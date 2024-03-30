@@ -1,0 +1,17 @@
+{
+  "hash": "ba35234d50f308eac3ed59cae821cf5b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Embed code from external files\nauthor: \"Jadey Ryan\"\ndate: \"2024-03-29\"\ndate-modified: last-modified\nformat: \n  html:\n    number-sections: true\n    code-tools: true\ncategories: [quarto, params]\n---\n\n------\n\n## Setup\n\n::: {.cell}\n\n```{.r .cell-code}\n# Attach packages\nlibrary(tidyverse)\n```\n:::\n\n\n## Embed plot\n\n\n{{< embed _penguins.qmd#fig-size-scatter >}}\n\n\n\n## Embed table\n\n\n{{< embed _penguins.qmd#tbl-cars >}}\n\n\n\n## Embed video\n\n{{< youtube kQn82pa04jQ \ntitle=\"Parameterized Reporting with Quarto, R by Jadey Ryan\" >}}\n\n",
+    "supporting": [
+      "embed_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

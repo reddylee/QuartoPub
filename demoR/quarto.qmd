@@ -1,0 +1,201 @@
+---
+title: Quarto basics
+author: Reddy Lee
+date: 2024-03-29
+date-modified: last-modified
+format: 
+  html:
+    number-sections: true
+    code-tools: true
+categories: [quarto, params]
+---
+------
+
+This document demonstrates the basic features of Quarto. You can find the source code of this document from upper right corner of this page by clicking "Code > View Source".
+
+## Setup
+If we *label* a code chunk as `setup`, it will be executed automatically when you first run a code chunk. We can also set `message: false` to suppress the output of the code chunk. For example, the following code chunk loads the `tidyverse` package and suppresses the output message.
+```{r}
+#| label: setup
+#| message: false
+
+# Attach packages
+library(tidyverse)
+```
+
+## Text styles
+### Headings
+We can use `#` to create headings. The number of `#` indicates the level of the heading. For example, `# Heading 1`, `## Heading 2`, `### Heading 3`, and all the way up to `###### Heading 6`.
+
+If we set `number-sections: true` in the YAML front matter, Quarto will automatically number the headings.
+
+### Emphasis
+We can use `*` or `_` to emphasize text. For example, *italic*, **bold**, and ***bold italic***.
+
+### Lists
+We can create ordered and unordered lists. For example:
+ 
+ 1. First item
+ 
+ 2. Second item
+    - Subitem 1
+    - Subitem 2
+
+### Blockquotes
+We can use `>` to create `blockquotes`. For example:
+
+ > This is a blockquote.
+
+### Links
+We can create links using the following syntax:
+ 
+ - [Quarto](https://quarto.org)
+
+### Images
+We can include images using the following syntax:
+ 
+ - From the web:
+![Quarto logo](https://quarto.org/quarto.png)
+
+ - From the local file:
+ 
+![](../fig/candoso2.png)
+
+### Colors
+We can use HTML color names or hexadecimal color codes to set text and background colors. For example:
+
+  <span style="color:blue">Blue text</span>
+    
+  <span style="color:purple">Purple text</span>
+
+### Equations
+We can include equations using LaTeX syntax. For example:
+  
+- Inline equation: $E=mc^2$
+
+- Block equation:
+  $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$  
+
+
+  $$\pi \in \mathbb {R}$$
+
+- Basic Functions:
+  $$\sin x, \ \log_2{x}, \hspace{0.5cm} \sqrt[3]{x^2 +1}$$
+
+- Fractions:  
+  $$\$5 \over{x + y}$$
+
+  $$ \left[\frac{1}{2} \hspace{0.5cm} \frac{x^2}{x^3}\right\}$$  
+
+  $$\left(\frac{\partial f}{\partial x}\right)$$
+
+- Changing faces:  
+  $$\mathbb{R}, \ \mathbb{N}, \ \mathbb{Z}, \ \mathbb{Q}$$
+
+  $$\mathcal{L}, \ \mathcal{F}, \ \mathcal{G}$$
+
+- Text in equations:
+  $$ \frac{\text{ordinary stuff}}{\text{extraordinary stuff}}$$
+
+- Aligned equation:
+
+  $$
+\begin{aligned}
+(x + y)^2 &= x^2 + 2xy + y^2 
+\\
+\\
+&\ne x^2 + y^2
+\end{aligned}
+  $$
+
+- Numbered equation:
+  $$
+\frac{\partial \mathrm C}{ \partial \mathrm t } + \frac{1}{2}\sigma^{2} \mathrm S^{2}
+\frac{\partial^{2} \mathrm C}{\partial \mathrm C^2}
+  + \mathrm r \mathrm S \frac{\partial \mathrm C}{\partial \mathrm S}\ =
+  \mathrm r \mathrm C 
+  $$ {#eq-black-scholes}
+
+Black-Scholes (@eq-black-scholes) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options.
+
+- Matrices:
+
+  $$
+\begin{bmatrix}
+    1 & 2 & 3 \\
+    4 & 5 & 6 \\
+    7 & 8 & 9
+\end{bmatrix}
+  $$
+
+## Layout
+### Columns
+We can create columns using the `columns` directive. For example:
+
+::::{.columns}
+
+:::{.column width="35%"}
+![Quarto logo](https://quarto.org/quarto.png)
+:::
+
+:::{.column width="65%"}
+![](../fig/candoso2.png)
+:::
+
+::::
+
+### Callouts
+We can create callouts using the `callout` directive. For example:
+
+::: {.callout-note}
+Note that there are five types of callouts, including:
+`note`, `warning`, `important`, `tip`, and `caution`.
+:::
+
+::: {.callout-tip}
+## Tip with Title
+
+This is an example of a callout with a title.
+:::
+
+::: {.callout-caution collapse="true"}
+## Expand To Learn About Collapse
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+### Tabsets
+We can create tabsets using the `tabset` directive. For example:
+
+:::{.panel-tabset}
+### R
+```{r}
+cat("Hello, Quarto!")
+```
+
+### Python
+```{python}
+print("Hello, python!")
+```
+
+:::
+
+
+## Embed code from external files
+### Embed plot
+
+{{< embed _penguins.qmd#fig-size-scatter >}}
+
+### Embed table
+
+{{< embed _penguins.qmd#tbl-cars >}}
+
+### Embed video
+
+**Get started with Quarto | Mine Çetinkaya-Rundel**
+{{< youtube _f3latmOhew >}}
+
+ 
+**Quarto for Academics | Mine Çetinkaya-Rundel**
+{{< video https://youtu.be/EbAAmrB0luA?si=M0zCxVhGj61PeSJu >}}
+

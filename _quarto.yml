@@ -1,0 +1,69 @@
+project:
+  type: website
+  title: Can.Do.So
+  preview:
+    port: 7327
+    browser: false
+  resources: 
+    - "*.csv"
+
+website:
+  image: /fig/candoso2.png
+  favicon: /fig/candoso.png
+  google-analytics:
+    tracking-id: "G-X0K8K06WME"
+    anonymize-ip: true
+  open-graph: true
+  twitter-card:
+    image: /fig/candoso.png
+    creator: "@reddy_lee"
+    card-style: summary_large_image
+  site-url: https://www.candoso.org
+  page-navigation: true
+
+  page-footer: 
+    center: "Copyright <span>&copy;<span> 2005-2024 Can.Do.So"
+    right: 
+      - icon: /fig/candoso2.png
+        href: https://www.candoso.org
+    
+  back-to-top-navigation: true
+  navbar:
+    background: "#7327ff"
+    logo: /fig/candoso.png
+    logo-alt: "Can.Do.So"
+    collapse-below: lg
+    left:
+      - href: index.qmd
+        text: Home
+      - href: demoR/demoR.qmd
+        text: R Tutorial
+      - href: ps/home.qmd
+        text: My Research
+    right:
+      - href: about.qmd
+        text: About
+        
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-title: "Jump To"
+    code-link: true
+    code-overflow: wrap
+    code-fold: true
+    code-summary: "_Show the code_"
+    code-block-background: true
+    highlight-style: atom-one
+    code-line-numbers: true 
+
+lightbox:
+  match: auto
+  effect: fade
+  desc-position: bottom
+  loop: true
+
+freeze: auto
+
+

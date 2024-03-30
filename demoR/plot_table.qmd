@@ -1,0 +1,39 @@
+---
+title: Tables and Plots
+author: Reddy Lee
+date: "2024-03-28"
+date-modified: last-modified
+format: 
+  html:
+    number-sections: true
+categories: [table, plot]
+---
+----
+
+## Setup
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+## Plot
+```{r}
+#| label: fig-cars
+#| fig-cap: Scatter plot of mpg vs hp colored by am
+mtcars |> 
+  mutate(am = as.factor(am)) |>
+  ggplot(aes(x = mpg, y = hp, color = am)) +
+  geom_point() 
+```
+
+## Table
+```{r}
+#| label: tbl-cars
+#| tbl-cap: First 5 rows of mtcars
+
+mtcars |> 
+  head(5) |>
+  knitr::kable()
+```
+
+

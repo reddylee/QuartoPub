@@ -1,0 +1,22 @@
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+```{r}
+#| label: fig-size-scatter
+#| fig-cap: Scatter plot of body mass and flipper length by species
+ggplot(penguins, aes(body_mass_g, flipper_length_mm)) +
+  geom_point(aes(color = species)) +
+  theme_minimal()
+```
+
+```{r}
+#| label: tbl-cars
+#| tbl-cap: First 5 rows of mtcars
+
+mtcars |> 
+  head(5) |>
+  knitr::kable()
+```
