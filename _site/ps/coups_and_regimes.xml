@@ -15,7 +15,6 @@ Coups</article-title>
             <given-names>Zhu</given-names>
           </name>
           <string-name>Zhu Qi</string-name>
-          <email>qz21485@essex.ac.uk</email>
           <xref ref-type="aff" rid="aff-1">a</xref>
         </contrib>
       </contrib-group>
@@ -26,31 +25,35 @@ Coups</article-title>
       </aff>
       <history/>
       <abstract>
-        <p><bold>Abstract:</bold> A substantial body of research has examined
-coups, with much of it focusing on the factors that lead to coup
-attempts. However, consensus remains elusive regarding why coups are
-more prevalent in certain countries while less so in others. Previous
-scholarship exploring the determinants of coup attempts has often
-overlooked the crucial aspect of coup success. Given the severe
-consequences of a failed coup, coup plotters are unlikely to proceed
-unless they perceive a high probability of success. Thus, the outcome of
-a coup—whether successful or unsuccessful—is not merely incidental but
-serves as a pivotal determinant of coup attempts. The decision to stage
-a coup is a self-selected variable contingent upon the anticipated
-success rate of coups. This study employs a sample selection model
-(specifically, a two-stage probit model) to elucidate why coups are more
-common in some autocratic countries but rare in others. I contend that
-coup attempts are largely shaped by the likelihood of coup success,
-which, in turn, hinges on the power dynamics between coup perpetrators
-and incumbents. These power dynamics are influenced by the regime type
-and their distinct responses to internal and external shocks.</p>
+        <p>A substantial body of research has examined coups, with much of it
+focusing on the factors that lead to coup attempts. However, consensus
+remains elusive regarding why coups are more prevalent in certain
+countries while less so in others. Previous scholarship exploring the
+determinants of coup attempts has often overlooked the crucial aspect of
+coup success. Given the severe consequences of a failed coup, coup
+plotters are unlikely to proceed unless they perceive a high probability
+of success. Thus, the outcome of a coup—whether successful or
+unsuccessful—is not merely incidental but serves as a pivotal
+determinant of coup attempts. The decision to stage a coup is a
+self-selected variable contingent upon the anticipated success rate of
+coups. This study employs a sample selection model (specifically, a
+two-stage probit model) to elucidate why coups are more common in some
+autocratic countries but rare in others. I contend that coup attempts
+are largely shaped by the likelihood of coup success, which, in turn,
+hinges on the power dynamics between coup perpetrators and incumbents.
+These power dynamics are influenced by the regime type and their
+distinct responses to internal and external shocks.</p>
       </abstract>
       <kwd-group kwd-group-type="author">
-        <kwd>coup, autocracy, regime types, sample selection</kwd>
+        <kwd>coup</kwd>
+        <kwd>autocracy</kwd>
+        <kwd>regime types</kwd>
+        <kwd>sample selection</kwd>
       </kwd-group>
     </article-meta>
   </front>
   <body>
+    <p/>
     <sec id="introduction">
       <title>Introduction</title>
       <p>Coups<xref ref-type="fn" rid="fn1">1</xref> are more frequently in
@@ -93,61 +96,195 @@ and their distinct responses to internal and external shocks.</p>
   quite satisfactory (Table ). The most recent coups staged in 2021,
   with 5 successful coups out of 7 staged coups, show an even higher
   success rate.</p>
-      <sec id="references">
-        <title>References</title>
-        <ref-list>
-          <ref id="ref-powell2011">
-            <element-citation publication-type="article-journal">
-              <person-group person-group-type="author">
-                <name>
-                  <surname>Powell</surname>
-                  <given-names>Jonathan M</given-names>
-                </name>
-                <name>
-                  <surname>Thyne</surname>
-                  <given-names>Clayton L</given-names>
-                </name>
-              </person-group>
-              <article-title>Global instances of coups from 1950 to 2010: A new dataset</article-title>
-              <source>Journal of Peace Research</source>
-              <year iso-8601-date="2011-03">2011</year>
-              <month>03</month>
-              <volume>48</volume>
-              <issue>2</issue>
-              <uri>http://dx.doi.org/10.1177/0022343310397436</uri>
-              <pub-id pub-id-type="doi">10.1177/0022343310397436</pub-id>
-              <fpage>249</fpage>
-              <lpage>259</lpage>
-            </element-citation>
-          </ref>
-          <ref id="ref-gassebner2016a">
-            <element-citation publication-type="article-journal">
-              <person-group person-group-type="author">
-                <name>
-                  <surname>Gassebner</surname>
-                  <given-names>Martin</given-names>
-                </name>
-                <name>
-                  <surname>Gutmann</surname>
-                  <given-names>Jerg</given-names>
-                </name>
-                <name>
-                  <surname>Voigt</surname>
-                  <given-names>Stefan</given-names>
-                </name>
-              </person-group>
-              <article-title>When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants</article-title>
-              <source>SSRN Electronic Journal</source>
-              <year iso-8601-date="2016">2016</year>
-              <uri>http://dx.doi.org/10.2139/ssrn.2851758</uri>
-              <pub-id pub-id-type="doi">10.2139/ssrn.2851758</pub-id>
-            </element-citation>
-          </ref>
-        </ref-list>
-      </sec>
+    </sec>
+    <sec id="setup">
+      <title>Setup</title>
+      <code language="r script">library(tidyverse)</code>
+    </sec>
+    <sec id="plot">
+      <title>Plot</title>
+      <code language="r script">mtcars |&gt; 
+  mutate(am = as.factor(am)) |&gt;
+  ggplot(aes(x = mpg, y = hp, color = am)) +
+  geom_point() </code>
+      <fig id="fig-cars">
+        <caption>
+          <p>Figure 1: Scatter plot of mpg vs hp colored by
+    am</p>
+        </caption>
+        <graphic mimetype="image" mime-subtype="png" xlink:href="coups_and_regimes_files/figure-jats/fig-cars-1.png"/>
+      </fig>
+    </sec>
+    <sec id="table">
+      <title>Table</title>
+      <code language="r script">mtcars |&gt; 
+  head(5) |&gt;
+  knitr::kable()</code>
+      <fig id="tbl-cars">
+        <caption>
+          <p>Table 1: First 5 rows of mtcars</p>
+        </caption>
+        <table-wrap>
+          <table>
+            <colgroup>
+              <col width="26%"/>
+              <col width="7%"/>
+              <col width="6%"/>
+              <col width="7%"/>
+              <col width="6%"/>
+              <col width="7%"/>
+              <col width="9%"/>
+              <col width="9%"/>
+              <col width="4%"/>
+              <col width="4%"/>
+              <col width="7%"/>
+              <col width="7%"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <th align="left"/>
+                <th align="right">mpg</th>
+                <th align="right">cyl</th>
+                <th align="right">disp</th>
+                <th align="right">hp</th>
+                <th align="right">drat</th>
+                <th align="right">wt</th>
+                <th align="right">qsec</th>
+                <th align="right">vs</th>
+                <th align="right">am</th>
+                <th align="right">gear</th>
+                <th align="right">carb</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left">Mazda RX4</td>
+                <td align="right">21.0</td>
+                <td align="right">6</td>
+                <td align="right">160</td>
+                <td align="right">110</td>
+                <td align="right">3.90</td>
+                <td align="right">2.620</td>
+                <td align="right">16.46</td>
+                <td align="right">0</td>
+                <td align="right">1</td>
+                <td align="right">4</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">Mazda RX4 Wag</td>
+                <td align="right">21.0</td>
+                <td align="right">6</td>
+                <td align="right">160</td>
+                <td align="right">110</td>
+                <td align="right">3.90</td>
+                <td align="right">2.875</td>
+                <td align="right">17.02</td>
+                <td align="right">0</td>
+                <td align="right">1</td>
+                <td align="right">4</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">Datsun 710</td>
+                <td align="right">22.8</td>
+                <td align="right">4</td>
+                <td align="right">108</td>
+                <td align="right">93</td>
+                <td align="right">3.85</td>
+                <td align="right">2.320</td>
+                <td align="right">18.61</td>
+                <td align="right">1</td>
+                <td align="right">1</td>
+                <td align="right">4</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">Hornet 4 Drive</td>
+                <td align="right">21.4</td>
+                <td align="right">6</td>
+                <td align="right">258</td>
+                <td align="right">110</td>
+                <td align="right">3.08</td>
+                <td align="right">3.215</td>
+                <td align="right">19.44</td>
+                <td align="right">1</td>
+                <td align="right">0</td>
+                <td align="right">3</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">Hornet Sportabout</td>
+                <td align="right">18.7</td>
+                <td align="right">8</td>
+                <td align="right">360</td>
+                <td align="right">175</td>
+                <td align="right">3.15</td>
+                <td align="right">3.440</td>
+                <td align="right">17.02</td>
+                <td align="right">0</td>
+                <td align="right">0</td>
+                <td align="right">3</td>
+                <td align="right">2</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </fig>
+      <p/>
     </sec>
   </body>
   <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="ref-powell2011">
+        <element-citation publication-type="article-journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Powell</surname>
+              <given-names>Jonathan M</given-names>
+            </name>
+            <name>
+              <surname>Thyne</surname>
+              <given-names>Clayton L</given-names>
+            </name>
+          </person-group>
+          <article-title>Global instances of coups from 1950 to 2010: A new dataset</article-title>
+          <source>Journal of Peace Research</source>
+          <year iso-8601-date="2011-03">2011</year>
+          <month>03</month>
+          <volume>48</volume>
+          <issue>2</issue>
+          <uri>http://dx.doi.org/10.1177/0022343310397436</uri>
+          <pub-id pub-id-type="doi">10.1177/0022343310397436</pub-id>
+          <fpage>249</fpage>
+          <lpage>259</lpage>
+        </element-citation>
+      </ref>
+      <ref id="ref-gassebner2016a">
+        <element-citation publication-type="article-journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gassebner</surname>
+              <given-names>Martin</given-names>
+            </name>
+            <name>
+              <surname>Gutmann</surname>
+              <given-names>Jerg</given-names>
+            </name>
+            <name>
+              <surname>Voigt</surname>
+              <given-names>Stefan</given-names>
+            </name>
+          </person-group>
+          <article-title>When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants</article-title>
+          <source>SSRN Electronic Journal</source>
+          <year iso-8601-date="2016">2016</year>
+          <uri>http://dx.doi.org/10.2139/ssrn.2851758</uri>
+          <pub-id pub-id-type="doi">10.2139/ssrn.2851758</pub-id>
+        </element-citation>
+      </ref>
+    </ref-list>
     <fn-group>
       <fn id="fn1">
         <label>1</label>
