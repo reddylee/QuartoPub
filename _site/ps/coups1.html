@@ -8,18 +8,19 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.552">
-<meta name="dcterms.date" content="2024-03-30">
-<meta name="keywords" content="Coups, Democracy">
-<title>Can.Do.So - Coups and Democracy</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-<link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
-<link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
-<style>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.552">
+
+  <meta name="author" content="Zhu Qi">
+  <meta name="dcterms.date" content="2024-03-29">
+  <meta name="keywords" content="coup, autocracy, regime types, sample selection">
+  <title>Can.Do.So - How Regime Types Affect the Likelihood of Coups</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -31,71 +32,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-      }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-    div.sourceCode
-      { color: #383a42;  }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #383a42; } /* Normal */
-    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
-    code span.an { color: #50a14f; } /* Annotation */
-    code span.at { color: #a626a4; } /* Attribute */
-    code span.bn { color: #986801; } /* BaseN */
-    code span.bu { color: #a626a4; } /* BuiltIn */
-    code span.cf { color: #a626a4; } /* ControlFlow */
-    code span.ch { color: #50a14f; } /* Char */
-    code span.cn { color: #986801; } /* Constant */
-    code span.co { color: #a0a1a7; font-style: italic; } /* Comment */
-    code span.cv { color: #e45649; font-style: italic; } /* CommentVar */
-    code span.do { color: #e45649; } /* Documentation */
-    code span.dt { color: #a626a4; } /* DataType */
-    code span.dv { color: #986801; } /* DecVal */
-    code span.er { color: #f44747; text-decoration: underline; } /* Error */
-    code span.ex { color: #4078f2; font-weight: bold; } /* Extension */
-    code span.fl { color: #986801; } /* Float */
-    code span.fu { color: #4078f2; } /* Function */
-    code span.im { color: #50a14f; } /* Import */
-    code span.in { color: #c45b00; } /* Information */
-    code span.kw { color: #a626a4; } /* Keyword */
-    code span.op { color: #a626a4; } /* Operator */
-    code span.ot { color: #27ae60; } /* Other */
-    code span.pp { color: #a626a4; } /* Preprocessor */
-    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
-    code span.sc { color: #0184bc; } /* SpecialChar */
-    code span.ss { color: #da4453; } /* SpecialString */
-    code span.st { color: #50a14f; } /* String */
-    code span.va { color: #e45649; } /* Variable */
-    code span.vs { color: #da4453; } /* VerbatimString */
-    code span.wa { color: #da4453; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -117,18 +53,21 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-<link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X0K8K06WME"></script><script type="text/javascript">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X0K8K06WME"></script>
+
+  <script type="text/javascript">
 
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
-  </script><link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-<link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-<link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-<link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-<style type="text/css">
+  </script>
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
 
   .callout {
     margin-top: 1em;
@@ -326,7 +265,7 @@
   }
 
   </style>
-<style type="text/css">
+  <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -413,15 +352,15 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="Can.Do.So - Coups and Democracy">
-<meta property="og:description" content="Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.)">
-<meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
+<meta property="og:title" content="Can.Do.So - How Regime Types Affect the Likelihood of Coups">
+<meta property="og:description" content="Abstract: A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.">
+<meta property="og:image" content="https://www.candoso.org/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
-<meta name="twitter:title" content="Can.Do.So - Coups and Democracy">
-<meta name="twitter:description" content="Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.)">
-<meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
+<meta name="twitter:title" content="Can.Do.So - How Regime Types Affect the Likelihood of Coups">
+<meta name="twitter:description" content="Abstract: A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.">
+<meta name="twitter:image" content="https://www.candoso.org/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image-height" content="1286">
@@ -431,12 +370,16 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center"><h1 class="title">Coups and Democracy</h1>
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">How Regime Types Affect the Likelihood of Coups</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Reddy Lee 
+Zhu Qi 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:qz21485@essex.ac.uk">qz21485@essex.ac.uk</a>
 </div>
         <p class="quarto-title-affiliation">
             University of Essex
@@ -444,22 +387,17 @@ Reddy Lee
     </div>
 </div>
 
-  <p class="date">2024-03-30</p>
-</section><section id="section" class="slide level2"><h2>Section</h2>
-<p>This is a simple placeholder for the manuscript’s main document <span class="citation" data-cites="knuth1984">(<a href="#/references" role="doc-biblioref" onclick="">Knuth 1984</a>)</span>.</p>
-<div class="cell">
-<details class="code-fold"><summary><em>Show the code</em></summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold"><summary><em>Show the code</em></summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Let’s cite here <span class="citation" data-cites="debruin2020">(<a href="#/references" role="doc-biblioref" onclick="">De Bruin 2020</a>)</span>.</p>
-<p></p>
-</section><section id="references" class="slide level2 smaller scrollable"><h2>References</h2>
+  <p class="date">2024-03-29</p>
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+<p>Coups<sup>1</sup> are more frequently in some countries but rarely in others. According to Global Instances of Coups <span class="citation" data-cites="powell2011">(<a href="#/references" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>, hereinafter GIC)</span>, in Latin America, coups occurred 23 times in Bolivia from 1950 to 1984, and 20 times in Argentina in almost the same period. In Mexico’s authoritarian period from 1917 to 2000, however, no coup occurred at all. In Africa, Sudan encountered 17 coups from 1955 to 2021, while no coup occurred in South Africa since 1950. Similar stories happened in the Middle East and south Asia. Previous studies have tried to explain these disparities from different perspectives. “About one hundred potential determinants of coups have been proposed, but no consensus has emerged on an established baseline model for analyzing coups” <span class="citation" data-cites="gassebner2016a">(<a href="#/references" role="doc-biblioref" onclick="">Gassebner, Gutmann, and Voigt 2016</a>)</span>. The question remains unanswered.</p>
+<p>To analyse determinants of coups, the most important characteristic of coups should not be overlooked. Coups are <strong>illegal</strong> attempts against the current leaders and the cost of failed coups could be too expensive to bear. Perpetrators of coups might be put to jail, forced to exile, or even sentenced to death if they fail. Sometimes even worse, the punishment might fall on the perpetrators’ family. Although staging coups is so risky, there were still many coups occurred-484 coups have been launched since 1950 (GIC). In 2021, 7 coups occurred in 6 countries, the most frequent year since 2000<sup>2</sup>.</p>
+<p>To understand the logic of perpetrators of coups, we need to analyse the pay-offs of coups. When a coup is launched, the perpetrators expect to earn something from the coup, not to lose, which depends on how likely they will succeed. Therefore, when coup plotters plan to stage a coup, the first and foremost thing they will consider is their likelihood of success. They might have many incentives to launch a coup, but they are less likely to put the plot into practice without some certainty of success. When the chances of success are low, coup plotters either abort their schemes or wait for better timing. It is hard to know the threshold of chances of success, but previous coups show that the success rates of staged coups are quite satisfactory (Table ). The most recent coups staged in 2021, with 5 successful coups out of 7 staged coups, show an even higher success rate.</p>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Coups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” <span class="citation" data-cites="powell2011">(<a href="#/references" role="doc-biblioref" onclick="">Powell and Thyne 2011, 252</a>)</span>.</p></li><li id="fn2"><p>Myanmar (February, succeeded), Niger (March, failed), Chad (April, succeeded), Mali (May, succeeded), Guinea (September, succeeded), and Sudan (September, failed; October, succeeded).</p></li></ol></aside></section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
@@ -467,18 +405,35 @@ Reddy Lee
 </div>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-debruin2020" class="csl-entry" role="listitem">
-De Bruin, Erica. 2020. <span>“Preventing Coups d<span>’</span>état.”</span> In, 1–12. Cornell University Press. <a href="https://doi.org/10.7591/cornell/9781501751912.003.0001">https://doi.org/10.7591/cornell/9781501751912.003.0001</a>.
+<div id="ref-gassebner2016a" class="csl-entry" role="listitem">
+Gassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. <span>“When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants.”</span> <em>SSRN Electronic Journal</em>. <a href="https://doi.org/10.2139/ssrn.2851758">https://doi.org/10.2139/ssrn.2851758</a>.
 </div>
-<div id="ref-knuth1984" class="csl-entry" role="listitem">
-Knuth, D. E. 1984. <span>“Literate Programming.”</span> <em>The Computer Journal</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+<div id="ref-powell2011" class="csl-entry" role="listitem">
+Powell, Jonathan M, and Clayton L Thyne. 2011. <span>“Global Instances of Coups from 1950 to 2010: A New Dataset.”</span> <em>Journal of Peace Research</em> 48 (2): 249–59. <a href="https://doi.org/10.1177/0022343310397436">https://doi.org/10.1177/0022343310397436</a>.
 </div>
 </div>
-</section>
-</div>
+</section></section>
+
+    </div>
   </div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../site_libs/revealjs/plugin/search/search.js"></script><script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -668,7 +623,8 @@ Knuth, D. E. 1984. <span>“Literate Programming.”</span> <em>The Computer Jou
           RevealZoom
         ]
       });
-    </script><script id="quarto-html-after-body" type="application/javascript">
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
         const mode = bsSheetEl.getAttribute("data-mode");
@@ -746,7 +702,7 @@ Knuth, D. E. 1984. <span>“Literate Programming.”</span> <em>The Computer Jou
       });
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/reddylee\.quarto\.pub\/candoso");
+          var filterRegex = new RegExp("https:\/\/www\.candoso\.org");
         var isInternal = (href) => {
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
@@ -844,6 +800,6 @@ Knuth, D. E. 1984. <span>“Literate Programming.”</span> <em>The Computer Jou
       }
     });
     </script>
-
+    
 
 </body></html>
