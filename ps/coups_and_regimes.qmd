@@ -5,17 +5,14 @@ author:
     affiliations: University of Essex
     email: qz21485@essex.ac.uk
 
-date: 2024-03-29
+date: 2024-03-31
 date-modified: last-modified
 format:
-  html:
-    comments:
-      hypothesis: false
+  html: default
   aps-pdf: default
   docx: default
   revealjs: 
     output-file: coups1.html
-  jats: default
   
 other-links:
     - text: Download data
@@ -24,10 +21,17 @@ other-links:
 bibliography: references.bib
 abstract: |
   A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.
-  
 keywords: [Coup, Autocracy, Regime types, Sample selection]
 ---
-\newpage
+
+```{r}
+#| label: setup
+#| message: false
+#| include: false
+library(tidyverse)
+library(gt)
+format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+```
 
 ## Introduction
 
@@ -59,17 +63,13 @@ When the chances of success are low, coup plotters either abort their schemes or
 It is hard to know the threshold of chances of success, but previous coups show that the success rates of staged coups are quite satisfactory (Table ).
 The most recent coups staged in 2021, with 5 successful coups out of 7 staged coups, show an even higher success rate.
 
-## Setup
-```{r}
-#| message: false
-library(tidyverse)
-library(gt)
-```
-
 ## Plot
+
 ```{r}
 #| label: fig-cars
 #| fig-cap: Scatter plot of mpg vs hp colored by am
+#| echo: !expr format == "html"
+
 mtcars |> 
   mutate(am = as.factor(am)) |>
   ggplot(aes(x = mpg, y = hp, color = am)) +
@@ -77,14 +77,24 @@ mtcars |>
 ```
 
 ## Table
+
+\cleardoublepage
+
 ```{r}
 #| label: tbl-cars
 #| tbl-cap: First 5 rows of mtcars
+#| echo: !expr format == "html"
 
 mtcars |> 
   head(5) |>
-  gt()
+  gt() |> 
+  as_raw_html()
 ```
 
-\newpage
-## References
+```{r}
+#| results: asis
+#| eval: !expr format == "latex"
+#| echo: false
+cat("\\newpage
+## References")
+```
