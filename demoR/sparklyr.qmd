@@ -1,0 +1,85 @@
+---
+title: Using R with Spark Connect
+format:
+  aps-html:
+    code-tools: true
+---
+
+## Connect to Spark
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(sparklyr)
+library(gt)
+#spark_install()
+sc <- spark_connect(master = "local")
+```
+
+## Load data
+
+```{r}
+tbl_mtcars <- copy_to(sc, mtcars, "spark_mtcars")
+spark_read_csv(sc, name = "gdp", path = "data/gdp.csv")
+flights_tbl <- copy_to(sc, nycflights13::flights, "spark_flights")
+# list datasets in spark
+src_tbls(sc)
+```
+
+## Query data
+
+### Oder of query execution
+
+![](../fig/sql_query_order.webp) Please visit [SQL Query Order](https://lukianovihor.medium.com/sql-order-of-query-execution-8c7cd926400) for more information.
+
+```{sql connection=sc}
+select * from spark_mtcars
+where hp > 100
+sort by -hp
+```
+
+```{sql connection=sc}
+select * from gdp
+Order by -year
+```
+
+```{sql connection=sc}
+select * from spark_flights
+where month == 1
+```
+
+```{sql connection=sc}
+SELECT *
+FROM (
+   SELECT
+     tailnum,
+    COUNT(*) AS count,
+    AVG(distance) AS dist,
+    AVG(arr_delay) AS delay
+  FROM spark_flights
+  GROUP BY tailnum
+) q01
+WHERE (count > 20.0) AND (dist < 2000.0) AND (NOT((delay IS NULL)))
+```
+
+## Save outcome of query into R environment
+
+```{sql connection=sc, output.var="top10_delayed_planes"}
+SELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay
+FROM spark_flights
+WHERE month = 1
+GROUP BY tailnum
+HAVING COUNT(*) > 20
+ORDER BY delay DESC
+LIMIT 10
+```
+
+The outcome of the query is saved in the R environment as `top10_delayed_planes` and you can call it in R chunk as shown below.
+```{r}
+top10_delayed_planes |> 
+  gt() |> 
+  as_raw_html() 
+```
+

@@ -8,14 +8,11 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.552">
 <meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-03-31">
+<meta name="dcterms.date" content="2024-04-02">
 <meta name="keywords" content="Coup, Autocracy, Regime types, Sample selection">
 <title>Can.Do.So - How Regime Types Affect the Likelihood of Coups</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -420,15 +417,17 @@
       margin-right: 0; 
     }
   </style>
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <meta property="og:title" content="Can.Do.So - How Regime Types Affect the Likelihood of Coups">
 <meta property="og:description" content="A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.">
-<meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
+<meta property="og:image" content="https://www.candoso.org/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
 <meta name="twitter:title" content="Can.Do.So - How Regime Types Affect the Likelihood of Coups">
 <meta name="twitter:description" content="A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.">
-<meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
+<meta name="twitter:image" content="https://www.candoso.org/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image-height" content="1286">
@@ -454,133 +453,585 @@ Zhu Qi
     </div>
 </div>
 
-  <p class="date">2024-03-31</p>
-</section><section id="introduction" class="slide level2 scrollable" data-number="1"><h2>
-<span class="header-section-number">1</span> Introduction</h2>
-<p>Coups<sup>1</sup> are more frequently in some countries but rarely in others. According to Global Instances of Coups <span class="citation" data-cites="powell2011">(<a href="#/table" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>, hereinafter GIC)</span>, in Latin America, coups occurred 23 times in Bolivia from 1950 to 1984, and 20 times in Argentina in almost the same period. In Mexico’s authoritarian period from 1917 to 2000, however, no coup occurred at all. In Africa, Sudan encountered 17 coups from 1955 to 2021, while no coup occurred in South Africa since 1950. Similar stories happened in the Middle East and south Asia. Previous studies have tried to explain these disparities from different perspectives. “About one hundred potential determinants of coups have been proposed, but no consensus has emerged on an established baseline model for analyzing coups” <span class="citation" data-cites="gassebner2016a">(<a href="#/table" role="doc-biblioref" onclick="">Gassebner, Gutmann, and Voigt 2016</a>)</span>. The question remains unanswered.</p>
-<p>To analyse determinants of coups, the most important characteristic of coups should not be overlooked. Coups are <strong>illegal</strong> attempts against the current leaders and the cost of failed coups could be too expensive to bear. Perpetrators of coups might be put to jail, forced to exile, or even sentenced to death if they fail. Sometimes even worse, the punishment might fall on the perpetrators’ family. Although staging coups is so risky, there were still many coups occurred-484 coups have been launched since 1950 (GIC). In 2021, 7 coups occurred in 6 countries, the most frequent year since 2000<sup>2</sup>.</p>
-<p>To understand the logic of perpetrators of coups, we need to analyse the pay-offs of coups. When a coup is launched, the perpetrators expect to earn something from the coup, not to lose, which depends on how likely they will succeed. Therefore, when coup plotters plan to stage a coup, the first and foremost thing they will consider is their likelihood of success. They might have many incentives to launch a coup, but they are less likely to put the plot into practice without some certainty of success. When the chances of success are low, coup plotters either abort their schemes or wait for better timing. It is hard to know the threshold of chances of success, but previous coups show that the success rates of staged coups are quite satisfactory (Table ). The most recent coups staged in 2021, with 5 successful coups out of 7 staged coups, show an even higher success rate.</p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Coups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” <span class="citation" data-cites="powell2011">(<a href="#/table" role="doc-biblioref" onclick="">Powell and Thyne 2011, 252</a>)</span>.</p></li><li id="fn2"><p>Myanmar (February, succeeded), Niger (March, failed), Chad (April, succeeded), Mali (May, succeeded), Guinea (September, succeeded), and Sudan (September, failed; October, succeeded).</p></li></ol></aside></section><section id="plot" class="slide level2" data-number="2"><h2>
-<span class="header-section-number">2</span> Plot</h2>
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb1-2"><a></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">as.factor</span>(am)) <span class="sc">|&gt;</span></span>
-<span id="cb1-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> hp, <span class="at">color =</span> am)) <span class="sc">+</span></span>
-<span id="cb1-4"><a></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+  <p class="date">2024-04-02</p>
+</section><section class="slide level2"><div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co">#load coup data</span></span>
+<span id="cb1-2"><a></a>coup <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt"</span>,</span>
+<span id="cb1-3"><a></a>                 <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb1-4"><a></a>coups <span class="ot">&lt;-</span> coup <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a></a>  <span class="fu">rename</span>(<span class="at">Country =</span> country) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb1-7"><a></a>    <span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">n</span>(),</span>
+<span id="cb1-8"><a></a>    <span class="st">`</span><span class="at">Coup succeeded</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(coup <span class="sc">==</span> <span class="dv">2</span>),</span>
+<span id="cb1-9"><a></a>    <span class="at">.by =</span> Country</span>
+<span id="cb1-10"><a></a>  )</span>
+<span id="cb1-11"><a></a></span>
+<span id="cb1-12"><a></a>attempts <span class="ot">&lt;-</span> <span class="fu">length</span>(coup<span class="sc">$</span>country)</span>
+<span id="cb1-13"><a></a>succeeded <span class="ot">&lt;-</span> <span class="fu">length</span>(coup<span class="sc">$</span>country[coup<span class="sc">$</span>coup <span class="sc">==</span> <span class="dv">2</span>])</span>
+<span id="cb1-14"><a></a>coup <span class="sc">|&gt;</span> </span>
+<span id="cb1-15"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-16"><a></a>            <span class="at">.by =</span> year) <span class="sc">|&gt;</span> </span>
+<span id="cb1-17"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(year)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell fragment">
 <div class="cell-output-display">
-<div id="fig-cars" class="quarto-figure quarto-figure-center quarto-float">
-<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coups_and_regimes_files/figure-html/fig-cars-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img data-src="coups_and_regimes_files/figure-html/fig-cars-1.png" width="672"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Scatter plot of mpg vs hp colored by am
-</figcaption></figure>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"2023","2":"3"},{"1":"2022","2":"4"},{"1":"2021","2":"7"},{"1":"2020","2":"1"},{"1":"2019","2":"2"},{"1":"2017","2":"1"},{"1":"2016","2":"1"},{"1":"2015","2":"2"},{"1":"2014","2":"4"},{"1":"2013","2":"1"},{"1":"2012","2":"6"},{"1":"2011","2":"2"},{"1":"2010","2":"3"},{"1":"2009","2":"2"},{"1":"2008","2":"3"},{"1":"2006","2":"3"},{"1":"2005","2":"2"},{"1":"2004","2":"2"},{"1":"2003","2":"4"},{"1":"2002","2":"2"},{"1":"2001","2":"4"},{"1":"2000","2":"8"},{"1":"1999","2":"6"},{"1":"1998","2":"1"},{"1":"1997","2":"3"},{"1":"1996","2":"6"},{"1":"1995","2":"5"},{"1":"1994","2":"6"},{"1":"1993","2":"5"},{"1":"1992","2":"10"},{"1":"1991","2":"14"},{"1":"1990","2":"5"},{"1":"1989","2":"10"},{"1":"1988","2":"6"},{"1":"1987","2":"9"},{"1":"1986","2":"5"},{"1":"1985","2":"8"},{"1":"1984","2":"5"},{"1":"1983","2":"7"},{"1":"1982","2":"7"},{"1":"1981","2":"11"},{"1":"1980","2":"10"},{"1":"1979","2":"7"},{"1":"1978","2":"12"},{"1":"1977","2":"10"},{"1":"1976","2":"11"},{"1":"1975","2":"16"},{"1":"1974","2":"10"},{"1":"1973","2":"8"},{"1":"1972","2":"10"},{"1":"1971","2":"10"},{"1":"1970","2":"8"},{"1":"1969","2":"10"},{"1":"1968","2":"10"},{"1":"1967","2":"9"},{"1":"1966","2":"18"},{"1":"1965","2":"15"},{"1":"1964","2":"8"},{"1":"1963","2":"16"},{"1":"1962","2":"14"},{"1":"1961","2":"11"},{"1":"1960","2":"12"},{"1":"1959","2":"6"},{"1":"1958","2":"11"},{"1":"1957","2":"8"},{"1":"1956","2":"6"},{"1":"1955","2":"7"},{"1":"1954","2":"6"},{"1":"1953","2":"3"},{"1":"1952","2":"5"},{"1":"1951","2":"6"},{"1":"1950","2":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>coup <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-3"><a></a>            <span class="at">.by =</span> year) <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(count)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["int"],"align":["right"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1966","2":"18"},{"1":"1963","2":"16"},{"1":"1975","2":"16"},{"1":"1965","2":"15"},{"1":"1991","2":"14"},{"1":"1962","2":"14"},{"1":"1960","2":"12"},{"1":"1978","2":"12"},{"1":"1981","2":"11"},{"1":"1961","2":"11"},{"1":"1958","2":"11"},{"1":"1976","2":"11"},{"1":"1989","2":"10"},{"1":"1972","2":"10"},{"1":"1977","2":"10"},{"1":"1968","2":"10"},{"1":"1969","2":"10"},{"1":"1992","2":"10"},{"1":"1980","2":"10"},{"1":"1971","2":"10"},{"1":"1974","2":"10"},{"1":"1967","2":"9"},{"1":"1987","2":"9"},{"1":"1957","2":"8"},{"1":"1970","2":"8"},{"1":"2000","2":"8"},{"1":"1964","2":"8"},{"1":"1973","2":"8"},{"1":"1985","2":"8"},{"1":"1979","2":"7"},{"1":"1983","2":"7"},{"1":"1955","2":"7"},{"1":"1982","2":"7"},{"1":"2021","2":"7"},{"1":"1956","2":"6"},{"1":"1988","2":"6"},{"1":"1954","2":"6"},{"1":"1959","2":"6"},{"1":"1999","2":"6"},{"1":"1951","2":"6"},{"1":"1994","2":"6"},{"1":"2012","2":"6"},{"1":"1996","2":"6"},{"1":"1952","2":"5"},{"1":"1986","2":"5"},{"1":"1984","2":"5"},{"1":"1995","2":"5"},{"1":"1990","2":"5"},{"1":"1993","2":"5"},{"1":"2014","2":"4"},{"1":"2003","2":"4"},{"1":"2022","2":"4"},{"1":"2001","2":"4"},{"1":"1953","2":"3"},{"1":"2008","2":"3"},{"1":"2010","2":"3"},{"1":"2023","2":"3"},{"1":"1997","2":"3"},{"1":"2006","2":"3"},{"1":"1950","2":"2"},{"1":"2009","2":"2"},{"1":"2002","2":"2"},{"1":"2005","2":"2"},{"1":"2011","2":"2"},{"1":"2015","2":"2"},{"1":"2019","2":"2"},{"1":"2004","2":"2"},{"1":"1998","2":"1"},{"1":"2020","2":"1"},{"1":"2017","2":"1"},{"1":"2016","2":"1"},{"1":"2013","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-</section><section id="table" class="slide level2 smaller scrollable" data-number="3"><h2>
-<span class="header-section-number">3</span> Table</h2>
+</div>
+</div>
+</section><section id="introduction" class="slide level2 smaller scrollable" data-number="1"><h2>
+<span class="header-section-number">1</span> Introduction</h2>
+<p>Coups<sup>1</sup> occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC) dataset <span class="citation" data-cites="powell2011">(<a href="#/introduction" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by <span class="citation" data-cites="gassebner2016">Gassebner, Gutmann, and Voigt (<a href="#/introduction" role="doc-biblioref" onclick="">2016</a>)</span>, around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.</p>
+<p>In analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high. Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful. In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.</p>
+<p>To comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in the table <a href="#/introduction" class="quarto-xref">Table&nbsp;1</a>, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb2-4"><a></a>  <span class="fu">as_raw_html</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>coups <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a></a>  <span class="co"># add one row which adds up the total</span></span>
+<span id="cb3-3"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">head</span>(<span class="dv">11</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a></a>  <span class="fu">add_row</span>(</span>
+<span id="cb3-6"><a></a>    <span class="at">Country =</span> <span class="st">"Total"</span>,</span>
+<span id="cb3-7"><a></a>    <span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(coups[, <span class="dv">2</span>]),</span>
+<span id="cb3-8"><a></a>    <span class="st">`</span><span class="at">Coup succeeded</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(coups[, <span class="dv">3</span>])</span>
+<span id="cb3-9"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-12"><a></a>  <span class="fu">tab_source_note</span>(<span class="at">source_note =</span> <span class="st">'Source: GIC dataset'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell fragment">
-<div id="tbl-cars" class="cell quarto-float">
-<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: First 5 rows of mtcars
-</figcaption><div aria-describedby="tbl-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="tbl-coups" class="cell quarto-float">
+<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Top 10 countries with the most coup attempts
+</figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="nmqlnrxlsn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-  
-  
-<table class="gt_table do-not-create-environment cell" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" data-bgcolor="#FFFFFF">
-<thead style="border-style: none;"><tr class="header gt_col_headings" style="border-style: none; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3;">
-<th id="mpg" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">mpg</th>
-<th id="cyl" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">cyl</th>
-<th id="disp" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">disp</th>
-<th id="hp" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">hp</th>
-<th id="drat" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">drat</th>
-<th id="wt" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">wt</th>
-<th id="qsec" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">qsec</th>
-<th id="vs" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">vs</th>
-<th id="am" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">am</th>
-<th id="gear" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">gear</th>
-<th id="carb" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col" style="text-align: right; border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-bgcolor="#FFFFFF" data-valign="bottom">carb</th>
+<div id="demidxsomq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#demidxsomq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#demidxsomq thead, #demidxsomq tbody, #demidxsomq tfoot, #demidxsomq tr, #demidxsomq td, #demidxsomq th {
+  border-style: none;
+}
+
+#demidxsomq p {
+  margin: 0;
+  padding: 0;
+}
+
+#demidxsomq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 90%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#demidxsomq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#demidxsomq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#demidxsomq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#demidxsomq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#demidxsomq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#demidxsomq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#demidxsomq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#demidxsomq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#demidxsomq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#demidxsomq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#demidxsomq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#demidxsomq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#demidxsomq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#demidxsomq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#demidxsomq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#demidxsomq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#demidxsomq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#demidxsomq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#demidxsomq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#demidxsomq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#demidxsomq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#demidxsomq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#demidxsomq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#demidxsomq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#demidxsomq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#demidxsomq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#demidxsomq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#demidxsomq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#demidxsomq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#demidxsomq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#demidxsomq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#demidxsomq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#demidxsomq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#demidxsomq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#demidxsomq .gt_left {
+  text-align: left;
+}
+
+#demidxsomq .gt_center {
+  text-align: center;
+}
+
+#demidxsomq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#demidxsomq .gt_font_normal {
+  font-weight: normal;
+}
+
+#demidxsomq .gt_font_bold {
+  font-weight: bold;
+}
+
+#demidxsomq .gt_font_italic {
+  font-style: italic;
+}
+
+#demidxsomq .gt_super {
+  font-size: 65%;
+}
+
+#demidxsomq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#demidxsomq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#demidxsomq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#demidxsomq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#demidxsomq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#demidxsomq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#demidxsomq .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table do-not-create-environment cell" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="header gt_col_headings">
+<th id="Country" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Country</th>
+<th id="Coup attempted" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Coup attempted</th>
+<th id="Coup succeeded" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Coup succeeded</th>
 </tr></thead>
-<tbody class="gt_table_body" style="border-style: none; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3;">
-<tr class="odd" style="border-style: none;">
-<td class="gt_row gt_right" headers="mpg" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">21.0</td>
-<td class="gt_row gt_right" headers="cyl" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">6</td>
-<td class="gt_row gt_right" headers="disp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">160</td>
-<td class="gt_row gt_right" headers="hp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">110</td>
-<td class="gt_row gt_right" headers="drat" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.90</td>
-<td class="gt_row gt_right" headers="wt" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">2.620</td>
-<td class="gt_row gt_right" headers="qsec" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">16.46</td>
-<td class="gt_row gt_right" headers="vs" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">0</td>
-<td class="gt_row gt_right" headers="am" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
-<td class="gt_row gt_right" headers="gear" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">4</td>
-<td class="gt_row gt_right" headers="carb" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">4</td>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Country">Bolivia</td>
+<td class="gt_row gt_right" headers="Coup attempted">23</td>
+<td class="gt_row gt_right" headers="Coup succeeded">11</td>
 </tr>
-<tr class="even" style="border-style: none;">
-<td class="gt_row gt_right" headers="mpg" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">21.0</td>
-<td class="gt_row gt_right" headers="cyl" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">6</td>
-<td class="gt_row gt_right" headers="disp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">160</td>
-<td class="gt_row gt_right" headers="hp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">110</td>
-<td class="gt_row gt_right" headers="drat" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.90</td>
-<td class="gt_row gt_right" headers="wt" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">2.875</td>
-<td class="gt_row gt_right" headers="qsec" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">17.02</td>
-<td class="gt_row gt_right" headers="vs" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">0</td>
-<td class="gt_row gt_right" headers="am" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
-<td class="gt_row gt_right" headers="gear" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">4</td>
-<td class="gt_row gt_right" headers="carb" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">4</td>
+<tr class="even">
+<td class="gt_row gt_left" headers="Country">Argentina</td>
+<td class="gt_row gt_right" headers="Coup attempted">20</td>
+<td class="gt_row gt_right" headers="Coup succeeded">7</td>
 </tr>
-<tr class="odd" style="border-style: none;">
-<td class="gt_row gt_right" headers="mpg" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">22.8</td>
-<td class="gt_row gt_right" headers="cyl" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">4</td>
-<td class="gt_row gt_right" headers="disp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">108</td>
-<td class="gt_row gt_right" headers="hp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">93</td>
-<td class="gt_row gt_right" headers="drat" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.85</td>
-<td class="gt_row gt_right" headers="wt" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">2.320</td>
-<td class="gt_row gt_right" headers="qsec" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">18.61</td>
-<td class="gt_row gt_right" headers="vs" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
-<td class="gt_row gt_right" headers="am" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
-<td class="gt_row gt_right" headers="gear" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">4</td>
-<td class="gt_row gt_right" headers="carb" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Country">Sudan</td>
+<td class="gt_row gt_right" headers="Coup attempted">17</td>
+<td class="gt_row gt_right" headers="Coup succeeded">6</td>
 </tr>
-<tr class="even" style="border-style: none;">
-<td class="gt_row gt_right" headers="mpg" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">21.4</td>
-<td class="gt_row gt_right" headers="cyl" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">6</td>
-<td class="gt_row gt_right" headers="disp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">258</td>
-<td class="gt_row gt_right" headers="hp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">110</td>
-<td class="gt_row gt_right" headers="drat" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.08</td>
-<td class="gt_row gt_right" headers="wt" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.215</td>
-<td class="gt_row gt_right" headers="qsec" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">19.44</td>
-<td class="gt_row gt_right" headers="vs" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
-<td class="gt_row gt_right" headers="am" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">0</td>
-<td class="gt_row gt_right" headers="gear" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3</td>
-<td class="gt_row gt_right" headers="carb" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">1</td>
+<tr class="even">
+<td class="gt_row gt_left" headers="Country">Haiti</td>
+<td class="gt_row gt_right" headers="Coup attempted">13</td>
+<td class="gt_row gt_right" headers="Coup succeeded">9</td>
 </tr>
-<tr class="odd" style="border-style: none;">
-<td class="gt_row gt_right" headers="mpg" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">18.7</td>
-<td class="gt_row gt_right" headers="cyl" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">8</td>
-<td class="gt_row gt_right" headers="disp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">360</td>
-<td class="gt_row gt_right" headers="hp" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">175</td>
-<td class="gt_row gt_right" headers="drat" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.15</td>
-<td class="gt_row gt_right" headers="wt" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3.440</td>
-<td class="gt_row gt_right" headers="qsec" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">17.02</td>
-<td class="gt_row gt_right" headers="vs" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">0</td>
-<td class="gt_row gt_right" headers="am" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">0</td>
-<td class="gt_row gt_right" headers="gear" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">3</td>
-<td class="gt_row gt_right" headers="carb" style="text-align: right; border-style: none; padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; font-variant-numeric: tabular-nums;" data-valign="middle">2</td>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Country">Venezuela</td>
+<td class="gt_row gt_right" headers="Coup attempted">13</td>
+<td class="gt_row gt_right" headers="Coup succeeded">0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Country">Iraq</td>
+<td class="gt_row gt_right" headers="Coup attempted">12</td>
+<td class="gt_row gt_right" headers="Coup succeeded">4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Country">Syria</td>
+<td class="gt_row gt_right" headers="Coup attempted">12</td>
+<td class="gt_row gt_right" headers="Coup succeeded">8</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Country">Thailand</td>
+<td class="gt_row gt_right" headers="Coup attempted">12</td>
+<td class="gt_row gt_right" headers="Coup succeeded">8</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Country">Ecuador</td>
+<td class="gt_row gt_right" headers="Coup attempted">11</td>
+<td class="gt_row gt_right" headers="Coup succeeded">5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Country">Burundi</td>
+<td class="gt_row gt_right" headers="Coup attempted">11</td>
+<td class="gt_row gt_right" headers="Coup succeeded">5</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Country">Guatemala</td>
+<td class="gt_row gt_right" headers="Coup attempted">10</td>
+<td class="gt_row gt_right" headers="Coup succeeded">5</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Country">Total</td>
+<td class="gt_row gt_right" headers="Coup attempted">491</td>
+<td class="gt_row gt_right" headers="Coup succeeded">245</td>
 </tr>
 </tbody>
+<tfoot class="gt_sourcenotes"><tr class="odd">
+<td colspan="3" class="gt_sourcenote">Source: GIC dataset</td>
+</tr></tfoot>
 </table>
 </div>
 </div>
@@ -596,18 +1047,15 @@ Table&nbsp;1: First 5 rows of mtcars
 <p><a href="https://www.candoso.org">Can.Do.So</a></p>
 </div>
 </div>
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Scatter plot of mpg vs hp colored by am</span>
-</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-gassebner2016a" class="csl-entry" role="listitem">
+<div id="ref-gassebner2016" class="csl-entry" role="listitem">
 Gassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. <span>“When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants.”</span> <em>SSRN Electronic Journal</em>. <a href="https://doi.org/10.2139/ssrn.2851758">https://doi.org/10.2139/ssrn.2851758</a>.
 </div>
 <div id="ref-powell2011" class="csl-entry" role="listitem">
 Powell, Jonathan M, and Clayton L Thyne. 2011. <span>“Global Instances of Coups from 1950 to 2010: A New Dataset.”</span> <em>Journal of Peace Research</em> 48 (2): 249–59. <a href="https://doi.org/10.1177/0022343310397436">https://doi.org/10.1177/0022343310397436</a>.
 </div>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Coups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” <span class="citation" data-cites="powell2011">(<a href="#/introduction" role="doc-biblioref" onclick="">Powell and Thyne 2011, 252</a>)</span>.</p></li></ol></aside></section>
 </div>
   </div>
 
@@ -881,7 +1329,7 @@ Powell, Jonathan M, and Clayton L Thyne. 2011. <span>“Global Instances of Coup
       });
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/reddylee\.quarto\.pub\/candoso");
+          var filterRegex = new RegExp("https:\/\/www\.candoso\.org");
         var isInternal = (href) => {
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
@@ -978,31 +1426,7 @@ Powell, Jonathan M, and Clayton L Thyne. 2011. <span>“Global Instances of Coup
         }
       }
     });
-    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","openEffect":"fade","loop":true,"selector":".lightbox","descPosition":"bottom"});
-    window.onload = () => {
-      lightboxQuarto.on('slide_before_load', (data) => {
-        const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-        const href = trigger.getAttribute('href');
-        if (href !== null) {
-          const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-          if (imgEl !== null) {
-            const srcAttr = imgEl.getAttribute("src");
-            if (srcAttr && srcAttr.startsWith("data:")) {
-              slideConfig.href = srcAttr;
-            }
-          }
-        } 
-      });
-
-      lightboxQuarto.on('slide_after_load', (data) => {
-        const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(slideNode);
-        }
-      });
-
-    };
-              </script>
+    </script>
 
 
 </body></html>

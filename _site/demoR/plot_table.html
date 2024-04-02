@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.552">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Reddy Lee">
 <meta name="dcterms.date" content="2024-03-28">
+
 <title>Can.Do.So - Tables and Plots</title>
 <style>
 code{white-space: pre-wrap;}
@@ -55,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
@@ -74,7 +78,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -100,13 +105,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X0K8K06WME"></script><script type="text/javascript">
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X0K8K06WME"></script>
+
+<script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
-</script><link rel="stylesheet" href="../styles.css">
+</script>
+
+
 <meta property="og:title" content="Can.Do.So - Tables and Plots">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
@@ -119,13 +129,17 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <meta name="twitter:image-height" content="1286">
 <meta name="twitter:image-width" content="1380">
 </head>
-<body class="nav-fixed">
+
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../fig/candoso.png" alt="Can.Do.So" class="navbar-logo"></a>
+    <img src="../fig/candoso.png" alt="Can.Do.So" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Can.Do.So</span>
     </a>
@@ -136,7 +150,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
@@ -149,30 +163,28 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span class="menu-text">My Research</span></a>
   </li>  
 </ul>
-<ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
     <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Jump To</h2>
-   
-  <ul>
-<li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup"><span class="header-section-number">1</span> Setup</a></li>
-  <li><a href="#plot" id="toc-plot" class="nav-link" data-scroll-target="#plot"><span class="header-section-number">2</span> Plot</a></li>
-  <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table"><span class="header-section-number">3</span> Table</a></li>
-  </ul></nav>
-    </div>
+    
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
 <h1 class="title">Tables and Plots</h1>
   <div class="quarto-categories">
     <div class="quarto-category">table</div>
@@ -209,41 +221,49 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   
 
 
-</header><hr>
-<section id="setup" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="setup">
-<span class="header-section-number">1</span> Setup</h2>
+</header>
+
+
+<hr>
+<section id="setup" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="setup"><span class="header-section-number">1</span> Setup</h2>
 <div class="cell">
-<details class="code-fold"><summary><em>Show the code</em></summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="plot" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="plot">
-<span class="header-section-number">2</span> Plot</h2>
+</section>
+<section id="plot" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="plot"><span class="header-section-number">2</span> Plot</h2>
 <div class="cell">
-<details class="code-fold"><summary><em>Show the code</em></summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">as.factor</span>(am)) <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> hp, <span class="at">color =</span> am)) <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">am =</span> <span class="fu">as.factor</span>(am)) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> hp, <span class="at">color =</span> am)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 <div id="fig-cars" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="plot_table_files/figure-html/fig-cars-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="plot_table_files/figure-html/fig-cars-1.png" class="img-fluid figure-img" width="672"></a>
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="plot_table_files/figure-html/fig-cars-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="plot_table_files/figure-html/fig-cars-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Scatter plot of mpg vs hp colored by am
-</figcaption></figure>
+</figcaption>
+</figure>
 </div>
 </div>
 </div>
-</section><section id="table" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="table">
-<span class="header-section-number">3</span> Table</h2>
+</section>
+<section id="table" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="table"><span class="header-section-number">3</span> Table</h2>
 <div class="cell">
-<details class="code-fold"><summary><em>Show the code</em></summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>mtcars <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="tbl-cars" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-cars" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: First 5 rows of mtcars
-</figcaption><div aria-describedby="tbl-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+<div aria-describedby="tbl-cars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell table table-sm table-striped small">
 <colgroup>
@@ -260,7 +280,8 @@ Table&nbsp;1: First 5 rows of mtcars
 <col style="width: 7%">
 <col style="width: 7%">
 </colgroup>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: right;">mpg</th>
 <th style="text-align: right;">cyl</th>
@@ -273,7 +294,8 @@ Table&nbsp;1: First 5 rows of mtcars
 <th style="text-align: right;">am</th>
 <th style="text-align: right;">gear</th>
 <th style="text-align: right;">carb</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Mazda RX4</td>
@@ -357,7 +379,10 @@ Table&nbsp;1: First 5 rows of mtcars
 <div class="hidden" aria-hidden="true">
 <span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Scatter plot of mpg vs hp colored by am</span>
 </div>
-</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -767,7 +792,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
@@ -776,16 +802,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-<li class="nav-item compact">
+    <li class="nav-item compact">
     <a class="nav-link" href="https://www.candoso.org">
       <i class="bi bi-/fig/candoso2.png" role="img">
 </i> 
     </a>
   </li>  
 </ul>
-</div>
+    </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"openEffect":"fade","closeEffect":"fade","selector":".lightbox","loop":true,"descPosition":"bottom"});
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"fade","closeEffect":"fade","selector":".lightbox","loop":true,"descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
@@ -810,6 +837,8 @@ window.onload = () => {
 
 };
           </script>
+
+
 
 
 </body></html>

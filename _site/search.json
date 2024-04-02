@@ -1,185 +1,80 @@
 [
   {
-    "objectID": "demoR/plot_table.html#setup",
-    "href": "demoR/plot_table.html#setup",
-    "title": "Tables and Plots",
-    "section": "\n1 Setup",
-    "text": "1 Setup\n\nShow the codelibrary(tidyverse)"
-  },
-  {
-    "objectID": "demoR/plot_table.html#plot",
-    "href": "demoR/plot_table.html#plot",
-    "title": "Tables and Plots",
-    "section": "\n2 Plot",
-    "text": "2 Plot\n\nShow the codemtcars |&gt; \n  mutate(am = as.factor(am)) |&gt;\n  ggplot(aes(x = mpg, y = hp, color = am)) +\n  geom_point() \n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
-  },
-  {
-    "objectID": "demoR/plot_table.html#table",
-    "href": "demoR/plot_table.html#table",
-    "title": "Tables and Plots",
-    "section": "\n3 Table",
-    "text": "3 Table\n\nShow the codemtcars |&gt; \n  head(5) |&gt;\n  knitr::kable()\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
-  },
-  {
-    "objectID": "demoR/params.html#setup",
-    "href": "demoR/params.html#setup",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "\n1 Setup",
-    "text": "1 Setup\n\nShow the code# Attach packages\nlibrary(tidyverse)\n\n# Load data\npets &lt;- read_rds(\"data/pets.RDS\")"
-  },
-  {
-    "objectID": "demoR/params.html#breeds-of-dogs-in-switzerland",
-    "href": "demoR/params.html#breeds-of-dogs-in-switzerland",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "\n2 Breeds of dogs in Switzerland",
-    "text": "2 Breeds of dogs in Switzerland\n\nShow the codebreeds &lt;- pets |&gt;\n  filter(pet_type == params$pet_type)\n\n# Top 5 per date\nbreeds_top_5 &lt;- breeds |&gt;\n  slice_max(order_by = count, n = 5, by = date)\n\n# Top 5 overall (average across all dates)\nbreeds_avg &lt;- breeds_top_5 |&gt;\n  summarize(\n    \"Average Number\" = format(\n      mean(count),\n      big.mark = \",\",\n      digits = 1,\n      justify = \"right\",\n      scientific = FALSE\n    ),\n    .by = \"breed\"\n  ) |&gt;\n  rename(\"Breed\" = breed) |&gt;\n  head(5)\n\n\nThe breed with the largest average population in Switzerland from 2016 - 2023 was the Kreuzung.\n\nShow the codebreeds_top_5 |&gt;\n  ggplot(\n    aes(x = date, y = count, color = breed)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = \"Evolution by breed\",\n    subtitle = str_wrap(\n      paste(\n        \"Number of registered and living\",\n        params$pet_type,\n        \"by breed. The evolution of the largest populations is presented.\"\n      ),\n      80\n    ),\n    color = NULL,\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
-  },
-  {
-    "objectID": "demoR/params.html#my-favorite-breed-australian-shepherd",
-    "href": "demoR/params.html#my-favorite-breed-australian-shepherd",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "\n3 My favorite breed: Australian Shepherd",
-    "text": "3 My favorite breed: Australian Shepherd\n\nShow the codefave_breed &lt;- breeds |&gt;\n  filter(breed == params$fave_breed)\n\n\n\nShow the codefave_breed |&gt;\n  ggplot(\n    aes(x = date, y = count)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = paste(params$fave_breed, \"population\"),\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
-  },
-  {
-    "objectID": "demoR/params.html#data-source",
-    "href": "demoR/params.html#data-source",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "\n4 Data source",
-    "text": "4 Data source\nIdentitas AG is the leading service provider for animal health, welfare and food safety in Switzerland.\nDogs are obliged to be registered for licensing purposes at a local government level and this data is kept in the Amicus database. Other pets, such as pets, rodents, birds or fish, may be registered and this data is stored in the Anis database."
-  },
-  {
-    "objectID": "demoR/params.html#tutorial-video",
-    "href": "demoR/params.html#tutorial-video",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "\n5 Tutorial video",
-    "text": "5 Tutorial video"
-  },
-  {
-    "objectID": "ps/second_paper.html",
-    "href": "ps/second_paper.html",
-    "title": "Coups and Democracy",
+    "objectID": "demoR/sparklyr.html",
+    "href": "demoR/sparklyr.html",
+    "title": "Using R with Spark Connect",
     "section": "",
-    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "text": "Codelibrary(tidyverse)\nlibrary(sparklyr)\nlibrary(gt)\n#spark_install()\nsc &lt;- spark_connect(master = \"local\")"
   },
   {
-    "objectID": "ps/second_paper.html#section",
-    "href": "ps/second_paper.html#section",
-    "title": "Coups and Democracy",
+    "objectID": "demoR/sparklyr.html#connect-to-spark",
+    "href": "demoR/sparklyr.html#connect-to-spark",
+    "title": "Using R with Spark Connect",
     "section": "",
-    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "text": "Codelibrary(tidyverse)\nlibrary(sparklyr)\nlibrary(gt)\n#spark_install()\nsc &lt;- spark_connect(master = \"local\")"
   },
   {
-    "objectID": "ps/second_paper1.html#section",
-    "href": "ps/second_paper1.html#section",
-    "title": "Coups and Democracy",
-    "section": "Section",
-    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "objectID": "demoR/sparklyr.html#load-data",
+    "href": "demoR/sparklyr.html#load-data",
+    "title": "Using R with Spark Connect",
+    "section": "Load data",
+    "text": "Load data\n\nCodetbl_mtcars &lt;- copy_to(sc, mtcars, \"spark_mtcars\")\nspark_read_csv(sc, name = \"gdp\", path = \"data/gdp.csv\")\n\n\n  \n\n\nCodeflights_tbl &lt;- copy_to(sc, nycflights13::flights, \"spark_flights\")\n# list datasets in spark\nsrc_tbls(sc)\n\n[1] \"gdp\"           \"spark_flights\" \"spark_mtcars\""
   },
   {
-    "objectID": "ps/second_paper1.html#references",
-    "href": "ps/second_paper1.html#references",
-    "title": "Coups and Democracy",
-    "section": "References",
-    "text": "References\n\n\n\n\n\n\n\n\nDe Bruin, Erica. 2020. “Preventing Coups d’état.” In, 1–12. Cornell University Press. https://doi.org/10.7591/cornell/9781501751912.003.0001.\n\n\nKnuth, D. E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "objectID": "demoR/sparklyr.html#query-data",
+    "href": "demoR/sparklyr.html#query-data",
+    "title": "Using R with Spark Connect",
+    "section": "Query data",
+    "text": "Query data\nOder of query execution\n Please visit SQL Query Order for more information.\n\nCodeselect * from spark_mtcars\nwhere hp &gt; 100\nsort by -hp\n\n\nDisplaying records 1 - 10\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n15.0\n8\n301.0\n335\n3.54\n3.570\n14.60\n0\n1\n5\n8\n\n\n15.8\n8\n351.0\n264\n4.22\n3.170\n14.50\n0\n1\n5\n4\n\n\n14.3\n8\n360.0\n245\n3.21\n3.570\n15.84\n0\n0\n3\n4\n\n\n13.3\n8\n350.0\n245\n3.73\n3.840\n15.41\n0\n0\n3\n4\n\n\n14.7\n8\n440.0\n230\n3.23\n5.345\n17.42\n0\n0\n3\n4\n\n\n10.4\n8\n460.0\n215\n3.00\n5.424\n17.82\n0\n0\n3\n4\n\n\n10.4\n8\n472.0\n205\n2.93\n5.250\n17.98\n0\n0\n3\n4\n\n\n16.4\n8\n275.8\n180\n3.07\n4.070\n17.40\n0\n0\n3\n3\n\n\n17.3\n8\n275.8\n180\n3.07\n3.730\n17.60\n0\n0\n3\n3\n\n\n15.2\n8\n275.8\n180\n3.07\n3.780\n18.00\n0\n0\n3\n3\n\n\n\n\n\n\nCodeselect * from gdp\nOrder by -year\n\n\nDisplaying records 1 - 10\n\n_c0\ncountry_name\nscode\nCOWcode\nyear\ngdppc\nedu_year\n\n\n\n77\nMexico\nMEX\n70\n2022\nNA\n8.48\n\n\n154\nSuriname\nSUR\n115\n2022\nNA\nNA\n\n\n231\nSweden\nSWE\n380\n2022\nNA\n11.85\n\n\n308\nSwitzerland\nCHE\n225\n2022\nNA\n12.71\n\n\n385\nGhana\nGHA\n452\n2022\nNA\n5.61\n\n\n462\nSouth Africa\nZAF\n560\n2022\nNA\n7.88\n\n\n539\nJapan\nJPN\n740\n2022\nNA\n13.15\n\n\n616\nBurma/Myanmar\nMMR\n775\n2022\nNA\nNA\n\n\n693\nRussia\nRUS\n365\n2022\nNA\n9.61\n\n\n770\nAlbania\nALB\n339\n2022\nNA\nNA\n\n\n\n\n\n\nCodeselect * from spark_flights\nwhere month == 1\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nyear\nmonth\nday\ndep_time\nsched_dep_time\ndep_delay\narr_time\nsched_arr_time\narr_delay\ncarrier\nflight\ntailnum\norigin\ndest\nair_time\ndistance\nhour\nminute\ntime_hour\n\n\n\n2013\n1\n1\n517\n515\n2\n830\n819\n11\nUA\n1545\nN14228\nEWR\nIAH\n227\n1400\n5\n15\n2013-01-01 10:00:00\n\n\n2013\n1\n1\n533\n529\n4\n850\n830\n20\nUA\n1714\nN24211\nLGA\nIAH\n227\n1416\n5\n29\n2013-01-01 10:00:00\n\n\n2013\n1\n1\n542\n540\n2\n923\n850\n33\nAA\n1141\nN619AA\nJFK\nMIA\n160\n1089\n5\n40\n2013-01-01 10:00:00\n\n\n2013\n1\n1\n544\n545\n-1\n1004\n1022\n-18\nB6\n725\nN804JB\nJFK\nBQN\n183\n1576\n5\n45\n2013-01-01 10:00:00\n\n\n2013\n1\n1\n554\n600\n-6\n812\n837\n-25\nDL\n461\nN668DN\nLGA\nATL\n116\n762\n6\n0\n2013-01-01 11:00:00\n\n\n2013\n1\n1\n554\n558\n-4\n740\n728\n12\nUA\n1696\nN39463\nEWR\nORD\n150\n719\n5\n58\n2013-01-01 10:00:00\n\n\n2013\n1\n1\n555\n600\n-5\n913\n854\n19\nB6\n507\nN516JB\nEWR\nFLL\n158\n1065\n6\n0\n2013-01-01 11:00:00\n\n\n2013\n1\n1\n557\n600\n-3\n709\n723\n-14\nEV\n5708\nN829AS\nLGA\nIAD\n53\n229\n6\n0\n2013-01-01 11:00:00\n\n\n2013\n1\n1\n557\n600\n-3\n838\n846\n-8\nB6\n79\nN593JB\nJFK\nMCO\n140\n944\n6\n0\n2013-01-01 11:00:00\n\n\n2013\n1\n1\n558\n600\n-2\n753\n745\n8\nAA\n301\nN3ALAA\nLGA\nORD\n138\n733\n6\n0\n2013-01-01 11:00:00\n\n\n\n\n\n\nCodeSELECT *\nFROM (\n   SELECT\n     tailnum,\n    COUNT(*) AS count,\n    AVG(distance) AS dist,\n    AVG(arr_delay) AS delay\n  FROM spark_flights\n  GROUP BY tailnum\n) q01\nWHERE (count &gt; 20.0) AND (dist &lt; 2000.0) AND (NOT((delay IS NULL)))\n\n\nDisplaying records 1 - 10\n\ntailnum\ncount\ndist\ndelay\n\n\n\nN24211\n130\n1330.2615\n7.700000\n\n\nN793JB\n283\n1528.5972\n4.722420\n\n\nN657JB\n285\n1285.8596\n5.031802\n\n\nN633AA\n24\n1587.0417\n-0.625000\n\n\nN9EAMQ\n248\n674.6653\n9.235294\n\n\nN3GKAA\n77\n1246.5974\n4.973333\n\n\nN997DL\n63\n867.7619\n4.903226\n\n\nN318NB\n202\n814.3465\n-1.120000\n\n\nN651JB\n261\n1407.5287\n7.580769\n\n\nN841UA\n96\n1208.4271\n2.104167"
   },
   {
-    "objectID": "ps/home.html",
-    "href": "ps/home.html",
+    "objectID": "demoR/sparklyr.html#save-outcome-of-query-into-r-environment",
+    "href": "demoR/sparklyr.html#save-outcome-of-query-into-r-environment",
+    "title": "Using R with Spark Connect",
+    "section": "Save outcome of query into R environment",
+    "text": "Save outcome of query into R environment\n\nCodeSELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay\nFROM spark_flights\nWHERE month = 1\nGROUP BY tailnum\nHAVING COUNT(*) &gt; 20\nORDER BY delay DESC\nLIMIT 10\n\n\nThe outcome of the query is saved in the R environment as top10_delayed_planes and you can call it in R chunk as shown below.\n\nCodetop10_delayed_planes |&gt; \n  gt() |&gt; \n  as_raw_html() \n\n\n\n  \n  \n\n\ntailnum\ndist\ndelay\n\n\n\nN21144\n601.4286\n59.10000\n\n\nN14920\n423.9048\n52.28571\n\n\nN517MQ\n590.0968\n51.40000\n\n\nN21537\n529.1111\n50.40741\n\n\nN10575\n485.4000\n48.10714\n\n\nN13994\n476.0294\n47.90625\n\n\nN16546\n519.8800\n46.36000\n\n\nN13553\n482.7429\n43.33333\n\n\nN13958\n442.8400\n43.00000\n\n\nN11565\n442.1538\n40.08333"
+  },
+  {
+    "objectID": "demoR/quarto.html",
+    "href": "demoR/quarto.html",
+    "title": "Quarto basics",
+    "section": "",
+    "text": "This document demonstrates the basic features of Quarto. You can find the source code of this document from upper right corner of this page by clicking “Code &gt; View Source”."
+  },
+  {
+    "objectID": "demoR/quarto.html#setup",
+    "href": "demoR/quarto.html#setup",
+    "title": "Quarto basics",
+    "section": "1 Setup",
+    "text": "1 Setup\nIf we label a code chunk as setup, it will be executed automatically when you first run a code chunk. We can also set message: false to suppress the output of the code chunk. For example, the following code chunk loads the tidyverse package and suppresses the output message.\n\n# Attach packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "demoR/quarto.html#text-styles",
+    "href": "demoR/quarto.html#text-styles",
+    "title": "Quarto basics",
+    "section": "2 Text styles",
+    "text": "2 Text styles\n\n2.1 Headings\nWe can use # to create headings. The number of # indicates the level of the heading. For example, # Heading 1, ## Heading 2, ### Heading 3, and all the way up to ###### Heading 6.\nIf we set number-sections: true in the YAML front matter, Quarto will automatically number the headings.\n\n\n2.2 Emphasis\nWe can use * or _ to emphasize text. For example, italic, bold, and bold italic.\n\n\n2.3 Lists\nWe can create ordered and unordered lists. For example:\n\nFirst item\nSecond item\n\nSubitem 1\nSubitem 2\n\n\n\n\n2.4 Blockquotes\nWe can use &gt; to create blockquotes. For example:\n\nThis is a blockquote.\n\n\n\n2.5 Links\nWe can create links using the following syntax:\n\nQuarto\n\n\n\n2.6 Images\nWe can include images using the following syntax:\n\nFrom the web: \nFrom the local file:\n\n\n\n\n2.7 Colors\nWe can use HTML color names or hexadecimal color codes to set text and background colors. For example:\nBlue text\nPurple text\n\n\n2.8 Equations\nWe can include equations using LaTeX syntax. For example:\n\nInline equation: \\(E=mc^2\\)\nBlock equation: \\[\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}\\]\n\\[\\pi \\in \\mathbb {R}\\]\nBasic Functions: \\[\\sin x, \\ \\log_2{x}, \\hspace{0.5cm} \\sqrt[3]{x^2 +1}\\]\nFractions:\n\\[\\$5 \\over{x + y}\\]\n\\[ \\left[\\frac{1}{2} \\hspace{0.5cm} \\frac{x^2}{x^3}\\right\\}\\]\n\\[\\left(\\frac{\\partial f}{\\partial x}\\right)\\]\nChanging faces:\n\\[\\mathbb{R}, \\ \\mathbb{N}, \\ \\mathbb{Z}, \\ \\mathbb{Q}\\]\n\\[\\mathcal{L}, \\ \\mathcal{F}, \\ \\mathcal{G}\\]\nText in equations: \\[ \\frac{\\text{ordinary stuff}}{\\text{extraordinary stuff}}\\]\nAligned equation:\n\\[\n\\begin{aligned}\n(x + y)^2 &= x^2 + 2xy + y^2\n\\\\\n\\\\\n&\\ne x^2 + y^2\n\\end{aligned}\n\\]\nNumbered equation: \\[\n\\frac{\\partial \\mathrm C}{ \\partial \\mathrm t } + \\frac{1}{2}\\sigma^{2} \\mathrm S^{2}\n\\frac{\\partial^{2} \\mathrm C}{\\partial \\mathrm C^2}\n+ \\mathrm r \\mathrm S \\frac{\\partial \\mathrm C}{\\partial \\mathrm S}\\ =\n\\mathrm r \\mathrm C\n\\tag{1}\\]\n\nBlack-Scholes (Equation 1) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options.\n\nMatrices:\n\\[\n\\begin{bmatrix}\n  1 & 2 & 3 \\\\\n  4 & 5 & 6 \\\\\n  7 & 8 & 9\n\\end{bmatrix}\n\\]"
+  },
+  {
+    "objectID": "demoR/quarto.html#layout",
+    "href": "demoR/quarto.html#layout",
+    "title": "Quarto basics",
+    "section": "3 Layout",
+    "text": "3 Layout\n\n3.1 Columns\nWe can create columns using the columns directive. For example:\n\n\n\n\n\nQuarto logo\n\n\n\n\n\n\n\n\n3.2 Callouts\nWe can create callouts using the callout directive. For example:\n\n\n\n\n\n\nNote\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.\n\n\n\n\n\n\n\n\nExpand To Learn About Collapse\n\n\n\n\n\nThis is an example of a ‘folded’ caution callout that can be expanded by the user. You can use collapse=\"true\" to collapse it by default or collapse=\"false\" to make a collapsible callout that is expanded by default.\n\n\n\n\n\n3.3 Tabsets\nWe can create tabsets using the tabset directive. For example:\n\nRPython\n\n\n\ncat(\"Hello, Quarto!\")\n\nHello, Quarto!\n\n\n\n\n\nprint(\"Hello, python!\")\n\nHello, python!"
+  },
+  {
+    "objectID": "demoR/quarto.html#embed-code-from-external-files",
+    "href": "demoR/quarto.html#embed-code-from-external-files",
+    "title": "Quarto basics",
+    "section": "4 Embed code from external files",
+    "text": "4 Embed code from external files\n\n4.1 Embed plot\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of body mass and flipper length by species\n\n\n\n\n\nSource: _penguins.qmd\n\n\n4.2 Embed table\n\n\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\nSource: _penguins.qmd\n\n\n4.3 Embed video\nGet started with Quarto | Mine Çetinkaya-Rundel\n\nQuarto for Academics | Mine Çetinkaya-Rundel\n\n\n\n\n\n\nQuarto logo\nFigure 1: Scatter plot of body mass and flipper length by species"
+  },
+  {
+    "objectID": "demoR/demoR.html",
+    "href": "demoR/demoR.html",
     "title": "R tutorial",
     "section": "",
-    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nHow Regime Types Affect the Likelihood of Coups\n\n\n\n\n\nA substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks. \n\n\n\n\n\nMar 31, 2024\n\n\nZhu Qi\n\n\n\n\n\n\n\n\n\n\n\n\nCoups and Democracy\n\n\n\n\n\nAmong patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 30, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nManuscript\n\n\n\n\n\nBACKGROUND Preliminary research suggests that rectally administered nonsteroidal antiinflammatory drugs may reduce the incidence of pancreatitis after endoscopic retrograde cholangiopancreatography (ERCP).\nMETHODS In this multicenter, randomized, placebo-controlled, double-blind clinical trial, we assigned patients at elevated risk for post-ERCP pancreatitis to receive a single dose of rectal indomethacin or placebo immediately after ERCP. Patients were determined to be at high risk on the basis of validated patient- and procedure-related risk factors. The primary outcome was post-ERCP pancreatitis, which was defined as new upper abdominal pain, an elevation in pancreatic enzymes to at least three times the upper limit of the normal range 24 hours after the procedure, and hospitalization for at least 2 nights.\nRESULTS A total of 602 patients were enrolled and completed follow-up. The majority of patients (82%) had a clinical suspicion of sphincter of Oddi dysfunction. Post-ERCP pancreatitis developed in 27 of 295 patients (9.2%) in the indomethacin group and in 52 of 307 patients (16.9%) in the placebo group (P=0.005). Moderate-to-severe pancreatitis developed in 13 patients (4.4%) in the indomethacin group and in 27 patients (8.8%) in the placebo group (P=0.03).\nCONCLUSIONS Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 29, 2024\n\n\n\n\n\n\nNo matching items\n\n Back to top"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Welcome to Reddy’s Space!",
-    "section": "",
-    "text": "I am a PhD student in Political Science at the Department of Government, University of Essex.\nMy research interests lie in the fields of authoritarian regimes, democratization, international conflict, coup d’état, and political economy."
-  },
-  {
-    "objectID": "about.html#our-beautiful-colchester-campus",
-    "href": "about.html#our-beautiful-colchester-campus",
-    "title": "Welcome to Reddy’s Space!",
-    "section": "Our beautiful Colchester campus",
-    "text": "Our beautiful Colchester campus"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome to Can.Do.So!",
-    "section": "",
-    "text": "This is a Quarto website that demonstrates R programming and Social scientific methods.\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "ps/coups1.html#introduction",
-    "href": "ps/coups1.html#introduction",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "\n1 Introduction",
-    "text": "1 Introduction\nCoups1 are more frequently in some countries but rarely in others. According to Global Instances of Coups (Powell and Thyne 2011, hereinafter GIC), in Latin America, coups occurred 23 times in Bolivia from 1950 to 1984, and 20 times in Argentina in almost the same period. In Mexico’s authoritarian period from 1917 to 2000, however, no coup occurred at all. In Africa, Sudan encountered 17 coups from 1955 to 2021, while no coup occurred in South Africa since 1950. Similar stories happened in the Middle East and south Asia. Previous studies have tried to explain these disparities from different perspectives. “About one hundred potential determinants of coups have been proposed, but no consensus has emerged on an established baseline model for analyzing coups” (Gassebner, Gutmann, and Voigt 2016). The question remains unanswered.\nTo analyse determinants of coups, the most important characteristic of coups should not be overlooked. Coups are illegal attempts against the current leaders and the cost of failed coups could be too expensive to bear. Perpetrators of coups might be put to jail, forced to exile, or even sentenced to death if they fail. Sometimes even worse, the punishment might fall on the perpetrators’ family. Although staging coups is so risky, there were still many coups occurred-484 coups have been launched since 1950 (GIC). In 2021, 7 coups occurred in 6 countries, the most frequent year since 20002.\nTo understand the logic of perpetrators of coups, we need to analyse the pay-offs of coups. When a coup is launched, the perpetrators expect to earn something from the coup, not to lose, which depends on how likely they will succeed. Therefore, when coup plotters plan to stage a coup, the first and foremost thing they will consider is their likelihood of success. They might have many incentives to launch a coup, but they are less likely to put the plot into practice without some certainty of success. When the chances of success are low, coup plotters either abort their schemes or wait for better timing. It is hard to know the threshold of chances of success, but previous coups show that the success rates of staged coups are quite satisfactory (Table ). The most recent coups staged in 2021, with 5 successful coups out of 7 staged coups, show an even higher success rate.\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252).Myanmar (February, succeeded), Niger (March, failed), Chad (April, succeeded), Mali (May, succeeded), Guinea (September, succeeded), and Sudan (September, failed; October, succeeded)."
-  },
-  {
-    "objectID": "ps/coups1.html#plot",
-    "href": "ps/coups1.html#plot",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "\n2 Plot",
-    "text": "2 Plot\n\nCodemtcars |&gt; \n  mutate(am = as.factor(am)) |&gt;\n  ggplot(aes(x = mpg, y = hp, color = am)) +\n  geom_point() \n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
-  },
-  {
-    "objectID": "ps/coups1.html#table",
-    "href": "ps/coups1.html#table",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "\n3 Table",
-    "text": "3 Table\n\nCodemtcars |&gt; \n  head(5) |&gt;\n  gt() |&gt; \n  as_raw_html()\n\n\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n  \n  \n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCan.Do.So\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am\n\n\n\nGassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. “When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants.” SSRN Electronic Journal. https://doi.org/10.2139/ssrn.2851758.\n\n\nPowell, Jonathan M, and Clayton L Thyne. 2011. “Global Instances of Coups from 1950 to 2010: A New Dataset.” Journal of Peace Research 48 (2): 249–59. https://doi.org/10.1177/0022343310397436."
-  },
-  {
-    "objectID": "ps/coups_and_regimes.html",
-    "href": "ps/coups_and_regimes.html",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "",
-    "text": "Coups1 are more frequently in some countries but rarely in others. According to Global Instances of Coups (Powell and Thyne 2011, hereinafter GIC), in Latin America, coups occurred 23 times in Bolivia from 1950 to 1984, and 20 times in Argentina in almost the same period. In Mexico’s authoritarian period from 1917 to 2000, however, no coup occurred at all. In Africa, Sudan encountered 17 coups from 1955 to 2021, while no coup occurred in South Africa since 1950. Similar stories happened in the Middle East and south Asia. Previous studies have tried to explain these disparities from different perspectives. “About one hundred potential determinants of coups have been proposed, but no consensus has emerged on an established baseline model for analyzing coups” (Gassebner, Gutmann, and Voigt 2016). The question remains unanswered.\nTo analyse determinants of coups, the most important characteristic of coups should not be overlooked. Coups are illegal attempts against the current leaders and the cost of failed coups could be too expensive to bear. Perpetrators of coups might be put to jail, forced to exile, or even sentenced to death if they fail. Sometimes even worse, the punishment might fall on the perpetrators’ family. Although staging coups is so risky, there were still many coups occurred-484 coups have been launched since 1950 (GIC). In 2021, 7 coups occurred in 6 countries, the most frequent year since 20002.\nTo understand the logic of perpetrators of coups, we need to analyse the pay-offs of coups. When a coup is launched, the perpetrators expect to earn something from the coup, not to lose, which depends on how likely they will succeed. Therefore, when coup plotters plan to stage a coup, the first and foremost thing they will consider is their likelihood of success. They might have many incentives to launch a coup, but they are less likely to put the plot into practice without some certainty of success. When the chances of success are low, coup plotters either abort their schemes or wait for better timing. It is hard to know the threshold of chances of success, but previous coups show that the success rates of staged coups are quite satisfactory (Table ). The most recent coups staged in 2021, with 5 successful coups out of 7 staged coups, show an even higher success rate."
-  },
-  {
-    "objectID": "ps/coups_and_regimes.html#introduction",
-    "href": "ps/coups_and_regimes.html#introduction",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "",
-    "text": "Coups1 are more frequently in some countries but rarely in others. According to Global Instances of Coups (Powell and Thyne 2011, hereinafter GIC), in Latin America, coups occurred 23 times in Bolivia from 1950 to 1984, and 20 times in Argentina in almost the same period. In Mexico’s authoritarian period from 1917 to 2000, however, no coup occurred at all. In Africa, Sudan encountered 17 coups from 1955 to 2021, while no coup occurred in South Africa since 1950. Similar stories happened in the Middle East and south Asia. Previous studies have tried to explain these disparities from different perspectives. “About one hundred potential determinants of coups have been proposed, but no consensus has emerged on an established baseline model for analyzing coups” (Gassebner, Gutmann, and Voigt 2016). The question remains unanswered.\nTo analyse determinants of coups, the most important characteristic of coups should not be overlooked. Coups are illegal attempts against the current leaders and the cost of failed coups could be too expensive to bear. Perpetrators of coups might be put to jail, forced to exile, or even sentenced to death if they fail. Sometimes even worse, the punishment might fall on the perpetrators’ family. Although staging coups is so risky, there were still many coups occurred-484 coups have been launched since 1950 (GIC). In 2021, 7 coups occurred in 6 countries, the most frequent year since 20002.\nTo understand the logic of perpetrators of coups, we need to analyse the pay-offs of coups. When a coup is launched, the perpetrators expect to earn something from the coup, not to lose, which depends on how likely they will succeed. Therefore, when coup plotters plan to stage a coup, the first and foremost thing they will consider is their likelihood of success. They might have many incentives to launch a coup, but they are less likely to put the plot into practice without some certainty of success. When the chances of success are low, coup plotters either abort their schemes or wait for better timing. It is hard to know the threshold of chances of success, but previous coups show that the success rates of staged coups are quite satisfactory (Table ). The most recent coups staged in 2021, with 5 successful coups out of 7 staged coups, show an even higher success rate."
-  },
-  {
-    "objectID": "ps/coups_and_regimes.html#plot",
-    "href": "ps/coups_and_regimes.html#plot",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "Plot",
-    "text": "Plot\n\nShow the codemtcars |&gt; \n  mutate(am = as.factor(am)) |&gt;\n  ggplot(aes(x = mpg, y = hp, color = am)) +\n  geom_point() \n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
-  },
-  {
-    "objectID": "ps/coups_and_regimes.html#table",
-    "href": "ps/coups_and_regimes.html#table",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "Table",
-    "text": "Table\n\nShow the codemtcars |&gt; \n  head(5) |&gt;\n  gt() |&gt; \n  as_raw_html()\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n  \n  \n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
-  },
-  {
-    "objectID": "ps/coups_and_regimes.html#footnotes",
-    "href": "ps/coups_and_regimes.html#footnotes",
-    "title": "How Regime Types Affect the Likelihood of Coups",
-    "section": "Footnotes",
-    "text": "Footnotes\n\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252).↩︎\nMyanmar (February, succeeded), Niger (March, failed), Chad (April, succeeded), Mali (May, succeeded), Guinea (September, succeeded), and Sudan (September, failed; October, succeeded).↩︎"
-  },
-  {
-    "objectID": "ps/test1.html#section",
-    "href": "ps/test1.html#section",
-    "title": "Manuscript",
-    "section": "Section",
-    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
-  },
-  {
-    "objectID": "ps/test1.html#references",
-    "href": "ps/test1.html#references",
-    "title": "Manuscript",
-    "section": "References",
-    "text": "References\n\n\n\n\n\n\n\n\nDe Bruin, Erica. 2020. “Preventing Coups d’état.” In, 1–12. Cornell University Press. https://doi.org/10.7591/cornell/9781501751912.003.0001.\n\n\nKnuth, D. E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nUsing R with Spark Connect\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto basics\n\n\n\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nTables and Plots\n\n\n\n\n\n\ntable\n\n\nplot\n\n\n\n\n\n\n\n\n\nMar 28, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nParameterized Reporting with Quarto\n\n\nRegistered r params$pet_type in Switzerland\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 27, 2024\n\n\nJadey Ryan\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "ps/test.html",
@@ -196,45 +91,157 @@
     "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
   },
   {
-    "objectID": "demoR/demoR.html",
-    "href": "demoR/demoR.html",
+    "objectID": "ps/test1.html#section",
+    "href": "ps/test1.html#section",
+    "title": "Manuscript",
+    "section": "Section",
+    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+  },
+  {
+    "objectID": "ps/test1.html#references",
+    "href": "ps/test1.html#references",
+    "title": "Manuscript",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\n\n\nDe Bruin, Erica. 2020. “Preventing Coups d’état.” In, 1–12. Cornell University Press. https://doi.org/10.7591/cornell/9781501751912.003.0001.\n\n\nKnuth, D. E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "ps/coups_and_regimes.html",
+    "href": "ps/coups_and_regimes.html",
+    "title": "How Regime Types Affect the Likelihood of Coups",
+    "section": "",
+    "text": "Code#load coup data\ncoup &lt;- read.csv(\"https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt\",\n                 sep = \"\\t\")\ncoups &lt;- coup |&gt;\n  rename(Country = country) |&gt;\n  summarise(\n    `Coup attempted` = n(),\n    `Coup succeeded` = sum(coup == 2),\n    .by = Country\n  )\n\nattempts &lt;- length(coup$country)\nsucceeded &lt;- length(coup$country[coup$coup == 2])\ncoup |&gt; \n  summarise(count = n(),\n            .by = year) |&gt; \n  arrange(desc(year)) \n\n\n  \n\n\nCodecoup |&gt; \n  summarise(count = n(),\n            .by = year) |&gt; \n  arrange(desc(count))"
+  },
+  {
+    "objectID": "ps/coups_and_regimes.html#introduction",
+    "href": "ps/coups_and_regimes.html#introduction",
+    "title": "How Regime Types Affect the Likelihood of Coups",
+    "section": "Introduction",
+    "text": "Introduction\nCoups1 occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC) dataset (Powell and Thyne 2011), Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by Gassebner, Gutmann, and Voigt (2016), around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.\nIn analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high. Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful. In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.\nTo comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in the table Table 1, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.\n\nCodecoups |&gt;\n  # add one row which adds up the total\n  arrange(desc(`Coup attempted`)) |&gt;\n  head(11) |&gt;\n  add_row(\n    Country = \"Total\",\n    `Coup attempted` = sum(coups[, 2]),\n    `Coup succeeded` = sum(coups[, 3])\n  ) |&gt;\n  gt() |&gt;\n  tab_options(table.width = pct(90)) |&gt;\n  tab_source_note(source_note = 'Source: GIC dataset') \n\n\nTable 1: Top 10 countries with the most coup attempts\n\n\n\n\n\n\n\nCountry\nCoup attempted\nCoup succeeded\n\n\n\nBolivia\n23\n11\n\n\nArgentina\n20\n7\n\n\nSudan\n17\n6\n\n\nHaiti\n13\n9\n\n\nVenezuela\n13\n0\n\n\nIraq\n12\n4\n\n\nSyria\n12\n8\n\n\nThailand\n12\n8\n\n\nEcuador\n11\n5\n\n\nBurundi\n11\n5\n\n\nGuatemala\n10\n5\n\n\nTotal\n491\n245\n\n\n\nSource: GIC dataset"
+  },
+  {
+    "objectID": "ps/coups_and_regimes.html#footnotes",
+    "href": "ps/coups_and_regimes.html#footnotes",
+    "title": "How Regime Types Affect the Likelihood of Coups",
+    "section": "Footnotes",
+    "text": "Footnotes\n\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252).↩︎"
+  },
+  {
+    "objectID": "ps/coups1.html#introduction",
+    "href": "ps/coups1.html#introduction",
+    "title": "How Regime Types Affect the Likelihood of Coups",
+    "section": "\n1 Introduction",
+    "text": "1 Introduction\nCoups1 occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC) dataset (Powell and Thyne 2011), Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by Gassebner, Gutmann, and Voigt (2016), around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.\nIn analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high. Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful. In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.\nTo comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in the table Table 1, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.\n\nCodecoups |&gt;\n  # add one row which adds up the total\n  arrange(desc(`Coup attempted`)) |&gt;\n  head(11) |&gt;\n  add_row(\n    Country = \"Total\",\n    `Coup attempted` = sum(coups[, 2]),\n    `Coup succeeded` = sum(coups[, 3])\n  ) |&gt;\n  gt() |&gt;\n  tab_options(table.width = pct(90)) |&gt;\n  tab_source_note(source_note = 'Source: GIC dataset') \n\n\n\n\n\nTable 1: Top 10 countries with the most coup attempts\n\n\n\n\n\n\n\nCountry\nCoup attempted\nCoup succeeded\n\n\n\nBolivia\n23\n11\n\n\nArgentina\n20\n7\n\n\nSudan\n17\n6\n\n\nHaiti\n13\n9\n\n\nVenezuela\n13\n0\n\n\nIraq\n12\n4\n\n\nSyria\n12\n8\n\n\nThailand\n12\n8\n\n\nEcuador\n11\n5\n\n\nBurundi\n11\n5\n\n\nGuatemala\n10\n5\n\n\nTotal\n491\n245\n\n\n\nSource: GIC dataset\n\n\n\n\n\n\n\n\n\n\n\n\n\nCan.Do.So\n\n\n\n\nGassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. “When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants.” SSRN Electronic Journal. https://doi.org/10.2139/ssrn.2851758.\n\n\nPowell, Jonathan M, and Clayton L Thyne. 2011. “Global Instances of Coups from 1950 to 2010: A New Dataset.” Journal of Peace Research 48 (2): 249–59. https://doi.org/10.1177/0022343310397436.\n\n\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252)."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to Can.Do.So!",
+    "section": "",
+    "text": "This is a Quarto website that demonstrates R programming and Social scientific methods.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Welcome to Reddy’s Space!",
+    "section": "",
+    "text": "I am a PhD student in Political Science at the Department of Government, University of Essex.\nMy research interests lie in the fields of authoritarian regimes, democratization, international conflict, coup d’état, and political economy."
+  },
+  {
+    "objectID": "about.html#our-beautiful-colchester-campus",
+    "href": "about.html#our-beautiful-colchester-campus",
+    "title": "Welcome to Reddy’s Space!",
+    "section": "Our beautiful Colchester campus",
+    "text": "Our beautiful Colchester campus"
+  },
+  {
+    "objectID": "ps/home.html",
+    "href": "ps/home.html",
     "title": "R tutorial",
     "section": "",
-    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nQuarto basics\n\n\n\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nTables and Plots\n\n\n\n\n\n\ntable\n\n\nplot\n\n\n\n\n\n\n\n\n\nMar 28, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nParameterized Reporting with Quarto\n\n\nRegistered r params$pet_type in Switzerland\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 27, 2024\n\n\nJadey Ryan\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nHow Regime Types Affect the Likelihood of Coups\n\n\n\n\n\nA substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high probability of success. Thus, the outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks. \n\n\n\n\n\nInvalid Date\n\n\nZhu Qi\n\n\n\n\n\n\n\n\n\n\n\n\nCoups and Democracy\n\n\n\n\n\nAmong patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 30, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nManuscript\n\n\n\n\n\nBACKGROUND Preliminary research suggests that rectally administered nonsteroidal antiinflammatory drugs may reduce the incidence of pancreatitis after endoscopic retrograde cholangiopancreatography (ERCP).\nMETHODS In this multicenter, randomized, placebo-controlled, double-blind clinical trial, we assigned patients at elevated risk for post-ERCP pancreatitis to receive a single dose of rectal indomethacin or placebo immediately after ERCP. Patients were determined to be at high risk on the basis of validated patient- and procedure-related risk factors. The primary outcome was post-ERCP pancreatitis, which was defined as new upper abdominal pain, an elevation in pancreatic enzymes to at least three times the upper limit of the normal range 24 hours after the procedure, and hospitalization for at least 2 nights.\nRESULTS A total of 602 patients were enrolled and completed follow-up. The majority of patients (82%) had a clinical suspicion of sphincter of Oddi dysfunction. Post-ERCP pancreatitis developed in 27 of 295 patients (9.2%) in the indomethacin group and in 52 of 307 patients (16.9%) in the placebo group (P=0.005). Moderate-to-severe pancreatitis developed in 13 patients (4.4%) in the indomethacin group and in 27 patients (8.8%) in the placebo group (P=0.03).\nCONCLUSIONS Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 29, 2024\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
-    "objectID": "demoR/quarto.html",
-    "href": "demoR/quarto.html",
-    "title": "Quarto basics",
+    "objectID": "ps/second_paper1.html#section",
+    "href": "ps/second_paper1.html#section",
+    "title": "Coups and Democracy",
+    "section": "Section",
+    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+  },
+  {
+    "objectID": "ps/second_paper1.html#references",
+    "href": "ps/second_paper1.html#references",
+    "title": "Coups and Democracy",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\n\n\nDe Bruin, Erica. 2020. “Preventing Coups d’état.” In, 1–12. Cornell University Press. https://doi.org/10.7591/cornell/9781501751912.003.0001.\n\n\nKnuth, D. E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "ps/second_paper.html",
+    "href": "ps/second_paper.html",
+    "title": "Coups and Democracy",
     "section": "",
-    "text": "This document demonstrates the basic features of Quarto. You can find the source code of this document from upper right corner of this page by clicking “Code &gt; View Source”."
+    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
   },
   {
-    "objectID": "demoR/quarto.html#setup",
-    "href": "demoR/quarto.html#setup",
-    "title": "Quarto basics",
-    "section": "\n1 Setup",
-    "text": "1 Setup\nIf we label a code chunk as setup, it will be executed automatically when you first run a code chunk. We can also set message: false to suppress the output of the code chunk. For example, the following code chunk loads the tidyverse package and suppresses the output message.\n\nShow the code# Attach packages\nlibrary(tidyverse)"
+    "objectID": "ps/second_paper.html#section",
+    "href": "ps/second_paper.html#section",
+    "title": "Coups and Democracy",
+    "section": "",
+    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
   },
   {
-    "objectID": "demoR/quarto.html#text-styles",
-    "href": "demoR/quarto.html#text-styles",
-    "title": "Quarto basics",
-    "section": "\n2 Text styles",
-    "text": "2 Text styles\n\n2.1 Headings\nWe can use # to create headings. The number of # indicates the level of the heading. For example, # Heading 1, ## Heading 2, ### Heading 3, and all the way up to ###### Heading 6.\nIf we set number-sections: true in the YAML front matter, Quarto will automatically number the headings.\n\n2.2 Emphasis\nWe can use * or _ to emphasize text. For example, italic, bold, and bold italic.\n\n2.3 Lists\nWe can create ordered and unordered lists. For example:\n\nFirst item\n\nSecond item\n\nSubitem 1\nSubitem 2\n\n\n\n2.4 Blockquotes\nWe can use &gt; to create blockquotes. For example:\n\nThis is a blockquote.\n\n\n2.5 Links\nWe can create links using the following syntax:\n\nQuarto\n\n2.6 Images\nWe can include images using the following syntax:\n\nFrom the web: \nFrom the local file:\n\n\n\n2.7 Colors\nWe can use HTML color names or hexadecimal color codes to set text and background colors. For example:\nBlue text\nPurple text\n\n2.8 Equations\nWe can include equations using LaTeX syntax. For example:\n\nInline equation: \\(E=mc^2\\)\n\nBlock equation: \\[\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}\\]\n\\[\\pi \\in \\mathbb {R}\\]\n\nBasic Functions: \\[\\sin x, \\ \\log_2{x}, \\hspace{0.5cm} \\sqrt[3]{x^2 +1}\\]\n\nFractions:\\[\\$5 \\over{x + y}\\]\n\\[ \\left[\\frac{1}{2} \\hspace{0.5cm} \\frac{x^2}{x^3}\\right\\}\\]\n\\[\\left(\\frac{\\partial f}{\\partial x}\\right)\\]\n\n\nChanging faces:\\[\\mathbb{R}, \\ \\mathbb{N}, \\ \\mathbb{Z}, \\ \\mathbb{Q}\\]\n\\[\\mathcal{L}, \\ \\mathcal{F}, \\ \\mathcal{G}\\]\n\nText in equations: \\[ \\frac{\\text{ordinary stuff}}{\\text{extraordinary stuff}}\\]\n\nAligned equation:\n\\[\n\\begin{aligned}\n(x + y)^2 &= x^2 + 2xy + y^2\n\\\\\n\\\\\n&\\ne x^2 + y^2\n\\end{aligned}\n\\]\n\nNumbered equation: \\[\n\\frac{\\partial \\mathrm C}{ \\partial \\mathrm t } + \\frac{1}{2}\\sigma^{2} \\mathrm S^{2}\n\\frac{\\partial^{2} \\mathrm C}{\\partial \\mathrm C^2}\n+ \\mathrm r \\mathrm S \\frac{\\partial \\mathrm C}{\\partial \\mathrm S}\\ =\n\\mathrm r \\mathrm C\n\\tag{1}\\]\n\nBlack-Scholes (Equation 1) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options.\n\n\nMatrices:\n\\[\n\\begin{bmatrix}\n  1 & 2 & 3 \\\\\n  4 & 5 & 6 \\\\\n  7 & 8 & 9\n\\end{bmatrix}\n\\]"
+    "objectID": "demoR/params.html#setup",
+    "href": "demoR/params.html#setup",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "1 Setup",
+    "text": "1 Setup\n\n# Attach packages\nlibrary(tidyverse)\n\n# Load data\npets &lt;- read_rds(\"data/pets.RDS\")"
   },
   {
-    "objectID": "demoR/quarto.html#layout",
-    "href": "demoR/quarto.html#layout",
-    "title": "Quarto basics",
-    "section": "\n3 Layout",
-    "text": "3 Layout\n\n3.1 Columns\nWe can create columns using the columns directive. For example:\n\n\n\n\nQuarto logo\n\n\n\n\n\n\n3.2 Callouts\nWe can create callouts using the callout directive. For example:\n\n\n\n\n\n\nNote\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.\n\n\n\n\n\n\n\n\nExpand To Learn About Collapse\n\n\n\n\n\nThis is an example of a ‘folded’ caution callout that can be expanded by the user. You can use collapse=\"true\" to collapse it by default or collapse=\"false\" to make a collapsible callout that is expanded by default.\n\n\n\n\n3.3 Tabsets\nWe can create tabsets using the tabset directive. For example:\n\n\nR\nPython\n\n\n\n\nShow the codecat(\"Hello, Quarto!\")\n\nHello, Quarto!\n\n\n\n\n\nShow the codeprint(\"Hello, python!\")\n\nHello, python!"
+    "objectID": "demoR/params.html#breeds-of-dogs-in-switzerland",
+    "href": "demoR/params.html#breeds-of-dogs-in-switzerland",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "2 Breeds of dogs in Switzerland",
+    "text": "2 Breeds of dogs in Switzerland\n\nbreeds &lt;- pets |&gt;\n  filter(pet_type == params$pet_type)\n\n# Top 5 per date\nbreeds_top_5 &lt;- breeds |&gt;\n  slice_max(order_by = count, n = 5, by = date)\n\n# Top 5 overall (average across all dates)\nbreeds_avg &lt;- breeds_top_5 |&gt;\n  summarize(\n    \"Average Number\" = format(\n      mean(count),\n      big.mark = \",\",\n      digits = 1,\n      justify = \"right\",\n      scientific = FALSE\n    ),\n    .by = \"breed\"\n  ) |&gt;\n  rename(\"Breed\" = breed) |&gt;\n  head(5)\n\nThe breed with the largest average population in Switzerland from 2016 - 2023 was the Kreuzung.\n\nbreeds_top_5 |&gt;\n  ggplot(\n    aes(x = date, y = count, color = breed)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = \"Evolution by breed\",\n    subtitle = str_wrap(\n      paste(\n        \"Number of registered and living\",\n        params$pet_type,\n        \"by breed. The evolution of the largest populations is presented.\"\n      ),\n      80\n    ),\n    color = NULL,\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
   },
   {
-    "objectID": "demoR/quarto.html#embed-code-from-external-files",
-    "href": "demoR/quarto.html#embed-code-from-external-files",
-    "title": "Quarto basics",
-    "section": "\n4 Embed code from external files",
-    "text": "4 Embed code from external files\n\n4.1 Embed plot\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of body mass and flipper length by species\n\n\n\n\nSource: _penguins.qmd\n\n4.2 Embed table\n\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\nSource: _penguins.qmd\n\n4.3 Embed video\nGet started with Quarto | Mine Çetinkaya-Rundel\n\n\nQuarto for Academics | Mine Çetinkaya-Rundel\n\n\n\n\n\n\nQuarto logo\nFigure 1: Scatter plot of body mass and flipper length by species"
+    "objectID": "demoR/params.html#my-favorite-breed-australian-shepherd",
+    "href": "demoR/params.html#my-favorite-breed-australian-shepherd",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "3 My favorite breed: Australian Shepherd",
+    "text": "3 My favorite breed: Australian Shepherd\n\nfave_breed &lt;- breeds |&gt;\n  filter(breed == params$fave_breed)\n\n\nfave_breed |&gt;\n  ggplot(\n    aes(x = date, y = count)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = paste(params$fave_breed, \"population\"),\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
+  },
+  {
+    "objectID": "demoR/params.html#data-source",
+    "href": "demoR/params.html#data-source",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "4 Data source",
+    "text": "4 Data source\nIdentitas AG is the leading service provider for animal health, welfare and food safety in Switzerland.\nDogs are obliged to be registered for licensing purposes at a local government level and this data is kept in the Amicus database. Other pets, such as pets, rodents, birds or fish, may be registered and this data is stored in the Anis database."
+  },
+  {
+    "objectID": "demoR/params.html#tutorial-video",
+    "href": "demoR/params.html#tutorial-video",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "5 Tutorial video",
+    "text": "5 Tutorial video"
+  },
+  {
+    "objectID": "demoR/plot_table.html#setup",
+    "href": "demoR/plot_table.html#setup",
+    "title": "Tables and Plots",
+    "section": "1 Setup",
+    "text": "1 Setup\n\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "demoR/plot_table.html#plot",
+    "href": "demoR/plot_table.html#plot",
+    "title": "Tables and Plots",
+    "section": "2 Plot",
+    "text": "2 Plot\n\nmtcars |&gt; \n  mutate(am = as.factor(am)) |&gt;\n  ggplot(aes(x = mpg, y = hp, color = am)) +\n  geom_point() \n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
+  },
+  {
+    "objectID": "demoR/plot_table.html#table",
+    "href": "demoR/plot_table.html#table",
+    "title": "Tables and Plots",
+    "section": "3 Table",
+    "text": "3 Table\n\nmtcars |&gt; \n  head(5) |&gt;\n  knitr::kable()\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
   }
 ]
