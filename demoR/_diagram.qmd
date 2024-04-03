@@ -1,0 +1,20 @@
+```{r}
+library(tidyverse)
+library(DiagrammeR)
+```
+```{r}
+#create a flowchart
+grViz("digraph {
+  graph [rankdir = UD]
+  node [shape = oval]
+  read_data -> clean_names -> mutate -> pivot_longer -> mutate
+  read_data [label = 'read_data']
+  clean_names [label = 'clean_names']
+  mutate [label = 'mutate']
+  pivot_longer [label = 'pivot_longer']
+  mutate [label = 'mutate']
+}"
+      )
+```
+
+

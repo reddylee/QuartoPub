@@ -1,0 +1,144 @@
+---
+title: DuckDB in R
+format:
+  aps-html:
+    code-tools: true
+---
+
+## Establish a connection to DuckDB
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(gt)
+library(DBI)
+library(duckdb)
+library(duckplyr)
+
+# to start an in-memory database
+con <- dbConnect(duckdb())
+# or con <- dbConnect(duckdb(), dbdir = ":memory:")
+
+# to use a database file (not shared between processes)
+# con <- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = FALSE)
+# to use a database file (shared between processes)
+# con <- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = TRUE)
+```
+
+## Load data into DuckDB
+
+### Load data from `R` chunk
+```{r}
+# write mtcars, from R environment, to duckdb database
+dbWriteTable(con, "mtcars", mtcars) 
+# register iris, from R environment, as a view in duckdb
+duckdb_register(con, "iris_view", iris) 
+duckdb_register(con, "flights", nycflights13::flights)
+
+# read data from local file to duckdb
+duckdb_read_csv(con, "gdp", "data/gdp.csv", na.strings = "NA")
+```
+
+### Load data from `sql` chunk
+```{sql connection=con}
+create table gdp2 as
+select * from read_csv('data/gdp.csv')
+```
+
+### Show tables in DuckDB
+- list tables in `R` chunk
+```{r}
+dbListTables(con) 
+```
+
+- list tables in `sql connection` chunk
+
+```{sql connection=con}
+show tables
+```
+
+## Query data from DuckDB
+
+### Oder of query execution
+
+![](../fig/sql_query_order.webp) 
+
+Please visit [SQL Query Order](https://lukianovihor.medium.com/sql-order-of-query-execution-8c7cd926400) for more information.
+
+### View the whole table
+```{sql connection=con}
+SELECT * FROM gdp
+```
+### More complex queries
+```{sql connection=con}
+select * from mtcars
+where hp > 100
+order by -hp
+```
+We can omit `Select *` in the query in `duckdb` as it is the default.
+
+```{sql connection=con}
+from mtcars
+where hp > 100
+order by -hp
+```
+We can anti-select columns in the query in `duckdb` as shown below.
+
+```{sql connection=con}
+from flights
+select * exclude (year, month, day)
+where month = 1 and
+day = 1
+order by dep_delay desc
+limit 10
+```
+
+More complex queries can be written in `sql` chunk as shown below.
+
+```{sql connection=con}
+SELECT *
+FROM (
+   SELECT
+     tailnum,
+    COUNT(*) AS count,
+    AVG(distance) AS dist,
+    AVG(arr_delay) AS delay
+  FROM flights
+  GROUP BY tailnum
+) q01
+WHERE (count > 20.0) AND (dist < 2000.0) AND (NOT((delay IS NULL)))
+limit 10
+```
+
+## Save outcome of query into R environment
+
+```{sql connection=con, output.var="top10_delayed_planes"}
+SELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay
+FROM flights
+WHERE month = 1
+GROUP BY tailnum
+HAVING COUNT(*) > 20
+ORDER BY delay DESC
+LIMIT 10
+```
+
+The outcome of the query is saved in the R environment as `top10_delayed_planes` and we can call it in R chunk as shown below.
+```{r}
+top10_delayed_planes |> 
+  gt() |> 
+  tab_options(table.width = pct(90),
+              column_labels.font.size = 16,
+              column_labels.font.weight = "bold",
+              column_labels.text_transform = "capitalize") |>
+  opt_row_striping()
+```
+
+## Disconnect from DuckDB
+
+```{r}
+dbDisconnect(con, shutdown = TRUE)
+```
+
+
+
