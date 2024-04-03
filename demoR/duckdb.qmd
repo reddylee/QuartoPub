@@ -29,9 +29,11 @@ con <- dbConnect(duckdb())
 ## Load data into DuckDB
 
 ### Load data from `R` chunk
+
 ```{r}
 # write mtcars, from R environment, to duckdb database
 dbWriteTable(con, "mtcars", mtcars) 
+
 # register iris, from R environment, as a view in duckdb
 duckdb_register(con, "iris_view", iris) 
 duckdb_register(con, "flights", nycflights13::flights)
@@ -41,18 +43,21 @@ duckdb_read_csv(con, "gdp", "data/gdp.csv", na.strings = "NA")
 ```
 
 ### Load data from `sql` chunk
+
 ```{sql connection=con}
 create table gdp2 as
 select * from read_csv('data/gdp.csv')
 ```
 
 ### Show tables in DuckDB
-- list tables in `R` chunk
+
+-   list tables in `R` chunk
+
 ```{r}
 dbListTables(con) 
 ```
 
-- list tables in `sql connection` chunk
+-   list tables in `sql connection` chunk
 
 ```{sql connection=con}
 show tables
@@ -62,20 +67,24 @@ show tables
 
 ### Oder of query execution
 
-![](../fig/sql_query_order.webp) 
+![](../fig/sql_query_order.webp)
 
 Please visit [SQL Query Order](https://lukianovihor.medium.com/sql-order-of-query-execution-8c7cd926400) for more information.
 
 ### View the whole table
+
 ```{sql connection=con}
 SELECT * FROM gdp
 ```
+
 ### More complex queries
+
 ```{sql connection=con}
 select * from mtcars
 where hp > 100
 order by -hp
 ```
+
 We can omit `Select *` in the query in `duckdb` as it is the default.
 
 ```{sql connection=con}
@@ -83,13 +92,13 @@ from mtcars
 where hp > 100
 order by -hp
 ```
+
 We can anti-select columns in the query in `duckdb` as shown below.
 
 ```{sql connection=con}
 from flights
 select * exclude (year, month, day)
-where month = 1 and
-day = 1
+where month = 1 and day = 1
 order by dep_delay desc
 limit 10
 ```
@@ -113,6 +122,10 @@ limit 10
 
 ## Save outcome of query into R environment
 
+We can save the outcome of the query into the R environment as shown below[^1].
+
+[^1]: Please go to upper right corner to view the source code.
+
 ```{sql connection=con, output.var="top10_delayed_planes"}
 SELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay
 FROM flights
@@ -123,7 +136,20 @@ ORDER BY delay DESC
 LIMIT 10
 ```
 
+```{r}
+#| include: false
+nycflights13::flights %>%
+  filter(month == 1) %>%
+  group_by(tailnum) %>%
+  filter(n() > 20) %>%
+  summarise(dist = mean(distance, na.rm = TRUE),
+            delay = mean(arr_delay, na.rm = TRUE)) %>%
+  arrange(desc(delay)) %>%
+  head(10)
+```
+
 The outcome of the query is saved in the R environment as `top10_delayed_planes` and we can call it in R chunk as shown below.
+
 ```{r}
 top10_delayed_planes |> 
   gt() |> 
@@ -134,11 +160,14 @@ top10_delayed_planes |>
   opt_row_striping()
 ```
 
+Why bother with `duckdb` when we can do the same in `R`?
+The answer is that `duckdb` is faster than `R` for large datasets.
+For example, the `vdemdata` dataset has 500 V-Dem indicators and 245 indices + 57 other indicators from other data sources.
+It is a huge dataset and it is almost impossible to view the whole V-Dem dataset in R.
+It would be better, although still quite slow, to use `duckdb` to query the dataset and view the outcome in R.
+
 ## Disconnect from DuckDB
 
 ```{r}
 dbDisconnect(con, shutdown = TRUE)
 ```
-
-
-
