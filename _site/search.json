@@ -4,35 +4,35 @@
     "href": "demoR/duckdb.html",
     "title": "DuckDB in R",
     "section": "",
-    "text": "Codelibrary(tidyverse)\nlibrary(gt)\nlibrary(DBI)\nlibrary(duckdb)\nlibrary(duckplyr)\n\n# to start an in-memory database\ncon &lt;- dbConnect(duckdb())\n# or con &lt;- dbConnect(duckdb(), dbdir = \":memory:\")\n\n# to use a database file (not shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = FALSE)\n# to use a database file (shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = TRUE)"
+    "text": "Codelibrary(tidyverse)\nlibrary(gt)\nlibrary(DBI)\nlibrary(duckdb)\nlibrary(duckplyr)\nlibrary(tictoc)\nlibrary(nycflights23)\n\n\n\nCode# to start an in-memory database\ncon &lt;- dbConnect(duckdb())\n# or con &lt;- dbConnect(duckdb(), dbdir = \":memory:\")\n\n# to use a database file (not shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = FALSE)\n# to use a database file (shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = TRUE)"
   },
   {
     "objectID": "demoR/duckdb.html#establish-a-connection-to-duckdb",
     "href": "demoR/duckdb.html#establish-a-connection-to-duckdb",
     "title": "DuckDB in R",
     "section": "",
-    "text": "Codelibrary(tidyverse)\nlibrary(gt)\nlibrary(DBI)\nlibrary(duckdb)\nlibrary(duckplyr)\n\n# to start an in-memory database\ncon &lt;- dbConnect(duckdb())\n# or con &lt;- dbConnect(duckdb(), dbdir = \":memory:\")\n\n# to use a database file (not shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = FALSE)\n# to use a database file (shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = TRUE)"
+    "text": "Codelibrary(tidyverse)\nlibrary(gt)\nlibrary(DBI)\nlibrary(duckdb)\nlibrary(duckplyr)\nlibrary(tictoc)\nlibrary(nycflights23)\n\n\n\nCode# to start an in-memory database\ncon &lt;- dbConnect(duckdb())\n# or con &lt;- dbConnect(duckdb(), dbdir = \":memory:\")\n\n# to use a database file (not shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = FALSE)\n# to use a database file (shared between processes)\n# con &lt;- dbConnect(duckdb(), dbdir = \"my-db.duckdb\", read_only = TRUE)"
   },
   {
     "objectID": "demoR/duckdb.html#load-data-into-duckdb",
     "href": "demoR/duckdb.html#load-data-into-duckdb",
     "title": "DuckDB in R",
     "section": "\n2 Load data into DuckDB",
-    "text": "2 Load data into DuckDB\n\n2.1 Load data from R chunk\n\nCode# write mtcars, from R environment, to duckdb database\ndbWriteTable(con, \"mtcars\", mtcars) \n\n# register iris, from R environment, as a view in duckdb\nduckdb_register(con, \"iris_view\", iris) \nduckdb_register(con, \"flights\", nycflights13::flights)\n\n# read data from local file to duckdb\nduckdb_read_csv(con, \"gdp\", \"data/gdp.csv\", na.strings = \"NA\")\n\n\n\n2.2 Load data from sql chunk\n\nCodecreate table gdp2 as\nselect * from read_csv('data/gdp.csv')\n\n\n\n2.3 Show tables in DuckDB\n\nlist tables in R chunk\n\n\nCodedbListTables(con) \n\n[1] \"flights\"   \"gdp\"       \"gdp2\"      \"iris_view\" \"mtcars\"   \n\n\n\nlist tables in sql connection chunk\n\n\nCodeshow tables\n\n\n5 records\n\nname\n\n\n\nflights\n\n\ngdp\n\n\ngdp2\n\n\niris_view\n\n\nmtcars"
+    "text": "2 Load data into DuckDB\n\n2.1 Load data from R chunk\n\nCode# write mtcars, from R environment, to duckdb database\ndbWriteTable(con, \"mtcars\", mtcars) \n\n# register iris, from R environment, as a view in duckdb\nduckdb_register(con, \"view\", iris) \nduckdb_register(con, \"flights\", flights)\n\n# read data from local file to duckdb\nduckdb_read_csv(con, \"gdp\", \"data/gdp.csv\", na.strings = \"NA\")\n\n\n\n2.2 Load data from sql chunk\n\nCodecreate table gdp2 as\nselect * from read_csv('data/gdp.csv')\n\n\n\n2.3 Show tables in DuckDB\n\nlist tables in R chunk\n\n\nCodedbListTables(con) \n\n[1] \"flights\" \"gdp\"     \"gdp2\"    \"mtcars\"  \"view\"   \n\n\n\nlist tables in sql connection chunk\n\n\nCodeshow tables\n\n\n5 records\n\nname\n\n\n\nflights\n\n\ngdp\n\n\ngdp2\n\n\nmtcars\n\n\nview"
   },
   {
     "objectID": "demoR/duckdb.html#query-data-from-duckdb",
     "href": "demoR/duckdb.html#query-data-from-duckdb",
     "title": "DuckDB in R",
     "section": "\n3 Query data from DuckDB",
-    "text": "3 Query data from DuckDB\n\n3.1 Oder of query execution\n\nPlease visit SQL Query Order for more information.\n\n3.2 View the whole table\n\nCodeSELECT * FROM gdp\n\n\nDisplaying records 1 - 10\n\nX\ncountry_name\nscode\nCOWcode\nyear\ngdppc\nedu_year\n\n\n\n1\nMexico\nMEX\n70\n1946\n3.174\n2.292\n\n\n2\nMexico\nMEX\n70\n1947\n3.242\n2.354\n\n\n3\nMexico\nMEX\n70\n1948\n3.366\n2.416\n\n\n4\nMexico\nMEX\n70\n1949\n3.568\n2.478\n\n\n5\nMexico\nMEX\n70\n1950\n3.960\n2.540\n\n\n6\nMexico\nMEX\n70\n1951\n4.181\n2.628\n\n\n7\nMexico\nMEX\n70\n1952\n4.288\n2.716\n\n\n8\nMexico\nMEX\n70\n1953\n4.306\n2.804\n\n\n9\nMexico\nMEX\n70\n1954\n4.469\n2.892\n\n\n10\nMexico\nMEX\n70\n1955\n4.644\n2.980\n\n\n\n\n\n\n3.3 More complex queries\n\nCodeselect * from mtcars\nwhere hp &gt; 100\norder by -hp\n\n\nDisplaying records 1 - 10\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n15.0\n8\n301.0\n335\n3.54\n3.570\n14.60\n0\n1\n5\n8\n\n\n15.8\n8\n351.0\n264\n4.22\n3.170\n14.50\n0\n1\n5\n4\n\n\n14.3\n8\n360.0\n245\n3.21\n3.570\n15.84\n0\n0\n3\n4\n\n\n13.3\n8\n350.0\n245\n3.73\n3.840\n15.41\n0\n0\n3\n4\n\n\n14.7\n8\n440.0\n230\n3.23\n5.345\n17.42\n0\n0\n3\n4\n\n\n10.4\n8\n460.0\n215\n3.00\n5.424\n17.82\n0\n0\n3\n4\n\n\n10.4\n8\n472.0\n205\n2.93\n5.250\n17.98\n0\n0\n3\n4\n\n\n16.4\n8\n275.8\n180\n3.07\n4.070\n17.40\n0\n0\n3\n3\n\n\n17.3\n8\n275.8\n180\n3.07\n3.730\n17.60\n0\n0\n3\n3\n\n\n15.2\n8\n275.8\n180\n3.07\n3.780\n18.00\n0\n0\n3\n3\n\n\n\n\n\nWe can omit Select * in the query in duckdb as it is the default.\n\nCodefrom mtcars\nwhere hp &gt; 100\norder by -hp\n\n\nDisplaying records 1 - 10\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n15.0\n8\n301.0\n335\n3.54\n3.570\n14.60\n0\n1\n5\n8\n\n\n15.8\n8\n351.0\n264\n4.22\n3.170\n14.50\n0\n1\n5\n4\n\n\n14.3\n8\n360.0\n245\n3.21\n3.570\n15.84\n0\n0\n3\n4\n\n\n13.3\n8\n350.0\n245\n3.73\n3.840\n15.41\n0\n0\n3\n4\n\n\n14.7\n8\n440.0\n230\n3.23\n5.345\n17.42\n0\n0\n3\n4\n\n\n10.4\n8\n460.0\n215\n3.00\n5.424\n17.82\n0\n0\n3\n4\n\n\n10.4\n8\n472.0\n205\n2.93\n5.250\n17.98\n0\n0\n3\n4\n\n\n16.4\n8\n275.8\n180\n3.07\n4.070\n17.40\n0\n0\n3\n3\n\n\n17.3\n8\n275.8\n180\n3.07\n3.730\n17.60\n0\n0\n3\n3\n\n\n15.2\n8\n275.8\n180\n3.07\n3.780\n18.00\n0\n0\n3\n3\n\n\n\n\n\nWe can anti-select columns in the query in duckdb as shown below.\n\nCodefrom flights\nselect * exclude (year, month, day)\nwhere month = 1 and day = 1\norder by dep_delay desc\nlimit 10\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndep_time\nsched_dep_time\ndep_delay\narr_time\nsched_arr_time\narr_delay\ncarrier\nflight\ntailnum\norigin\ndest\nair_time\ndistance\nhour\nminute\ntime_hour\n\n\n\n848\n1835\n853\n1001\n1950\n851\nMQ\n3944\nN942MQ\nJFK\nBWI\n41\n184\n18\n35\n2013-01-01 23:00:00\n\n\n2343\n1724\n379\n314\n1938\n456\nEV\n4321\nN21197\nEWR\nMCI\n222\n1092\n17\n24\n2013-01-01 22:00:00\n\n\n1815\n1325\n290\n2120\n1542\n338\nEV\n4417\nN17185\nEWR\nOMA\n213\n1134\n13\n25\n2013-01-01 18:00:00\n\n\n2205\n1720\n285\n46\n2040\n246\nAA\n1999\nN5DNAA\nEWR\nMIA\n146\n1085\n17\n20\n2013-01-01 22:00:00\n\n\n1842\n1422\n260\n1958\n1535\n263\nEV\n4633\nN18120\nEWR\nBTV\n46\n266\n14\n22\n2013-01-01 19:00:00\n\n\n2115\n1700\n255\n2330\n1920\n250\n9E\n3347\nN924XJ\nJFK\nCVG\n115\n589\n17\n0\n2013-01-01 22:00:00\n\n\n2006\n1630\n216\n2230\n1848\n222\nEV\n4644\nN14972\nEWR\nSAV\n121\n708\n16\n30\n2013-01-01 21:00:00\n\n\n2312\n2000\n192\n21\n2110\n191\nEV\n4312\nN13958\nEWR\nDCA\n44\n199\n20\n0\n2013-01-02 01:00:00\n\n\n1942\n1705\n157\n2124\n1830\n174\nMQ\n4410\nN835MQ\nJFK\nDCA\n60\n213\n17\n5\n2013-01-01 22:00:00\n\n\n1938\n1703\n155\n2109\n1823\n166\nEV\n4300\nN18557\nEWR\nRIC\n68\n277\n17\n3\n2013-01-01 22:00:00\n\n\n\n\n\nMore complex queries can be written in sql chunk as shown below.\n\nCodeSELECT *\nFROM (\n   SELECT\n     tailnum,\n    COUNT(*) AS count,\n    AVG(distance) AS dist,\n    AVG(arr_delay) AS delay\n  FROM flights\n  GROUP BY tailnum\n) q01\nWHERE (count &gt; 20.0) AND (dist &lt; 2000.0) AND (NOT((delay IS NULL)))\nlimit 10\n\n\nDisplaying records 1 - 10\n\ntailnum\ncount\ndist\ndelay\n\n\n\nN708JB\n246\n1389.9959\n8.5126050\n\n\nN535UW\n60\n1669.4000\n2.1333333\n\n\nN33289\n119\n1420.7395\n2.4621849\n\n\nN3GKAA\n77\n1246.5974\n4.9733333\n\n\nN75435\n89\n1760.4831\n4.9438202\n\n\nN3EKAA\n45\n1186.7778\n0.2444444\n\n\nN562JB\n315\n1243.7810\n10.9903846\n\n\nN37456\n89\n1634.2022\n-7.8409091\n\n\nN625JB\n275\n1463.5709\n7.1102941\n\n\nN789SW\n30\n967.3667\n9.9655172"
+    "text": "3 Query data from DuckDB\n\n3.1 Oder of query execution\n\nPlease visit SQL Query Order for more information.\n\n3.2 View the whole table\n\nCodeSELECT * FROM gdp\n\n\nDisplaying records 1 - 10\n\nX\ncountry_name\nscode\nCOWcode\nyear\ngdppc\nedu_year\n\n\n\n1\nMexico\nMEX\n70\n1946\n3.174\n2.292\n\n\n2\nMexico\nMEX\n70\n1947\n3.242\n2.354\n\n\n3\nMexico\nMEX\n70\n1948\n3.366\n2.416\n\n\n4\nMexico\nMEX\n70\n1949\n3.568\n2.478\n\n\n5\nMexico\nMEX\n70\n1950\n3.960\n2.540\n\n\n6\nMexico\nMEX\n70\n1951\n4.181\n2.628\n\n\n7\nMexico\nMEX\n70\n1952\n4.288\n2.716\n\n\n8\nMexico\nMEX\n70\n1953\n4.306\n2.804\n\n\n9\nMexico\nMEX\n70\n1954\n4.469\n2.892\n\n\n10\nMexico\nMEX\n70\n1955\n4.644\n2.980\n\n\n\n\n\n\n3.3 More complex queries\n\nCodeselect * from mtcars\nwhere hp &gt; 100\norder by -hp\n\n\nDisplaying records 1 - 10\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n15.0\n8\n301.0\n335\n3.54\n3.570\n14.60\n0\n1\n5\n8\n\n\n15.8\n8\n351.0\n264\n4.22\n3.170\n14.50\n0\n1\n5\n4\n\n\n14.3\n8\n360.0\n245\n3.21\n3.570\n15.84\n0\n0\n3\n4\n\n\n13.3\n8\n350.0\n245\n3.73\n3.840\n15.41\n0\n0\n3\n4\n\n\n14.7\n8\n440.0\n230\n3.23\n5.345\n17.42\n0\n0\n3\n4\n\n\n10.4\n8\n460.0\n215\n3.00\n5.424\n17.82\n0\n0\n3\n4\n\n\n10.4\n8\n472.0\n205\n2.93\n5.250\n17.98\n0\n0\n3\n4\n\n\n16.4\n8\n275.8\n180\n3.07\n4.070\n17.40\n0\n0\n3\n3\n\n\n17.3\n8\n275.8\n180\n3.07\n3.730\n17.60\n0\n0\n3\n3\n\n\n15.2\n8\n275.8\n180\n3.07\n3.780\n18.00\n0\n0\n3\n3\n\n\n\n\n\nWe can omit Select * in the query in duckdb as it is the default.\n\nCodefrom mtcars\nwhere hp &gt; 100\norder by -hp\n\n\nDisplaying records 1 - 10\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n15.0\n8\n301.0\n335\n3.54\n3.570\n14.60\n0\n1\n5\n8\n\n\n15.8\n8\n351.0\n264\n4.22\n3.170\n14.50\n0\n1\n5\n4\n\n\n14.3\n8\n360.0\n245\n3.21\n3.570\n15.84\n0\n0\n3\n4\n\n\n13.3\n8\n350.0\n245\n3.73\n3.840\n15.41\n0\n0\n3\n4\n\n\n14.7\n8\n440.0\n230\n3.23\n5.345\n17.42\n0\n0\n3\n4\n\n\n10.4\n8\n460.0\n215\n3.00\n5.424\n17.82\n0\n0\n3\n4\n\n\n10.4\n8\n472.0\n205\n2.93\n5.250\n17.98\n0\n0\n3\n4\n\n\n16.4\n8\n275.8\n180\n3.07\n4.070\n17.40\n0\n0\n3\n3\n\n\n17.3\n8\n275.8\n180\n3.07\n3.730\n17.60\n0\n0\n3\n3\n\n\n15.2\n8\n275.8\n180\n3.07\n3.780\n18.00\n0\n0\n3\n3\n\n\n\n\n\nWe can anti-select columns in the query in duckdb as shown below.\n\nCodefrom flights\nselect * exclude (year, month, day)\nwhere month = 1 and day = 1\norder by dep_delay desc\nlimit 10\n\n\nDisplaying records 1 - 10\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndep_time\nsched_dep_time\ndep_delay\narr_time\nsched_arr_time\narr_delay\ncarrier\nflight\ntailnum\norigin\ndest\nair_time\ndistance\nhour\nminute\ntime_hour\n\n\n\n1733\n1045\n408\n2018\n1345\n393\nUA\n740\nN17730\nEWR\nMCO\n127\n937\n10\n45\n2023-01-01 10:00:00\n\n\n1445\n830\n375\n1754\n1205\n349\nDL\n126\nN705TW\nJFK\nSAN\n330\n2446\n8\n30\n2023-01-01 08:00:00\n\n\n1453\n840\n373\n1735\n1156\n339\nB6\n968\nN193JB\nLGA\nPBI\n147\n1035\n8\n40\n2023-01-01 08:00:00\n\n\n1158\n600\n358\n1404\n831\n333\nDL\n825\nN3756\nEWR\nATL\n108\n746\n6\n0\n2023-01-01 06:00:00\n\n\n1124\n600\n324\n1320\n755\n325\nDL\n487\nN394DX\nLGA\nDTW\n87\n502\n6\n0\n2023-01-01 06:00:00\n\n\n1933\n1420\n313\n2214\n1731\n283\nB6\n656\nN2086J\nEWR\nMCO\n130\n937\n14\n20\n2023-01-01 14:00:00\n\n\n2030\n1545\n285\n2304\n1856\n248\nUA\n789\nN77259\nLGA\nIAH\n185\n1416\n15\n45\n2023-01-01 15:00:00\n\n\n1115\n639\n276\n1402\n940\n262\nB6\n112\nN2086J\nEWR\nMCO\n140\n937\n6\n39\n2023-01-01 06:00:00\n\n\n1056\n700\n236\n1345\n1027\n198\nAS\n349\nN268AK\nEWR\nSEA\n331\n2402\n7\n0\n2023-01-01 07:00:00\n\n\n2127\n1735\n232\n2247\n1900\n227\nB6\n494\nN2102J\nJFK\nROC\n55\n264\n17\n35\n2023-01-01 17:00:00\n\n\n\n\n\nMore complex queries can be written in sql chunk as shown below.\n\nCodeSELECT *\nFROM (\n   SELECT\n     tailnum,\n    COUNT(*) AS count,\n    AVG(distance) AS dist,\n    AVG(arr_delay) AS delay\n  FROM flights\n  GROUP BY tailnum\n) q01\nWHERE (count &gt; 20.0) AND (dist &lt; 2000.0) AND (NOT((delay IS NULL)))\nlimit 10\n\n\nDisplaying records 1 - 10\n\ntailnum\ncount\ndist\ndelay\n\n\n\nN925AN\n70\n987.4000\n-1.771429\n\n\nN2043J\n164\n1702.0427\n20.331210\n\n\nN659JB\n222\n1174.3964\n16.052885\n\n\nN342NW\n73\n1015.0548\n7.478873\n\n\nN612NK\n64\n1130.4375\n3.645161\n\n\nN2027J\n122\n1432.7787\n26.547826\n\n\nN24715\n173\n915.2717\n7.093567\n\n\nN413UA\n80\n914.5375\n12.126582\n\n\nN27274\n234\n1323.9359\n5.914163\n\n\nN73256\n99\n1072.1414\n7.232323"
   },
   {
     "objectID": "demoR/duckdb.html#save-outcome-of-query-into-r-environment",
     "href": "demoR/duckdb.html#save-outcome-of-query-into-r-environment",
     "title": "DuckDB in R",
     "section": "\n4 Save outcome of query into R environment",
-    "text": "4 Save outcome of query into R environment\nWe can save the outcome of the query into the R environment as shown below1.\n\nCodeSELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay\nFROM flights\nWHERE month = 1\nGROUP BY tailnum\nHAVING COUNT(*) &gt; 20\nORDER BY delay DESC\nLIMIT 10\n\n\nThe outcome of the query is saved in the R environment as top10_delayed_planes and we can call it in R chunk as shown below.\n\nCodetop10_delayed_planes |&gt; \n  gt() |&gt; \n  tab_options(table.width = pct(90),\n              column_labels.font.size = 16,\n              column_labels.font.weight = \"bold\",\n              column_labels.text_transform = \"capitalize\") |&gt;\n  opt_row_striping()\n\n\n\n\n\n\ntailnum\ndist\ndelay\n\n\n\nN21144\n601.4286\n59.10000\n\n\nN14920\n423.9048\n52.28571\n\n\nN517MQ\n590.0968\n51.40000\n\n\nN21537\n529.1111\n50.40741\n\n\nN10575\n485.4000\n48.10714\n\n\nN13994\n476.0294\n47.90625\n\n\nN16546\n519.8800\n46.36000\n\n\nN13553\n482.7429\n43.33333\n\n\nN13958\n442.8400\n43.00000\n\n\nN11565\n442.1538\n40.08333\n\n\n\n\n\n\n\nWhy bother with duckdb when we can do the same in R? The answer is that duckdb is faster than R for large datasets. For example, the vdemdata dataset has 500 V-Dem indicators and 245 indices + 57 other indicators from other data sources. It is a huge dataset and it is almost impossible to view the whole V-Dem dataset in R. It would be better, although still quite slow, to use duckdb to query the dataset and view the outcome in R."
+    "text": "4 Save outcome of query into R environment\nWe can save the outcome of the query into the R environment as shown below1.\n\nCodetic(\"sql\")\n\n\n\nCodeSELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay\nFROM flights\nWHERE month = 1\nGROUP BY tailnum\nHAVING COUNT(*) &gt; 20\nORDER BY delay DESC\nLIMIT 10\n\n\n\nCodetoc()\n\nsql: 0.035 sec elapsed\n\n\n\nCodetic(\"R\")\n\n\n\nCodetoc()\n\nR: 4.29 sec elapsed\n\n\nThe outcome of the query is saved in the R environment as top10_delayed_planes and we can call it in R chunk as shown below.\n\nCode# same result with the query in R\ntop10_delayed_planes |&gt; \n  gt() |&gt; \n  tab_options(table.width = pct(90),\n              column_labels.font.size = 16,\n              column_labels.font.weight = \"bold\",\n              column_labels.text_transform = \"capitalize\") |&gt;\n  opt_row_striping()\n\n\n\n\n\n\ntailnum\ndist\ndelay\n\n\n\nN394DA\n1224.1333\n47.43333\n\n\nN325PQ\n423.8214\n44.89286\n\n\nN691CA\n417.5641\n44.02857\n\n\nN272PQ\n502.4242\n33.12121\n\n\nN320SY\n544.0833\n32.08333\n\n\nN558JB\n1127.8400\n32.00000\n\n\nN116AN\n2506.3333\n31.44444\n\n\nN187GJ\n545.8182\n30.87879\n\n\nN905XJ\n458.5714\n30.57143\n\n\nN193JB\n448.6078\n29.98000\n\n\n\n\n\n\n\nWhy bother with duckdb when we can do the same in R? You might ask. The answer is that duckdb is faster than R for large datasets. As showed above, the query in duckdb is much faster than in R to get the same results.\nWe might not notice a significant difference in query execution speed in this example because the dataset is small. However, the discrepancy becomes more apparent with larger datasets. Let’s examine a big dataset to observe the contrast in query execution speed. We’ll use a dataset containing item checkouts from Seattle public libraries, accessible online at Seattle.\nWhen attempting to read the dataset with read_csv(), it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset’s substantial size, comprising approximately 31,871,534 rows, spanning 12 columns, and occupying 6.5 GB of storage space. The following code would fail to read such voluminous data.\n```{r}\nread_csv(\"data/seattle-library-checkouts.csv\") |&gt; \n  nrow()\n```\nLet’s try to query with duckdb.\n\nCodetic(\"sql\")\n\n\n\nCodeSelect Count(*)\nFrom read_csv('data/seattle-library-checkouts.csv')\n\n\n1 records\n\ncount_star()\n\n\n31871534\n\n\n\n\n\nCodetoc()\n\nsql: 7.201 sec elapsed\n\n\nDuckDB took a bit longer to retrieve the results, more than 4 seconds, but the performance was quite acceptable. It outperformed R, which failed to read the data altogether."
   },
   {
     "objectID": "demoR/duckdb.html#disconnect-from-duckdb",
@@ -49,74 +49,95 @@
     "text": "Footnotes\n\nPlease go to upper right corner to view the source code.↩︎"
   },
   {
-    "objectID": "demoR/quarto.html",
-    "href": "demoR/quarto.html",
-    "title": "Quarto basics",
-    "section": "",
-    "text": "This document demonstrates the basic features of Quarto. You can find the source code of this document from upper right corner of this page by clicking “Code &gt; View Source”."
+    "objectID": "demoR/plot_table.html#setup",
+    "href": "demoR/plot_table.html#setup",
+    "title": "Tables and Plots",
+    "section": "\n1 Setup",
+    "text": "1 Setup\n\nCodelibrary(tidyverse)"
   },
   {
-    "objectID": "demoR/quarto.html#setup",
-    "href": "demoR/quarto.html#setup",
-    "title": "Quarto basics",
-    "section": "1 Setup",
-    "text": "1 Setup\nIf we label a code chunk as setup, it will be executed automatically when you first run a code chunk. We can also set message: false to suppress the output of the code chunk. For example, the following code chunk loads the tidyverse package and suppresses the output message.\n\n# Attach packages\nlibrary(tidyverse)"
+    "objectID": "demoR/plot_table.html#plot",
+    "href": "demoR/plot_table.html#plot",
+    "title": "Tables and Plots",
+    "section": "\n2 Plot",
+    "text": "2 Plot\n\nCodemtcars |&gt; \n  mutate(am = as.factor(am)) |&gt;\n  ggplot(aes(x = mpg, y = hp, color = am)) +\n  geom_point() \n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
   },
   {
-    "objectID": "demoR/quarto.html#text-styles",
-    "href": "demoR/quarto.html#text-styles",
-    "title": "Quarto basics",
-    "section": "2 Text styles",
-    "text": "2 Text styles\n\n2.1 Headings\nWe can use # to create headings. The number of # indicates the level of the heading. For example, # Heading 1, ## Heading 2, ### Heading 3, and all the way up to ###### Heading 6.\nIf we set number-sections: true in the YAML front matter, Quarto will automatically number the headings.\n\n\n2.2 Emphasis\nWe can use * or _ to emphasize text. For example, italic, bold, and bold italic.\n\n\n2.3 Lists\nWe can create ordered and unordered lists. For example:\n\nFirst item\nSecond item\n\nSubitem 1\nSubitem 2\n\n\n\n\n2.4 Blockquotes\nWe can use &gt; to create blockquotes. For example:\n\nThis is a blockquote.\n\n\n\n2.5 Links\nWe can create links using the following syntax:\n\nQuarto\n\n\n\n2.6 Images\nWe can include images using the following syntax:\n\nFrom the web: \nFrom the local file:\n\n\n\n\n2.7 Colors\nWe can use HTML color names or hexadecimal color codes to set text and background colors. For example:\nBlue text\nPurple text\n\n\n2.8 Equations\nWe can include equations using LaTeX syntax. For example:\n\nInline equation: \\(E=mc^2\\)\nBlock equation: \\[\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}\\]\n\\[\\pi \\in \\mathbb {R}\\]\nBasic Functions: \\[\\sin x, \\ \\log_2{x}, \\hspace{0.5cm} \\sqrt[3]{x^2 +1}\\]\nFractions:\n\\[\\$5 \\over{x + y}\\]\n\\[ \\left[\\frac{1}{2} \\hspace{0.5cm} \\frac{x^2}{x^3}\\right\\}\\]\n\\[\\left(\\frac{\\partial f}{\\partial x}\\right)\\]\nChanging faces:\n\\[\\mathbb{R}, \\ \\mathbb{N}, \\ \\mathbb{Z}, \\ \\mathbb{Q}\\]\n\\[\\mathcal{L}, \\ \\mathcal{F}, \\ \\mathcal{G}\\]\nText in equations: \\[ \\frac{\\text{ordinary stuff}}{\\text{extraordinary stuff}}\\]\nAligned equation:\n\\[\n\\begin{aligned}\n(x + y)^2 &= x^2 + 2xy + y^2\n\\\\\n\\\\\n&\\ne x^2 + y^2\n\\end{aligned}\n\\]\nNumbered equation: \\[\n\\frac{\\partial \\mathrm C}{ \\partial \\mathrm t } + \\frac{1}{2}\\sigma^{2} \\mathrm S^{2}\n\\frac{\\partial^{2} \\mathrm C}{\\partial \\mathrm C^2}\n+ \\mathrm r \\mathrm S \\frac{\\partial \\mathrm C}{\\partial \\mathrm S}\\ =\n\\mathrm r \\mathrm C\n\\tag{1}\\]\n\nBlack-Scholes (Equation 1) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options.\n\nMatrices:\n\\[\n\\begin{bmatrix}\n  1 & 2 & 3 \\\\\n  4 & 5 & 6 \\\\\n  7 & 8 & 9\n\\end{bmatrix}\n\\]"
+    "objectID": "demoR/plot_table.html#table",
+    "href": "demoR/plot_table.html#table",
+    "title": "Tables and Plots",
+    "section": "\n3 Table",
+    "text": "3 Table\n\nCodemtcars |&gt; \n  head(5) |&gt;\n  knitr::kable()\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
   },
   {
-    "objectID": "demoR/quarto.html#layout",
-    "href": "demoR/quarto.html#layout",
-    "title": "Quarto basics",
-    "section": "3 Layout",
-    "text": "3 Layout\n\n3.1 Columns\nWe can create columns using the columns directive. For example:\n\n\n\n\n\nQuarto logo\n\n\n\n\n\n\n\n\n3.2 Callouts\nWe can create callouts using the callout directive. For example:\n\n\n\n\n\n\nNote\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.\n\n\n\n\n\n\n\n\nExpand To Learn About Collapse\n\n\n\n\n\nThis is an example of a ‘folded’ caution callout that can be expanded by the user. You can use collapse=\"true\" to collapse it by default or collapse=\"false\" to make a collapsible callout that is expanded by default.\n\n\n\n\n\n3.3 Tabsets\nWe can create tabsets using the tabset directive. For example:\n\nRPython\n\n\n\ncat(\"Hello, Quarto!\")\n\nHello, Quarto!\n\n\n\n\n\nprint(\"Hello, python!\")\n\nHello, python!"
+    "objectID": "demoR/params.html#setup",
+    "href": "demoR/params.html#setup",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "\n1 Setup",
+    "text": "1 Setup\n\nCode# Attach packages\nlibrary(tidyverse)\n\n# Load data\npets &lt;- read_rds(\"data/pets.RDS\")"
   },
   {
-    "objectID": "demoR/quarto.html#embed-code-from-external-files",
-    "href": "demoR/quarto.html#embed-code-from-external-files",
-    "title": "Quarto basics",
-    "section": "4 Embed code from external files",
-    "text": "4 Embed code from external files\n\n4.1 Embed plot\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of body mass and flipper length by species\n\n\n\n\n\nSource: _penguins.qmd\n\n\n4.2 Embed table\n\n\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\nSource: _penguins.qmd\n\n\n4.3 Embed video\nGet started with Quarto | Mine Çetinkaya-Rundel\n\nQuarto for Academics | Mine Çetinkaya-Rundel\n\n\n\n\n\n\nQuarto logo\nFigure 1: Scatter plot of body mass and flipper length by species"
+    "objectID": "demoR/params.html#breeds-of-dogs-in-switzerland",
+    "href": "demoR/params.html#breeds-of-dogs-in-switzerland",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "\n2 Breeds of dogs in Switzerland",
+    "text": "2 Breeds of dogs in Switzerland\n\nCodebreeds &lt;- pets |&gt;\n  filter(pet_type == params$pet_type)\n\n# Top 5 per date\nbreeds_top_5 &lt;- breeds |&gt;\n  slice_max(order_by = count, n = 5, by = date)\n\n# Top 5 overall (average across all dates)\nbreeds_avg &lt;- breeds_top_5 |&gt;\n  summarize(\n    \"Average Number\" = format(\n      mean(count),\n      big.mark = \",\",\n      digits = 1,\n      justify = \"right\",\n      scientific = FALSE\n    ),\n    .by = \"breed\"\n  ) |&gt;\n  rename(\"Breed\" = breed) |&gt;\n  head(5)\n\n\nThe breed with the largest average population in Switzerland from 2016 - 2023 was the Kreuzung.\n\nCodebreeds_top_5 |&gt;\n  ggplot(\n    aes(x = date, y = count, color = breed)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = \"Evolution by breed\",\n    subtitle = str_wrap(\n      paste(\n        \"Number of registered and living\",\n        params$pet_type,\n        \"by breed. The evolution of the largest populations is presented.\"\n      ),\n      80\n    ),\n    color = NULL,\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
   },
   {
-    "objectID": "demoR/demoR.html",
-    "href": "demoR/demoR.html",
+    "objectID": "demoR/params.html#my-favorite-breed-australian-shepherd",
+    "href": "demoR/params.html#my-favorite-breed-australian-shepherd",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "\n3 My favorite breed: Australian Shepherd",
+    "text": "3 My favorite breed: Australian Shepherd\n\nCodefave_breed &lt;- breeds |&gt;\n  filter(breed == params$fave_breed)\n\n\n\nCodefave_breed |&gt;\n  ggplot(\n    aes(x = date, y = count)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = paste(params$fave_breed, \"population\"),\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
+  },
+  {
+    "objectID": "demoR/params.html#data-source",
+    "href": "demoR/params.html#data-source",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "\n4 Data source",
+    "text": "4 Data source\nIdentitas AG is the leading service provider for animal health, welfare and food safety in Switzerland.\nDogs are obliged to be registered for licensing purposes at a local government level and this data is kept in the Amicus database. Other pets, such as pets, rodents, birds or fish, may be registered and this data is stored in the Anis database."
+  },
+  {
+    "objectID": "demoR/params.html#tutorial-video",
+    "href": "demoR/params.html#tutorial-video",
+    "title": "Parameterized Reporting with Quarto",
+    "section": "\n5 Tutorial video",
+    "text": "5 Tutorial video"
+  },
+  {
+    "objectID": "ps/home.html",
+    "href": "ps/home.html",
     "title": "R tutorial",
     "section": "",
-    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nDuckDB in R\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto basics\n\n\n\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nTables and Plots\n\n\n\n\n\n\ntable\n\n\nplot\n\n\n\n\n\n\n\n\n\nMar 28, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nParameterized Reporting with Quarto\n\n\nRegistered r params$pet_type in Switzerland\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 27, 2024\n\n\nJadey Ryan\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nSample Selection Effects and the Likelihood of Coups\n\n\n\n\n\n\nArticle\n\n\nCoups\n\n\n\nA substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high chance of success. Thus, the expected outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks. \n\n\n\n\n\nInvalid Date\n\n\nZhu Qi\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
-    "objectID": "ps/test.html",
-    "href": "ps/test.html",
-    "title": "Manuscript",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Welcome to Reddy’s Space!",
     "section": "",
-    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "text": "I am a PhD student in Political Science at the Department of Government, University of Essex.\nMy research interests lie in the fields of authoritarian regimes, democratization, international conflict, coup d’état, and political economy."
   },
   {
-    "objectID": "ps/test.html#section",
-    "href": "ps/test.html#section",
-    "title": "Manuscript",
+    "objectID": "about.html#our-beautiful-colchester-campus",
+    "href": "about.html#our-beautiful-colchester-campus",
+    "title": "Welcome to Reddy’s Space!",
+    "section": "Our beautiful Colchester campus",
+    "text": "Our beautiful Colchester campus"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to Can.Do.So!",
     "section": "",
-    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "text": "This is a Quarto website that demonstrates R programming and Social scientific methods.\n\n\n\n Back to top"
   },
   {
-    "objectID": "ps/test1.html#section",
-    "href": "ps/test1.html#section",
-    "title": "Manuscript",
-    "section": "Section",
-    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
-  },
-  {
-    "objectID": "ps/test1.html#references",
-    "href": "ps/test1.html#references",
-    "title": "Manuscript",
-    "section": "References",
-    "text": "References\n\n\n\n\n\n\n\n\nDe Bruin, Erica. 2020. “Preventing Coups d’état.” In, 1–12. Cornell University Press. https://doi.org/10.7591/cornell/9781501751912.003.0001.\n\n\nKnuth, D. E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "objectID": "ps/coups1.html#introduction",
+    "href": "ps/coups1.html#introduction",
+    "title": "Sample Selection Effects and the Likelihood of Coups",
+    "section": "\n1 Introduction",
+    "text": "1 Introduction\nCoups1 occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC) dataset (Powell and Thyne 2011), Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by Gassebner, Gutmann, and Voigt (2016), around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.\nIn analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high. Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful. In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.\nTo comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in Table 2, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.\n\nCodecoups |&gt;\n  # add one row which adds up the total\n  arrange(desc(`Coup attempted`)) |&gt;\n  head(11) |&gt;\n  add_row(\n    Country = \"Total\",\n    `Coup attempted` = sum(coups[, 2]),\n    `Coup succeeded` = sum(coups[, 3])\n  ) |&gt;\n  gt() |&gt;\n  tab_options(table.width = pct(90),\n              column_labels.font.size = 16,\n              column_labels.font.weight = \"bold\",\n              column_labels.text_transform = \"capitalize\") |&gt;\n  tab_source_note(source_note = md(\"***Source: GIC dataset***\")) \n\n\n\n\n\nTable 2: Top 10 countries with the most coup attempts\n\n\n\n\n\n\n\nCountry\nCoup attempted\nCoup succeeded\n\n\n\nBolivia\n23\n11\n\n\nArgentina\n20\n7\n\n\nSudan\n17\n6\n\n\nHaiti\n13\n9\n\n\nVenezuela\n13\n0\n\n\nIraq\n12\n4\n\n\nSyria\n12\n8\n\n\nThailand\n12\n8\n\n\nEcuador\n11\n5\n\n\nBurundi\n11\n5\n\n\nGuatemala\n10\n5\n\n\nTotal\n491\n245\n\n\n\nSource: GIC dataset\n\n\n\n\n\n\n\n\n\n\n\n\n\nCan.Do.So\n\n\n\n\nGassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. “When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants.” SSRN Electronic Journal. https://doi.org/10.2139/ssrn.2851758.\n\n\nPowell, Jonathan M, and Clayton L Thyne. 2011. “Global Instances of Coups from 1950 to 2010: A New Dataset.” Journal of Peace Research 48 (2): 249–59. https://doi.org/10.1177/0022343310397436.\n\n\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252)."
   },
   {
     "objectID": "ps/coups_and_regimes.html",
@@ -140,122 +161,73 @@
     "text": "Footnotes\n\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252).↩︎"
   },
   {
-    "objectID": "ps/coups1.html#introduction",
-    "href": "ps/coups1.html#introduction",
-    "title": "Sample Selection Effects and the Likelihood of Coups",
-    "section": "\n1 Introduction",
-    "text": "1 Introduction\nCoups1 occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC) dataset (Powell and Thyne 2011), Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by Gassebner, Gutmann, and Voigt (2016), around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.\nIn analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high. Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful. In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.\nTo comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in Table 2, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.\n\nCodecoups |&gt;\n  # add one row which adds up the total\n  arrange(desc(`Coup attempted`)) |&gt;\n  head(11) |&gt;\n  add_row(\n    Country = \"Total\",\n    `Coup attempted` = sum(coups[, 2]),\n    `Coup succeeded` = sum(coups[, 3])\n  ) |&gt;\n  gt() |&gt;\n  tab_options(table.width = pct(90),\n              column_labels.font.size = 16,\n              column_labels.font.weight = \"bold\",\n              column_labels.text_transform = \"capitalize\") |&gt;\n  tab_source_note(source_note = md(\"***Source: GIC dataset***\")) \n\n\n\n\n\nTable 2: Top 10 countries with the most coup attempts\n\n\n\n\n\n\n\nCountry\nCoup attempted\nCoup succeeded\n\n\n\nBolivia\n23\n11\n\n\nArgentina\n20\n7\n\n\nSudan\n17\n6\n\n\nHaiti\n13\n9\n\n\nVenezuela\n13\n0\n\n\nIraq\n12\n4\n\n\nSyria\n12\n8\n\n\nThailand\n12\n8\n\n\nEcuador\n11\n5\n\n\nBurundi\n11\n5\n\n\nGuatemala\n10\n5\n\n\nTotal\n491\n245\n\n\n\nSource: GIC dataset\n\n\n\n\n\n\n\n\n\n\n\n\n\nCan.Do.So\n\n\n\n\nGassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. “When to Expect a Coup D’État? An Extreme Bound Analysis of Coup Determinants.” SSRN Electronic Journal. https://doi.org/10.2139/ssrn.2851758.\n\n\nPowell, Jonathan M, and Clayton L Thyne. 2011. “Global Instances of Coups from 1950 to 2010: A New Dataset.” Journal of Peace Research 48 (2): 249–59. https://doi.org/10.1177/0022343310397436.\n\n\nCoups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” (Powell and Thyne 2011, 252)."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome to Can.Do.So!",
-    "section": "",
-    "text": "This is a Quarto website that demonstrates R programming and Social scientific methods.\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Welcome to Reddy’s Space!",
-    "section": "",
-    "text": "I am a PhD student in Political Science at the Department of Government, University of Essex.\nMy research interests lie in the fields of authoritarian regimes, democratization, international conflict, coup d’état, and political economy."
-  },
-  {
-    "objectID": "about.html#our-beautiful-colchester-campus",
-    "href": "about.html#our-beautiful-colchester-campus",
-    "title": "Welcome to Reddy’s Space!",
-    "section": "1 Our beautiful Colchester campus",
-    "text": "1 Our beautiful Colchester campus"
-  },
-  {
-    "objectID": "ps/home.html",
-    "href": "ps/home.html",
+    "objectID": "demoR/demoR.html",
+    "href": "demoR/demoR.html",
     "title": "R tutorial",
     "section": "",
-    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nSample Selection Effects and the Likelihood of Coups\n\n\n\n\n\nA substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high chance of success. Thus, the expected outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks. \n\n\n\n\n\nInvalid Date\n\n\nZhu Qi\n\n\n\n\n\n\n\n\n\n\n\n\nCoups and Democracy\n\n\n\n\n\nAmong patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 30, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nManuscript\n\n\n\n\n\nBACKGROUND Preliminary research suggests that rectally administered nonsteroidal antiinflammatory drugs may reduce the incidence of pancreatitis after endoscopic retrograde cholangiopancreatography (ERCP).\nMETHODS In this multicenter, randomized, placebo-controlled, double-blind clinical trial, we assigned patients at elevated risk for post-ERCP pancreatitis to receive a single dose of rectal indomethacin or placebo immediately after ERCP. Patients were determined to be at high risk on the basis of validated patient- and procedure-related risk factors. The primary outcome was post-ERCP pancreatitis, which was defined as new upper abdominal pain, an elevation in pancreatic enzymes to at least three times the upper limit of the normal range 24 hours after the procedure, and hospitalization for at least 2 nights.\nRESULTS A total of 602 patients were enrolled and completed follow-up. The majority of patients (82%) had a clinical suspicion of sphincter of Oddi dysfunction. Post-ERCP pancreatitis developed in 27 of 295 patients (9.2%) in the indomethacin group and in 52 of 307 patients (16.9%) in the placebo group (P=0.005). Moderate-to-severe pancreatitis developed in 13 patients (4.4%) in the indomethacin group and in 27 patients (8.8%) in the placebo group (P=0.03).\nCONCLUSIONS Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 29, 2024\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "You can learn how to use R in this tutorial.\n\n\n\n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nDuckDB in R\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto basics\n\n\n\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 29, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nManuscript\n\n\n\n\n\n\nQuarto\n\n\nManuscript\n\n\n\nBACKGROUND Preliminary research suggests that rectally administered nonsteroidal antiinflammatory drugs may reduce the incidence of pancreatitis after endoscopic retrograde cholangiopancreatography (ERCP).\nMETHODS In this multicenter, randomized, placebo-controlled, double-blind clinical trial, we assigned patients at elevated risk for post-ERCP pancreatitis to receive a single dose of rectal indomethacin or placebo immediately after ERCP. Patients were determined to be at high risk on the basis of validated patient- and procedure-related risk factors. The primary outcome was post-ERCP pancreatitis, which was defined as new upper abdominal pain, an elevation in pancreatic enzymes to at least three times the upper limit of the normal range 24 hours after the procedure, and hospitalization for at least 2 nights.\nRESULTS A total of 602 patients were enrolled and completed follow-up. The majority of patients (82%) had a clinical suspicion of sphincter of Oddi dysfunction. Post-ERCP pancreatitis developed in 27 of 295 patients (9.2%) in the indomethacin group and in 52 of 307 patients (16.9%) in the placebo group (P=0.005). Moderate-to-severe pancreatitis developed in 13 patients (4.4%) in the indomethacin group and in 27 patients (8.8%) in the placebo group (P=0.03).\nCONCLUSIONS Among patients at high risk for post-ERCP pancreatitis, rectal indomethacin significantly reduced the incidence of the condition. (Funded by the National Institutes of Health; ClinicalTrials.gov number, NCT00820612. opens in new tab.) \n\n\n\n\n\nMar 29, 2024\n\n\n\n\n\n\n\n\n\n\n\n\nTables and Plots\n\n\n\n\n\n\ntable\n\n\nplot\n\n\n\n\n\n\n\n\n\nMar 28, 2024\n\n\nReddy Lee\n\n\n\n\n\n\n\n\n\n\n\n\nParameterized Reporting with Quarto\n\n\nRegistered r params$pet_type in Switzerland\n\n\n\nquarto\n\n\nparams\n\n\n\n\n\n\n\n\n\nMar 27, 2024\n\n\nJadey Ryan\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
-    "objectID": "ps/second_paper1.html#section",
-    "href": "ps/second_paper1.html#section",
-    "title": "Coups and Democracy",
+    "objectID": "demoR/quarto.html",
+    "href": "demoR/quarto.html",
+    "title": "Quarto basics",
+    "section": "",
+    "text": "This document demonstrates the basic features of Quarto. You can find the source code of this document from upper right corner of this page by clicking “Code &gt; View Source”."
+  },
+  {
+    "objectID": "demoR/quarto.html#setup",
+    "href": "demoR/quarto.html#setup",
+    "title": "Quarto basics",
+    "section": "\n1 Setup",
+    "text": "1 Setup\nIf we label a code chunk as setup, it will be executed automatically when you first run a code chunk. We can also set message: false to suppress the output of the code chunk. For example, the following code chunk loads the tidyverse package and suppresses the output message.\n\nCode# Attach packages\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "demoR/quarto.html#text-styles",
+    "href": "demoR/quarto.html#text-styles",
+    "title": "Quarto basics",
+    "section": "\n2 Text styles",
+    "text": "2 Text styles\n\n2.1 Headings\nWe can use # to create headings. The number of # indicates the level of the heading. For example, # Heading 1, ## Heading 2, ### Heading 3, and all the way up to ###### Heading 6.\nIf we set number-sections: true in the YAML front matter, Quarto will automatically number the headings.\n\n2.2 Emphasis\nWe can use * or _ to emphasize text. For example, italic, bold, and bold italic.\n\n2.3 Lists\nWe can create ordered and unordered lists. For example:\n\nFirst item\n\nSecond item\n\nSubitem 1\nSubitem 2\n\n\n\n2.4 Blockquotes\nWe can use &gt; to create blockquotes. For example:\n\nThis is a blockquote.\n\n\n2.5 Links\nWe can create links using the following syntax:\n\nQuarto\n\n2.6 Images\nWe can include images using the following syntax:\n\nFrom the web: \nFrom the local file:\n\n\n\n2.7 Colors\nWe can use HTML color names or hexadecimal color codes to set text and background colors. For example:\nBlue text\nPurple text\n\n2.8 Equations\nWe can include equations using LaTeX syntax. For example:\n\nInline equation: \\(E=mc^2\\)\n\nBlock equation: \\[\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}\\]\n\\[\\pi \\in \\mathbb {R}\\]\n\nBasic Functions: \\[\\sin x, \\ \\log_2{x}, \\hspace{0.5cm} \\sqrt[3]{x^2 +1}\\]\n\nFractions:\\[\\$5 \\over{x + y}\\]\n\\[ \\left[\\frac{1}{2} \\hspace{0.5cm} \\frac{x^2}{x^3}\\right\\}\\]\n\\[\\left(\\frac{\\partial f}{\\partial x}\\right)\\]\n\n\nChanging faces:\\[\\mathbb{R}, \\ \\mathbb{N}, \\ \\mathbb{Z}, \\ \\mathbb{Q}\\]\n\\[\\mathcal{L}, \\ \\mathcal{F}, \\ \\mathcal{G}\\]\n\nText in equations: \\[ \\frac{\\text{ordinary stuff}}{\\text{extraordinary stuff}}\\]\n\nAligned equation:\n\\[\n\\begin{aligned}\n(x + y)^2 &= x^2 + 2xy + y^2\n\\\\\n\\\\\n&\\ne x^2 + y^2\n\\end{aligned}\n\\]\n\nNumbered equation: \\[\n\\frac{\\partial \\mathrm C}{ \\partial \\mathrm t } + \\frac{1}{2}\\sigma^{2} \\mathrm S^{2}\n\\frac{\\partial^{2} \\mathrm C}{\\partial \\mathrm C^2}\n+ \\mathrm r \\mathrm S \\frac{\\partial \\mathrm C}{\\partial \\mathrm S}\\ =\n\\mathrm r \\mathrm C\n\\tag{1}\\]\n\nBlack-Scholes (Equation 1) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options.\n\n\nMatrices:\n\\[\n\\begin{bmatrix}\n  1 & 2 & 3 \\\\\n  4 & 5 & 6 \\\\\n  7 & 8 & 9\n\\end{bmatrix}\n\\]"
+  },
+  {
+    "objectID": "demoR/quarto.html#layout",
+    "href": "demoR/quarto.html#layout",
+    "title": "Quarto basics",
+    "section": "\n3 Layout",
+    "text": "3 Layout\n\n3.1 Columns\nWe can create columns using the columns directive. For example:\n\n\n\n\nQuarto logo\n\n\n\n\n\n\n3.2 Callouts\nWe can create callouts using the callout directive. For example:\n\n\n\n\n\n\nNote\n\n\n\nNote that there are five types of callouts, including: note, warning, important, tip, and caution.\n\n\n\n\n\n\n\n\nTip with Title\n\n\n\nThis is an example of a callout with a title.\n\n\n\n\n\n\n\n\nExpand To Learn About Collapse\n\n\n\n\n\nThis is an example of a ‘folded’ caution callout that can be expanded by the user. You can use collapse=\"true\" to collapse it by default or collapse=\"false\" to make a collapsible callout that is expanded by default.\n\n\n\n\n3.3 Tabsets\nWe can create tabsets using the tabset directive. For example:\n\n\nR\nPython\n\n\n\n\nCodecat(\"Hello, Quarto!\")\n\nHello, Quarto!\n\n\n\n\n\nCodeprint(\"Hello, python!\")\n\nHello, python!"
+  },
+  {
+    "objectID": "demoR/quarto.html#embed-code-from-external-files",
+    "href": "demoR/quarto.html#embed-code-from-external-files",
+    "title": "Quarto basics",
+    "section": "\n4 Embed code from external files",
+    "text": "4 Embed code from external files\n\n4.1 Embed plot\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of body mass and flipper length by species\n\n\n\n\nSource: _penguins.qmd\n\n4.2 Embed table\n\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\nSource: _penguins.qmd\n\n4.3 Embed video\nGet started with Quarto | Mine Çetinkaya-Rundel\n\n\nQuarto for Academics | Mine Çetinkaya-Rundel\n\n\n\n\n\n\nQuarto logo\nFigure 1: Scatter plot of body mass and flipper length by species"
+  },
+  {
+    "objectID": "demoR/test1.html#section",
+    "href": "demoR/test1.html#section",
+    "title": "Manuscript",
     "section": "Section",
-    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "text": "Section\nThis is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\n1 + 1\n\n[1] 2\n\n\n\nlibrary(ggplot2)\n\nLet’s cite here (De Bruin 2020)."
   },
   {
-    "objectID": "ps/second_paper1.html#references",
-    "href": "ps/second_paper1.html#references",
-    "title": "Coups and Democracy",
+    "objectID": "demoR/test1.html#references",
+    "href": "demoR/test1.html#references",
+    "title": "Manuscript",
     "section": "References",
     "text": "References\n\n\n\n\n\n\n\n\nDe Bruin, Erica. 2020. “Preventing Coups d’état.” In, 1–12. Cornell University Press. https://doi.org/10.7591/cornell/9781501751912.003.0001.\n\n\nKnuth, D. E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
   },
   {
-    "objectID": "ps/second_paper.html",
-    "href": "ps/second_paper.html",
-    "title": "Coups and Democracy",
+    "objectID": "demoR/manuscript.html",
+    "href": "demoR/manuscript.html",
+    "title": "Manuscript",
     "section": "",
-    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
+    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nCode1 + 1\n\n[1] 2\n\n\n\nCodelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
   },
   {
-    "objectID": "ps/second_paper.html#section",
-    "href": "ps/second_paper.html#section",
-    "title": "Coups and Democracy",
+    "objectID": "demoR/manuscript.html#section",
+    "href": "demoR/manuscript.html#section",
+    "title": "Manuscript",
     "section": "",
-    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nShow the code1 + 1\n\n[1] 2\n\n\n\nShow the codelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
-  },
-  {
-    "objectID": "demoR/params.html#setup",
-    "href": "demoR/params.html#setup",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "1 Setup",
-    "text": "1 Setup\n\n# Attach packages\nlibrary(tidyverse)\n\n# Load data\npets &lt;- read_rds(\"data/pets.RDS\")"
-  },
-  {
-    "objectID": "demoR/params.html#breeds-of-dogs-in-switzerland",
-    "href": "demoR/params.html#breeds-of-dogs-in-switzerland",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "2 Breeds of dogs in Switzerland",
-    "text": "2 Breeds of dogs in Switzerland\n\nbreeds &lt;- pets |&gt;\n  filter(pet_type == params$pet_type)\n\n# Top 5 per date\nbreeds_top_5 &lt;- breeds |&gt;\n  slice_max(order_by = count, n = 5, by = date)\n\n# Top 5 overall (average across all dates)\nbreeds_avg &lt;- breeds_top_5 |&gt;\n  summarize(\n    \"Average Number\" = format(\n      mean(count),\n      big.mark = \",\",\n      digits = 1,\n      justify = \"right\",\n      scientific = FALSE\n    ),\n    .by = \"breed\"\n  ) |&gt;\n  rename(\"Breed\" = breed) |&gt;\n  head(5)\n\nThe breed with the largest average population in Switzerland from 2016 - 2023 was the Kreuzung.\n\nbreeds_top_5 |&gt;\n  ggplot(\n    aes(x = date, y = count, color = breed)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = \"Evolution by breed\",\n    subtitle = str_wrap(\n      paste(\n        \"Number of registered and living\",\n        params$pet_type,\n        \"by breed. The evolution of the largest populations is presented.\"\n      ),\n      80\n    ),\n    color = NULL,\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
-  },
-  {
-    "objectID": "demoR/params.html#my-favorite-breed-australian-shepherd",
-    "href": "demoR/params.html#my-favorite-breed-australian-shepherd",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "3 My favorite breed: Australian Shepherd",
-    "text": "3 My favorite breed: Australian Shepherd\n\nfave_breed &lt;- breeds |&gt;\n  filter(breed == params$fave_breed)\n\n\nfave_breed |&gt;\n  ggplot(\n    aes(x = date, y = count)\n  ) +\n  geom_line(linewidth = 1) +\n  scale_x_date(date_labels = \"%Y\", date_breaks = \"1 year\") +\n  scale_y_continuous(\n    labels = \\(x) format(x, big.mark = \",\", scientific = FALSE)\n  ) +\n  labs(\n    title = paste(params$fave_breed, \"population\"),\n    caption = \"Source: Identitas AG Animal Statistics\"\n  ) +\n  xlab(NULL) +\n  ylab(NULL) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(\n    plot.caption.position = \"plot\",\n    legend.position = \"top\",\n    panel.grid.major.x = element_blank(),\n    panel.grid.minor.x = element_blank()\n  )"
-  },
-  {
-    "objectID": "demoR/params.html#data-source",
-    "href": "demoR/params.html#data-source",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "4 Data source",
-    "text": "4 Data source\nIdentitas AG is the leading service provider for animal health, welfare and food safety in Switzerland.\nDogs are obliged to be registered for licensing purposes at a local government level and this data is kept in the Amicus database. Other pets, such as pets, rodents, birds or fish, may be registered and this data is stored in the Anis database."
-  },
-  {
-    "objectID": "demoR/params.html#tutorial-video",
-    "href": "demoR/params.html#tutorial-video",
-    "title": "Parameterized Reporting with Quarto",
-    "section": "5 Tutorial video",
-    "text": "5 Tutorial video"
-  },
-  {
-    "objectID": "demoR/plot_table.html#setup",
-    "href": "demoR/plot_table.html#setup",
-    "title": "Tables and Plots",
-    "section": "1 Setup",
-    "text": "1 Setup\n\nlibrary(tidyverse)"
-  },
-  {
-    "objectID": "demoR/plot_table.html#plot",
-    "href": "demoR/plot_table.html#plot",
-    "title": "Tables and Plots",
-    "section": "2 Plot",
-    "text": "2 Plot\n\nmtcars |&gt; \n  mutate(am = as.factor(am)) |&gt;\n  ggplot(aes(x = mpg, y = hp, color = am)) +\n  geom_point() \n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
-  },
-  {
-    "objectID": "demoR/plot_table.html#table",
-    "href": "demoR/plot_table.html#table",
-    "title": "Tables and Plots",
-    "section": "3 Table",
-    "text": "3 Table\n\nmtcars |&gt; \n  head(5) |&gt;\n  knitr::kable()\n\n\n\nTable 1: First 5 rows of mtcars\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmpg\ncyl\ndisp\nhp\ndrat\nwt\nqsec\nvs\nam\ngear\ncarb\n\n\n\n\nMazda RX4\n21.0\n6\n160\n110\n3.90\n2.620\n16.46\n0\n1\n4\n4\n\n\nMazda RX4 Wag\n21.0\n6\n160\n110\n3.90\n2.875\n17.02\n0\n1\n4\n4\n\n\nDatsun 710\n22.8\n4\n108\n93\n3.85\n2.320\n18.61\n1\n1\n4\n1\n\n\nHornet 4 Drive\n21.4\n6\n258\n110\n3.08\n3.215\n19.44\n1\n0\n3\n1\n\n\nHornet Sportabout\n18.7\n8\n360\n175\n3.15\n3.440\n17.02\n0\n0\n3\n2\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Scatter plot of mpg vs hp colored by am"
+    "text": "This is a simple placeholder for the manuscript’s main document (Knuth 1984).\n\nCode1 + 1\n\n[1] 2\n\n\n\nCodelibrary(ggplot2)\n\n\nLet’s cite here (De Bruin 2020)."
   }
 ]

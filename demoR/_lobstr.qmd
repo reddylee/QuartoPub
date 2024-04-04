@@ -1,0 +1,85 @@
+---
+title: Understanding R with lobstr
+format:
+  html:
+    code-tools: true
+---
+
+## Setup
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(lobstr)
+```
+
+## Nmae vs. Value
+
+```{r}
+x <- runif(1e6)
+obj_size(x)
+```
+
+```{r}
+y <- list(x,x,x)
+obj_size(y)
+```
+
+```{r}
+y[[1]][[1]] <- NA
+obj_size(y)
+```
+## Multiple references
+```{r}
+a <- b <- c <- x
+obj_size(a,b,c)
+```
+```{r}
+ref(a,b,c,x)
+```
+
+```{r}
+ast(f(x, "y",1))
+ast(f(g(x), "y",1))
+ast(f(g(h(i(x))), "y",1))
+ast(y <- x * 10)
+```
+
+```{r}
+ast(Reddy <- "Is a PhD student")
+```
+
+```{r}
+ast(1 + 2 + 3)
+ast(1 + 2 * 3)
+ast(2 ^ 3 ^ 4)
+```
+```{r}
+ast(if (x > 10) y[[1]] else y[[2]])
+```
+
+```{r}
+ast(for (i in 1:10) {
+  i + 1
+})
+```
+
+```{r}
+expr(1 + 2 + 3)
+```
+```{r}
+a <- expr(1 + 2 * 3)
+```
+```{r}
+a
+```
+
+```{r}
+tree(mtcars)
+```
+
+
+
+
+
+

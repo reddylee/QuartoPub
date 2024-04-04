@@ -3,6 +3,10 @@ title: DuckDB in R
 format:
   aps-html:
     code-tools: true
+other-links:
+    - text: Download data
+      href: data/gdp.csv
+      icon: download
 ---
 
 ## Establish a connection to DuckDB
@@ -15,7 +19,11 @@ library(gt)
 library(DBI)
 library(duckdb)
 library(duckplyr)
+library(tictoc)
+library(nycflights23)
+```
 
+```{r}
 # to start an in-memory database
 con <- dbConnect(duckdb())
 # or con <- dbConnect(duckdb(), dbdir = ":memory:")
@@ -35,8 +43,8 @@ con <- dbConnect(duckdb())
 dbWriteTable(con, "mtcars", mtcars) 
 
 # register iris, from R environment, as a view in duckdb
-duckdb_register(con, "iris_view", iris) 
-duckdb_register(con, "flights", nycflights13::flights)
+duckdb_register(con, "view", iris) 
+duckdb_register(con, "flights", flights)
 
 # read data from local file to duckdb
 duckdb_read_csv(con, "gdp", "data/gdp.csv", na.strings = "NA")
@@ -126,6 +134,10 @@ We can save the outcome of the query into the R environment as shown below[^1].
 
 [^1]: Please go to upper right corner to view the source code.
 
+```{r}
+tic("sql")
+```
+
 ```{sql connection=con, output.var="top10_delayed_planes"}
 SELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay
 FROM flights
@@ -135,7 +147,13 @@ HAVING COUNT(*) > 20
 ORDER BY delay DESC
 LIMIT 10
 ```
+```{r}
+toc()
+```
 
+```{r}
+tic("R")
+```
 ```{r}
 #| include: false
 nycflights13::flights %>%
@@ -148,9 +166,13 @@ nycflights13::flights %>%
   head(10)
 ```
 
+```{r}
+toc()
+```
 The outcome of the query is saved in the R environment as `top10_delayed_planes` and we can call it in R chunk as shown below.
 
 ```{r}
+# same result with the query in R
 top10_delayed_planes |> 
   gt() |> 
   tab_options(table.width = pct(90),
@@ -160,14 +182,35 @@ top10_delayed_planes |>
   opt_row_striping()
 ```
 
-Why bother with `duckdb` when we can do the same in `R`?
-The answer is that `duckdb` is faster than `R` for large datasets.
-For example, the `vdemdata` dataset has 500 V-Dem indicators and 245 indices + 57 other indicators from other data sources.
-It is a huge dataset and it is almost impossible to view the whole V-Dem dataset in R.
-It would be better, although still quite slow, to use `duckdb` to query the dataset and view the outcome in R.
+Why bother with `duckdb` when we can do the same in `R`? You might ask. The answer is that `duckdb` is faster than `R` for large datasets. As showed above, the query in `duckdb` is much faster than in `R` to get the same results. 
+
+We might not notice a significant difference in query execution speed in this example because the dataset is small. However, the discrepancy becomes more apparent with larger datasets. Let's examine a big dataset to observe the contrast in query execution speed. We'll use a dataset containing item checkouts from Seattle public libraries, accessible online at [Seattle](https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data).
+
+When attempting to read the dataset with `read_csv()`, it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset's substantial size, comprising approximately 31,871,534 rows, spanning 12 columns, and occupying 6.5 GB of storage space. The following code would fail to read such voluminous data.
+
+```{{r}}
+read_csv("data/seattle-library-checkouts.csv") |> 
+  nrow()
+```
+
+Let's try to query with `duckdb`.
+```{r}
+tic("sql")
+```
+
+```{sql connection=con}
+Select Count(*)
+From read_csv('data/seattle-library-checkouts.csv')
+```
+```{r}
+toc()
+```
+
+`DuckDB` took a bit longer to retrieve the results, more than 4 seconds, but the performance was quite acceptable. It outperformed `R`, which failed to read the data altogether.
 
 ## Disconnect from DuckDB
 
 ```{r}
 dbDisconnect(con, shutdown = TRUE)
 ```
+

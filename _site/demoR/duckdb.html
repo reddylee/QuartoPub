@@ -186,7 +186,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </li>
   <li><a href="#save-outcome-of-query-into-r-environment" id="toc-save-outcome-of-query-into-r-environment" class="nav-link" data-scroll-target="#save-outcome-of-query-into-r-environment"><span class="header-section-number">4</span> Save outcome of query into R environment</a></li>
   <li><a href="#disconnect-from-duckdb" id="toc-disconnect-from-duckdb" class="nav-link" data-scroll-target="#disconnect-from-duckdb"><span class="header-section-number">5</span> Disconnect from DuckDB</a></li>
-  </ul></nav>
+  </ul><div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="data/gdp.csv"><i class="bi bi-download"></i>Download data</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -212,15 +212,19 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(duckdb)</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(duckplyr)</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># to start an in-memory database</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># or con &lt;- dbConnect(duckdb(), dbdir = ":memory:")</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># to use a database file (not shared between processes)</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = FALSE)</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># to use a database file (shared between processes)</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(tictoc)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(nycflights23)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># to start an in-memory database</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># or con &lt;- dbConnect(duckdb(), dbdir = ":memory:")</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># to use a database file (not shared between processes)</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = FALSE)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># to use a database file (shared between processes)</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section><section id="load-data-into-duckdb" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="load-data-into-duckdb">
@@ -228,22 +232,22 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <section id="load-data-from-r-chunk" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="load-data-from-r-chunk">
 <span class="header-section-number">2.1</span> Load data from <code>R</code> chunk</h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># write mtcars, from R environment, to duckdb database</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars) </span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># register iris, from R environment, as a view in duckdb</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">duckdb_register</span>(con, <span class="st">"iris_view"</span>, iris) </span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">duckdb_register</span>(con, <span class="st">"flights"</span>, nycflights13<span class="sc">::</span>flights)</span>
-<span id="cb2-7"><a href="#cb2-7"></a></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># read data from local file to duckdb</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">duckdb_read_csv</span>(con, <span class="st">"gdp"</span>, <span class="st">"data/gdp.csv"</span>, <span class="at">na.strings =</span> <span class="st">"NA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># write mtcars, from R environment, to duckdb database</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars) </span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># register iris, from R environment, as a view in duckdb</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">duckdb_register</span>(con, <span class="st">"view"</span>, iris) </span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="fu">duckdb_register</span>(con, <span class="st">"flights"</span>, flights)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># read data from local file to duckdb</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="fu">duckdb_read_csv</span>(con, <span class="st">"gdp"</span>, <span class="st">"data/gdp.csv"</span>, <span class="at">na.strings =</span> <span class="st">"NA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section><section id="load-data-from-sql-chunk" class="level3" data-number="2.2"><h3 data-number="2.2" class="anchored" data-anchor-id="load-data-from-sql-chunk">
 <span class="header-section-number">2.2</span> Load data from <code>sql</code> chunk</h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">create</span> <span class="kw">table</span> gdp2 <span class="kw">as</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> read_csv(<span class="st">'data/gdp.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">create</span> <span class="kw">table</span> gdp2 <span class="kw">as</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> read_csv(<span class="st">'data/gdp.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section><section id="show-tables-in-duckdb" class="level3" data-number="2.3"><h3 data-number="2.3" class="anchored" data-anchor-id="show-tables-in-duckdb">
@@ -252,16 +256,16 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <li>list tables in <code>R</code> chunk</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">dbListTables</span>(con) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">dbListTables</span>(con) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] "flights"   "gdp"       "gdp2"      "iris_view" "mtcars"   </code></pre>
+<pre><code>[1] "flights" "gdp"     "gdp2"    "mtcars"  "view"   </code></pre>
 </div>
 </div>
 <ul>
 <li>list tables in <code>sql connection</code> chunk</li>
 </ul>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1"></a>show <span class="kw">tables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1"></a>show <span class="kw">tables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>5 records</caption>
@@ -279,10 +283,10 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <td style="text-align: left;">gdp2</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">iris_view</td>
+<td style="text-align: left;">mtcars</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">mtcars</td>
+<td style="text-align: left;">view</td>
 </tr>
 </tbody>
 </table>
@@ -297,7 +301,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </section><section id="view-the-whole-table" class="level3" data-number="3.2"><h3 data-number="3.2" class="anchored" data-anchor-id="view-the-whole-table">
 <span class="header-section-number">3.2</span> View the whole table</h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> gdp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> gdp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -408,163 +412,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </section><section id="more-complex-queries" class="level3" data-number="3.3"><h3 data-number="3.3" class="anchored" data-anchor-id="more-complex-queries">
 <span class="header-section-number">3.3</span> More complex queries</h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> mtcars</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">where</span> hp <span class="op">&gt;</span> <span class="dv">100</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">order</span> <span class="kw">by</span> <span class="op">-</span>hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
-<thead><tr class="header">
-<th style="text-align: right;">mpg</th>
-<th style="text-align: right;">cyl</th>
-<th style="text-align: right;">disp</th>
-<th style="text-align: right;">hp</th>
-<th style="text-align: right;">drat</th>
-<th style="text-align: right;">wt</th>
-<th style="text-align: right;">qsec</th>
-<th style="text-align: right;">vs</th>
-<th style="text-align: right;">am</th>
-<th style="text-align: right;">gear</th>
-<th style="text-align: right;">carb</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">15.0</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">301.0</td>
-<td style="text-align: right;">335</td>
-<td style="text-align: right;">3.54</td>
-<td style="text-align: right;">3.570</td>
-<td style="text-align: right;">14.60</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">15.8</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">351.0</td>
-<td style="text-align: right;">264</td>
-<td style="text-align: right;">4.22</td>
-<td style="text-align: right;">3.170</td>
-<td style="text-align: right;">14.50</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">14.3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">360.0</td>
-<td style="text-align: right;">245</td>
-<td style="text-align: right;">3.21</td>
-<td style="text-align: right;">3.570</td>
-<td style="text-align: right;">15.84</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">13.3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">350.0</td>
-<td style="text-align: right;">245</td>
-<td style="text-align: right;">3.73</td>
-<td style="text-align: right;">3.840</td>
-<td style="text-align: right;">15.41</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">14.7</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">440.0</td>
-<td style="text-align: right;">230</td>
-<td style="text-align: right;">3.23</td>
-<td style="text-align: right;">5.345</td>
-<td style="text-align: right;">17.42</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10.4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">460.0</td>
-<td style="text-align: right;">215</td>
-<td style="text-align: right;">3.00</td>
-<td style="text-align: right;">5.424</td>
-<td style="text-align: right;">17.82</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">10.4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">472.0</td>
-<td style="text-align: right;">205</td>
-<td style="text-align: right;">2.93</td>
-<td style="text-align: right;">5.250</td>
-<td style="text-align: right;">17.98</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">16.4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">275.8</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">3.07</td>
-<td style="text-align: right;">4.070</td>
-<td style="text-align: right;">17.40</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">17.3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">275.8</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">3.07</td>
-<td style="text-align: right;">3.730</td>
-<td style="text-align: right;">17.60</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">15.2</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">275.8</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">3.07</td>
-<td style="text-align: right;">3.780</td>
-<td style="text-align: right;">18.00</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>We can omit <code>Select *</code> in the query in <code>duckdb</code> as it is the default.</p>
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">from</span> mtcars</span>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> mtcars</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="kw">where</span> hp <span class="op">&gt;</span> <span class="dv">100</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="kw">order</span> <span class="kw">by</span> <span class="op">-</span>hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -718,13 +566,169 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </table>
 </div>
 </div>
+<p>We can omit <code>Select *</code> in the query in <code>duckdb</code> as it is the default.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">from</span> mtcars</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">where</span> hp <span class="op">&gt;</span> <span class="dv">100</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">order</span> <span class="kw">by</span> <span class="op">-</span>hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead><tr class="header">
+<th style="text-align: right;">mpg</th>
+<th style="text-align: right;">cyl</th>
+<th style="text-align: right;">disp</th>
+<th style="text-align: right;">hp</th>
+<th style="text-align: right;">drat</th>
+<th style="text-align: right;">wt</th>
+<th style="text-align: right;">qsec</th>
+<th style="text-align: right;">vs</th>
+<th style="text-align: right;">am</th>
+<th style="text-align: right;">gear</th>
+<th style="text-align: right;">carb</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">301.0</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">3.54</td>
+<td style="text-align: right;">3.570</td>
+<td style="text-align: right;">14.60</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15.8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">351.0</td>
+<td style="text-align: right;">264</td>
+<td style="text-align: right;">4.22</td>
+<td style="text-align: right;">3.170</td>
+<td style="text-align: right;">14.50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">360.0</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">3.21</td>
+<td style="text-align: right;">3.570</td>
+<td style="text-align: right;">15.84</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">350.0</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">3.73</td>
+<td style="text-align: right;">3.840</td>
+<td style="text-align: right;">15.41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">440.0</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">3.23</td>
+<td style="text-align: right;">5.345</td>
+<td style="text-align: right;">17.42</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">460.0</td>
+<td style="text-align: right;">215</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">5.424</td>
+<td style="text-align: right;">17.82</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">472.0</td>
+<td style="text-align: right;">205</td>
+<td style="text-align: right;">2.93</td>
+<td style="text-align: right;">5.250</td>
+<td style="text-align: right;">17.98</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16.4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">275.8</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">3.07</td>
+<td style="text-align: right;">4.070</td>
+<td style="text-align: right;">17.40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">275.8</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">3.07</td>
+<td style="text-align: right;">3.730</td>
+<td style="text-align: right;">17.60</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">275.8</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">3.07</td>
+<td style="text-align: right;">3.780</td>
+<td style="text-align: right;">18.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>We can anti-select columns in the query in <code>duckdb</code> as shown below.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">from</span> flights</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">select</span> <span class="op">*</span> exclude (<span class="dt">year</span>, <span class="dt">month</span>, <span class="dt">day</span>)</span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">where</span> <span class="dt">month</span> <span class="op">=</span> <span class="dv">1</span> <span class="kw">and</span> <span class="dt">day</span> <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="kw">order</span> <span class="kw">by</span> dep_delay <span class="kw">desc</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">limit</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">from</span> flights</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">select</span> <span class="op">*</span> exclude (<span class="dt">year</span>, <span class="dt">month</span>, <span class="dt">day</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="kw">where</span> <span class="dt">month</span> <span class="op">=</span> <span class="dv">1</span> <span class="kw">and</span> <span class="dt">day</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">order</span> <span class="kw">by</span> dep_delay <span class="kw">desc</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="kw">limit</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -766,184 +770,184 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">848</td>
-<td style="text-align: right;">1835</td>
-<td style="text-align: right;">853</td>
-<td style="text-align: right;">1001</td>
-<td style="text-align: right;">1950</td>
-<td style="text-align: right;">851</td>
-<td style="text-align: left;">MQ</td>
-<td style="text-align: right;">3944</td>
-<td style="text-align: left;">N942MQ</td>
+<td style="text-align: right;">1733</td>
+<td style="text-align: right;">1045</td>
+<td style="text-align: right;">408</td>
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">1345</td>
+<td style="text-align: right;">393</td>
+<td style="text-align: left;">UA</td>
+<td style="text-align: right;">740</td>
+<td style="text-align: left;">N17730</td>
+<td style="text-align: left;">EWR</td>
+<td style="text-align: left;">MCO</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">937</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: left;">2023-01-01 10:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1445</td>
+<td style="text-align: right;">830</td>
+<td style="text-align: right;">375</td>
+<td style="text-align: right;">1754</td>
+<td style="text-align: right;">1205</td>
+<td style="text-align: right;">349</td>
+<td style="text-align: left;">DL</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: left;">N705TW</td>
 <td style="text-align: left;">JFK</td>
-<td style="text-align: left;">BWI</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">184</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: left;">2013-01-01 23:00:00</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2343</td>
-<td style="text-align: right;">1724</td>
-<td style="text-align: right;">379</td>
-<td style="text-align: right;">314</td>
-<td style="text-align: right;">1938</td>
-<td style="text-align: right;">456</td>
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">4321</td>
-<td style="text-align: left;">N21197</td>
-<td style="text-align: left;">EWR</td>
-<td style="text-align: left;">MCI</td>
-<td style="text-align: right;">222</td>
-<td style="text-align: right;">1092</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: left;">2013-01-01 22:00:00</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1815</td>
-<td style="text-align: right;">1325</td>
-<td style="text-align: right;">290</td>
-<td style="text-align: right;">2120</td>
-<td style="text-align: right;">1542</td>
-<td style="text-align: right;">338</td>
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">4417</td>
-<td style="text-align: left;">N17185</td>
-<td style="text-align: left;">EWR</td>
-<td style="text-align: left;">OMA</td>
-<td style="text-align: right;">213</td>
-<td style="text-align: right;">1134</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: left;">2013-01-01 18:00:00</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2205</td>
-<td style="text-align: right;">1720</td>
-<td style="text-align: right;">285</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">2040</td>
-<td style="text-align: right;">246</td>
-<td style="text-align: left;">AA</td>
-<td style="text-align: right;">1999</td>
-<td style="text-align: left;">N5DNAA</td>
-<td style="text-align: left;">EWR</td>
-<td style="text-align: left;">MIA</td>
-<td style="text-align: right;">146</td>
-<td style="text-align: right;">1085</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: left;">2013-01-01 22:00:00</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1842</td>
-<td style="text-align: right;">1422</td>
-<td style="text-align: right;">260</td>
-<td style="text-align: right;">1958</td>
-<td style="text-align: right;">1535</td>
-<td style="text-align: right;">263</td>
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">4633</td>
-<td style="text-align: left;">N18120</td>
-<td style="text-align: left;">EWR</td>
-<td style="text-align: left;">BTV</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">266</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: left;">2013-01-01 19:00:00</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2115</td>
-<td style="text-align: right;">1700</td>
-<td style="text-align: right;">255</td>
-<td style="text-align: right;">2330</td>
-<td style="text-align: right;">1920</td>
-<td style="text-align: right;">250</td>
-<td style="text-align: left;">9E</td>
-<td style="text-align: right;">3347</td>
-<td style="text-align: left;">N924XJ</td>
-<td style="text-align: left;">JFK</td>
-<td style="text-align: left;">CVG</td>
-<td style="text-align: right;">115</td>
-<td style="text-align: right;">589</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">2013-01-01 22:00:00</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2006</td>
-<td style="text-align: right;">1630</td>
-<td style="text-align: right;">216</td>
-<td style="text-align: right;">2230</td>
-<td style="text-align: right;">1848</td>
-<td style="text-align: right;">222</td>
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">4644</td>
-<td style="text-align: left;">N14972</td>
-<td style="text-align: left;">EWR</td>
-<td style="text-align: left;">SAV</td>
-<td style="text-align: right;">121</td>
-<td style="text-align: right;">708</td>
-<td style="text-align: right;">16</td>
+<td style="text-align: left;">SAN</td>
+<td style="text-align: right;">330</td>
+<td style="text-align: right;">2446</td>
+<td style="text-align: right;">8</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: left;">2013-01-01 21:00:00</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2312</td>
-<td style="text-align: right;">2000</td>
-<td style="text-align: right;">192</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">2110</td>
-<td style="text-align: right;">191</td>
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">4312</td>
-<td style="text-align: left;">N13958</td>
-<td style="text-align: left;">EWR</td>
-<td style="text-align: left;">DCA</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">199</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">2013-01-02 01:00:00</td>
+<td style="text-align: left;">2023-01-01 08:00:00</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">1942</td>
-<td style="text-align: right;">1705</td>
-<td style="text-align: right;">157</td>
-<td style="text-align: right;">2124</td>
-<td style="text-align: right;">1830</td>
-<td style="text-align: right;">174</td>
-<td style="text-align: left;">MQ</td>
-<td style="text-align: right;">4410</td>
-<td style="text-align: left;">N835MQ</td>
-<td style="text-align: left;">JFK</td>
-<td style="text-align: left;">DCA</td>
-<td style="text-align: right;">60</td>
-<td style="text-align: right;">213</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">2013-01-01 22:00:00</td>
+<td style="text-align: right;">1453</td>
+<td style="text-align: right;">840</td>
+<td style="text-align: right;">373</td>
+<td style="text-align: right;">1735</td>
+<td style="text-align: right;">1156</td>
+<td style="text-align: right;">339</td>
+<td style="text-align: left;">B6</td>
+<td style="text-align: right;">968</td>
+<td style="text-align: left;">N193JB</td>
+<td style="text-align: left;">LGA</td>
+<td style="text-align: left;">PBI</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">1035</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">2023-01-01 08:00:00</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">1938</td>
-<td style="text-align: right;">1703</td>
-<td style="text-align: right;">155</td>
-<td style="text-align: right;">2109</td>
-<td style="text-align: right;">1823</td>
-<td style="text-align: right;">166</td>
-<td style="text-align: left;">EV</td>
-<td style="text-align: right;">4300</td>
-<td style="text-align: left;">N18557</td>
+<td style="text-align: right;">1158</td>
+<td style="text-align: right;">600</td>
+<td style="text-align: right;">358</td>
+<td style="text-align: right;">1404</td>
+<td style="text-align: right;">831</td>
+<td style="text-align: right;">333</td>
+<td style="text-align: left;">DL</td>
+<td style="text-align: right;">825</td>
+<td style="text-align: left;">N3756</td>
 <td style="text-align: left;">EWR</td>
-<td style="text-align: left;">RIC</td>
-<td style="text-align: right;">68</td>
-<td style="text-align: right;">277</td>
+<td style="text-align: left;">ATL</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">746</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2023-01-01 06:00:00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1124</td>
+<td style="text-align: right;">600</td>
+<td style="text-align: right;">324</td>
+<td style="text-align: right;">1320</td>
+<td style="text-align: right;">755</td>
+<td style="text-align: right;">325</td>
+<td style="text-align: left;">DL</td>
+<td style="text-align: right;">487</td>
+<td style="text-align: left;">N394DX</td>
+<td style="text-align: left;">LGA</td>
+<td style="text-align: left;">DTW</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">502</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2023-01-01 06:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1933</td>
+<td style="text-align: right;">1420</td>
+<td style="text-align: right;">313</td>
+<td style="text-align: right;">2214</td>
+<td style="text-align: right;">1731</td>
+<td style="text-align: right;">283</td>
+<td style="text-align: left;">B6</td>
+<td style="text-align: right;">656</td>
+<td style="text-align: left;">N2086J</td>
+<td style="text-align: left;">EWR</td>
+<td style="text-align: left;">MCO</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">937</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: left;">2023-01-01 14:00:00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2030</td>
+<td style="text-align: right;">1545</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">2304</td>
+<td style="text-align: right;">1856</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: left;">UA</td>
+<td style="text-align: right;">789</td>
+<td style="text-align: left;">N77259</td>
+<td style="text-align: left;">LGA</td>
+<td style="text-align: left;">IAH</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: right;">1416</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: left;">2023-01-01 15:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1115</td>
+<td style="text-align: right;">639</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">1402</td>
+<td style="text-align: right;">940</td>
+<td style="text-align: right;">262</td>
+<td style="text-align: left;">B6</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: left;">N2086J</td>
+<td style="text-align: left;">EWR</td>
+<td style="text-align: left;">MCO</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">937</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">2023-01-01 06:00:00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1056</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">1345</td>
+<td style="text-align: right;">1027</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: left;">AS</td>
+<td style="text-align: right;">349</td>
+<td style="text-align: left;">N268AK</td>
+<td style="text-align: left;">EWR</td>
+<td style="text-align: left;">SEA</td>
+<td style="text-align: right;">331</td>
+<td style="text-align: right;">2402</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2023-01-01 07:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2127</td>
+<td style="text-align: right;">1735</td>
+<td style="text-align: right;">232</td>
+<td style="text-align: right;">2247</td>
+<td style="text-align: right;">1900</td>
+<td style="text-align: right;">227</td>
+<td style="text-align: left;">B6</td>
+<td style="text-align: right;">494</td>
+<td style="text-align: left;">N2102J</td>
+<td style="text-align: left;">JFK</td>
+<td style="text-align: left;">ROC</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">264</td>
 <td style="text-align: right;">17</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">2013-01-01 22:00:00</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">2023-01-01 17:00:00</td>
 </tr>
 </tbody>
 </table>
@@ -951,18 +955,18 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </div>
 <p>More complex queries can be written in <code>sql</code> chunk as shown below.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">FROM</span> (</span>
-<span id="cb11-3"><a href="#cb11-3"></a>   <span class="kw">SELECT</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>     tailnum,</span>
-<span id="cb11-5"><a href="#cb11-5"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> <span class="fu">count</span>,</span>
-<span id="cb11-6"><a href="#cb11-6"></a>    <span class="fu">AVG</span>(distance) <span class="kw">AS</span> dist,</span>
-<span id="cb11-7"><a href="#cb11-7"></a>    <span class="fu">AVG</span>(arr_delay) <span class="kw">AS</span> delay</span>
-<span id="cb11-8"><a href="#cb11-8"></a>  <span class="kw">FROM</span> flights</span>
-<span id="cb11-9"><a href="#cb11-9"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> tailnum</span>
-<span id="cb11-10"><a href="#cb11-10"></a>) q01</span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="kw">WHERE</span> (<span class="fu">count</span> <span class="op">&gt;</span> <span class="fl">20.0</span>) <span class="kw">AND</span> (dist <span class="op">&lt;</span> <span class="fl">2000.0</span>) <span class="kw">AND</span> (<span class="kw">NOT</span>((delay <span class="kw">IS</span> <span class="kw">NULL</span>)))</span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="kw">limit</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">FROM</span> (</span>
+<span id="cb12-3"><a href="#cb12-3"></a>   <span class="kw">SELECT</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>     tailnum,</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> <span class="fu">count</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="fu">AVG</span>(distance) <span class="kw">AS</span> dist,</span>
+<span id="cb12-7"><a href="#cb12-7"></a>    <span class="fu">AVG</span>(arr_delay) <span class="kw">AS</span> delay</span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="kw">FROM</span> flights</span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> tailnum</span>
+<span id="cb12-10"><a href="#cb12-10"></a>) q01</span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="kw">WHERE</span> (<span class="fu">count</span> <span class="op">&gt;</span> <span class="fl">20.0</span>) <span class="kw">AND</span> (dist <span class="op">&lt;</span> <span class="fl">2000.0</span>) <span class="kw">AND</span> (<span class="kw">NOT</span>((delay <span class="kw">IS</span> <span class="kw">NULL</span>)))</span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="kw">limit</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -974,64 +978,64 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">N708JB</td>
-<td style="text-align: right;">246</td>
-<td style="text-align: right;">1389.9959</td>
-<td style="text-align: right;">8.5126050</td>
+<td style="text-align: left;">N925AN</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">987.4000</td>
+<td style="text-align: right;">-1.771429</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">N535UW</td>
-<td style="text-align: right;">60</td>
-<td style="text-align: right;">1669.4000</td>
-<td style="text-align: right;">2.1333333</td>
+<td style="text-align: left;">N2043J</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">1702.0427</td>
+<td style="text-align: right;">20.331210</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">N33289</td>
-<td style="text-align: right;">119</td>
-<td style="text-align: right;">1420.7395</td>
-<td style="text-align: right;">2.4621849</td>
+<td style="text-align: left;">N659JB</td>
+<td style="text-align: right;">222</td>
+<td style="text-align: right;">1174.3964</td>
+<td style="text-align: right;">16.052885</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">N3GKAA</td>
-<td style="text-align: right;">77</td>
-<td style="text-align: right;">1246.5974</td>
-<td style="text-align: right;">4.9733333</td>
+<td style="text-align: left;">N342NW</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">1015.0548</td>
+<td style="text-align: right;">7.478873</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">N75435</td>
-<td style="text-align: right;">89</td>
-<td style="text-align: right;">1760.4831</td>
-<td style="text-align: right;">4.9438202</td>
+<td style="text-align: left;">N612NK</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">1130.4375</td>
+<td style="text-align: right;">3.645161</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">N3EKAA</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">1186.7778</td>
-<td style="text-align: right;">0.2444444</td>
+<td style="text-align: left;">N2027J</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">1432.7787</td>
+<td style="text-align: right;">26.547826</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">N562JB</td>
-<td style="text-align: right;">315</td>
-<td style="text-align: right;">1243.7810</td>
-<td style="text-align: right;">10.9903846</td>
+<td style="text-align: left;">N24715</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">915.2717</td>
+<td style="text-align: right;">7.093567</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">N37456</td>
-<td style="text-align: right;">89</td>
-<td style="text-align: right;">1634.2022</td>
-<td style="text-align: right;">-7.8409091</td>
+<td style="text-align: left;">N413UA</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">914.5375</td>
+<td style="text-align: right;">12.126582</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">N625JB</td>
-<td style="text-align: right;">275</td>
-<td style="text-align: right;">1463.5709</td>
-<td style="text-align: right;">7.1102941</td>
+<td style="text-align: left;">N27274</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">1323.9359</td>
+<td style="text-align: right;">5.914163</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">N789SW</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">967.3667</td>
-<td style="text-align: right;">9.9655172</td>
+<td style="text-align: left;">N73256</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">1072.1414</td>
+<td style="text-align: right;">7.232323</td>
 </tr>
 </tbody>
 </table>
@@ -1040,44 +1044,65 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </section></section><section id="save-outcome-of-query-into-r-environment" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="save-outcome-of-query-into-r-environment">
 <span class="header-section-number">4</span> Save outcome of query into R environment</h2>
 <p>We can save the outcome of the query into the R environment as shown below<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<div class="cell" data-output.var="top10_delayed_planes">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">SELECT</span> tailnum, <span class="fu">AVG</span>(distance) <span class="kw">AS</span> dist, <span class="fu">AVG</span>(arr_delay) <span class="kw">AS</span> delay</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">FROM</span> flights</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">WHERE</span> <span class="dt">month</span> <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tailnum</span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">20</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="kw">ORDER</span> <span class="kw">BY</span> delay <span class="kw">DESC</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">tic</span>(<span class="st">"sql"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+<div class="cell" data-output.var="top10_delayed_planes">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">SELECT</span> tailnum, <span class="fu">AVG</span>(distance) <span class="kw">AS</span> dist, <span class="fu">AVG</span>(arr_delay) <span class="kw">AS</span> delay</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">FROM</span> flights</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">WHERE</span> <span class="dt">month</span> <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="kw">GROUP</span> <span class="kw">BY</span> tailnum</span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">20</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="kw">ORDER</span> <span class="kw">BY</span> delay <span class="kw">DESC</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>sql: 0.035 sec elapsed</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">tic</span>(<span class="st">"R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>R: 4.29 sec elapsed</code></pre>
+</div>
 </div>
 <p>The outcome of the query is saved in the R environment as <code>top10_delayed_planes</code> and we can call it in R chunk as shown below.</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>top10_delayed_planes <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
-<span id="cb13-4"><a href="#cb13-4"></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
-<span id="cb13-5"><a href="#cb13-5"></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6"></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">opt_row_striping</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># same result with the query in R</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>top10_delayed_planes <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
+<span id="cb20-5"><a href="#cb20-5"></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">opt_row_striping</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<div id="elkqjtdjxa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#elkqjtdjxa table {
+<div id="zevschdlyk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zevschdlyk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#elkqjtdjxa thead, #elkqjtdjxa tbody, #elkqjtdjxa tfoot, #elkqjtdjxa tr, #elkqjtdjxa td, #elkqjtdjxa th {
+#zevschdlyk thead, #zevschdlyk tbody, #zevschdlyk tfoot, #zevschdlyk tr, #zevschdlyk td, #zevschdlyk th {
   border-style: none;
 }
 
-#elkqjtdjxa p {
+#zevschdlyk p {
   margin: 0;
   padding: 0;
 }
 
-#elkqjtdjxa .gt_table {
+#zevschdlyk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1103,12 +1128,12 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-left-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_caption {
+#zevschdlyk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#elkqjtdjxa .gt_title {
+#zevschdlyk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1120,7 +1145,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-bottom-width: 0;
 }
 
-#elkqjtdjxa .gt_subtitle {
+#zevschdlyk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1132,7 +1157,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-top-width: 0;
 }
 
-#elkqjtdjxa .gt_heading {
+#zevschdlyk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1144,13 +1169,13 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-right-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_bottom_border {
+#zevschdlyk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_col_headings {
+#zevschdlyk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1165,7 +1190,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-right-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_col_heading {
+#zevschdlyk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
@@ -1185,7 +1210,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   overflow-x: hidden;
 }
 
-#elkqjtdjxa .gt_column_spanner_outer {
+#zevschdlyk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
@@ -1197,15 +1222,15 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   padding-right: 4px;
 }
 
-#elkqjtdjxa .gt_column_spanner_outer:first-child {
+#zevschdlyk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#elkqjtdjxa .gt_column_spanner_outer:last-child {
+#zevschdlyk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#elkqjtdjxa .gt_column_spanner {
+#zevschdlyk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1217,11 +1242,11 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   width: 100%;
 }
 
-#elkqjtdjxa .gt_spanner_row {
+#zevschdlyk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#elkqjtdjxa .gt_group_heading {
+#zevschdlyk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1247,7 +1272,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   text-align: left;
 }
 
-#elkqjtdjxa .gt_empty_group_heading {
+#zevschdlyk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1262,15 +1287,15 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   vertical-align: middle;
 }
 
-#elkqjtdjxa .gt_from_md > :first-child {
+#zevschdlyk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#elkqjtdjxa .gt_from_md > :last-child {
+#zevschdlyk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#elkqjtdjxa .gt_row {
+#zevschdlyk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1289,7 +1314,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   overflow-x: hidden;
 }
 
-#elkqjtdjxa .gt_stub {
+#zevschdlyk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1302,7 +1327,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   padding-right: 5px;
 }
 
-#elkqjtdjxa .gt_stub_row_group {
+#zevschdlyk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1316,15 +1341,15 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   vertical-align: top;
 }
 
-#elkqjtdjxa .gt_row_group_first td {
+#zevschdlyk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#elkqjtdjxa .gt_row_group_first th {
+#zevschdlyk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#elkqjtdjxa .gt_summary_row {
+#zevschdlyk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1334,16 +1359,16 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   padding-right: 5px;
 }
 
-#elkqjtdjxa .gt_first_summary_row {
+#zevschdlyk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_first_summary_row.thick {
+#zevschdlyk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#elkqjtdjxa .gt_last_summary_row {
+#zevschdlyk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1353,7 +1378,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-bottom-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_grand_summary_row {
+#zevschdlyk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1363,7 +1388,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   padding-right: 5px;
 }
 
-#elkqjtdjxa .gt_first_grand_summary_row {
+#zevschdlyk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1373,7 +1398,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-top-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_last_grand_summary_row_top {
+#zevschdlyk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1383,11 +1408,11 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-bottom-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_striped {
+#zevschdlyk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#elkqjtdjxa .gt_table_body {
+#zevschdlyk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1396,7 +1421,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-bottom-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_footnotes {
+#zevschdlyk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1410,7 +1435,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-right-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_footnote {
+#zevschdlyk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1419,7 +1444,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   padding-right: 5px;
 }
 
-#elkqjtdjxa .gt_sourcenotes {
+#zevschdlyk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1433,7 +1458,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   border-right-color: #D3D3D3;
 }
 
-#elkqjtdjxa .gt_sourcenote {
+#zevschdlyk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1441,63 +1466,63 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   padding-right: 5px;
 }
 
-#elkqjtdjxa .gt_left {
+#zevschdlyk .gt_left {
   text-align: left;
 }
 
-#elkqjtdjxa .gt_center {
+#zevschdlyk .gt_center {
   text-align: center;
 }
 
-#elkqjtdjxa .gt_right {
+#zevschdlyk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#elkqjtdjxa .gt_font_normal {
+#zevschdlyk .gt_font_normal {
   font-weight: normal;
 }
 
-#elkqjtdjxa .gt_font_bold {
+#zevschdlyk .gt_font_bold {
   font-weight: bold;
 }
 
-#elkqjtdjxa .gt_font_italic {
+#zevschdlyk .gt_font_italic {
   font-style: italic;
 }
 
-#elkqjtdjxa .gt_super {
+#zevschdlyk .gt_super {
   font-size: 65%;
 }
 
-#elkqjtdjxa .gt_footnote_marks {
+#zevschdlyk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#elkqjtdjxa .gt_asterisk {
+#zevschdlyk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#elkqjtdjxa .gt_indent_1 {
+#zevschdlyk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#elkqjtdjxa .gt_indent_2 {
+#zevschdlyk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#elkqjtdjxa .gt_indent_3 {
+#zevschdlyk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#elkqjtdjxa .gt_indent_4 {
+#zevschdlyk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#elkqjtdjxa .gt_indent_5 {
+#zevschdlyk .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1509,54 +1534,54 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </tr></thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="tailnum">N21144</td>
-<td class="gt_row gt_right" headers="dist">601.4286</td>
-<td class="gt_row gt_right" headers="delay">59.10000</td>
+<td class="gt_row gt_left" headers="tailnum">N394DA</td>
+<td class="gt_row gt_right" headers="dist">1224.1333</td>
+<td class="gt_row gt_right" headers="delay">47.43333</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="tailnum">N14920</td>
-<td class="gt_row gt_right gt_striped" headers="dist">423.9048</td>
-<td class="gt_row gt_right gt_striped" headers="delay">52.28571</td>
+<td class="gt_row gt_left gt_striped" headers="tailnum">N325PQ</td>
+<td class="gt_row gt_right gt_striped" headers="dist">423.8214</td>
+<td class="gt_row gt_right gt_striped" headers="delay">44.89286</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="tailnum">N517MQ</td>
-<td class="gt_row gt_right" headers="dist">590.0968</td>
-<td class="gt_row gt_right" headers="delay">51.40000</td>
+<td class="gt_row gt_left" headers="tailnum">N691CA</td>
+<td class="gt_row gt_right" headers="dist">417.5641</td>
+<td class="gt_row gt_right" headers="delay">44.02857</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="tailnum">N21537</td>
-<td class="gt_row gt_right gt_striped" headers="dist">529.1111</td>
-<td class="gt_row gt_right gt_striped" headers="delay">50.40741</td>
+<td class="gt_row gt_left gt_striped" headers="tailnum">N272PQ</td>
+<td class="gt_row gt_right gt_striped" headers="dist">502.4242</td>
+<td class="gt_row gt_right gt_striped" headers="delay">33.12121</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="tailnum">N10575</td>
-<td class="gt_row gt_right" headers="dist">485.4000</td>
-<td class="gt_row gt_right" headers="delay">48.10714</td>
+<td class="gt_row gt_left" headers="tailnum">N320SY</td>
+<td class="gt_row gt_right" headers="dist">544.0833</td>
+<td class="gt_row gt_right" headers="delay">32.08333</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="tailnum">N13994</td>
-<td class="gt_row gt_right gt_striped" headers="dist">476.0294</td>
-<td class="gt_row gt_right gt_striped" headers="delay">47.90625</td>
+<td class="gt_row gt_left gt_striped" headers="tailnum">N558JB</td>
+<td class="gt_row gt_right gt_striped" headers="dist">1127.8400</td>
+<td class="gt_row gt_right gt_striped" headers="delay">32.00000</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="tailnum">N16546</td>
-<td class="gt_row gt_right" headers="dist">519.8800</td>
-<td class="gt_row gt_right" headers="delay">46.36000</td>
+<td class="gt_row gt_left" headers="tailnum">N116AN</td>
+<td class="gt_row gt_right" headers="dist">2506.3333</td>
+<td class="gt_row gt_right" headers="delay">31.44444</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="tailnum">N13553</td>
-<td class="gt_row gt_right gt_striped" headers="dist">482.7429</td>
-<td class="gt_row gt_right gt_striped" headers="delay">43.33333</td>
+<td class="gt_row gt_left gt_striped" headers="tailnum">N187GJ</td>
+<td class="gt_row gt_right gt_striped" headers="dist">545.8182</td>
+<td class="gt_row gt_right gt_striped" headers="delay">30.87879</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="tailnum">N13958</td>
-<td class="gt_row gt_right" headers="dist">442.8400</td>
-<td class="gt_row gt_right" headers="delay">43.00000</td>
+<td class="gt_row gt_left" headers="tailnum">N905XJ</td>
+<td class="gt_row gt_right" headers="dist">458.5714</td>
+<td class="gt_row gt_right" headers="delay">30.57143</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" headers="tailnum">N11565</td>
-<td class="gt_row gt_right gt_striped" headers="dist">442.1538</td>
-<td class="gt_row gt_right gt_striped" headers="delay">40.08333</td>
+<td class="gt_row gt_left gt_striped" headers="tailnum">N193JB</td>
+<td class="gt_row gt_right gt_striped" headers="dist">448.6078</td>
+<td class="gt_row gt_right gt_striped" headers="delay">29.98000</td>
 </tr>
 </tbody>
 </table>
@@ -1564,11 +1589,44 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>Why bother with <code>duckdb</code> when we can do the same in <code>R</code>? The answer is that <code>duckdb</code> is faster than <code>R</code> for large datasets. For example, the <code>vdemdata</code> dataset has 500 V-Dem indicators and 245 indices + 57 other indicators from other data sources. It is a huge dataset and it is almost impossible to view the whole V-Dem dataset in R. It would be better, although still quite slow, to use <code>duckdb</code> to query the dataset and view the outcome in R.</p>
+<p>Why bother with <code>duckdb</code> when we can do the same in <code>R</code>? You might ask. The answer is that <code>duckdb</code> is faster than <code>R</code> for large datasets. As showed above, the query in <code>duckdb</code> is much faster than in <code>R</code> to get the same results.</p>
+<p>We might not notice a significant difference in query execution speed in this example because the dataset is small. However, the discrepancy becomes more apparent with larger datasets. Let’s examine a big dataset to observe the contrast in query execution speed. We’ll use a dataset containing item checkouts from Seattle public libraries, accessible online at <a href="https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data">Seattle</a>.</p>
+<p>When attempting to read the dataset with <code>read_csv()</code>, it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset’s substantial size, comprising approximately 31,871,534 rows, spanning 12 columns, and occupying 6.5 GB of storage space. The following code would fail to read such voluminous data.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1"></a><span class="in">```{r}</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="in">read_csv("data/seattle-library-checkouts.csv") |&gt; </span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="in">  nrow()</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s try to query with <code>duckdb</code>.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">tic</span>(<span class="st">"sql"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">Select</span> <span class="fu">Count</span>(<span class="op">*</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">From</span> read_csv(<span class="st">'data/seattle-library-checkouts.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>1 records</caption>
+<thead><tr class="header">
+<th style="text-align: right;">count_star()</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">31871534</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>sql: 7.201 sec elapsed</code></pre>
+</div>
+</div>
+<p><code>DuckDB</code> took a bit longer to retrieve the results, more than 4 seconds, but the performance was quite acceptable. It outperformed <code>R</code>, which failed to read the data altogether.</p>
 </section><section id="disconnect-from-duckdb" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="disconnect-from-duckdb">
 <span class="header-section-number">5</span> Disconnect from DuckDB</h2>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">dbDisconnect</span>(con, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">dbDisconnect</span>(con, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
@@ -2038,179 +2096,221 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">---</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="an">title:</span><span class="co"> DuckDB in R</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="an">format:</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co">  aps-html:</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">    code-tools: true</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co">---</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="fu">## Establish a connection to DuckDB</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="in">```{r}</span></span>
-<span id="cb15-13"><a href="#cb15-13"></a><span class="co">#| label: setup</span></span>
-<span id="cb15-14"><a href="#cb15-14"></a><span class="co">#| message: false</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb15-16"><a href="#cb15-16"></a><span class="fu">library</span>(gt)</span>
-<span id="cb15-17"><a href="#cb15-17"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb15-18"><a href="#cb15-18"></a><span class="fu">library</span>(duckdb)</span>
-<span id="cb15-19"><a href="#cb15-19"></a><span class="fu">library</span>(duckplyr)</span>
-<span id="cb15-20"><a href="#cb15-20"></a></span>
-<span id="cb15-21"><a href="#cb15-21"></a><span class="co"># to start an in-memory database</span></span>
-<span id="cb15-22"><a href="#cb15-22"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
-<span id="cb15-23"><a href="#cb15-23"></a><span class="co"># or con &lt;- dbConnect(duckdb(), dbdir = ":memory:")</span></span>
-<span id="cb15-24"><a href="#cb15-24"></a></span>
-<span id="cb15-25"><a href="#cb15-25"></a><span class="co"># to use a database file (not shared between processes)</span></span>
-<span id="cb15-26"><a href="#cb15-26"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = FALSE)</span></span>
-<span id="cb15-27"><a href="#cb15-27"></a><span class="co"># to use a database file (shared between processes)</span></span>
-<span id="cb15-28"><a href="#cb15-28"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = TRUE)</span></span>
-<span id="cb15-29"><a href="#cb15-29"></a><span class="in">```</span></span>
-<span id="cb15-30"><a href="#cb15-30"></a></span>
-<span id="cb15-31"><a href="#cb15-31"></a><span class="fu">## Load data into DuckDB</span></span>
-<span id="cb15-32"><a href="#cb15-32"></a></span>
-<span id="cb15-33"><a href="#cb15-33"></a><span class="fu">### Load data from `R` chunk</span></span>
-<span id="cb15-34"><a href="#cb15-34"></a></span>
-<span id="cb15-37"><a href="#cb15-37"></a><span class="in">```{r}</span></span>
-<span id="cb15-38"><a href="#cb15-38"></a><span class="co"># write mtcars, from R environment, to duckdb database</span></span>
-<span id="cb15-39"><a href="#cb15-39"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars) </span>
-<span id="cb15-40"><a href="#cb15-40"></a></span>
-<span id="cb15-41"><a href="#cb15-41"></a><span class="co"># register iris, from R environment, as a view in duckdb</span></span>
-<span id="cb15-42"><a href="#cb15-42"></a><span class="fu">duckdb_register</span>(con, <span class="st">"iris_view"</span>, iris) </span>
-<span id="cb15-43"><a href="#cb15-43"></a><span class="fu">duckdb_register</span>(con, <span class="st">"flights"</span>, nycflights13<span class="sc">::</span>flights)</span>
-<span id="cb15-44"><a href="#cb15-44"></a></span>
-<span id="cb15-45"><a href="#cb15-45"></a><span class="co"># read data from local file to duckdb</span></span>
-<span id="cb15-46"><a href="#cb15-46"></a><span class="fu">duckdb_read_csv</span>(con, <span class="st">"gdp"</span>, <span class="st">"data/gdp.csv"</span>, <span class="at">na.strings =</span> <span class="st">"NA"</span>)</span>
-<span id="cb15-47"><a href="#cb15-47"></a><span class="in">```</span></span>
-<span id="cb15-48"><a href="#cb15-48"></a></span>
-<span id="cb15-49"><a href="#cb15-49"></a><span class="fu">### Load data from `sql` chunk</span></span>
-<span id="cb15-50"><a href="#cb15-50"></a></span>
-<span id="cb15-51"><a href="#cb15-51"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-52"><a href="#cb15-52"></a><span class="in">create table gdp2 as</span></span>
-<span id="cb15-53"><a href="#cb15-53"></a><span class="in">select * from read_csv('data/gdp.csv')</span></span>
-<span id="cb15-54"><a href="#cb15-54"></a><span class="in">```</span></span>
-<span id="cb15-55"><a href="#cb15-55"></a></span>
-<span id="cb15-56"><a href="#cb15-56"></a><span class="fu">### Show tables in DuckDB</span></span>
-<span id="cb15-57"><a href="#cb15-57"></a></span>
-<span id="cb15-58"><a href="#cb15-58"></a><span class="ss">-   </span>list tables in <span class="in">`R`</span> chunk</span>
-<span id="cb15-59"><a href="#cb15-59"></a></span>
-<span id="cb15-62"><a href="#cb15-62"></a><span class="in">```{r}</span></span>
-<span id="cb15-63"><a href="#cb15-63"></a><span class="fu">dbListTables</span>(con) </span>
-<span id="cb15-64"><a href="#cb15-64"></a><span class="in">```</span></span>
-<span id="cb15-65"><a href="#cb15-65"></a></span>
-<span id="cb15-66"><a href="#cb15-66"></a><span class="ss">-   </span>list tables in <span class="in">`sql connection`</span> chunk</span>
-<span id="cb15-67"><a href="#cb15-67"></a></span>
-<span id="cb15-68"><a href="#cb15-68"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-69"><a href="#cb15-69"></a><span class="in">show tables</span></span>
-<span id="cb15-70"><a href="#cb15-70"></a><span class="in">```</span></span>
-<span id="cb15-71"><a href="#cb15-71"></a></span>
-<span id="cb15-72"><a href="#cb15-72"></a><span class="fu">## Query data from DuckDB</span></span>
-<span id="cb15-73"><a href="#cb15-73"></a></span>
-<span id="cb15-74"><a href="#cb15-74"></a><span class="fu">### Oder of query execution</span></span>
-<span id="cb15-75"><a href="#cb15-75"></a></span>
-<span id="cb15-76"><a href="#cb15-76"></a><span class="al">![](../fig/sql_query_order.webp)</span></span>
-<span id="cb15-77"><a href="#cb15-77"></a></span>
-<span id="cb15-78"><a href="#cb15-78"></a>Please visit <span class="co">[</span><span class="ot">SQL Query Order</span><span class="co">](https://lukianovihor.medium.com/sql-order-of-query-execution-8c7cd926400)</span> for more information.</span>
-<span id="cb15-79"><a href="#cb15-79"></a></span>
-<span id="cb15-80"><a href="#cb15-80"></a><span class="fu">### View the whole table</span></span>
-<span id="cb15-81"><a href="#cb15-81"></a></span>
-<span id="cb15-82"><a href="#cb15-82"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-83"><a href="#cb15-83"></a><span class="in">SELECT * FROM gdp</span></span>
-<span id="cb15-84"><a href="#cb15-84"></a><span class="in">```</span></span>
-<span id="cb15-85"><a href="#cb15-85"></a></span>
-<span id="cb15-86"><a href="#cb15-86"></a><span class="fu">### More complex queries</span></span>
-<span id="cb15-87"><a href="#cb15-87"></a></span>
-<span id="cb15-88"><a href="#cb15-88"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-89"><a href="#cb15-89"></a><span class="in">select * from mtcars</span></span>
-<span id="cb15-90"><a href="#cb15-90"></a><span class="in">where hp &gt; 100</span></span>
-<span id="cb15-91"><a href="#cb15-91"></a><span class="in">order by -hp</span></span>
-<span id="cb15-92"><a href="#cb15-92"></a><span class="in">```</span></span>
-<span id="cb15-93"><a href="#cb15-93"></a></span>
-<span id="cb15-94"><a href="#cb15-94"></a>We can omit <span class="in">`Select *`</span> in the query in <span class="in">`duckdb`</span> as it is the default.</span>
-<span id="cb15-95"><a href="#cb15-95"></a></span>
-<span id="cb15-96"><a href="#cb15-96"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-97"><a href="#cb15-97"></a><span class="in">from mtcars</span></span>
-<span id="cb15-98"><a href="#cb15-98"></a><span class="in">where hp &gt; 100</span></span>
-<span id="cb15-99"><a href="#cb15-99"></a><span class="in">order by -hp</span></span>
-<span id="cb15-100"><a href="#cb15-100"></a><span class="in">```</span></span>
-<span id="cb15-101"><a href="#cb15-101"></a></span>
-<span id="cb15-102"><a href="#cb15-102"></a>We can anti-select columns in the query in <span class="in">`duckdb`</span> as shown below.</span>
-<span id="cb15-103"><a href="#cb15-103"></a></span>
-<span id="cb15-104"><a href="#cb15-104"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-105"><a href="#cb15-105"></a><span class="in">from flights</span></span>
-<span id="cb15-106"><a href="#cb15-106"></a><span class="in">select * exclude (year, month, day)</span></span>
-<span id="cb15-107"><a href="#cb15-107"></a><span class="in">where month = 1 and day = 1</span></span>
-<span id="cb15-108"><a href="#cb15-108"></a><span class="in">order by dep_delay desc</span></span>
-<span id="cb15-109"><a href="#cb15-109"></a><span class="in">limit 10</span></span>
-<span id="cb15-110"><a href="#cb15-110"></a><span class="in">```</span></span>
-<span id="cb15-111"><a href="#cb15-111"></a></span>
-<span id="cb15-112"><a href="#cb15-112"></a>More complex queries can be written in <span class="in">`sql`</span> chunk as shown below.</span>
-<span id="cb15-113"><a href="#cb15-113"></a></span>
-<span id="cb15-114"><a href="#cb15-114"></a><span class="in">```{sql connection=con}</span></span>
-<span id="cb15-115"><a href="#cb15-115"></a><span class="in">SELECT *</span></span>
-<span id="cb15-116"><a href="#cb15-116"></a><span class="in">FROM (</span></span>
-<span id="cb15-117"><a href="#cb15-117"></a><span class="in">   SELECT</span></span>
-<span id="cb15-118"><a href="#cb15-118"></a><span class="in">     tailnum,</span></span>
-<span id="cb15-119"><a href="#cb15-119"></a><span class="in">    COUNT(*) AS count,</span></span>
-<span id="cb15-120"><a href="#cb15-120"></a><span class="in">    AVG(distance) AS dist,</span></span>
-<span id="cb15-121"><a href="#cb15-121"></a><span class="in">    AVG(arr_delay) AS delay</span></span>
-<span id="cb15-122"><a href="#cb15-122"></a><span class="in">  FROM flights</span></span>
-<span id="cb15-123"><a href="#cb15-123"></a><span class="in">  GROUP BY tailnum</span></span>
-<span id="cb15-124"><a href="#cb15-124"></a><span class="in">) q01</span></span>
-<span id="cb15-125"><a href="#cb15-125"></a><span class="in">WHERE (count &gt; 20.0) AND (dist &lt; 2000.0) AND (NOT((delay IS NULL)))</span></span>
-<span id="cb15-126"><a href="#cb15-126"></a><span class="in">limit 10</span></span>
-<span id="cb15-127"><a href="#cb15-127"></a><span class="in">```</span></span>
-<span id="cb15-128"><a href="#cb15-128"></a></span>
-<span id="cb15-129"><a href="#cb15-129"></a><span class="fu">## Save outcome of query into R environment</span></span>
-<span id="cb15-130"><a href="#cb15-130"></a></span>
-<span id="cb15-131"><a href="#cb15-131"></a>We can save the outcome of the query into the R environment as shown below<span class="ot">[^1]</span>.</span>
-<span id="cb15-132"><a href="#cb15-132"></a></span>
-<span id="cb15-133"><a href="#cb15-133"></a><span class="ot">[^1]: </span>Please go to upper right corner to view the source code.</span>
-<span id="cb15-134"><a href="#cb15-134"></a></span>
-<span id="cb15-135"><a href="#cb15-135"></a><span class="in">```{sql connection=con, output.var="top10_delayed_planes"}</span></span>
-<span id="cb15-136"><a href="#cb15-136"></a><span class="in">SELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay</span></span>
-<span id="cb15-137"><a href="#cb15-137"></a><span class="in">FROM flights</span></span>
-<span id="cb15-138"><a href="#cb15-138"></a><span class="in">WHERE month = 1</span></span>
-<span id="cb15-139"><a href="#cb15-139"></a><span class="in">GROUP BY tailnum</span></span>
-<span id="cb15-140"><a href="#cb15-140"></a><span class="in">HAVING COUNT(*) &gt; 20</span></span>
-<span id="cb15-141"><a href="#cb15-141"></a><span class="in">ORDER BY delay DESC</span></span>
-<span id="cb15-142"><a href="#cb15-142"></a><span class="in">LIMIT 10</span></span>
-<span id="cb15-143"><a href="#cb15-143"></a><span class="in">```</span></span>
-<span id="cb15-144"><a href="#cb15-144"></a></span>
-<span id="cb15-147"><a href="#cb15-147"></a><span class="in">```{r}</span></span>
-<span id="cb15-148"><a href="#cb15-148"></a><span class="co">#| include: false</span></span>
-<span id="cb15-149"><a href="#cb15-149"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
-<span id="cb15-150"><a href="#cb15-150"></a>  <span class="fu">filter</span>(month <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-151"><a href="#cb15-151"></a>  <span class="fu">group_by</span>(tailnum) <span class="sc">%&gt;%</span></span>
-<span id="cb15-152"><a href="#cb15-152"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-153"><a href="#cb15-153"></a>  <span class="fu">summarise</span>(<span class="at">dist =</span> <span class="fu">mean</span>(distance, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb15-154"><a href="#cb15-154"></a>            <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-155"><a href="#cb15-155"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(delay)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-156"><a href="#cb15-156"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb15-157"><a href="#cb15-157"></a><span class="in">```</span></span>
-<span id="cb15-158"><a href="#cb15-158"></a></span>
-<span id="cb15-159"><a href="#cb15-159"></a>The outcome of the query is saved in the R environment as <span class="in">`top10_delayed_planes`</span> and we can call it in R chunk as shown below.</span>
-<span id="cb15-160"><a href="#cb15-160"></a></span>
-<span id="cb15-163"><a href="#cb15-163"></a><span class="in">```{r}</span></span>
-<span id="cb15-164"><a href="#cb15-164"></a>top10_delayed_planes <span class="sc">|&gt;</span> </span>
-<span id="cb15-165"><a href="#cb15-165"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb15-166"><a href="#cb15-166"></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
-<span id="cb15-167"><a href="#cb15-167"></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
-<span id="cb15-168"><a href="#cb15-168"></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
-<span id="cb15-169"><a href="#cb15-169"></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-170"><a href="#cb15-170"></a>  <span class="fu">opt_row_striping</span>()</span>
-<span id="cb15-171"><a href="#cb15-171"></a><span class="in">```</span></span>
-<span id="cb15-172"><a href="#cb15-172"></a></span>
-<span id="cb15-173"><a href="#cb15-173"></a>Why bother with <span class="in">`duckdb`</span> when we can do the same in <span class="in">`R`</span>?</span>
-<span id="cb15-174"><a href="#cb15-174"></a>The answer is that <span class="in">`duckdb`</span> is faster than <span class="in">`R`</span> for large datasets.</span>
-<span id="cb15-175"><a href="#cb15-175"></a>For example, the <span class="in">`vdemdata`</span> dataset has 500 V-Dem indicators and 245 indices + 57 other indicators from other data sources.</span>
-<span id="cb15-176"><a href="#cb15-176"></a>It is a huge dataset and it is almost impossible to view the whole V-Dem dataset in R.</span>
-<span id="cb15-177"><a href="#cb15-177"></a>It would be better, although still quite slow, to use <span class="in">`duckdb`</span> to query the dataset and view the outcome in R.</span>
-<span id="cb15-178"><a href="#cb15-178"></a></span>
-<span id="cb15-179"><a href="#cb15-179"></a><span class="fu">## Disconnect from DuckDB</span></span>
-<span id="cb15-180"><a href="#cb15-180"></a></span>
-<span id="cb15-183"><a href="#cb15-183"></a><span class="in">```{r}</span></span>
-<span id="cb15-184"><a href="#cb15-184"></a><span class="fu">dbDisconnect</span>(con, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-185"><a href="#cb15-185"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb27" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">---</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="an">title:</span><span class="co"> DuckDB in R</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="an">format:</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="co">  aps-html:</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="co">    code-tools: true</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="an">other-links:</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="co">    - text: Download data</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a><span class="co">      href: data/gdp.csv</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="co">      icon: download</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="co">---</span></span>
+<span id="cb27-11"><a href="#cb27-11"></a></span>
+<span id="cb27-12"><a href="#cb27-12"></a><span class="fu">## Establish a connection to DuckDB</span></span>
+<span id="cb27-13"><a href="#cb27-13"></a></span>
+<span id="cb27-16"><a href="#cb27-16"></a><span class="in">```{r}</span></span>
+<span id="cb27-17"><a href="#cb27-17"></a><span class="co">#| label: setup</span></span>
+<span id="cb27-18"><a href="#cb27-18"></a><span class="co">#| message: false</span></span>
+<span id="cb27-19"><a href="#cb27-19"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-20"><a href="#cb27-20"></a><span class="fu">library</span>(gt)</span>
+<span id="cb27-21"><a href="#cb27-21"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb27-22"><a href="#cb27-22"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb27-23"><a href="#cb27-23"></a><span class="fu">library</span>(duckplyr)</span>
+<span id="cb27-24"><a href="#cb27-24"></a><span class="fu">library</span>(tictoc)</span>
+<span id="cb27-25"><a href="#cb27-25"></a><span class="fu">library</span>(nycflights23)</span>
+<span id="cb27-26"><a href="#cb27-26"></a><span class="in">```</span></span>
+<span id="cb27-27"><a href="#cb27-27"></a></span>
+<span id="cb27-30"><a href="#cb27-30"></a><span class="in">```{r}</span></span>
+<span id="cb27-31"><a href="#cb27-31"></a><span class="co"># to start an in-memory database</span></span>
+<span id="cb27-32"><a href="#cb27-32"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">duckdb</span>())</span>
+<span id="cb27-33"><a href="#cb27-33"></a><span class="co"># or con &lt;- dbConnect(duckdb(), dbdir = ":memory:")</span></span>
+<span id="cb27-34"><a href="#cb27-34"></a></span>
+<span id="cb27-35"><a href="#cb27-35"></a><span class="co"># to use a database file (not shared between processes)</span></span>
+<span id="cb27-36"><a href="#cb27-36"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = FALSE)</span></span>
+<span id="cb27-37"><a href="#cb27-37"></a><span class="co"># to use a database file (shared between processes)</span></span>
+<span id="cb27-38"><a href="#cb27-38"></a><span class="co"># con &lt;- dbConnect(duckdb(), dbdir = "my-db.duckdb", read_only = TRUE)</span></span>
+<span id="cb27-39"><a href="#cb27-39"></a><span class="in">```</span></span>
+<span id="cb27-40"><a href="#cb27-40"></a></span>
+<span id="cb27-41"><a href="#cb27-41"></a><span class="fu">## Load data into DuckDB</span></span>
+<span id="cb27-42"><a href="#cb27-42"></a></span>
+<span id="cb27-43"><a href="#cb27-43"></a><span class="fu">### Load data from `R` chunk</span></span>
+<span id="cb27-44"><a href="#cb27-44"></a></span>
+<span id="cb27-47"><a href="#cb27-47"></a><span class="in">```{r}</span></span>
+<span id="cb27-48"><a href="#cb27-48"></a><span class="co"># write mtcars, from R environment, to duckdb database</span></span>
+<span id="cb27-49"><a href="#cb27-49"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"mtcars"</span>, mtcars) </span>
+<span id="cb27-50"><a href="#cb27-50"></a></span>
+<span id="cb27-51"><a href="#cb27-51"></a><span class="co"># register iris, from R environment, as a view in duckdb</span></span>
+<span id="cb27-52"><a href="#cb27-52"></a><span class="fu">duckdb_register</span>(con, <span class="st">"view"</span>, iris) </span>
+<span id="cb27-53"><a href="#cb27-53"></a><span class="fu">duckdb_register</span>(con, <span class="st">"flights"</span>, flights)</span>
+<span id="cb27-54"><a href="#cb27-54"></a></span>
+<span id="cb27-55"><a href="#cb27-55"></a><span class="co"># read data from local file to duckdb</span></span>
+<span id="cb27-56"><a href="#cb27-56"></a><span class="fu">duckdb_read_csv</span>(con, <span class="st">"gdp"</span>, <span class="st">"data/gdp.csv"</span>, <span class="at">na.strings =</span> <span class="st">"NA"</span>)</span>
+<span id="cb27-57"><a href="#cb27-57"></a><span class="in">```</span></span>
+<span id="cb27-58"><a href="#cb27-58"></a></span>
+<span id="cb27-59"><a href="#cb27-59"></a><span class="fu">### Load data from `sql` chunk</span></span>
+<span id="cb27-60"><a href="#cb27-60"></a></span>
+<span id="cb27-61"><a href="#cb27-61"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-62"><a href="#cb27-62"></a><span class="in">create table gdp2 as</span></span>
+<span id="cb27-63"><a href="#cb27-63"></a><span class="in">select * from read_csv('data/gdp.csv')</span></span>
+<span id="cb27-64"><a href="#cb27-64"></a><span class="in">```</span></span>
+<span id="cb27-65"><a href="#cb27-65"></a></span>
+<span id="cb27-66"><a href="#cb27-66"></a><span class="fu">### Show tables in DuckDB</span></span>
+<span id="cb27-67"><a href="#cb27-67"></a></span>
+<span id="cb27-68"><a href="#cb27-68"></a><span class="ss">-   </span>list tables in <span class="in">`R`</span> chunk</span>
+<span id="cb27-69"><a href="#cb27-69"></a></span>
+<span id="cb27-72"><a href="#cb27-72"></a><span class="in">```{r}</span></span>
+<span id="cb27-73"><a href="#cb27-73"></a><span class="fu">dbListTables</span>(con) </span>
+<span id="cb27-74"><a href="#cb27-74"></a><span class="in">```</span></span>
+<span id="cb27-75"><a href="#cb27-75"></a></span>
+<span id="cb27-76"><a href="#cb27-76"></a><span class="ss">-   </span>list tables in <span class="in">`sql connection`</span> chunk</span>
+<span id="cb27-77"><a href="#cb27-77"></a></span>
+<span id="cb27-78"><a href="#cb27-78"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-79"><a href="#cb27-79"></a><span class="in">show tables</span></span>
+<span id="cb27-80"><a href="#cb27-80"></a><span class="in">```</span></span>
+<span id="cb27-81"><a href="#cb27-81"></a></span>
+<span id="cb27-82"><a href="#cb27-82"></a><span class="fu">## Query data from DuckDB</span></span>
+<span id="cb27-83"><a href="#cb27-83"></a></span>
+<span id="cb27-84"><a href="#cb27-84"></a><span class="fu">### Oder of query execution</span></span>
+<span id="cb27-85"><a href="#cb27-85"></a></span>
+<span id="cb27-86"><a href="#cb27-86"></a><span class="al">![](../fig/sql_query_order.webp)</span></span>
+<span id="cb27-87"><a href="#cb27-87"></a></span>
+<span id="cb27-88"><a href="#cb27-88"></a>Please visit <span class="co">[</span><span class="ot">SQL Query Order</span><span class="co">](https://lukianovihor.medium.com/sql-order-of-query-execution-8c7cd926400)</span> for more information.</span>
+<span id="cb27-89"><a href="#cb27-89"></a></span>
+<span id="cb27-90"><a href="#cb27-90"></a><span class="fu">### View the whole table</span></span>
+<span id="cb27-91"><a href="#cb27-91"></a></span>
+<span id="cb27-92"><a href="#cb27-92"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-93"><a href="#cb27-93"></a><span class="in">SELECT * FROM gdp</span></span>
+<span id="cb27-94"><a href="#cb27-94"></a><span class="in">```</span></span>
+<span id="cb27-95"><a href="#cb27-95"></a></span>
+<span id="cb27-96"><a href="#cb27-96"></a><span class="fu">### More complex queries</span></span>
+<span id="cb27-97"><a href="#cb27-97"></a></span>
+<span id="cb27-98"><a href="#cb27-98"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-99"><a href="#cb27-99"></a><span class="in">select * from mtcars</span></span>
+<span id="cb27-100"><a href="#cb27-100"></a><span class="in">where hp &gt; 100</span></span>
+<span id="cb27-101"><a href="#cb27-101"></a><span class="in">order by -hp</span></span>
+<span id="cb27-102"><a href="#cb27-102"></a><span class="in">```</span></span>
+<span id="cb27-103"><a href="#cb27-103"></a></span>
+<span id="cb27-104"><a href="#cb27-104"></a>We can omit <span class="in">`Select *`</span> in the query in <span class="in">`duckdb`</span> as it is the default.</span>
+<span id="cb27-105"><a href="#cb27-105"></a></span>
+<span id="cb27-106"><a href="#cb27-106"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-107"><a href="#cb27-107"></a><span class="in">from mtcars</span></span>
+<span id="cb27-108"><a href="#cb27-108"></a><span class="in">where hp &gt; 100</span></span>
+<span id="cb27-109"><a href="#cb27-109"></a><span class="in">order by -hp</span></span>
+<span id="cb27-110"><a href="#cb27-110"></a><span class="in">```</span></span>
+<span id="cb27-111"><a href="#cb27-111"></a></span>
+<span id="cb27-112"><a href="#cb27-112"></a>We can anti-select columns in the query in <span class="in">`duckdb`</span> as shown below.</span>
+<span id="cb27-113"><a href="#cb27-113"></a></span>
+<span id="cb27-114"><a href="#cb27-114"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-115"><a href="#cb27-115"></a><span class="in">from flights</span></span>
+<span id="cb27-116"><a href="#cb27-116"></a><span class="in">select * exclude (year, month, day)</span></span>
+<span id="cb27-117"><a href="#cb27-117"></a><span class="in">where month = 1 and day = 1</span></span>
+<span id="cb27-118"><a href="#cb27-118"></a><span class="in">order by dep_delay desc</span></span>
+<span id="cb27-119"><a href="#cb27-119"></a><span class="in">limit 10</span></span>
+<span id="cb27-120"><a href="#cb27-120"></a><span class="in">```</span></span>
+<span id="cb27-121"><a href="#cb27-121"></a></span>
+<span id="cb27-122"><a href="#cb27-122"></a>More complex queries can be written in <span class="in">`sql`</span> chunk as shown below.</span>
+<span id="cb27-123"><a href="#cb27-123"></a></span>
+<span id="cb27-124"><a href="#cb27-124"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-125"><a href="#cb27-125"></a><span class="in">SELECT *</span></span>
+<span id="cb27-126"><a href="#cb27-126"></a><span class="in">FROM (</span></span>
+<span id="cb27-127"><a href="#cb27-127"></a><span class="in">   SELECT</span></span>
+<span id="cb27-128"><a href="#cb27-128"></a><span class="in">     tailnum,</span></span>
+<span id="cb27-129"><a href="#cb27-129"></a><span class="in">    COUNT(*) AS count,</span></span>
+<span id="cb27-130"><a href="#cb27-130"></a><span class="in">    AVG(distance) AS dist,</span></span>
+<span id="cb27-131"><a href="#cb27-131"></a><span class="in">    AVG(arr_delay) AS delay</span></span>
+<span id="cb27-132"><a href="#cb27-132"></a><span class="in">  FROM flights</span></span>
+<span id="cb27-133"><a href="#cb27-133"></a><span class="in">  GROUP BY tailnum</span></span>
+<span id="cb27-134"><a href="#cb27-134"></a><span class="in">) q01</span></span>
+<span id="cb27-135"><a href="#cb27-135"></a><span class="in">WHERE (count &gt; 20.0) AND (dist &lt; 2000.0) AND (NOT((delay IS NULL)))</span></span>
+<span id="cb27-136"><a href="#cb27-136"></a><span class="in">limit 10</span></span>
+<span id="cb27-137"><a href="#cb27-137"></a><span class="in">```</span></span>
+<span id="cb27-138"><a href="#cb27-138"></a></span>
+<span id="cb27-139"><a href="#cb27-139"></a><span class="fu">## Save outcome of query into R environment</span></span>
+<span id="cb27-140"><a href="#cb27-140"></a></span>
+<span id="cb27-141"><a href="#cb27-141"></a>We can save the outcome of the query into the R environment as shown below<span class="ot">[^1]</span>.</span>
+<span id="cb27-142"><a href="#cb27-142"></a></span>
+<span id="cb27-143"><a href="#cb27-143"></a><span class="ot">[^1]: </span>Please go to upper right corner to view the source code.</span>
+<span id="cb27-144"><a href="#cb27-144"></a></span>
+<span id="cb27-147"><a href="#cb27-147"></a><span class="in">```{r}</span></span>
+<span id="cb27-148"><a href="#cb27-148"></a><span class="fu">tic</span>(<span class="st">"sql"</span>)</span>
+<span id="cb27-149"><a href="#cb27-149"></a><span class="in">```</span></span>
+<span id="cb27-150"><a href="#cb27-150"></a></span>
+<span id="cb27-151"><a href="#cb27-151"></a><span class="in">```{sql connection=con, output.var="top10_delayed_planes"}</span></span>
+<span id="cb27-152"><a href="#cb27-152"></a><span class="in">SELECT tailnum, AVG(distance) AS dist, AVG(arr_delay) AS delay</span></span>
+<span id="cb27-153"><a href="#cb27-153"></a><span class="in">FROM flights</span></span>
+<span id="cb27-154"><a href="#cb27-154"></a><span class="in">WHERE month = 1</span></span>
+<span id="cb27-155"><a href="#cb27-155"></a><span class="in">GROUP BY tailnum</span></span>
+<span id="cb27-156"><a href="#cb27-156"></a><span class="in">HAVING COUNT(*) &gt; 20</span></span>
+<span id="cb27-157"><a href="#cb27-157"></a><span class="in">ORDER BY delay DESC</span></span>
+<span id="cb27-158"><a href="#cb27-158"></a><span class="in">LIMIT 10</span></span>
+<span id="cb27-159"><a href="#cb27-159"></a><span class="in">```</span></span>
+<span id="cb27-162"><a href="#cb27-162"></a><span class="in">```{r}</span></span>
+<span id="cb27-163"><a href="#cb27-163"></a><span class="fu">toc</span>()</span>
+<span id="cb27-164"><a href="#cb27-164"></a><span class="in">```</span></span>
+<span id="cb27-165"><a href="#cb27-165"></a></span>
+<span id="cb27-168"><a href="#cb27-168"></a><span class="in">```{r}</span></span>
+<span id="cb27-169"><a href="#cb27-169"></a><span class="fu">tic</span>(<span class="st">"R"</span>)</span>
+<span id="cb27-170"><a href="#cb27-170"></a><span class="in">```</span></span>
+<span id="cb27-173"><a href="#cb27-173"></a><span class="in">```{r}</span></span>
+<span id="cb27-174"><a href="#cb27-174"></a><span class="co">#| include: false</span></span>
+<span id="cb27-175"><a href="#cb27-175"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb27-176"><a href="#cb27-176"></a>  <span class="fu">filter</span>(month <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-177"><a href="#cb27-177"></a>  <span class="fu">group_by</span>(tailnum) <span class="sc">%&gt;%</span></span>
+<span id="cb27-178"><a href="#cb27-178"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-179"><a href="#cb27-179"></a>  <span class="fu">summarise</span>(<span class="at">dist =</span> <span class="fu">mean</span>(distance, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb27-180"><a href="#cb27-180"></a>            <span class="at">delay =</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-181"><a href="#cb27-181"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(delay)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-182"><a href="#cb27-182"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb27-183"><a href="#cb27-183"></a><span class="in">```</span></span>
+<span id="cb27-184"><a href="#cb27-184"></a></span>
+<span id="cb27-187"><a href="#cb27-187"></a><span class="in">```{r}</span></span>
+<span id="cb27-188"><a href="#cb27-188"></a><span class="fu">toc</span>()</span>
+<span id="cb27-189"><a href="#cb27-189"></a><span class="in">```</span></span>
+<span id="cb27-190"><a href="#cb27-190"></a>The outcome of the query is saved in the R environment as <span class="in">`top10_delayed_planes`</span> and we can call it in R chunk as shown below.</span>
+<span id="cb27-191"><a href="#cb27-191"></a></span>
+<span id="cb27-194"><a href="#cb27-194"></a><span class="in">```{r}</span></span>
+<span id="cb27-195"><a href="#cb27-195"></a><span class="co"># same result with the query in R</span></span>
+<span id="cb27-196"><a href="#cb27-196"></a>top10_delayed_planes <span class="sc">|&gt;</span> </span>
+<span id="cb27-197"><a href="#cb27-197"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb27-198"><a href="#cb27-198"></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
+<span id="cb27-199"><a href="#cb27-199"></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
+<span id="cb27-200"><a href="#cb27-200"></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
+<span id="cb27-201"><a href="#cb27-201"></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-202"><a href="#cb27-202"></a>  <span class="fu">opt_row_striping</span>()</span>
+<span id="cb27-203"><a href="#cb27-203"></a><span class="in">```</span></span>
+<span id="cb27-204"><a href="#cb27-204"></a></span>
+<span id="cb27-205"><a href="#cb27-205"></a>Why bother with <span class="in">`duckdb`</span> when we can do the same in <span class="in">`R`</span>? You might ask. The answer is that <span class="in">`duckdb`</span> is faster than <span class="in">`R`</span> for large datasets. As showed above, the query in <span class="in">`duckdb`</span> is much faster than in <span class="in">`R`</span> to get the same results. </span>
+<span id="cb27-206"><a href="#cb27-206"></a></span>
+<span id="cb27-207"><a href="#cb27-207"></a>We might not notice a significant difference in query execution speed in this example because the dataset is small. However, the discrepancy becomes more apparent with larger datasets. Let's examine a big dataset to observe the contrast in query execution speed. We'll use a dataset containing item checkouts from Seattle public libraries, accessible online at <span class="co">[</span><span class="ot">Seattle</span><span class="co">](https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data)</span>.</span>
+<span id="cb27-208"><a href="#cb27-208"></a></span>
+<span id="cb27-209"><a href="#cb27-209"></a>When attempting to read the dataset with <span class="in">`read_csv()`</span>, it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset's substantial size, comprising approximately 31,871,534 rows, spanning 12 columns, and occupying 6.5 GB of storage space. The following code would fail to read such voluminous data.</span>
+<span id="cb27-210"><a href="#cb27-210"></a></span>
+<span id="cb27-211"><a href="#cb27-211"></a><span class="in">```{r}</span></span>
+<span id="cb27-212"><a href="#cb27-212"></a><span class="in">read_csv("data/seattle-library-checkouts.csv") |&gt; </span></span>
+<span id="cb27-213"><a href="#cb27-213"></a><span class="in">  nrow()</span></span>
+<span id="cb27-214"><a href="#cb27-214"></a><span class="in">```</span></span>
+<span id="cb27-215"><a href="#cb27-215"></a></span>
+<span id="cb27-216"><a href="#cb27-216"></a>Let's try to query with <span class="in">`duckdb`</span>.</span>
+<span id="cb27-219"><a href="#cb27-219"></a><span class="in">```{r}</span></span>
+<span id="cb27-220"><a href="#cb27-220"></a><span class="fu">tic</span>(<span class="st">"sql"</span>)</span>
+<span id="cb27-221"><a href="#cb27-221"></a><span class="in">```</span></span>
+<span id="cb27-222"><a href="#cb27-222"></a></span>
+<span id="cb27-223"><a href="#cb27-223"></a><span class="in">```{sql connection=con}</span></span>
+<span id="cb27-224"><a href="#cb27-224"></a><span class="in">Select Count(*)</span></span>
+<span id="cb27-225"><a href="#cb27-225"></a><span class="in">From read_csv('data/seattle-library-checkouts.csv')</span></span>
+<span id="cb27-226"><a href="#cb27-226"></a><span class="in">```</span></span>
+<span id="cb27-229"><a href="#cb27-229"></a><span class="in">```{r}</span></span>
+<span id="cb27-230"><a href="#cb27-230"></a><span class="fu">toc</span>()</span>
+<span id="cb27-231"><a href="#cb27-231"></a><span class="in">```</span></span>
+<span id="cb27-232"><a href="#cb27-232"></a></span>
+<span id="cb27-233"><a href="#cb27-233"></a><span class="in">`DuckDB`</span> took a bit longer to retrieve the results, more than 4 seconds, but the performance was quite acceptable. It outperformed <span class="in">`R`</span>, which failed to read the data altogether.</span>
+<span id="cb27-234"><a href="#cb27-234"></a></span>
+<span id="cb27-235"><a href="#cb27-235"></a><span class="fu">## Disconnect from DuckDB</span></span>
+<span id="cb27-236"><a href="#cb27-236"></a></span>
+<span id="cb27-239"><a href="#cb27-239"></a><span class="in">```{r}</span></span>
+<span id="cb27-240"><a href="#cb27-240"></a><span class="fu">dbDisconnect</span>(con, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-241"><a href="#cb27-241"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
@@ -2232,7 +2332,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </ul>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"fade","openEffect":"fade","loop":true,"descPosition":"bottom"});
+</footer><script>var lightboxQuarto = GLightbox({"openEffect":"fade","selector":".lightbox","descPosition":"bottom","closeEffect":"fade","loop":true});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
