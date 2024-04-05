@@ -1,0 +1,169 @@
+---
+title: "Doing More with Bigger Data: An Introduction to Arrow for R Users"
+format:
+  aps-html:
+    number-sections: true
+    code-tools: true
+---
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+#install.packages('arrow', repos = c('https://apache.r-universe.dev'))
+library(arrow)
+library(dbplyr, warn.conflicts = FALSE)
+library(duckdb)
+library(lobstr)
+library(tictoc)
+datapath <- "~/Github/data"
+```
+
+## Getting the data
+
+We use a dataset of item checkouts from Seattle public libraries, available online at [Seattle](https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data). 
+
+The following code will get you a cached copy of the data. The data is quite big, so it will take some time to download. I highly recommend using `curl::multi_download()` to get very large files as it’s built for exactly this purpose: it gives you a progress bar and it can resume the download if its interrupted.
+
+```{{r}}
+dir.create("data", showWarnings = FALSE)
+
+curl::multi_download(
+  "https://r4ds.s3.us-west-2.amazonaws.com/seattle-library-checkouts.csv",
+  "~/Github/data/seattle-library-checkouts.csv",
+  resume = TRUE
+)
+```
+
+## Reading the data as a CSV file
+
+If we attempt to read the dataset using `read_csv()`, it could result in a lengthy processing time or potentially fail altogether (In my case, I have to force quit R due to no responding). This is primarily due to the sheer size of the dataset, which contains 41,389,465 rows, 12 columns, and occupies 9.21 GB of storage space.
+```{{r}}
+#| eval: false
+#| include: false
+read_csv("~/Github/data/seattle-library-checkouts.csv") |> 
+  nrow()
+```
+
+Let's use the `open_dataset()` function from the `arrow` package to read the dataset. This function is designed to read large datasets efficiently by only reading the metadata and not the entire dataset. This allows us to work with large datasets without running into memory issues.
+
+```{r}
+seattle_csv <- open_dataset(
+  sources = "~/GitHub/data/seattle-library-checkouts.csv", 
+  col_types = schema(ISBN = string()),
+  format = "csv"
+)
+seattle_csv 
+```
+
+Even so, it still took a much longer time (about 35 seconds) to get the rows, which is 41,389,465 rows.
+```{{r}}
+tic()
+seattle_csv |> 
+  count() |> 
+  collect()
+toc()
+```
+
+Take a glimpse at the dataset also took a long time (about 20 seconds).
+```{r}
+tic()
+seattle_csv |> glimpse()
+toc()
+```
+```{r}
+tic()
+seattle_csv |> 
+  summarise(Checkouts = sum(Checkouts),
+            .by = CheckoutYear) |> 
+  arrange(CheckoutYear) |> 
+  collect()
+toc()
+```
+
+And it took about 20 seconds to count the **Checkouts** by year.
+
+## Reading the data as a Partquet file
+Thanks to arrow, this code will work regardless of how large the underlying dataset is. But it’s currently rather slow: on mycomputer, it took 20 seconds or longer to run. That’s not terrible given how much data we have, but we can make it much faster by switching to a better format.
+
+### Rewriting the Seattle library data as a Parquet file
+
+```{{r}}
+seattle_csv |>
+  group_by(CheckoutYear) |>
+  write_dataset(path = "~/GitHub/data/seattle-library-checkouts", format = "parquet")
+```
+
+It took about 30 seconds to write the dataset as a Parquet file, which is 4,42 GB in size, less than half the size of the original CSV file. Let’s take a look at what we just produced:
+```{r}
+tibble(
+  files = list.files("~/GitHub/data/seattle-library-checkouts", recursive = TRUE),
+  size_MB = file.size(file.path("~/GitHub/data/seattle-library-checkouts", files)) / 1024^2
+)
+```
+
+Our single 9GB CSV file has been rewritten into 18 parquet files. The file names use a “self-describing” convention used by the Apache Hive project. Hive-style partitions name folders with a “key=value” convention, so as you might guess, the CheckoutYear=2005 directory contains all the data where CheckoutYear is 2005. Each file is between 100 and 300 MB and the total size is now around 4 GB, a little over half the size of the original CSV file. This is as we expect since parquet is a much more efficient format.
+
+### Using dplyr with arrow
+Now we’ve created these parquet files, we’ll need to read them in again. We use open_dataset() again, but this time we give it a directory:
+```{r}
+seattle_pq <- open_dataset("~/GitHub/data/seattle-library-checkouts")
+```
+Now we can write our dplyr pipeline. For example, we could count the total number of books checked out in each month for the last five years:
+```{r}
+query <- seattle_pq |> 
+  filter(CheckoutYear >= 2018, MaterialType == "BOOK") |>
+  group_by(CheckoutYear, CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(CheckoutYear, CheckoutMonth)
+```
+Writing dplyr code for arrow data is conceptually similar to dbplyr, Chapter 21: you write dplyr code, which is automatically transformed into a query that the Apache Arrow C++ library understands, which is then executed when you call collect(). If we print out the query object we can see a little information about what we expect Arrow to return when the execution takes place. And we can get the results by calling collect():
+
+```{r}
+query
+query |> 
+  collect()
+```
+
+Let's compare the time it took to count the **Checkouts** by year using the CSV file and the Parquet file and see if it worth the trouble.
+```{r}
+csvtime <- seattle_csv |> 
+  filter(CheckoutYear == 2021, MaterialType == "BOOK") |>
+  group_by(CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(desc(CheckoutMonth)) |>
+  collect() |> 
+  system.time()
+csvtime
+```
+
+```{r}
+pqtime <- seattle_pq |> 
+  filter(CheckoutYear == 2021, MaterialType == "BOOK") |>
+  group_by(CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(desc(CheckoutMonth)) |>
+  collect() |> 
+  system.time()
+pqtime
+```
+Parquet file took `r pqtime[3]` seconds while csv file took `r csvtime[3]` seconds. The Parquet file is extremely faster, about 100 times, than the CSV file. Totally worth the trouble. 
+
+## Using duckdb with arrow
+There’s one last advantage of parquet and arrow — it’s very easy to turn an arrow dataset into a `DuckDB` database by calling `arrow::to_duckdb()`:
+
+```{r}
+tic()
+seattle_pq |> 
+  to_duckdb() |>
+  filter(CheckoutYear == 2021, MaterialType == "BOOK") |>
+  group_by(CheckoutMonth) |>
+  summarize(TotalCheckouts = sum(Checkouts)) |>
+  arrange(desc(CheckoutMonth)) |>
+  collect() 
+toc()
+```
+It took a little longer than without transition. However, the neat thing about `to_duckdb()` is that the transfer doesn’t involve any memory copying, and speaks to the goals of the arrow ecosystem: enabling seamless transitions from one computing environment to another.
+

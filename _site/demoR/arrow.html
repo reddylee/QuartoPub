@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.552">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Can.Do.So - Doing More with Bigger Data: An Introduction to Arrow for R Users</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//fig/candoso.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X0K8K06WME"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
+</script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<meta property="og:title" content="Can.Do.So - Doing More with Bigger Data: An Introduction to Arrow for R Users">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
+<meta property="og:site_name" content="Can.Do.So">
+<meta property="og:image:height" content="180">
+<meta property="og:image:width" content="323">
+<meta name="twitter:title" content="Can.Do.So - Doing More with Bigger Data: An Introduction to Arrow for R Users">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
+<meta name="twitter:creator" content="@reddy_lee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="1286">
+<meta name="twitter:image-width" content="1380">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../fig/candoso.png" alt="Can.Do.So" class="navbar-logo"></a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Can.Do.So</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../demoR/demoR.html"> 
+<span class="menu-text">R Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../ps/home.html"> 
+<span class="menu-text">My Research</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Jump To</h2>
+   
+  <ul>
+<li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup"><span class="header-section-number">1</span> Setup</a></li>
+  <li><a href="#getting-the-data" id="toc-getting-the-data" class="nav-link" data-scroll-target="#getting-the-data"><span class="header-section-number">2</span> Getting the data</a></li>
+  <li><a href="#reading-the-data-as-a-csv-file" id="toc-reading-the-data-as-a-csv-file" class="nav-link" data-scroll-target="#reading-the-data-as-a-csv-file"><span class="header-section-number">3</span> Reading the data as a CSV file</a></li>
+  <li>
+<a href="#reading-the-data-as-a-partquet-file" id="toc-reading-the-data-as-a-partquet-file" class="nav-link" data-scroll-target="#reading-the-data-as-a-partquet-file"><span class="header-section-number">4</span> Reading the data as a Partquet file</a>
+  <ul class="collapse">
+<li><a href="#rewriting-the-seattle-library-data-as-a-parquet-file" id="toc-rewriting-the-seattle-library-data-as-a-parquet-file" class="nav-link" data-scroll-target="#rewriting-the-seattle-library-data-as-a-parquet-file"><span class="header-section-number">4.1</span> Rewriting the Seattle library data as a Parquet file</a></li>
+  <li><a href="#using-dplyr-with-arrow" id="toc-using-dplyr-with-arrow" class="nav-link" data-scroll-target="#using-dplyr-with-arrow"><span class="header-section-number">4.2</span> Using dplyr with arrow</a></li>
+  </ul>
+</li>
+  <li><a href="#using-duckdb-with-arrow" id="toc-using-duckdb-with-arrow" class="nav-link" data-scroll-target="#using-duckdb-with-arrow"><span class="header-section-number">5</span> Using duckdb with arrow</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Doing More with Bigger Data: An Introduction to Arrow for R Users</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="setup" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="setup">
+<span class="header-section-number">1</span> Setup</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#install.packages('arrow', repos = c('https://apache.r-universe.dev'))</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(dbplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(lobstr)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(tictoc)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>datapath <span class="ot">&lt;-</span> <span class="st">"~/Github/data"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="getting-the-data" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="getting-the-data">
+<span class="header-section-number">2</span> Getting the data</h2>
+<p>We use a dataset of item checkouts from Seattle public libraries, available online at <a href="https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data">Seattle</a>.</p>
+<p>The following code will get you a cached copy of the data. The data is quite big, so it will take some time to download. I highly recommend using <code><a href="https://rdrr.io/pkg/curl/man/multi_download.html">curl::multi_download()</a></code> to get very large files as it’s built for exactly this purpose: it gives you a progress bar and it can resume the download if its interrupted.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="in">dir.create("data", showWarnings = FALSE)</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="in">curl::multi_download(</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="in">  "https://r4ds.s3.us-west-2.amazonaws.com/seattle-library-checkouts.csv",</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="in">  "~/Github/data/seattle-library-checkouts.csv",</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="in">  resume = TRUE</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="in">)</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="reading-the-data-as-a-csv-file" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="reading-the-data-as-a-csv-file">
+<span class="header-section-number">3</span> Reading the data as a CSV file</h2>
+<p>If we attempt to read the dataset using <code>read_csv()</code>, it could result in a lengthy processing time or potentially fail altogether (In my case, I have to force quit R due to no responding). This is primarily due to the sheer size of the dataset, which contains 41,389,465 rows, 12 columns, and occupies 9.21 GB of storage space.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="in">#| eval: false</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="in">#| include: false</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="in">read_csv("~/Github/data/seattle-library-checkouts.csv") |&gt; </span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="in">  nrow()</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s use the <code>open_dataset()</code> function from the <code>arrow</code> package to read the dataset. This function is designed to read large datasets efficiently by only reading the metadata and not the entire dataset. This allows us to work with large datasets without running into memory issues.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>seattle_csv <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="at">sources =</span> <span class="st">"~/GitHub/data/seattle-library-checkouts.csv"</span>, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="at">col_types =</span> <span class="fu">schema</span>(<span class="at">ISBN =</span> <span class="fu">string</span>()),</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="at">format =</span> <span class="st">"csv"</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>seattle_csv </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset with 1 csv file
+UsageClass: string
+CheckoutType: string
+MaterialType: string
+CheckoutYear: int64
+CheckoutMonth: int64
+Checkouts: int64
+Title: string
+ISBN: string
+Creator: string
+Subjects: string
+Publisher: string
+PublicationYear: string</code></pre>
+</div>
+</div>
+<p>Even so, it still took a much longer time (about 35 seconds) to get the rows, which is 41,389,465 rows.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="in">tic()</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="in">seattle_csv |&gt; </span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="in">  count() |&gt; </span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="in">  collect()</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="in">toc()</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Take a glimpse at the dataset also took a long time (about 20 seconds).</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">tic</span>()</span>
+<span id="cb7-2"><a href="#cb7-2"></a>seattle_csv <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset with 1 csv file
+41,389,465 rows x 12 columns
+$ UsageClass      &lt;string&gt; "Physical", "Physical", "Digital", "Physical", "Physi…
+$ CheckoutType    &lt;string&gt; "Horizon", "Horizon", "OverDrive", "Horizon", "Horizo…
+$ MaterialType    &lt;string&gt; "BOOK", "BOOK", "EBOOK", "BOOK", "SOUNDDISC", "BOOK",…
+$ CheckoutYear     &lt;int64&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016,…
+$ CheckoutMonth    &lt;int64&gt; 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,…
+$ Checkouts        &lt;int64&gt; 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 2, 3, 2, 1, 3, 2, 3,…
+$ Title           &lt;string&gt; "Super rich : a guide to having it all / Russell Simm…
+$ ISBN            &lt;string&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", "…
+$ Creator         &lt;string&gt; "Simmons, Russell", "Barclay, James, 1965-", "Tim Par…
+$ Subjects        &lt;string&gt; "Self realization, Conduct of life, Attitude Psycholo…
+$ Publisher       &lt;string&gt; "Gotham Books,", "Pyr,", "Random House, Inc.", "Dial …
+$ PublicationYear &lt;string&gt; "c2011.", "2010.", "2015", "2005.", "c2004.", "c2005.…</code></pre>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>85.557 sec elapsed</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">tic</span>()</span>
+<span id="cb11-2"><a href="#cb11-2"></a>seattle_csv <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">summarise</span>(<span class="at">Checkouts =</span> <span class="fu">sum</span>(Checkouts),</span>
+<span id="cb11-4"><a href="#cb11-4"></a>            <span class="at">.by =</span> CheckoutYear) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">arrange</span>(CheckoutYear) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["CheckoutYear"],"name":[1],"type":["int"],"align":["right"]},{"label":["Checkouts"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"2005","2":"3798685"},{"1":"2006","2":"6599318"},{"1":"2007","2":"7126627"},{"1":"2008","2":"8438486"},{"1":"2009","2":"9135167"},{"1":"2010","2":"8608966"},{"1":"2011","2":"8321732"},{"1":"2012","2":"8163046"},{"1":"2013","2":"9057096"},{"1":"2014","2":"9136081"},{"1":"2015","2":"9084179"},{"1":"2016","2":"9021051"},{"1":"2017","2":"9231648"},{"1":"2018","2":"9149176"},{"1":"2019","2":"9199083"},{"1":"2020","2":"6053717"},{"1":"2021","2":"7361031"},{"1":"2022","2":"7001989"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>27.761 sec elapsed</code></pre>
+</div>
+</div>
+<p>And it took about 20 seconds to count the <strong>Checkouts</strong> by year.</p>
+</section><section id="reading-the-data-as-a-partquet-file" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="reading-the-data-as-a-partquet-file">
+<span class="header-section-number">4</span> Reading the data as a Partquet file</h2>
+<p>Thanks to arrow, this code will work regardless of how large the underlying dataset is. But it’s currently rather slow: on mycomputer, it took 20 seconds or longer to run. That’s not terrible given how much data we have, but we can make it much faster by switching to a better format.</p>
+<section id="rewriting-the-seattle-library-data-as-a-parquet-file" class="level3" data-number="4.1"><h3 data-number="4.1" class="anchored" data-anchor-id="rewriting-the-seattle-library-data-as-a-parquet-file">
+<span class="header-section-number">4.1</span> Rewriting the Seattle library data as a Parquet file</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="in">seattle_csv |&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="in">  group_by(CheckoutYear) |&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="in">  write_dataset(path = "~/GitHub/data/seattle-library-checkouts", format = "parquet")</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It took about 30 seconds to write the dataset as a Parquet file, which is 4,42 GB in size, less than half the size of the original CSV file. Let’s take a look at what we just produced:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="at">files =</span> <span class="fu">list.files</span>(<span class="st">"~/GitHub/data/seattle-library-checkouts"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">size_MB =</span> <span class="fu">file.size</span>(<span class="fu">file.path</span>(<span class="st">"~/GitHub/data/seattle-library-checkouts"</span>, files)) <span class="sc">/</span> <span class="dv">1024</span><span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["files"],"name":[1],"type":["chr"],"align":["left"]},{"label":["size_MB"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"CheckoutYear=2005/part-0.parquet","2":"109.1460"},{"1":"CheckoutYear=2006/part-0.parquet","2":"163.8052"},{"1":"CheckoutYear=2007/part-0.parquet","2":"177.5494"},{"1":"CheckoutYear=2008/part-0.parquet","2":"194.6294"},{"1":"CheckoutYear=2009/part-0.parquet","2":"213.9811"},{"1":"CheckoutYear=2010/part-0.parquet","2":"222.1355"},{"1":"CheckoutYear=2011/part-0.parquet","2":"238.5952"},{"1":"CheckoutYear=2012/part-0.parquet","2":"248.7223"},{"1":"CheckoutYear=2013/part-0.parquet","2":"268.8119"},{"1":"CheckoutYear=2014/part-0.parquet","2":"281.9293"},{"1":"CheckoutYear=2015/part-0.parquet","2":"293.5520"},{"1":"CheckoutYear=2016/part-0.parquet","2":"300.2249"},{"1":"CheckoutYear=2017/part-0.parquet","2":"304.1663"},{"1":"CheckoutYear=2018/part-0.parquet","2":"292.0176"},{"1":"CheckoutYear=2019/part-0.parquet","2":"288.4465"},{"1":"CheckoutYear=2020/part-0.parquet","2":"150.8536"},{"1":"CheckoutYear=2021/part-0.parquet","2":"228.7637"},{"1":"CheckoutYear=2022/part-0.parquet","2":"240.5243"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Our single 9GB CSV file has been rewritten into 18 parquet files. The file names use a “self-describing” convention used by the Apache Hive project. Hive-style partitions name folders with a “key=value” convention, so as you might guess, the CheckoutYear=2005 directory contains all the data where CheckoutYear is 2005. Each file is between 100 and 300 MB and the total size is now around 4 GB, a little over half the size of the original CSV file. This is as we expect since parquet is a much more efficient format.</p>
+</section><section id="using-dplyr-with-arrow" class="level3" data-number="4.2"><h3 data-number="4.2" class="anchored" data-anchor-id="using-dplyr-with-arrow">
+<span class="header-section-number">4.2</span> Using dplyr with arrow</h3>
+<p>Now we’ve created these parquet files, we’ll need to read them in again. We use open_dataset() again, but this time we give it a directory:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>seattle_pq <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(<span class="st">"~/GitHub/data/seattle-library-checkouts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now we can write our dplyr pipeline. For example, we could count the total number of books checked out in each month for the last five years:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>query <span class="ot">&lt;-</span> seattle_pq <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">&gt;=</span> <span class="dv">2018</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">group_by</span>(CheckoutYear, CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">arrange</span>(CheckoutYear, CheckoutMonth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Writing dplyr code for arrow data is conceptually similar to dbplyr, Chapter 21: you write dplyr code, which is automatically transformed into a query that the Apache Arrow C++ library understands, which is then executed when you call collect(). If we print out the query object we can see a little information about what we expect Arrow to return when the execution takes place. And we can get the results by calling collect():</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>query</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>FileSystemDataset (query)
+CheckoutYear: int32
+CheckoutMonth: int64
+TotalCheckouts: int64
+
+* Grouped by CheckoutYear
+* Sorted by CheckoutYear [asc], CheckoutMonth [asc]
+See $.data for the source Arrow object</code></pre>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>query <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">collect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["CheckoutYear"],"name":[1],"type":["int"],"align":["right"]},{"label":["CheckoutMonth"],"name":[2],"type":["int"],"align":["right"]},{"label":["TotalCheckouts"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"2018","2":"1","3":"355101"},{"1":"2018","2":"2","3":"309813"},{"1":"2018","2":"3","3":"344487"},{"1":"2018","2":"4","3":"330988"},{"1":"2018","2":"5","3":"318049"},{"1":"2018","2":"6","3":"341825"},{"1":"2018","2":"7","3":"351207"},{"1":"2018","2":"8","3":"352977"},{"1":"2018","2":"9","3":"319587"},{"1":"2018","2":"10","3":"338497"},{"1":"2018","2":"11","3":"325249"},{"1":"2018","2":"12","3":"299789"},{"1":"2019","2":"1","3":"352288"},{"1":"2019","2":"2","3":"299465"},{"1":"2019","2":"3","3":"326457"},{"1":"2019","2":"4","3":"326988"},{"1":"2019","2":"5","3":"314565"},{"1":"2019","2":"6","3":"331914"},{"1":"2019","2":"7","3":"356688"},{"1":"2019","2":"8","3":"340723"},{"1":"2019","2":"9","3":"328773"},{"1":"2019","2":"10","3":"334295"},{"1":"2019","2":"11","3":"323796"},{"1":"2019","2":"12","3":"295736"},{"1":"2020","2":"1","3":"343328"},{"1":"2020","2":"2","3":"317946"},{"1":"2020","2":"3","3":"215128"},{"1":"2020","2":"4","3":"70"},{"1":"2020","2":"5","3":"87"},{"1":"2020","2":"6","3":"43"},{"1":"2020","2":"7","3":"52"},{"1":"2020","2":"8","3":"8276"},{"1":"2020","2":"9","3":"65204"},{"1":"2020","2":"10","3":"91168"},{"1":"2020","2":"11","3":"91740"},{"1":"2020","2":"12","3":"108957"},{"1":"2021","2":"1","3":"128967"},{"1":"2021","2":"2","3":"129312"},{"1":"2021","2":"3","3":"152856"},{"1":"2021","2":"4","3":"143800"},{"1":"2021","2":"5","3":"148170"},{"1":"2021","2":"6","3":"185533"},{"1":"2021","2":"7","3":"224132"},{"1":"2021","2":"8","3":"229374"},{"1":"2021","2":"9","3":"241336"},{"1":"2021","2":"10","3":"244967"},{"1":"2021","2":"11","3":"245485"},{"1":"2021","2":"12","3":"192506"},{"1":"2022","2":"1","3":"261763"},{"1":"2022","2":"2","3":"222464"},{"1":"2022","2":"3","3":"251502"},{"1":"2022","2":"4","3":"236443"},{"1":"2022","2":"5","3":"240284"},{"1":"2022","2":"6","3":"249086"},{"1":"2022","2":"7","3":"232558"},{"1":"2022","2":"8","3":"257218"},{"1":"2022","2":"9","3":"239864"},{"1":"2022","2":"10","3":"240320"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Let’s compare the time it took to count the <strong>Checkouts</strong> by year using the CSV file and the Parquet file and see if it worth the trouble.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>csvtime <span class="ot">&lt;-</span> seattle_csv <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">==</span> <span class="dv">2021</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">group_by</span>(CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(CheckoutMonth)) <span class="sc">|&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb21-7"><a href="#cb21-7"></a>  <span class="fu">system.time</span>()</span>
+<span id="cb21-8"><a href="#cb21-8"></a>csvtime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   user  system elapsed 
+ 22.589   6.705  33.465 </code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>pqtime <span class="ot">&lt;-</span> seattle_pq <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">==</span> <span class="dv">2021</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">group_by</span>(CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(CheckoutMonth)) <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb23-7"><a href="#cb23-7"></a>  <span class="fu">system.time</span>()</span>
+<span id="cb23-8"><a href="#cb23-8"></a>pqtime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   user  system elapsed 
+  0.326   0.063   0.432 </code></pre>
+</div>
+</div>
+<p>Parquet file took 0.432 seconds while csv file took 33.465 seconds. The Parquet file is extremely faster, about 100 times, than the CSV file. Totally worth the trouble.</p>
+</section></section><section id="using-duckdb-with-arrow" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="using-duckdb-with-arrow">
+<span class="header-section-number">5</span> Using duckdb with arrow</h2>
+<p>There’s one last advantage of parquet and arrow — it’s very easy to turn an arrow dataset into a <code>DuckDB</code> database by calling <code><a href="https://arrow.apache.org/docs/r/reference/to_duckdb.html">arrow::to_duckdb()</a></code>:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">tic</span>()</span>
+<span id="cb25-2"><a href="#cb25-2"></a>seattle_pq <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">to_duckdb</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">==</span> <span class="dv">2021</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="fu">group_by</span>(CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(CheckoutMonth)) <span class="sc">|&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a>  <span class="fu">collect</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning: Missing values are always removed in SQL aggregation functions.
+Use `na.rm = TRUE` to silence this warning
+This warning is displayed once every 8 hours.</code></pre>
+</div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["CheckoutMonth"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["TotalCheckouts"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"12","2":"192506"},{"1":"11","2":"245485"},{"1":"10","2":"244967"},{"1":"9","2":"241336"},{"1":"8","2":"229374"},{"1":"7","2":"224132"},{"1":"6","2":"185533"},{"1":"5","2":"148170"},{"1":"4","2":"143800"},{"1":"3","2":"152856"},{"1":"2","2":"129312"},{"1":"1","2":"128967"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>0.737 sec elapsed</code></pre>
+</div>
+</div>
+<p>It took a little longer than without transition. However, the neat thing about <code>to_duckdb()</code> is that the transfer doesn’t involve any memory copying, and speaks to the goals of the arrow ecosystem: enabling seamless transitions from one computing environment to another.</p>
+
+
+<!-- -->
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/reddylee\.quarto\.pub\/candoso");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb29" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">---</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="an">title:</span><span class="co"> "Doing More with Bigger Data: An Introduction to Arrow for R Users"</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="an">format:</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="co">  aps-html:</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="co">    number-sections: true</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="co">    code-tools: true</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="co">---</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a></span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="fu">## Setup</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a></span>
+<span id="cb29-13"><a href="#cb29-13"></a><span class="in">```{r}</span></span>
+<span id="cb29-14"><a href="#cb29-14"></a><span class="co">#| label: setup</span></span>
+<span id="cb29-15"><a href="#cb29-15"></a><span class="co">#| message: false</span></span>
+<span id="cb29-16"><a href="#cb29-16"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-17"><a href="#cb29-17"></a><span class="co">#install.packages('arrow', repos = c('https://apache.r-universe.dev'))</span></span>
+<span id="cb29-18"><a href="#cb29-18"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb29-19"><a href="#cb29-19"></a><span class="fu">library</span>(dbplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb29-20"><a href="#cb29-20"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb29-21"><a href="#cb29-21"></a><span class="fu">library</span>(lobstr)</span>
+<span id="cb29-22"><a href="#cb29-22"></a><span class="fu">library</span>(tictoc)</span>
+<span id="cb29-23"><a href="#cb29-23"></a>datapath <span class="ot">&lt;-</span> <span class="st">"~/Github/data"</span></span>
+<span id="cb29-24"><a href="#cb29-24"></a><span class="in">```</span></span>
+<span id="cb29-25"><a href="#cb29-25"></a></span>
+<span id="cb29-26"><a href="#cb29-26"></a><span class="fu">## Getting the data</span></span>
+<span id="cb29-27"><a href="#cb29-27"></a></span>
+<span id="cb29-28"><a href="#cb29-28"></a>We use a dataset of item checkouts from Seattle public libraries, available online at <span class="co">[</span><span class="ot">Seattle</span><span class="co">](https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data)</span>. </span>
+<span id="cb29-29"><a href="#cb29-29"></a></span>
+<span id="cb29-30"><a href="#cb29-30"></a>The following code will get you a cached copy of the data. The data is quite big, so it will take some time to download. I highly recommend using <span class="in">`curl::multi_download()`</span> to get very large files as it’s built for exactly this purpose: it gives you a progress bar and it can resume the download if its interrupted.</span>
+<span id="cb29-31"><a href="#cb29-31"></a></span>
+<span id="cb29-32"><a href="#cb29-32"></a><span class="in">```{r}</span></span>
+<span id="cb29-33"><a href="#cb29-33"></a><span class="in">dir.create("data", showWarnings = FALSE)</span></span>
+<span id="cb29-34"><a href="#cb29-34"></a></span>
+<span id="cb29-35"><a href="#cb29-35"></a><span class="in">curl::multi_download(</span></span>
+<span id="cb29-36"><a href="#cb29-36"></a><span class="in">  "https://r4ds.s3.us-west-2.amazonaws.com/seattle-library-checkouts.csv",</span></span>
+<span id="cb29-37"><a href="#cb29-37"></a><span class="in">  "~/Github/data/seattle-library-checkouts.csv",</span></span>
+<span id="cb29-38"><a href="#cb29-38"></a><span class="in">  resume = TRUE</span></span>
+<span id="cb29-39"><a href="#cb29-39"></a><span class="in">)</span></span>
+<span id="cb29-40"><a href="#cb29-40"></a><span class="in">```</span></span>
+<span id="cb29-41"><a href="#cb29-41"></a></span>
+<span id="cb29-42"><a href="#cb29-42"></a><span class="fu">## Reading the data as a CSV file</span></span>
+<span id="cb29-43"><a href="#cb29-43"></a></span>
+<span id="cb29-44"><a href="#cb29-44"></a>If we attempt to read the dataset using <span class="in">`read_csv()`</span>, it could result in a lengthy processing time or potentially fail altogether (In my case, I have to force quit R due to no responding). This is primarily due to the sheer size of the dataset, which contains 41,389,465 rows, 12 columns, and occupies 9.21 GB of storage space.</span>
+<span id="cb29-45"><a href="#cb29-45"></a><span class="in">```{r}</span></span>
+<span id="cb29-46"><a href="#cb29-46"></a><span class="in">#| eval: false</span></span>
+<span id="cb29-47"><a href="#cb29-47"></a><span class="in">#| include: false</span></span>
+<span id="cb29-48"><a href="#cb29-48"></a><span class="in">read_csv("~/Github/data/seattle-library-checkouts.csv") |&gt; </span></span>
+<span id="cb29-49"><a href="#cb29-49"></a><span class="in">  nrow()</span></span>
+<span id="cb29-50"><a href="#cb29-50"></a><span class="in">```</span></span>
+<span id="cb29-51"><a href="#cb29-51"></a></span>
+<span id="cb29-52"><a href="#cb29-52"></a>Let's use the <span class="in">`open_dataset()`</span> function from the <span class="in">`arrow`</span> package to read the dataset. This function is designed to read large datasets efficiently by only reading the metadata and not the entire dataset. This allows us to work with large datasets without running into memory issues.</span>
+<span id="cb29-53"><a href="#cb29-53"></a></span>
+<span id="cb29-56"><a href="#cb29-56"></a><span class="in">```{r}</span></span>
+<span id="cb29-57"><a href="#cb29-57"></a>seattle_csv <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
+<span id="cb29-58"><a href="#cb29-58"></a>  <span class="at">sources =</span> <span class="st">"~/GitHub/data/seattle-library-checkouts.csv"</span>, </span>
+<span id="cb29-59"><a href="#cb29-59"></a>  <span class="at">col_types =</span> <span class="fu">schema</span>(<span class="at">ISBN =</span> <span class="fu">string</span>()),</span>
+<span id="cb29-60"><a href="#cb29-60"></a>  <span class="at">format =</span> <span class="st">"csv"</span></span>
+<span id="cb29-61"><a href="#cb29-61"></a>)</span>
+<span id="cb29-62"><a href="#cb29-62"></a>seattle_csv </span>
+<span id="cb29-63"><a href="#cb29-63"></a><span class="in">```</span></span>
+<span id="cb29-64"><a href="#cb29-64"></a></span>
+<span id="cb29-65"><a href="#cb29-65"></a>Even so, it still took a much longer time (about 35 seconds) to get the rows, which is 41,389,465 rows.</span>
+<span id="cb29-66"><a href="#cb29-66"></a><span class="in">```{r}</span></span>
+<span id="cb29-67"><a href="#cb29-67"></a><span class="in">tic()</span></span>
+<span id="cb29-68"><a href="#cb29-68"></a><span class="in">seattle_csv |&gt; </span></span>
+<span id="cb29-69"><a href="#cb29-69"></a><span class="in">  count() |&gt; </span></span>
+<span id="cb29-70"><a href="#cb29-70"></a><span class="in">  collect()</span></span>
+<span id="cb29-71"><a href="#cb29-71"></a><span class="in">toc()</span></span>
+<span id="cb29-72"><a href="#cb29-72"></a><span class="in">```</span></span>
+<span id="cb29-73"><a href="#cb29-73"></a></span>
+<span id="cb29-74"><a href="#cb29-74"></a>Take a glimpse at the dataset also took a long time (about 20 seconds).</span>
+<span id="cb29-77"><a href="#cb29-77"></a><span class="in">```{r}</span></span>
+<span id="cb29-78"><a href="#cb29-78"></a><span class="fu">tic</span>()</span>
+<span id="cb29-79"><a href="#cb29-79"></a>seattle_csv <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span>
+<span id="cb29-80"><a href="#cb29-80"></a><span class="fu">toc</span>()</span>
+<span id="cb29-81"><a href="#cb29-81"></a><span class="in">```</span></span>
+<span id="cb29-84"><a href="#cb29-84"></a><span class="in">```{r}</span></span>
+<span id="cb29-85"><a href="#cb29-85"></a><span class="fu">tic</span>()</span>
+<span id="cb29-86"><a href="#cb29-86"></a>seattle_csv <span class="sc">|&gt;</span> </span>
+<span id="cb29-87"><a href="#cb29-87"></a>  <span class="fu">summarise</span>(<span class="at">Checkouts =</span> <span class="fu">sum</span>(Checkouts),</span>
+<span id="cb29-88"><a href="#cb29-88"></a>            <span class="at">.by =</span> CheckoutYear) <span class="sc">|&gt;</span> </span>
+<span id="cb29-89"><a href="#cb29-89"></a>  <span class="fu">arrange</span>(CheckoutYear) <span class="sc">|&gt;</span> </span>
+<span id="cb29-90"><a href="#cb29-90"></a>  <span class="fu">collect</span>()</span>
+<span id="cb29-91"><a href="#cb29-91"></a><span class="fu">toc</span>()</span>
+<span id="cb29-92"><a href="#cb29-92"></a><span class="in">```</span></span>
+<span id="cb29-93"><a href="#cb29-93"></a></span>
+<span id="cb29-94"><a href="#cb29-94"></a>And it took about 20 seconds to count the **Checkouts** by year.</span>
+<span id="cb29-95"><a href="#cb29-95"></a></span>
+<span id="cb29-96"><a href="#cb29-96"></a><span class="fu">## Reading the data as a Partquet file</span></span>
+<span id="cb29-97"><a href="#cb29-97"></a>Thanks to arrow, this code will work regardless of how large the underlying dataset is. But it’s currently rather slow: on mycomputer, it took 20 seconds or longer to run. That’s not terrible given how much data we have, but we can make it much faster by switching to a better format.</span>
+<span id="cb29-98"><a href="#cb29-98"></a></span>
+<span id="cb29-99"><a href="#cb29-99"></a><span class="fu">### Rewriting the Seattle library data as a Parquet file</span></span>
+<span id="cb29-100"><a href="#cb29-100"></a></span>
+<span id="cb29-101"><a href="#cb29-101"></a><span class="in">```{r}</span></span>
+<span id="cb29-102"><a href="#cb29-102"></a><span class="in">seattle_csv |&gt;</span></span>
+<span id="cb29-103"><a href="#cb29-103"></a><span class="in">  group_by(CheckoutYear) |&gt;</span></span>
+<span id="cb29-104"><a href="#cb29-104"></a><span class="in">  write_dataset(path = "~/GitHub/data/seattle-library-checkouts", format = "parquet")</span></span>
+<span id="cb29-105"><a href="#cb29-105"></a><span class="in">```</span></span>
+<span id="cb29-106"><a href="#cb29-106"></a></span>
+<span id="cb29-107"><a href="#cb29-107"></a>It took about 30 seconds to write the dataset as a Parquet file, which is 4,42 GB in size, less than half the size of the original CSV file. Let’s take a look at what we just produced:</span>
+<span id="cb29-110"><a href="#cb29-110"></a><span class="in">```{r}</span></span>
+<span id="cb29-111"><a href="#cb29-111"></a><span class="fu">tibble</span>(</span>
+<span id="cb29-112"><a href="#cb29-112"></a>  <span class="at">files =</span> <span class="fu">list.files</span>(<span class="st">"~/GitHub/data/seattle-library-checkouts"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-113"><a href="#cb29-113"></a>  <span class="at">size_MB =</span> <span class="fu">file.size</span>(<span class="fu">file.path</span>(<span class="st">"~/GitHub/data/seattle-library-checkouts"</span>, files)) <span class="sc">/</span> <span class="dv">1024</span><span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb29-114"><a href="#cb29-114"></a>)</span>
+<span id="cb29-115"><a href="#cb29-115"></a><span class="in">```</span></span>
+<span id="cb29-116"><a href="#cb29-116"></a></span>
+<span id="cb29-117"><a href="#cb29-117"></a>Our single 9GB CSV file has been rewritten into 18 parquet files. The file names use a “self-describing” convention used by the Apache Hive project. Hive-style partitions name folders with a “key=value” convention, so as you might guess, the CheckoutYear=2005 directory contains all the data where CheckoutYear is 2005. Each file is between 100 and 300 MB and the total size is now around 4 GB, a little over half the size of the original CSV file. This is as we expect since parquet is a much more efficient format.</span>
+<span id="cb29-118"><a href="#cb29-118"></a></span>
+<span id="cb29-119"><a href="#cb29-119"></a><span class="fu">### Using dplyr with arrow</span></span>
+<span id="cb29-120"><a href="#cb29-120"></a>Now we’ve created these parquet files, we’ll need to read them in again. We use open_dataset() again, but this time we give it a directory:</span>
+<span id="cb29-123"><a href="#cb29-123"></a><span class="in">```{r}</span></span>
+<span id="cb29-124"><a href="#cb29-124"></a>seattle_pq <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(<span class="st">"~/GitHub/data/seattle-library-checkouts"</span>)</span>
+<span id="cb29-125"><a href="#cb29-125"></a><span class="in">```</span></span>
+<span id="cb29-126"><a href="#cb29-126"></a>Now we can write our dplyr pipeline. For example, we could count the total number of books checked out in each month for the last five years:</span>
+<span id="cb29-129"><a href="#cb29-129"></a><span class="in">```{r}</span></span>
+<span id="cb29-130"><a href="#cb29-130"></a>query <span class="ot">&lt;-</span> seattle_pq <span class="sc">|&gt;</span> </span>
+<span id="cb29-131"><a href="#cb29-131"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">&gt;=</span> <span class="dv">2018</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-132"><a href="#cb29-132"></a>  <span class="fu">group_by</span>(CheckoutYear, CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb29-133"><a href="#cb29-133"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb29-134"><a href="#cb29-134"></a>  <span class="fu">arrange</span>(CheckoutYear, CheckoutMonth)</span>
+<span id="cb29-135"><a href="#cb29-135"></a><span class="in">```</span></span>
+<span id="cb29-136"><a href="#cb29-136"></a>Writing dplyr code for arrow data is conceptually similar to dbplyr, Chapter 21: you write dplyr code, which is automatically transformed into a query that the Apache Arrow C++ library understands, which is then executed when you call collect(). If we print out the query object we can see a little information about what we expect Arrow to return when the execution takes place. And we can get the results by calling collect():</span>
+<span id="cb29-137"><a href="#cb29-137"></a></span>
+<span id="cb29-140"><a href="#cb29-140"></a><span class="in">```{r}</span></span>
+<span id="cb29-141"><a href="#cb29-141"></a>query</span>
+<span id="cb29-142"><a href="#cb29-142"></a>query <span class="sc">|&gt;</span> </span>
+<span id="cb29-143"><a href="#cb29-143"></a>  <span class="fu">collect</span>()</span>
+<span id="cb29-144"><a href="#cb29-144"></a><span class="in">```</span></span>
+<span id="cb29-145"><a href="#cb29-145"></a></span>
+<span id="cb29-146"><a href="#cb29-146"></a>Let's compare the time it took to count the **Checkouts** by year using the CSV file and the Parquet file and see if it worth the trouble.</span>
+<span id="cb29-149"><a href="#cb29-149"></a><span class="in">```{r}</span></span>
+<span id="cb29-150"><a href="#cb29-150"></a>csvtime <span class="ot">&lt;-</span> seattle_csv <span class="sc">|&gt;</span> </span>
+<span id="cb29-151"><a href="#cb29-151"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">==</span> <span class="dv">2021</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-152"><a href="#cb29-152"></a>  <span class="fu">group_by</span>(CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb29-153"><a href="#cb29-153"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb29-154"><a href="#cb29-154"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(CheckoutMonth)) <span class="sc">|&gt;</span></span>
+<span id="cb29-155"><a href="#cb29-155"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb29-156"><a href="#cb29-156"></a>  <span class="fu">system.time</span>()</span>
+<span id="cb29-157"><a href="#cb29-157"></a>csvtime</span>
+<span id="cb29-158"><a href="#cb29-158"></a><span class="in">```</span></span>
+<span id="cb29-159"><a href="#cb29-159"></a></span>
+<span id="cb29-162"><a href="#cb29-162"></a><span class="in">```{r}</span></span>
+<span id="cb29-163"><a href="#cb29-163"></a>pqtime <span class="ot">&lt;-</span> seattle_pq <span class="sc">|&gt;</span> </span>
+<span id="cb29-164"><a href="#cb29-164"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">==</span> <span class="dv">2021</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-165"><a href="#cb29-165"></a>  <span class="fu">group_by</span>(CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb29-166"><a href="#cb29-166"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb29-167"><a href="#cb29-167"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(CheckoutMonth)) <span class="sc">|&gt;</span></span>
+<span id="cb29-168"><a href="#cb29-168"></a>  <span class="fu">collect</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb29-169"><a href="#cb29-169"></a>  <span class="fu">system.time</span>()</span>
+<span id="cb29-170"><a href="#cb29-170"></a>pqtime</span>
+<span id="cb29-171"><a href="#cb29-171"></a><span class="in">```</span></span>
+<span id="cb29-172"><a href="#cb29-172"></a>Parquet file took <span class="in">`r pqtime[3]`</span> seconds while csv file took <span class="in">`r csvtime[3]`</span> seconds. The Parquet file is extremely faster, about 100 times, than the CSV file. Totally worth the trouble. </span>
+<span id="cb29-173"><a href="#cb29-173"></a></span>
+<span id="cb29-174"><a href="#cb29-174"></a><span class="fu">## Using duckdb with arrow</span></span>
+<span id="cb29-175"><a href="#cb29-175"></a>There’s one last advantage of parquet and arrow — it’s very easy to turn an arrow dataset into a <span class="in">`DuckDB`</span> database by calling <span class="in">`arrow::to_duckdb()`</span>:</span>
+<span id="cb29-176"><a href="#cb29-176"></a></span>
+<span id="cb29-179"><a href="#cb29-179"></a><span class="in">```{r}</span></span>
+<span id="cb29-180"><a href="#cb29-180"></a><span class="fu">tic</span>()</span>
+<span id="cb29-181"><a href="#cb29-181"></a>seattle_pq <span class="sc">|&gt;</span> </span>
+<span id="cb29-182"><a href="#cb29-182"></a>  <span class="fu">to_duckdb</span>() <span class="sc">|&gt;</span></span>
+<span id="cb29-183"><a href="#cb29-183"></a>  <span class="fu">filter</span>(CheckoutYear <span class="sc">==</span> <span class="dv">2021</span>, MaterialType <span class="sc">==</span> <span class="st">"BOOK"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-184"><a href="#cb29-184"></a>  <span class="fu">group_by</span>(CheckoutMonth) <span class="sc">|&gt;</span></span>
+<span id="cb29-185"><a href="#cb29-185"></a>  <span class="fu">summarize</span>(<span class="at">TotalCheckouts =</span> <span class="fu">sum</span>(Checkouts)) <span class="sc">|&gt;</span></span>
+<span id="cb29-186"><a href="#cb29-186"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(CheckoutMonth)) <span class="sc">|&gt;</span></span>
+<span id="cb29-187"><a href="#cb29-187"></a>  <span class="fu">collect</span>() </span>
+<span id="cb29-188"><a href="#cb29-188"></a><span class="fu">toc</span>()</span>
+<span id="cb29-189"><a href="#cb29-189"></a><span class="in">```</span></span>
+<span id="cb29-190"><a href="#cb29-190"></a>It took a little longer than without transition. However, the neat thing about <span class="in">`to_duckdb()`</span> is that the transfer doesn’t involve any memory copying, and speaks to the goals of the arrow ecosystem: enabling seamless transitions from one computing environment to another.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright <span>©<span> 2005-2024 Can.Do.So</span></span></p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://www.candoso.org">
+      <i class="bi bi-/fig/candoso2.png" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

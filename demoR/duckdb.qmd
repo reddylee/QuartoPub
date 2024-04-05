@@ -156,7 +156,7 @@ tic("R")
 ```
 ```{r}
 #| include: false
-nycflights13::flights %>%
+flights %>%
   filter(month == 1) %>%
   group_by(tailnum) %>%
   filter(n() > 20) %>%
@@ -186,10 +186,10 @@ Why bother with `duckdb` when we can do the same in `R`? You might ask. The answ
 
 We might not notice a significant difference in query execution speed in this example because the dataset is small. However, the discrepancy becomes more apparent with larger datasets. Let's examine a big dataset to observe the contrast in query execution speed. We'll use a dataset containing item checkouts from Seattle public libraries, accessible online at [Seattle](https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data).
 
-When attempting to read the dataset with `read_csv()`, it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset's substantial size, comprising approximately 31,871,534 rows, spanning 12 columns, and occupying 6.5 GB of storage space. The following code would fail to read such voluminous data.
+When attempting to read the dataset with `read_csv()`, it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset's substantial size, comprising approximately 41,389,465 rows, spanning 12 columns, and occupying 9.21 GB of storage space. The following code would fail to read such voluminous data.
 
 ```{{r}}
-read_csv("data/seattle-library-checkouts.csv") |> 
+read_csv("~/GitHub/data/seattle-library-checkouts.csv") |> 
   nrow()
 ```
 
@@ -200,7 +200,7 @@ tic("sql")
 
 ```{sql connection=con}
 Select Count(*)
-From read_csv('data/seattle-library-checkouts.csv')
+From read_csv('~/GitHub/data/seattle-library-checkouts.csv')
 ```
 ```{r}
 toc()
