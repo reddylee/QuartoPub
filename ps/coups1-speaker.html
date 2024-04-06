@@ -10,9 +10,9 @@
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.552">
+<meta name="generator" content="quarto-1.4.553">
 <meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-04-04">
+<meta name="dcterms.date" content="2024-04-06">
 <meta name="keywords" content="Coup, Autocracy, Regime types, Sample selection">
 <title>Can.Do.So - Sample Selection Effects and the Likelihood of Coups</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -453,43 +453,43 @@ Zhu Qi
     </div>
 </div>
 
-  <p class="date">2024-04-04</p>
+  <p class="date">2024-04-06</p>
 </section><section class="slide level2"><details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co">#load coup data</span></span>
 <span id="cb1-2"><a></a>coup <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt"</span>,</span>
 <span id="cb1-3"><a></a>                 <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
-<span id="cb1-4"><a></a>coups <span class="ot">&lt;-</span> coup <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a></a>  <span class="fu">rename</span>(<span class="at">Country =</span> country) <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a>coups <span class="ot">&lt;-</span> coup <span class="sc">|&gt;</span></span>
 <span id="cb1-6"><a></a>  <span class="fu">summarise</span>(</span>
 <span id="cb1-7"><a></a>    <span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">n</span>(),</span>
 <span id="cb1-8"><a></a>    <span class="st">`</span><span class="at">Coup succeeded</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(coup <span class="sc">==</span> <span class="dv">2</span>),</span>
-<span id="cb1-9"><a></a>    <span class="at">.by =</span> Country</span>
+<span id="cb1-9"><a></a>    <span class="at">.by =</span> country</span>
 <span id="cb1-10"><a></a>  )</span>
 <span id="cb1-11"><a></a></span>
 <span id="cb1-12"><a></a>attempts <span class="ot">&lt;-</span> <span class="fu">length</span>(coup<span class="sc">$</span>country)</span>
 <span id="cb1-13"><a></a>succeeded <span class="ot">&lt;-</span> <span class="fu">length</span>(coup<span class="sc">$</span>country[coup<span class="sc">$</span>coup <span class="sc">==</span> <span class="dv">2</span>])</span>
 <span id="cb1-14"><a></a></span>
 <span id="cb1-15"><a></a>coup <span class="sc">|&gt;</span> </span>
-<span id="cb1-16"><a></a>  <span class="fu">summarise</span>(<span class="at">Counts =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-16"><a></a>  <span class="fu">summarise</span>(<span class="at">counts =</span> <span class="fu">n</span>(),</span>
 <span id="cb1-17"><a></a>            <span class="at">.by =</span> year) <span class="sc">|&gt;</span> </span>
-<span id="cb1-18"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Counts)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-18"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(counts)) <span class="sc">|&gt;</span> </span>
 <span id="cb1-19"><a></a>  <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-20"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-21"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
-<span id="cb1-22"><a></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
-<span id="cb1-23"><a></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
-<span id="cb1-24"><a></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-20"><a></a>  <span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"title"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-21"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-22"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
+<span id="cb1-23"><a></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
+<span id="cb1-24"><a></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb1-25"><a></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span></span>
 <span id="cb1-26"><a></a>  <span class="fu">tab_source_note</span>(<span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"***Source: GIC dataset***"</span>))</span>
 <span id="cb1-27"><a></a>coup <span class="sc">|&gt;</span> </span>
-<span id="cb1-28"><a></a>  <span class="fu">summarise</span>(<span class="at">Counts =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-28"><a></a>  <span class="fu">summarise</span>(<span class="at">counts =</span> <span class="fu">n</span>(),</span>
 <span id="cb1-29"><a></a>            <span class="at">.by =</span> country) <span class="sc">|&gt;</span> </span>
-<span id="cb1-30"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Counts)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-30"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(counts)) <span class="sc">|&gt;</span> </span>
 <span id="cb1-31"><a></a>  <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-32"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-33"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
-<span id="cb1-34"><a></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
-<span id="cb1-35"><a></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
-<span id="cb1-36"><a></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-32"><a></a>  <span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"title"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-33"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-34"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
+<span id="cb1-35"><a></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
+<span id="cb1-36"><a></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb1-37"><a></a>  <span class="fu">opt_row_striping</span>() <span class="sc">|&gt;</span></span>
 <span id="cb1-38"><a></a>  <span class="fu">tab_source_note</span>(<span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"***Source: GIC dataset***"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div id="tbl-coup_year_counts" class="quarto-layout-panel">
@@ -499,23 +499,23 @@ Table&nbsp;1: Coups by year and by country
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coup_year_counts" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-cell-subref" data-ref-parent="tbl-coup_year_counts">
-<div id="gskmygfwwe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gskmygfwwe table {
+<div id="setxutsoxi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#setxutsoxi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gskmygfwwe thead, #gskmygfwwe tbody, #gskmygfwwe tfoot, #gskmygfwwe tr, #gskmygfwwe td, #gskmygfwwe th {
+#setxutsoxi thead, #setxutsoxi tbody, #setxutsoxi tfoot, #setxutsoxi tr, #setxutsoxi td, #setxutsoxi th {
   border-style: none;
 }
 
-#gskmygfwwe p {
+#setxutsoxi p {
   margin: 0;
   padding: 0;
 }
 
-#gskmygfwwe .gt_table {
+#setxutsoxi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -541,12 +541,12 @@ Table&nbsp;1: Coups by year and by country
   border-left-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_caption {
+#setxutsoxi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gskmygfwwe .gt_title {
+#setxutsoxi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -558,7 +558,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-width: 0;
 }
 
-#gskmygfwwe .gt_subtitle {
+#setxutsoxi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -570,7 +570,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-width: 0;
 }
 
-#gskmygfwwe .gt_heading {
+#setxutsoxi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -582,13 +582,13 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_bottom_border {
+#setxutsoxi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_col_headings {
+#setxutsoxi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -603,12 +603,12 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_col_heading {
+#setxutsoxi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: inherit;
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -623,27 +623,27 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#gskmygfwwe .gt_column_spanner_outer {
+#setxutsoxi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: inherit;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-#gskmygfwwe .gt_column_spanner_outer:first-child {
+#setxutsoxi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gskmygfwwe .gt_column_spanner_outer:last-child {
+#setxutsoxi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gskmygfwwe .gt_column_spanner {
+#setxutsoxi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -655,11 +655,11 @@ Table&nbsp;1: Coups by year and by country
   width: 100%;
 }
 
-#gskmygfwwe .gt_spanner_row {
+#setxutsoxi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gskmygfwwe .gt_group_heading {
+#setxutsoxi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -685,7 +685,7 @@ Table&nbsp;1: Coups by year and by country
   text-align: left;
 }
 
-#gskmygfwwe .gt_empty_group_heading {
+#setxutsoxi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -700,15 +700,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: middle;
 }
 
-#gskmygfwwe .gt_from_md > :first-child {
+#setxutsoxi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gskmygfwwe .gt_from_md > :last-child {
+#setxutsoxi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gskmygfwwe .gt_row {
+#setxutsoxi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -727,7 +727,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#gskmygfwwe .gt_stub {
+#setxutsoxi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -740,7 +740,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#gskmygfwwe .gt_stub_row_group {
+#setxutsoxi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -754,15 +754,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: top;
 }
 
-#gskmygfwwe .gt_row_group_first td {
+#setxutsoxi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gskmygfwwe .gt_row_group_first th {
+#setxutsoxi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gskmygfwwe .gt_summary_row {
+#setxutsoxi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -772,16 +772,16 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#gskmygfwwe .gt_first_summary_row {
+#setxutsoxi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_first_summary_row.thick {
+#setxutsoxi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gskmygfwwe .gt_last_summary_row {
+#setxutsoxi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -791,7 +791,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_grand_summary_row {
+#setxutsoxi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -801,7 +801,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#gskmygfwwe .gt_first_grand_summary_row {
+#setxutsoxi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -811,7 +811,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_last_grand_summary_row_top {
+#setxutsoxi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -821,11 +821,11 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_striped {
+#setxutsoxi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gskmygfwwe .gt_table_body {
+#setxutsoxi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -834,7 +834,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_footnotes {
+#setxutsoxi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -848,7 +848,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_footnote {
+#setxutsoxi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -857,7 +857,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#gskmygfwwe .gt_sourcenotes {
+#setxutsoxi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -871,7 +871,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#gskmygfwwe .gt_sourcenote {
+#setxutsoxi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -879,134 +879,134 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#gskmygfwwe .gt_left {
+#setxutsoxi .gt_left {
   text-align: left;
 }
 
-#gskmygfwwe .gt_center {
+#setxutsoxi .gt_center {
   text-align: center;
 }
 
-#gskmygfwwe .gt_right {
+#setxutsoxi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gskmygfwwe .gt_font_normal {
+#setxutsoxi .gt_font_normal {
   font-weight: normal;
 }
 
-#gskmygfwwe .gt_font_bold {
+#setxutsoxi .gt_font_bold {
   font-weight: bold;
 }
 
-#gskmygfwwe .gt_font_italic {
+#setxutsoxi .gt_font_italic {
   font-style: italic;
 }
 
-#gskmygfwwe .gt_super {
+#setxutsoxi .gt_super {
   font-size: 65%;
 }
 
-#gskmygfwwe .gt_footnote_marks {
+#setxutsoxi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gskmygfwwe .gt_asterisk {
+#setxutsoxi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gskmygfwwe .gt_indent_1 {
+#setxutsoxi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gskmygfwwe .gt_indent_2 {
+#setxutsoxi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gskmygfwwe .gt_indent_3 {
+#setxutsoxi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gskmygfwwe .gt_indent_4 {
+#setxutsoxi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gskmygfwwe .gt_indent_5 {
+#setxutsoxi .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<div id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment quarto-float" data-quarto-disable-processing="false" data-quarto-postprocess="true" data-quarto-bootstrap="false">
+<div id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment quarto-float" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-quarto-postprocess="true">
 <figure class="quarto-float quarto-subfloat-tbl"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coup_year_counts-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) by year frequency
 </figcaption><div aria-describedby="tbl-coup_year_counts-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-tbl-colwidths="auto">
 <thead><tr class="header gt_col_headings">
-<th id="year" class="gt_col_heading gt_columns_bottom_border gt_right" style="text-align: left;" data-quarto-table-cell-role="th" scope="col">year</th>
+<th id="Year" class="gt_col_heading gt_columns_bottom_border gt_right" style="text-align: left;" data-quarto-table-cell-role="th" scope="col">Year</th>
 <th id="Counts" class="gt_col_heading gt_columns_bottom_border gt_right" style="text-align: left;" data-quarto-table-cell-role="th" scope="col">Counts</th>
 </tr></thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1966</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1966</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">18</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1963</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1963</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">16</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1975</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1975</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">16</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1965</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1965</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">15</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1991</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1991</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">14</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1962</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1962</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">14</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1960</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1960</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">12</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1978</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1978</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">12</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1981</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1981</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">11</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1961</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1961</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">11</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1958</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1958</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">11</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1976</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1976</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">11</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1989</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1989</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">10</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="year">1972</td>
+<td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Year">1972</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">10</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_right" style="text-align: left;" headers="year">1977</td>
+<td class="gt_row gt_right" style="text-align: left;" headers="Year">1977</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">10</td>
 </tr>
 </tbody>
@@ -1023,23 +1023,23 @@ Table&nbsp;1: Coups by year and by country
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coup_year_counts" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-cell-subref" data-ref-parent="tbl-coup_year_counts">
-<div id="dqgxjpmtlt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dqgxjpmtlt table {
+<div id="sxtseysyie" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sxtseysyie table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dqgxjpmtlt thead, #dqgxjpmtlt tbody, #dqgxjpmtlt tfoot, #dqgxjpmtlt tr, #dqgxjpmtlt td, #dqgxjpmtlt th {
+#sxtseysyie thead, #sxtseysyie tbody, #sxtseysyie tfoot, #sxtseysyie tr, #sxtseysyie td, #sxtseysyie th {
   border-style: none;
 }
 
-#dqgxjpmtlt p {
+#sxtseysyie p {
   margin: 0;
   padding: 0;
 }
 
-#dqgxjpmtlt .gt_table {
+#sxtseysyie .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1065,12 +1065,12 @@ Table&nbsp;1: Coups by year and by country
   border-left-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_caption {
+#sxtseysyie .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dqgxjpmtlt .gt_title {
+#sxtseysyie .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1082,7 +1082,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-width: 0;
 }
 
-#dqgxjpmtlt .gt_subtitle {
+#sxtseysyie .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1094,7 +1094,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-width: 0;
 }
 
-#dqgxjpmtlt .gt_heading {
+#sxtseysyie .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1106,13 +1106,13 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_bottom_border {
+#sxtseysyie .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_col_headings {
+#sxtseysyie .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1127,12 +1127,12 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_col_heading {
+#sxtseysyie .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: inherit;
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -1147,27 +1147,27 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#dqgxjpmtlt .gt_column_spanner_outer {
+#sxtseysyie .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: inherit;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-#dqgxjpmtlt .gt_column_spanner_outer:first-child {
+#sxtseysyie .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dqgxjpmtlt .gt_column_spanner_outer:last-child {
+#sxtseysyie .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dqgxjpmtlt .gt_column_spanner {
+#sxtseysyie .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1179,11 +1179,11 @@ Table&nbsp;1: Coups by year and by country
   width: 100%;
 }
 
-#dqgxjpmtlt .gt_spanner_row {
+#sxtseysyie .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dqgxjpmtlt .gt_group_heading {
+#sxtseysyie .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1209,7 +1209,7 @@ Table&nbsp;1: Coups by year and by country
   text-align: left;
 }
 
-#dqgxjpmtlt .gt_empty_group_heading {
+#sxtseysyie .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1224,15 +1224,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: middle;
 }
 
-#dqgxjpmtlt .gt_from_md > :first-child {
+#sxtseysyie .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dqgxjpmtlt .gt_from_md > :last-child {
+#sxtseysyie .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dqgxjpmtlt .gt_row {
+#sxtseysyie .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1251,7 +1251,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#dqgxjpmtlt .gt_stub {
+#sxtseysyie .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1264,7 +1264,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#dqgxjpmtlt .gt_stub_row_group {
+#sxtseysyie .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1278,15 +1278,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: top;
 }
 
-#dqgxjpmtlt .gt_row_group_first td {
+#sxtseysyie .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dqgxjpmtlt .gt_row_group_first th {
+#sxtseysyie .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dqgxjpmtlt .gt_summary_row {
+#sxtseysyie .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1296,16 +1296,16 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#dqgxjpmtlt .gt_first_summary_row {
+#sxtseysyie .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_first_summary_row.thick {
+#sxtseysyie .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dqgxjpmtlt .gt_last_summary_row {
+#sxtseysyie .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1315,7 +1315,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_grand_summary_row {
+#sxtseysyie .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1325,7 +1325,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#dqgxjpmtlt .gt_first_grand_summary_row {
+#sxtseysyie .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1335,7 +1335,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_last_grand_summary_row_top {
+#sxtseysyie .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1345,11 +1345,11 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_striped {
+#sxtseysyie .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dqgxjpmtlt .gt_table_body {
+#sxtseysyie .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1358,7 +1358,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_footnotes {
+#sxtseysyie .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1372,7 +1372,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_footnote {
+#sxtseysyie .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1381,7 +1381,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#dqgxjpmtlt .gt_sourcenotes {
+#sxtseysyie .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1395,7 +1395,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#dqgxjpmtlt .gt_sourcenote {
+#sxtseysyie .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1403,134 +1403,134 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#dqgxjpmtlt .gt_left {
+#sxtseysyie .gt_left {
   text-align: left;
 }
 
-#dqgxjpmtlt .gt_center {
+#sxtseysyie .gt_center {
   text-align: center;
 }
 
-#dqgxjpmtlt .gt_right {
+#sxtseysyie .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dqgxjpmtlt .gt_font_normal {
+#sxtseysyie .gt_font_normal {
   font-weight: normal;
 }
 
-#dqgxjpmtlt .gt_font_bold {
+#sxtseysyie .gt_font_bold {
   font-weight: bold;
 }
 
-#dqgxjpmtlt .gt_font_italic {
+#sxtseysyie .gt_font_italic {
   font-style: italic;
 }
 
-#dqgxjpmtlt .gt_super {
+#sxtseysyie .gt_super {
   font-size: 65%;
 }
 
-#dqgxjpmtlt .gt_footnote_marks {
+#sxtseysyie .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dqgxjpmtlt .gt_asterisk {
+#sxtseysyie .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dqgxjpmtlt .gt_indent_1 {
+#sxtseysyie .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dqgxjpmtlt .gt_indent_2 {
+#sxtseysyie .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dqgxjpmtlt .gt_indent_3 {
+#sxtseysyie .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dqgxjpmtlt .gt_indent_4 {
+#sxtseysyie .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dqgxjpmtlt .gt_indent_5 {
+#sxtseysyie .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<div id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment quarto-float" data-quarto-disable-processing="false" data-quarto-postprocess="true" data-quarto-bootstrap="false">
+<div id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment quarto-float" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-quarto-postprocess="true">
 <figure class="quarto-float quarto-subfloat-tbl"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coup_year_counts-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) by country frequency
 </figcaption><div aria-describedby="tbl-coup_year_counts-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-tbl-colwidths="auto">
 <thead><tr class="header gt_col_headings">
-<th id="country" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: left;" data-quarto-table-cell-role="th" scope="col">country</th>
+<th id="Country" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: left;" data-quarto-table-cell-role="th" scope="col">Country</th>
 <th id="Counts" class="gt_col_heading gt_columns_bottom_border gt_right" style="text-align: left;" data-quarto-table-cell-role="th" scope="col">Counts</th>
 </tr></thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Bolivia</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Bolivia</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">23</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Argentina</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Argentina</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">20</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Sudan</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Sudan</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">17</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Haiti</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Haiti</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">13</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Venezuela</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Venezuela</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">13</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Iraq</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Iraq</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">12</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Syria</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Syria</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">12</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Thailand</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Thailand</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">12</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Ecuador</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Ecuador</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">11</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Burundi</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Burundi</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">11</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Guatemala</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Guatemala</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">10</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Honduras</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Honduras</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">10</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Burkina Faso</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Burkina Faso</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">10</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="country">Sierra Leone</td>
+<td class="gt_row gt_left gt_striped" style="text-align: left;" headers="Country">Sierra Leone</td>
 <td class="gt_row gt_right gt_striped" style="text-align: left;" headers="Counts">10</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" style="text-align: left;" headers="country">Ghana</td>
+<td class="gt_row gt_left" style="text-align: left;" headers="Country">Ghana</td>
 <td class="gt_row gt_right" style="text-align: left;" headers="Counts">10</td>
 </tr>
 </tbody>
@@ -1549,26 +1549,24 @@ Table&nbsp;1: Coups by year and by country
 </div>
 </figure>
 </div>
-</section><section id="introduction" class="slide level2 smaller scrollable" data-number="1"><h2>
+</section><section id="introduction" class="slide level2 scrollable" data-number="1"><h2>
 <span class="header-section-number">1</span> Introduction</h2>
-<p>Coups<sup>1</sup> occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC) dataset <span class="citation" data-cites="powell2011">(<a href="#/introduction" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by <span class="citation" data-cites="gassebner2016">Gassebner, Gutmann, and Voigt (<a href="#/introduction" role="doc-biblioref" onclick="">2016</a>)</span>, around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.</p>
-<p>In analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high. Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful. In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.</p>
-<p>To comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in <a href="#/introduction" class="quarto-xref">Table&nbsp;2</a>, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.</p>
+<p>Coups occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC)<sup>1</sup> dataset <span class="citation" data-cites="powell2011">(<a href="#/theory" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950. Similar patterns are observed in the Middle East and South Asia. Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups. As noted by <span class="citation" data-cites="gassebner2016">Gassebner, Gutmann, and Voigt (<a href="#/theory" role="doc-biblioref" onclick="">2016</a>)</span>, around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>coups <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a></a>  <span class="co"># add one row which adds up the total</span></span>
 <span id="cb2-3"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a></a>  <span class="fu">head</span>(<span class="dv">11</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-5"><a></a>  <span class="fu">add_row</span>(</span>
-<span id="cb2-6"><a></a>    <span class="at">Country =</span> <span class="st">"Total"</span>,</span>
+<span id="cb2-6"><a></a>    <span class="at">country =</span> <span class="st">"Total"</span>,</span>
 <span id="cb2-7"><a></a>    <span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(coups[, <span class="dv">2</span>]),</span>
 <span id="cb2-8"><a></a>    <span class="st">`</span><span class="at">Coup succeeded</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(coups[, <span class="dv">3</span>])</span>
 <span id="cb2-9"><a></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
-<span id="cb2-12"><a></a>              <span class="at">column_labels.font.size =</span> <span class="dv">16</span>,</span>
-<span id="cb2-13"><a></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
-<span id="cb2-14"><a></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a></a>  <span class="fu">mutate</span>(<span class="at">Success_rate =</span> <span class="fu">percent</span>(<span class="st">`</span><span class="at">Coup succeeded</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">Coup attempted</span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a></a>  <span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"title"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-12"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a></a>  <span class="fu">tab_options</span>(<span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">90</span>),</span>
+<span id="cb2-14"><a></a>              <span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb2-15"><a></a>  <span class="fu">tab_source_note</span>(<span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"***Source: GIC dataset***"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -1579,23 +1577,23 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 </figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="nskogfeulb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nskogfeulb table {
+<div id="wsulqapiio" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wsulqapiio table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#nskogfeulb thead, #nskogfeulb tbody, #nskogfeulb tfoot, #nskogfeulb tr, #nskogfeulb td, #nskogfeulb th {
+#wsulqapiio thead, #wsulqapiio tbody, #wsulqapiio tfoot, #wsulqapiio tr, #wsulqapiio td, #wsulqapiio th {
   border-style: none;
 }
 
-#nskogfeulb p {
+#wsulqapiio p {
   margin: 0;
   padding: 0;
 }
 
-#nskogfeulb .gt_table {
+#wsulqapiio .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1621,12 +1619,12 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-left-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_caption {
+#wsulqapiio .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nskogfeulb .gt_title {
+#wsulqapiio .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1638,7 +1636,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-width: 0;
 }
 
-#nskogfeulb .gt_subtitle {
+#wsulqapiio .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1650,7 +1648,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-top-width: 0;
 }
 
-#nskogfeulb .gt_heading {
+#wsulqapiio .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1662,13 +1660,13 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_bottom_border {
+#wsulqapiio .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_col_headings {
+#wsulqapiio .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1683,12 +1681,12 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_col_heading {
+#wsulqapiio .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 16px;
+  font-size: 100%;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: inherit;
   border-left-style: none;
   border-left-width: 1px;
   border-left-color: #D3D3D3;
@@ -1703,27 +1701,27 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   overflow-x: hidden;
 }
 
-#nskogfeulb .gt_column_spanner_outer {
+#wsulqapiio .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
-  font-size: 16px;
+  font-size: 100%;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: inherit;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-#nskogfeulb .gt_column_spanner_outer:first-child {
+#wsulqapiio .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nskogfeulb .gt_column_spanner_outer:last-child {
+#wsulqapiio .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nskogfeulb .gt_column_spanner {
+#wsulqapiio .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1735,11 +1733,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   width: 100%;
 }
 
-#nskogfeulb .gt_spanner_row {
+#wsulqapiio .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#nskogfeulb .gt_group_heading {
+#wsulqapiio .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1765,7 +1763,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   text-align: left;
 }
 
-#nskogfeulb .gt_empty_group_heading {
+#wsulqapiio .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1780,15 +1778,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   vertical-align: middle;
 }
 
-#nskogfeulb .gt_from_md > :first-child {
+#wsulqapiio .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nskogfeulb .gt_from_md > :last-child {
+#wsulqapiio .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nskogfeulb .gt_row {
+#wsulqapiio .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1807,7 +1805,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   overflow-x: hidden;
 }
 
-#nskogfeulb .gt_stub {
+#wsulqapiio .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1820,7 +1818,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#nskogfeulb .gt_stub_row_group {
+#wsulqapiio .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1834,15 +1832,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   vertical-align: top;
 }
 
-#nskogfeulb .gt_row_group_first td {
+#wsulqapiio .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nskogfeulb .gt_row_group_first th {
+#wsulqapiio .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#nskogfeulb .gt_summary_row {
+#wsulqapiio .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1852,16 +1850,16 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#nskogfeulb .gt_first_summary_row {
+#wsulqapiio .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_first_summary_row.thick {
+#wsulqapiio .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nskogfeulb .gt_last_summary_row {
+#wsulqapiio .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1871,7 +1869,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_grand_summary_row {
+#wsulqapiio .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1881,7 +1879,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#nskogfeulb .gt_first_grand_summary_row {
+#wsulqapiio .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1891,7 +1889,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-top-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_last_grand_summary_row_top {
+#wsulqapiio .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1901,11 +1899,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_striped {
+#wsulqapiio .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nskogfeulb .gt_table_body {
+#wsulqapiio .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1914,7 +1912,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_footnotes {
+#wsulqapiio .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1928,7 +1926,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_footnote {
+#wsulqapiio .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1937,7 +1935,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#nskogfeulb .gt_sourcenotes {
+#wsulqapiio .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1951,7 +1949,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#nskogfeulb .gt_sourcenote {
+#wsulqapiio .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1959,136 +1957,149 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#nskogfeulb .gt_left {
+#wsulqapiio .gt_left {
   text-align: left;
 }
 
-#nskogfeulb .gt_center {
+#wsulqapiio .gt_center {
   text-align: center;
 }
 
-#nskogfeulb .gt_right {
+#wsulqapiio .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nskogfeulb .gt_font_normal {
+#wsulqapiio .gt_font_normal {
   font-weight: normal;
 }
 
-#nskogfeulb .gt_font_bold {
+#wsulqapiio .gt_font_bold {
   font-weight: bold;
 }
 
-#nskogfeulb .gt_font_italic {
+#wsulqapiio .gt_font_italic {
   font-style: italic;
 }
 
-#nskogfeulb .gt_super {
+#wsulqapiio .gt_super {
   font-size: 65%;
 }
 
-#nskogfeulb .gt_footnote_marks {
+#wsulqapiio .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#nskogfeulb .gt_asterisk {
+#wsulqapiio .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nskogfeulb .gt_indent_1 {
+#wsulqapiio .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nskogfeulb .gt_indent_2 {
+#wsulqapiio .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nskogfeulb .gt_indent_3 {
+#wsulqapiio .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nskogfeulb .gt_indent_4 {
+#wsulqapiio .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nskogfeulb .gt_indent_5 {
+#wsulqapiio .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="gt_table do-not-create-environment cell" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="header gt_col_headings">
 <th id="Country" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Country</th>
-<th id="Coup attempted" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Coup attempted</th>
-<th id="Coup succeeded" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Coup succeeded</th>
+<th id="Coup Attempted" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Coup Attempted</th>
+<th id="Coup Succeeded" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Coup Succeeded</th>
+<th id="Success Rate" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Success Rate</th>
 </tr></thead>
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="Country">Bolivia</td>
-<td class="gt_row gt_right" headers="Coup attempted">23</td>
-<td class="gt_row gt_right" headers="Coup succeeded">11</td>
+<td class="gt_row gt_right" headers="Coup Attempted">23</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">11</td>
+<td class="gt_row gt_right" headers="Success Rate">47.83%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Country">Argentina</td>
-<td class="gt_row gt_right" headers="Coup attempted">20</td>
-<td class="gt_row gt_right" headers="Coup succeeded">7</td>
+<td class="gt_row gt_right" headers="Coup Attempted">20</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">7</td>
+<td class="gt_row gt_right" headers="Success Rate">35.00%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Country">Sudan</td>
-<td class="gt_row gt_right" headers="Coup attempted">17</td>
-<td class="gt_row gt_right" headers="Coup succeeded">6</td>
+<td class="gt_row gt_right" headers="Coup Attempted">17</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">6</td>
+<td class="gt_row gt_right" headers="Success Rate">35.29%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Country">Haiti</td>
-<td class="gt_row gt_right" headers="Coup attempted">13</td>
-<td class="gt_row gt_right" headers="Coup succeeded">9</td>
+<td class="gt_row gt_right" headers="Coup Attempted">13</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">9</td>
+<td class="gt_row gt_right" headers="Success Rate">69.23%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Country">Venezuela</td>
-<td class="gt_row gt_right" headers="Coup attempted">13</td>
-<td class="gt_row gt_right" headers="Coup succeeded">0</td>
+<td class="gt_row gt_right" headers="Coup Attempted">13</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">0</td>
+<td class="gt_row gt_right" headers="Success Rate">0.00%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Country">Iraq</td>
-<td class="gt_row gt_right" headers="Coup attempted">12</td>
-<td class="gt_row gt_right" headers="Coup succeeded">4</td>
+<td class="gt_row gt_right" headers="Coup Attempted">12</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">4</td>
+<td class="gt_row gt_right" headers="Success Rate">33.33%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Country">Syria</td>
-<td class="gt_row gt_right" headers="Coup attempted">12</td>
-<td class="gt_row gt_right" headers="Coup succeeded">8</td>
+<td class="gt_row gt_right" headers="Coup Attempted">12</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">8</td>
+<td class="gt_row gt_right" headers="Success Rate">66.67%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Country">Thailand</td>
-<td class="gt_row gt_right" headers="Coup attempted">12</td>
-<td class="gt_row gt_right" headers="Coup succeeded">8</td>
+<td class="gt_row gt_right" headers="Coup Attempted">12</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">8</td>
+<td class="gt_row gt_right" headers="Success Rate">66.67%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Country">Ecuador</td>
-<td class="gt_row gt_right" headers="Coup attempted">11</td>
-<td class="gt_row gt_right" headers="Coup succeeded">5</td>
+<td class="gt_row gt_right" headers="Coup Attempted">11</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">5</td>
+<td class="gt_row gt_right" headers="Success Rate">45.45%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Country">Burundi</td>
-<td class="gt_row gt_right" headers="Coup attempted">11</td>
-<td class="gt_row gt_right" headers="Coup succeeded">5</td>
+<td class="gt_row gt_right" headers="Coup Attempted">11</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">5</td>
+<td class="gt_row gt_right" headers="Success Rate">45.45%</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="Country">Guatemala</td>
-<td class="gt_row gt_right" headers="Coup attempted">10</td>
-<td class="gt_row gt_right" headers="Coup succeeded">5</td>
+<td class="gt_row gt_right" headers="Coup Attempted">10</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">5</td>
+<td class="gt_row gt_right" headers="Success Rate">50.00%</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Country">Total</td>
-<td class="gt_row gt_right" headers="Coup attempted">491</td>
-<td class="gt_row gt_right" headers="Coup succeeded">245</td>
+<td class="gt_row gt_right" headers="Coup Attempted">491</td>
+<td class="gt_row gt_right" headers="Coup Succeeded">245</td>
+<td class="gt_row gt_right" headers="Success Rate">49.90%</td>
 </tr>
 </tbody>
 <tfoot class="gt_sourcenotes"><tr class="odd">
-<td colspan="3" class="gt_sourcenote"><em><strong>Source: GIC dataset</strong></em></td>
+<td colspan="4" class="gt_sourcenote"><em><strong>Source: GIC dataset</strong></em></td>
 </tr></tfoot>
 </table>
 </div>
@@ -2098,6 +2109,13 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 </figure>
 </div>
 </div>
+<p>In analysing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. As <span class="citation" data-cites="powell2011">Powell and Thyne (<a href="#/theory" role="doc-biblioref" onclick="">2011</a>)</span> noted, coups are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” <span class="citation" data-cites="powell2011">(<a href="#/theory" role="doc-biblioref" onclick="">Powell and Thyne 2011, 252</a>)</span>. Due to the illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death. In some instances, the repercussions extend to the families of the coup perpetrators.</p>
+<p>Despite these grave risks, however, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of 491 coups have been launched since 1950, with 245 coups succeeding, with an overall success rate of <span class="math inline">\(50\%\)</span> (<a href="#/introduction" class="quarto-xref">Table&nbsp;2</a>). Having said that, the occurrence rate of coups is extremely rare. Only 491 coups have been attempted since 1950, among more than <span class="math inline">\(12,000\)</span> country-years since 1950.</p>
+<p>This rarity suggests that coups are highly selective. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. Therefore, coup plotters are unlikely to proceed with their plans unless they perceive a high likelihood of success.</p>
+<p>This study aims to elucidate how expected chances of success of coups might determine the likelihood of coup attemts. I argue that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics among coup perpetrators, incumbents and other ruling elites. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.</p>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><a href="https://www.uky.edu/~clthyn2/coup_data/home.htm" class="uri">https://www.uky.edu/~clthyn2/coup_data/home.htm</a>, accessed on 2024-04-06</p></li></ol></aside></section><section id="theory" class="slide level2 smaller scrollable" data-number="2"><h2>
+<span class="header-section-number">2</span> Theory</h2>
+<p>To comprehend the motives of coup perpetrators, it’s essential to analyze the potential pay-off of coup attempts. When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success. Therefore, when considering a coup, plotters prioritize assessing their probability of success. While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success. When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances. Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates.</p>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../fig/Candoso2.png" class="slide-logo"></p>
@@ -2113,7 +2131,7 @@ Gassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. <span>“When to Expect
 Powell, Jonathan M, and Clayton L Thyne. 2011. <span>“Global Instances of Coups from 1950 to 2010: A New Dataset.”</span> <em>Journal of Peace Research</em> 48 (2): 249–59. <a href="https://doi.org/10.1177/0022343310397436">https://doi.org/10.1177/0022343310397436</a>.
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Coups, according to Powell and Thyne, are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive” <span class="citation" data-cites="powell2011">(<a href="#/introduction" role="doc-biblioref" onclick="">Powell and Thyne 2011, 252</a>)</span>.</p></li></ol></aside></section>
+</section>
 </div>
   </div>
 

@@ -6,7 +6,7 @@ date-modified: last-modified
 format: 
   aps-html:
     code-tools: true
-categories: [table, plot]
+categories: [table, plot, package]
 ---
 ----
 
@@ -14,6 +14,7 @@ categories: [table, plot]
 ```{r}
 #| message: false
 library(tidyverse)
+library(gtsummary)
 ```
 
 ## Plot
@@ -36,4 +37,21 @@ mtcars |>
   knitr::kable()
 ```
 
+### Tables with `gtsummary`
+```{r}
+CO2 |> 
+  select(!c(Plant, conc)) |> 
+  tbl_summary() 
+```
+```{r}
+CO2 |> 
+  select(!c(Plant, conc)) |> 
+  tbl_summary(by = Type, missing = "no") 
+```
+```{r}
+CO2 |> 
+  select(!c(Plant, conc)) |> 
+  tbl_summary(by = Type, missing = "no") |> 
+  add_p()
+```
 

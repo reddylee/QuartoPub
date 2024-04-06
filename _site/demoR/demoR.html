@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.552">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -209,7 +209,7 @@ window.Quarto = {
 <p><a href="../fig/candoso.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../fig/candoso.png" class="img-fluid" style="width:61.8%"></a></p>
 </div></div>
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Manuscript">Manuscript <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="params">params <span class="quarto-category-count">(2)</span></div><div class="category" data-category="plot">plot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="quarto">quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="table">table <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Manuscript">Manuscript <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="package">package <span class="quarto-category-count">(1)</span></div><div class="category" data-category="params">params <span class="quarto-category-count">(2)</span></div><div class="category" data-category="plot">plot <span class="quarto-category-count">(1)</span></div><div class="category" data-category="quarto">quarto <span class="quarto-category-count">(2)</span></div><div class="category" data-category="table">table <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -380,7 +380,7 @@ Mar 29, 2024
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="table,plot" data-listing-date-sort="1711584000000" data-listing-file-modified-sort="1712250833729" data-listing-date-modified-sort="1712250833000" data-listing-reading-time-sort="1" data-listing-word-count-sort="53">
+<div class="quarto-post image-right" data-index="4" data-categories="table,plot,package" data-listing-date-sort="1711584000000" data-listing-file-modified-sort="1712394145022" data-listing-date-modified-sort="1712394145000" data-listing-reading-time-sort="1" data-listing-word-count-sort="99">
 <div class="thumbnail">
 <p><a href="../demoR/plot_table.html" class="no-external"></a></p><a href="../demoR/plot_table.html" class="no-external">
 <p class="card-img-top"><img src="plot_table_files/figure-html/fig-cars-1.png"  class="thumbnail-image card-img"/></p>
@@ -400,11 +400,15 @@ table
 <div class="listing-category" onclick="window.quartoListingCategory('plot'); return false;">
 plot
 </div>
+<div class="listing-category" onclick="window.quartoListingCategory('package'); return false;">
+package
+</div>
 </div>
 <div class="listing-description">
 <a href="../demoR/plot_table.html" class="no-external">
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu">library</span>(gtsummary)</span></code></pre></div>
 </details>
 </div>
 </a>
@@ -892,7 +896,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"fade","selector":".lightbox","loop":true,"openEffect":"fade"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"fade","descPosition":"bottom","selector":".lightbox","closeEffect":"fade","loop":true});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

@@ -26,8 +26,12 @@ keywords: [Coup, Autocracy, Regime types, Sample selection]
 #| include: false
 format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 library(tidyverse)
+library(gtsummary)
 library(gt)
+library(janitor)
+library(scales)
 ```
+
 ```{r}
 #| label: tbl-coup_year_counts
 #| tbl-cap: "Coups by year and by country"
@@ -41,68 +45,55 @@ library(gt)
 #load coup data
 coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
                  sep = "\t")
+
 coups <- coup |>
-  rename(Country = country) |>
   summarise(
     `Coup attempted` = n(),
     `Coup succeeded` = sum(coup == 2),
-    .by = Country
+    .by = country
   )
 
 attempts <- length(coup$country)
 succeeded <- length(coup$country[coup$coup == 2])
 
 coup |> 
-  summarise(Counts = n(),
+  summarise(counts = n(),
             .by = year) |> 
-  arrange(desc(Counts)) |> 
+  arrange(desc(counts)) |> 
   head(15) |>
+  clean_names(case = "title") |> 
   gt() |> 
   tab_options(table.width = pct(90),
               column_labels.font.size = 16,
-              column_labels.font.weight = "bold",
-              column_labels.text_transform = "capitalize") |>
+              column_labels.font.weight = "bold") |>
   opt_row_striping() |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 
 coup |> 
-  summarise(Counts = n(),
+  summarise(counts = n(),
             .by = country) |> 
-  arrange(desc(Counts)) |> 
+  arrange(desc(counts)) |> 
   head(15) |>
+  clean_names(case = "title") |> 
   gt() |> 
   tab_options(table.width = pct(90),
               column_labels.font.size = 16,
-              column_labels.font.weight = "bold",
-              column_labels.text_transform = "capitalize") |>
+              column_labels.font.weight = "bold") |>
   opt_row_striping() |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 ```
 
-
 ## Introduction
 
-Coups[^1] occur with varying frequency across different countries, with some experiencing them more frequently than others.
-According to the Global Instances of Coups (GIC) dataset [@powell2011], Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe.
+Coups occur with varying frequency across different countries, with some experiencing them more frequently than others.
+According to the Global Instances of Coups (GIC)[^1] dataset [@powell2011], Latin American countries such as Bolivia witnessed `r coups |> filter(country == "Bolivia") |> pull(2)` coups between 1950 and 1984, while Argentina experienced `r coups |> filter(country == "Argentina") |> pull(2)` during a similar timeframe.
 However, Mexico's authoritarian period from 1917 to 2000 saw no coups at all.
-In Africa, Sudan endured 17 coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950.
+In Africa, Sudan endured `r coups |> filter(country == "Sudan") |> pull(2)` coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950.
 Similar patterns are observed in the Middle East and South Asia.
 Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups.
 As noted by @gassebner2016, around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.
 
-[^1]: Coups, according to Powell and Thyne, are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive" [@powell2011, p. 252].
-
-In analysing the determinants of coups, it's crucial not to overlook the most significant characteristic of coups themselves.
-Coups represent illegal attempts to overthrow current leaders, and the consequences of failed coups can be exceedingly high.
-Perpetrators of coups risk imprisonment, exile, or even death if their attempts are unsuccessful.
-In some instances, the repercussions extend to the families of the coup perpetrators. Despite these grave risks, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of `r attempts` coups have been launched since 1950, with `r succeeded` coups succeeding. Furthermore, in 2021 alone, 7 coups occurred in 6 countries, marking the most frequent year for coup attempts since 2000. While 2022 and 2023 saw a decrease in the number of coups, they still witnessed 4 and 3 coups, respectively.
-
-To comprehend the motives of coup perpetrators, it's essential to analyze the potential pay-off of coup attempts.
-When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success.
-Therefore, when considering a coup, plotters prioritize assessing their probability of success.
-While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success.
-When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances.
-Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates. As depicted in @tbl-coups, the overall success rate of coups stands at 0.5, implying that half of the coups attempted since 1950 have resulted in success.
+[^1]: <https://www.uky.edu/~clthyn2/coup_data/home.htm>, accessed on `r Sys.Date()`
 
 ```{r}
 #| label: tbl-coups
@@ -114,18 +105,38 @@ coups |>
   arrange(desc(`Coup attempted`)) |>
   head(11) |>
   add_row(
-    Country = "Total",
+    country = "Total",
     `Coup attempted` = sum(coups[, 2]),
     `Coup succeeded` = sum(coups[, 3])
   ) |>
+  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`)) |>
+  clean_names(case = "title") |> 
   gt() |>
   tab_options(table.width = pct(90),
-              column_labels.font.size = 16,
-              column_labels.font.weight = "bold",
-              column_labels.text_transform = "capitalize") |>
+              column_labels.font.weight = "bold") |> 
   tab_source_note(source_note = md("***Source: GIC dataset***")) 
 ```
+In analysing the determinants of coups, it's crucial not to overlook the most significant characteristic of coups themselves.
+As @powell2011 noted, coups are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive" [@powell2011, p. 252].
+Due to the illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death.
+In some instances, the repercussions extend to the families of the coup perpetrators.
 
+Despite these grave risks, however, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of `r attempts` coups have been launched since 1950, with `r succeeded` coups succeeding, with an overall success rate of $50\%$ (@tbl-coups). Having said that, the occurrence rate of coups is extremely rare. Only `r attempts` coups have been attempted since 1950, among more than $12,000$ country-years since 1950.
+
+This rarity suggests that coups are highly selective. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. Therefore, coup plotters are unlikely to proceed with their plans unless they perceive a high likelihood of success.
+
+This study aims to elucidate how expected chances of success of coups might determine the likelihood of coup attemts.
+I argue that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics among coup perpetrators, incumbents and other ruling elites.
+These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.
+
+## Theory
+
+To comprehend the motives of coup perpetrators, it's essential to analyze the potential pay-off of coup attempts.
+When orchestrating a coup, perpetrators anticipate gaining something, rather than risking losses, contingent upon the likelihood of their success.
+Therefore, when considering a coup, plotters prioritize assessing their probability of success.
+While they may have various motivations for initiating a coup, they are unlikely to proceed without a reasonable expectation of success.
+When faced with low prospects of success, coup plotters may either abandon their plans or await more favorable circumstances.
+Determining the threshold for the likelihood of success is challenging, but historical data reveals that staged coups have generally enjoyed satisfactory success rates.
 
 ```{r}
 #| results: asis
