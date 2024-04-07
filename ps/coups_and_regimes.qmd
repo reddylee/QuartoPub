@@ -88,10 +88,15 @@ coup |>
 Coups occur with varying frequency across different countries, with some experiencing them more frequently than others.
 According to the Global Instances of Coups (GIC)[^1] dataset [@powell2011], Latin American countries such as Bolivia witnessed `r coups |> filter(country == "Bolivia") |> pull(2)` coups between 1950 and 1984, while Argentina experienced `r coups |> filter(country == "Argentina") |> pull(2)` during a similar timeframe.
 However, Mexico's authoritarian period from 1917 to 2000 saw no coups at all.
-In Africa, Sudan endured `r coups |> filter(country == "Sudan") |> pull(2)` coups between 1955 and 2021, whereas South Africa has not experienced a coup since 1950.
-Similar patterns are observed in the Middle East and South Asia.
-Despite numerous attempts in previous studies to explain these disparities, no consensus has been reached on a definitive model for analysing coups.
-As noted by @gassebner2016, around one hundred potential determinants of coups have been proposed, yet the fundamental question remains unanswered.
+In Africa, Sudan endured `r coups |> filter(country == "Sudan") |> pull(2)` coups between 1955 and 2023, whereas South Africa has not experienced any coup since 1950.
+Similar patterns are observed in the Middle East and South Asia. The question of why coups occur more frequently in certain regions, countries, and periods, while being less common in others, has captivated scholars for decades. Consequently, scholars have delved into extensive research on coups. Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analyzing coups remains elusive. As highlighted by @gassebner2016, although approximately one hundred potential determinants of coups have been suggested, the fundamental question remains unanswered.
+
+However, despite extensive research by scholars, the impact of anticipated outcomes on coup initiation has not received sufficient attention. When analyzing the determinants of coups, it's crucial not to overlook the most significant characteristic of coups themselves.
+As noted by @powell2011, coups are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive."(P.252) Due to their illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death. In some instances, the repercussions extend to the families of the coup perpetrators. 
+
+Despite the significant risks associated with coups, as shown in @tbl-coups since 1950, there have still been as many as `r attempts` coups worldwide. Furthermore, more importantly, half of these coups have been successful. At first glance, coups seem to be a high-success-rate, high-reward political venture and speculation. However, compared to over $12,000$ country-years since 1950, the occurrence of `r attempts` coups appears rather rare, accounting for less than $4\%$. 
+
+The low occurrence rate and high success rate indicate that the initiation of coups is highly selective. In other words, the likelihood of a coup occurring depends greatly on its potential success rate. Coup plotters carefully assess their chances before staging a coup. If they decide to proceed, it suggests that the conditions are relatively ripe, hence the fifty-fifty success rate. Plans with immature conditions and low chances of success are automatically filtered out. Fundamentally, launching a coup is not like participating in a general election, where failure in one election allows for another attempt in the next election. A coup is a high-stakes gamble where success brings substantial rewards, while failure may result in martyrdom. Failure, put differently, means permanent and absolute defeat.
 
 [^1]: <https://www.uky.edu/~clthyn2/coup_data/home.htm>, accessed on `r Sys.Date()`
 
@@ -116,14 +121,8 @@ coups |>
               column_labels.font.weight = "bold") |> 
   tab_source_note(source_note = md("***Source: GIC dataset***")) 
 ```
-In analysing the determinants of coups, it's crucial not to overlook the most significant characteristic of coups themselves.
-As @powell2011 noted, coups are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive" [@powell2011, p. 252].
-Due to the illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death.
-In some instances, the repercussions extend to the families of the coup perpetrators.
 
-Despite these grave risks, however, there have been numerous coup attempts throughout history—according to the Global Instances of Coups (GIC) dataset, a total of `r attempts` coups have been launched since 1950, with `r succeeded` coups succeeding, with an overall success rate of $50\%$ (@tbl-coups). Having said that, the occurrence rate of coups is extremely rare. Only `r attempts` coups have been attempted since 1950, among more than $12,000$ country-years since 1950.
-
-This rarity suggests that coups are highly selective. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. Therefore, coup plotters are unlikely to proceed with their plans unless they perceive a high likelihood of success.
+This rarity suggests that coups are highly selective. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. Therefore, coup plotters are unlikely to proceed with their plans unless they perceive a high likelihood of success. 
 
 This study aims to elucidate how expected chances of success of coups might determine the likelihood of coup attemts.
 I argue that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics among coup perpetrators, incumbents and other ruling elites.
