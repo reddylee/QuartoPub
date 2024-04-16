@@ -1,0 +1,103 @@
+---
+title: Not-so-simple linear regression with R
+author: Andrew Gard
+date: 2024-04-16
+date-modified: last-modified
+format: 
+  aps-html:
+    code-tools: true
+categories: [regression, linear]
+---
+
+## Setup
+
+```{r}
+library(tidymodels)
+library(broom)
+airquality |> 
+  head()
+```
+
+## Split data
+
+```{r}
+set.seed(0)
+aq_split <- initial_split(airquality) # default prop = 0.75
+aq_train <- training(aq_split)
+aq_test <- testing(aq_split)
+```
+
+## Visualize the data
+
+```{r}
+aq_train |> 
+  ggplot(aes(y = Temp, x = Wind)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+## Fit a linear regression model
+
+```{r}
+model <- aq_train |> 
+  lm(Temp ~ Wind, data = _) 
+model|> 
+  summary()
+```
+```{r}
+data |> 
+  lm(Temp ~ Wind, data = _) |> 
+  summary()
+```
+
+```{r}
+names(model)
+```
+```{r}
+fitted.values(model) 
+confint(model, level = .9)
+```
+```{r}
+plot(model)
+```
+
+## Statistics the model with the `broom` package
+
+```{r}
+model |> 
+  tidy()
+```
+```{r}
+model |> 
+  glance()
+```
+```{r}
+aq_aug <- model |> 
+  augment() 
+aq_aug |> 
+  head()
+```
+
+## Evaluate the model performance
+
+```{r}
+predict(model, 
+        newdata = aq_test,
+        interval = "confidence") |> 
+  head()
+```
+```{r}
+predict(model, 
+        newdata = aq_test,
+        interval = "prediction") |> 
+  head()
+```
+
+```{r}
+#residual standard error 
+(aq_test$Temp - predict(model, aq_test))^2 |> 
+  mean() |>
+  sqrt()
+```
+
+
