@@ -1,5 +1,5 @@
 ---
-title: "Sample Selection Effects and the Likelihood of Coups"
+title: "Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis"
 author:
   - name: Zhu Qi
     affiliations: University of Essex
@@ -86,26 +86,27 @@ coup |>
 ## Introduction
 
 Coups occur with varying frequency across different countries, with some experiencing them more frequently than others.
-According to the Global Instances of Coups (GIC)[^1] dataset [@powell2011], Latin American countries such as Bolivia witnessed `r coups |> filter(country == "Bolivia") |> pull(2)` coups between 1950 and 1984, while Argentina experienced `r coups |> filter(country == "Argentina") |> pull(2)` during a similar timeframe.
-However, Mexico's authoritarian period from 1917 to 2000 saw no coups at all.
-In Africa, Sudan endured `r coups |> filter(country == "Sudan") |> pull(2)` coups between 1955 and 2023, whereas South Africa has not experienced any coup since 1950.
+According to the Global Instances of Coups (GIC)[^1] dataset [@powell2011], Latin American countries such as Bolivia witnessed `r coups |> filter(country == "Bolivia") |> pull(2)` coups between $1950$ and $1984$, while Argentina experienced `r coups |> filter(country == "Argentina") |> pull(2)` during a similar timeframe.
+However, Mexico's authoritarian period from $1917$ to $2000$ saw no coups at all.
+In Africa, Sudan endured `r coups |> filter(country == "Sudan") |> pull(2)` coups between $1955$ and $2023$, whereas South Africa has not experienced any coup since $1950$.
 Similar patterns are observed in the Middle East and South Asia.
 The question of why coups occur more frequently in certain regions, countries, and periods, while being less common in others, has captivated scholars for decades.
 Consequently, scholars have delved into extensive research on coups.
-Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analyzing coups remains elusive.
+Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analysing coups remains elusive.
 As highlighted by @gassebner2016, although approximately one hundred potential determinants of coups have been suggested, the fundamental question remains unanswered.
 
 [^1]: <https://www.uky.edu/~clthyn2/coup_data/home.htm>, accessed on `r Sys.Date()`
 
 However, despite extensive research by scholars, the impact of anticipated outcomes on coup initiation has not received sufficient attention.
 When analyzing the determinants of coups, it's crucial not to overlook the most significant characteristic of coups themselves.
-As noted by @powell2011, coups are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive."(P.252) Due to their illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death.
+As noted by @powell2011, coups are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive."(@powell2011, P.252).
+Due to their illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death.
 In some instances, the repercussions extend to the families of the coup perpetrators.
 
-Despite the significant risks associated with coups, as shown in @tbl-coups since 1950, there have still been as many as `r attempts` coups worldwide.
+Despite the significant risks associated with coups, as shown in @tbl-coups since $1950$, there have still been as many as `r attempts` coups worldwide.
 Furthermore, more importantly, half of these coups have been successful.
 At first glance, coups seem to be a high-success-rate, high-reward political venture and speculation.
-However, compared to over $12,000$ country-years since 1950, the occurrence of `r attempts` coups appears rather rare, accounting for less than $4\%$.
+However, compared to over $12,000$ country-years since $1950$, the occurrence of `r attempts` coups appears rather rare, accounting for less than $4\%$.
 
 The low occurrence rate and high success rate indicate that the initiation of coups is highly selective.
 In other words, the likelihood of a coup occurring depends greatly on its potential success rate.
@@ -149,9 +150,9 @@ These dynamics are largely contingent on regime types, highlighting the pivotal 
 This study offers two potential contributions to the existing literature: firstly, it highlights the significance of power dynamics within various regime types as critical factors influencing coup attempts; secondly, it demonstrates how sample selection models can enhance our understanding of coup attempts by taking into account the success rates of coups.
 
 The subsequent section of this paper delves into previous research on coups.
-Following that, in Part 3, I present the research framework and propose hypotheses.
+Following that, in Part $3$, I present the research framework and propose hypotheses.
 Part 4 provides insights into the data and variables utilized in the study.
-The testing results are discussed in Part 5, followed by the conclusion in Part 6.
+The testing results are discussed in Part $5$, followed by the conclusion in Part $6$.
 
 ## Theory
 
@@ -194,7 +195,13 @@ Secondly, there is no need for precise measurements of $V_S$ and $C$.
 It is sufficient to consider them as invaluable, with both potentially considered roughly equal.
 Additionally, coup plotters are driven by factors beyond mere economic gains or losses.
 As long as the coup succeeds, they win anyway.
-This suggests that in @eq-eq2, the values of $V_S-V_I$ and $C$ can be disregarded, and the focus can solely be on the probability of the coup's success, $\sigma$.
+This suggests that in @eq-eq2, the values of $V_S-V_I$ and $C$ can be disregarded, and the focus can solely be on the probability of the coup's success, $\sigma$:
+
+$$
+\begin{aligned}
+\sigma > (1-\sigma)
+\end{aligned}
+$$ {#eq-eq3}
 
 ### Disposition
 
@@ -206,36 +213,60 @@ Totalitarian leaders exert control over every aspect of their citizens' lives, r
 On the other hand, tinpot leaders are primarily motivated by personal consumption, indulging in luxuries such as living in opulent palaces, driving luxury cars like Mercedes, and adorning themselves with prestigious accessories like Rolex watches.
 
 Secondly, at times, coups are justified by motives such as rescuing a country in crisis, upholding constitutional authority, or facilitating democratic transition.
-However, this rationale is often met with skepticism, as the first type of coup plotters often use similar excuses to justify their actions.
+However, this rationale is often met with scepticism, as the first type of coup plotters often use similar excuses to justify their actions.
 Nonetheless, there are indeed cases that validate the purported objectives.
-For instance, in Niger in 2010, a coup ousted President Tandja, who sought to secure a third term in office contrary to constitutional limits.
+For instance, in Niger in $2010$, a coup ousted President Tandja, who sought to secure a third term in office contrary to constitutional limits.
 Tandja's attempt to extend his presidency led to the dissolution of the Constitutional Court when it opposed his proposal, prompting a referendum for a new constitution to enable a third term.
 This triggered the coup to protect the constitution [@ginsburg2019].
 
 Thirdly, in certain instances, staging a coup serves as a final resort for self-preservation, aimed at evading political persecution by adversaries.
-Coup perpetrators may not harbor further ambitions and may be content with the status quo.
+Coup perpetrators may not harbour further ambitions and may be content with the status quo.
 However, their mere existence could be perceived as a threat by the incumbent leader, prompting the need for their removal.
 Consequently, the coup is triggered rather than initiated by the coup perpetrators themselves.
-An illustrative example is Idi Amin, who, as the army commander-in-chief of Uganda in 1971, staged a coup against President Obote, who was attempting to undermine Amin [@sudduth2017].
+An illustrative example is Idi Amin, who, as the army commander-in-chief of Uganda in $1971$, staged a coup against President Obote, who was attempting to undermine Amin [@sudduth2017].
 
 Theoretically, these three types of coup plotters can emerge from any type of regimes.
 While they may be more prevalent in autocracies, ambitious individuals can also exist within democracies.
 Moreover, unstable societies, economic downturns, and democratic backsliding can occur even in democracies.
 Although political persecutions may be rare in stable democracies, they are not uncommon in newly established or poorly governed ones.
-However, despite these factors, the occurrence of coups remains relatively low, accounting for only 4% of country-years since 1950.
+However, despite these factors, the occurrence of coups remains relatively low, accounting for only $4\%$ of country-years since $1950$.
 This is primarily because the disposition to stage coups is heavily contingent upon the opportunity to do so.
 
 ### Opportunity
 
-While there may be numerous ambitious political figures aspiring to seize supreme power for various reasons as mentioned above, only a select few have the opportunity to orchestrate a successful coup.
-Among them, those who control the military forces wield the greatest potential as coup plotters.
-This is why military coups are often the focal point of discussion in political science.
+As previously mentioned, while there may be numerous ambitious political figures aspiring to seize supreme power for various reasons, only a select few have the opportunity to orchestrate a successful coup.
+When coup plotters conspire to stage a coup, their foremost consideration is the likelihood of success.
+According to @eq-eq3, if the probability of success, $\sigma$, exceeds $0.5$, the equation holds true.
+This assertion finds some support in empirical data on coups since $1950$.
+As indicated in @tbl-coups, the overall success rate of coups stands at $49.9\%$.
+Although this figure falls just below the threshold of $0.5$, it is important to acknowledge that this is an average rate calculated post-coups.
+In reality, coup plotters typically require more certainty about success than a mere fifty-fifty chance.
+Furthermore, outliers do exist, such as irrational political careerists or coup attempts driven more by self-protection instincts than strategic planning.
+In such cases, coup perpetrators may not prioritize or even consider the potential outcomes, as the consequences of being purged are no different from those of a failed coup.
+
+Given the pivotal role of coup success in determining coup attempts, the factors influencing coup success inevitably become the determinants of coup attempts themselves.
+While the specific determinants may vary, the fundamental factor lies in the balance of power between the coup perpetrators and the incumbent leaders.
+I will delve into the factors that could potentially tip the scales of power among different political factions.
+
+#### Regime types
+
+When discussing the balance of power, the first aspect that comes to mind is military strength.
+It's evident that control over the military gives individuals the upper hand in coup attempts.
+This explains why military coups are often at the forefront of political science discussions.
+In much of the literature on coups, the terms "coup" and "military coup" are used interchangeably, with little exploration into why this is the case.
+Consequently, more attention is directed towards preventing military involvement in politics.
+Strategies such as "*Keeping the military happy*" [@aidt2019, P. 15] or "*giving them toys*" [@huntington1991democratization, P. 252] have been proposed to mitigate military intervention.
+Many coup-proofing strategies, informed by empirical research, aim to either diminish the military's inclination to stage coups or create obstacles to their success.
+For example, studies by @leon2013a suggest that nations with lower military spending as a percentage of GDP are more susceptible to coups.
+Similarly, @powell2018 argues that increased military expenditures may reduce the likelihood of coups among military factions.
+
+However, as @powell2012 posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup's success.
 
 There are three dimensions when we analyse coup outcomes.
 The first dimension is straightforward: why some coups succeed while others fail [@quinlivan1999; @kebschull1994].
 The second dimension focuses on the potential influences: what happens after failed coups and successful coups.
 In particular, whether it helps the shifts towards democracy following successful coups.
-This debate is exemplified by the arguments between Michael Miller [@miller2016] and Derpanopoulos, Frantz & Gedde [@derpanopoulos2016; @derpanopoulos2017].
+This debate is exemplified by the arguments between Michael Miller [@miller2016] and Derpanopoulos, Frantz & Geddes [@derpanopoulos2016; @derpanopoulos2017].
 However, the third dimension, which explores how the expected success of coups influences coup attempts, remains underexplored.
 
 Among the limited discussions on the influence of coup success on coup attempts, @powell2012 utilizes a selection model with global data spanning 1961 to 2000.
@@ -246,10 +277,6 @@ In other words, as demonstrated in @eq-eq1 and @eq-eq2, they do not consider the
 
 If the likelihood of coup success is predetermined, what factors influence or potentially determine the success rates of coups?
 Much attention is understandably given to military strength, as it is believed that the control of military forces often determines the success of coups.
-Consequently, coup-proofing strategies are designed to either decrease the inclination of military forces to stage coups or to erect barriers that impede their success.
-For instance, studies by @leon2013a suggest that coups are more probable in nations where military spending as a percentage of GDP is low.
-@powell2018 also argue that increased military expenditures may decrease the propensity for coups among military factions.
-However, as @powell2012 posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup's success.
 
 In addition to military factors, research delves into other determinants as well.
 For instance, @bell2016 contends that democracies are less susceptible to coups, yet coup attempts against democracies are more likely to succeed.

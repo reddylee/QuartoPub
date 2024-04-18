@@ -5,9 +5,9 @@
 <meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-04-17">
+<meta name="dcterms.date" content="2024-04-18">
 <meta name="keywords" content="Coup, Autocracy, Regime types, Sample selection">
-<title>Can.Do.So - Sample Selection Effects and the Likelihood of Coups</title>
+<title>Can.Do.So - Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -151,13 +151,13 @@ window.Quarto = {
   typesetMath
 };
 </script>
-<meta property="og:title" content="Can.Do.So - Sample Selection Effects and the Likelihood of Coups">
+<meta property="og:title" content="Can.Do.So - Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis">
 <meta property="og:description" content="A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high chance of success. Thus, the expected outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
-<meta name="twitter:title" content="Can.Do.So - Sample Selection Effects and the Likelihood of Coups">
+<meta name="twitter:title" content="Can.Do.So - Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis">
 <meta name="twitter:description" content="A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high chance of success. Thus, the expected outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.">
 <meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
@@ -229,7 +229,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Sample Selection Effects and the Likelihood of Coups</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">Article</div>
     <div class="quarto-category">Coups</div>
@@ -257,14 +257,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 17, 2024</p>
+      <p class="date">April 18, 2024</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 17, 2024</p>
+      <p class="date-modified">April 18, 2024</p>
     </div>
   </div>
     
@@ -329,23 +329,23 @@ Table&nbsp;1: Coups by year and by country
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coup_year_counts" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-cell-subref" data-ref-parent="tbl-coup_year_counts">
-<div id="vxxkfdmmwb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vxxkfdmmwb table {
+<div id="fqaloasetp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fqaloasetp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vxxkfdmmwb thead, #vxxkfdmmwb tbody, #vxxkfdmmwb tfoot, #vxxkfdmmwb tr, #vxxkfdmmwb td, #vxxkfdmmwb th {
+#fqaloasetp thead, #fqaloasetp tbody, #fqaloasetp tfoot, #fqaloasetp tr, #fqaloasetp td, #fqaloasetp th {
   border-style: none;
 }
 
-#vxxkfdmmwb p {
+#fqaloasetp p {
   margin: 0;
   padding: 0;
 }
 
-#vxxkfdmmwb .gt_table {
+#fqaloasetp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -371,12 +371,12 @@ Table&nbsp;1: Coups by year and by country
   border-left-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_caption {
+#fqaloasetp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vxxkfdmmwb .gt_title {
+#fqaloasetp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -388,7 +388,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-width: 0;
 }
 
-#vxxkfdmmwb .gt_subtitle {
+#fqaloasetp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -400,7 +400,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-width: 0;
 }
 
-#vxxkfdmmwb .gt_heading {
+#fqaloasetp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -412,13 +412,13 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_bottom_border {
+#fqaloasetp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_col_headings {
+#fqaloasetp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -433,7 +433,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_col_heading {
+#fqaloasetp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
@@ -453,7 +453,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#vxxkfdmmwb .gt_column_spanner_outer {
+#fqaloasetp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
@@ -465,15 +465,15 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 4px;
 }
 
-#vxxkfdmmwb .gt_column_spanner_outer:first-child {
+#fqaloasetp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vxxkfdmmwb .gt_column_spanner_outer:last-child {
+#fqaloasetp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vxxkfdmmwb .gt_column_spanner {
+#fqaloasetp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -485,11 +485,11 @@ Table&nbsp;1: Coups by year and by country
   width: 100%;
 }
 
-#vxxkfdmmwb .gt_spanner_row {
+#fqaloasetp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vxxkfdmmwb .gt_group_heading {
+#fqaloasetp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -515,7 +515,7 @@ Table&nbsp;1: Coups by year and by country
   text-align: left;
 }
 
-#vxxkfdmmwb .gt_empty_group_heading {
+#fqaloasetp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -530,15 +530,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: middle;
 }
 
-#vxxkfdmmwb .gt_from_md > :first-child {
+#fqaloasetp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vxxkfdmmwb .gt_from_md > :last-child {
+#fqaloasetp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vxxkfdmmwb .gt_row {
+#fqaloasetp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -557,7 +557,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#vxxkfdmmwb .gt_stub {
+#fqaloasetp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -570,7 +570,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#vxxkfdmmwb .gt_stub_row_group {
+#fqaloasetp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -584,15 +584,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: top;
 }
 
-#vxxkfdmmwb .gt_row_group_first td {
+#fqaloasetp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vxxkfdmmwb .gt_row_group_first th {
+#fqaloasetp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vxxkfdmmwb .gt_summary_row {
+#fqaloasetp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -602,16 +602,16 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#vxxkfdmmwb .gt_first_summary_row {
+#fqaloasetp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_first_summary_row.thick {
+#fqaloasetp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vxxkfdmmwb .gt_last_summary_row {
+#fqaloasetp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -621,7 +621,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_grand_summary_row {
+#fqaloasetp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -631,7 +631,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#vxxkfdmmwb .gt_first_grand_summary_row {
+#fqaloasetp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -641,7 +641,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_last_grand_summary_row_top {
+#fqaloasetp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -651,11 +651,11 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_striped {
+#fqaloasetp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vxxkfdmmwb .gt_table_body {
+#fqaloasetp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -664,7 +664,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_footnotes {
+#fqaloasetp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -678,7 +678,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_footnote {
+#fqaloasetp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -687,7 +687,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#vxxkfdmmwb .gt_sourcenotes {
+#fqaloasetp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -701,7 +701,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#vxxkfdmmwb .gt_sourcenote {
+#fqaloasetp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -709,67 +709,67 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#vxxkfdmmwb .gt_left {
+#fqaloasetp .gt_left {
   text-align: left;
 }
 
-#vxxkfdmmwb .gt_center {
+#fqaloasetp .gt_center {
   text-align: center;
 }
 
-#vxxkfdmmwb .gt_right {
+#fqaloasetp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vxxkfdmmwb .gt_font_normal {
+#fqaloasetp .gt_font_normal {
   font-weight: normal;
 }
 
-#vxxkfdmmwb .gt_font_bold {
+#fqaloasetp .gt_font_bold {
   font-weight: bold;
 }
 
-#vxxkfdmmwb .gt_font_italic {
+#fqaloasetp .gt_font_italic {
   font-style: italic;
 }
 
-#vxxkfdmmwb .gt_super {
+#fqaloasetp .gt_super {
   font-size: 65%;
 }
 
-#vxxkfdmmwb .gt_footnote_marks {
+#fqaloasetp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vxxkfdmmwb .gt_asterisk {
+#fqaloasetp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vxxkfdmmwb .gt_indent_1 {
+#fqaloasetp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vxxkfdmmwb .gt_indent_2 {
+#fqaloasetp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vxxkfdmmwb .gt_indent_3 {
+#fqaloasetp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vxxkfdmmwb .gt_indent_4 {
+#fqaloasetp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vxxkfdmmwb .gt_indent_5 {
+#fqaloasetp .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<div id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment quarto-float anchored" data-quarto-bootstrap="false" data-quarto-disable-processing="false" data-quarto-postprocess="true">
+<div id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment quarto-float anchored" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-quarto-postprocess="true">
 <figure class="quarto-float quarto-subfloat-tbl figure"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coup_year_counts-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) by year frequency
 </figcaption><div aria-describedby="tbl-coup_year_counts-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -853,23 +853,23 @@ Table&nbsp;1: Coups by year and by country
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coup_year_counts" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-cell-subref" data-ref-parent="tbl-coup_year_counts">
-<div id="wmbibkgvmt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wmbibkgvmt table {
+<div id="pamjddosca" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pamjddosca table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wmbibkgvmt thead, #wmbibkgvmt tbody, #wmbibkgvmt tfoot, #wmbibkgvmt tr, #wmbibkgvmt td, #wmbibkgvmt th {
+#pamjddosca thead, #pamjddosca tbody, #pamjddosca tfoot, #pamjddosca tr, #pamjddosca td, #pamjddosca th {
   border-style: none;
 }
 
-#wmbibkgvmt p {
+#pamjddosca p {
   margin: 0;
   padding: 0;
 }
 
-#wmbibkgvmt .gt_table {
+#pamjddosca .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -895,12 +895,12 @@ Table&nbsp;1: Coups by year and by country
   border-left-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_caption {
+#pamjddosca .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wmbibkgvmt .gt_title {
+#pamjddosca .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -912,7 +912,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-width: 0;
 }
 
-#wmbibkgvmt .gt_subtitle {
+#pamjddosca .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -924,7 +924,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-width: 0;
 }
 
-#wmbibkgvmt .gt_heading {
+#pamjddosca .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -936,13 +936,13 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_bottom_border {
+#pamjddosca .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_col_headings {
+#pamjddosca .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -957,7 +957,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_col_heading {
+#pamjddosca .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
@@ -977,7 +977,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#wmbibkgvmt .gt_column_spanner_outer {
+#pamjddosca .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 16px;
@@ -989,15 +989,15 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 4px;
 }
 
-#wmbibkgvmt .gt_column_spanner_outer:first-child {
+#pamjddosca .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wmbibkgvmt .gt_column_spanner_outer:last-child {
+#pamjddosca .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wmbibkgvmt .gt_column_spanner {
+#pamjddosca .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1009,11 +1009,11 @@ Table&nbsp;1: Coups by year and by country
   width: 100%;
 }
 
-#wmbibkgvmt .gt_spanner_row {
+#pamjddosca .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wmbibkgvmt .gt_group_heading {
+#pamjddosca .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1039,7 +1039,7 @@ Table&nbsp;1: Coups by year and by country
   text-align: left;
 }
 
-#wmbibkgvmt .gt_empty_group_heading {
+#pamjddosca .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1054,15 +1054,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: middle;
 }
 
-#wmbibkgvmt .gt_from_md > :first-child {
+#pamjddosca .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wmbibkgvmt .gt_from_md > :last-child {
+#pamjddosca .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wmbibkgvmt .gt_row {
+#pamjddosca .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1081,7 +1081,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#wmbibkgvmt .gt_stub {
+#pamjddosca .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1094,7 +1094,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#wmbibkgvmt .gt_stub_row_group {
+#pamjddosca .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1108,15 +1108,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: top;
 }
 
-#wmbibkgvmt .gt_row_group_first td {
+#pamjddosca .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wmbibkgvmt .gt_row_group_first th {
+#pamjddosca .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wmbibkgvmt .gt_summary_row {
+#pamjddosca .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1126,16 +1126,16 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#wmbibkgvmt .gt_first_summary_row {
+#pamjddosca .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_first_summary_row.thick {
+#pamjddosca .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wmbibkgvmt .gt_last_summary_row {
+#pamjddosca .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1145,7 +1145,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_grand_summary_row {
+#pamjddosca .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1155,7 +1155,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#wmbibkgvmt .gt_first_grand_summary_row {
+#pamjddosca .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1165,7 +1165,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_last_grand_summary_row_top {
+#pamjddosca .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1175,11 +1175,11 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_striped {
+#pamjddosca .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wmbibkgvmt .gt_table_body {
+#pamjddosca .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1188,7 +1188,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_footnotes {
+#pamjddosca .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1202,7 +1202,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_footnote {
+#pamjddosca .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1211,7 +1211,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#wmbibkgvmt .gt_sourcenotes {
+#pamjddosca .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1225,7 +1225,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#wmbibkgvmt .gt_sourcenote {
+#pamjddosca .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1233,67 +1233,67 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#wmbibkgvmt .gt_left {
+#pamjddosca .gt_left {
   text-align: left;
 }
 
-#wmbibkgvmt .gt_center {
+#pamjddosca .gt_center {
   text-align: center;
 }
 
-#wmbibkgvmt .gt_right {
+#pamjddosca .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wmbibkgvmt .gt_font_normal {
+#pamjddosca .gt_font_normal {
   font-weight: normal;
 }
 
-#wmbibkgvmt .gt_font_bold {
+#pamjddosca .gt_font_bold {
   font-weight: bold;
 }
 
-#wmbibkgvmt .gt_font_italic {
+#pamjddosca .gt_font_italic {
   font-style: italic;
 }
 
-#wmbibkgvmt .gt_super {
+#pamjddosca .gt_super {
   font-size: 65%;
 }
 
-#wmbibkgvmt .gt_footnote_marks {
+#pamjddosca .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wmbibkgvmt .gt_asterisk {
+#pamjddosca .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wmbibkgvmt .gt_indent_1 {
+#pamjddosca .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wmbibkgvmt .gt_indent_2 {
+#pamjddosca .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wmbibkgvmt .gt_indent_3 {
+#pamjddosca .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wmbibkgvmt .gt_indent_4 {
+#pamjddosca .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wmbibkgvmt .gt_indent_5 {
+#pamjddosca .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<div id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment quarto-float anchored" data-quarto-bootstrap="false" data-quarto-disable-processing="false" data-quarto-postprocess="true">
+<div id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment quarto-float anchored" data-quarto-disable-processing="false" data-quarto-bootstrap="false" data-quarto-postprocess="true">
 <figure class="quarto-float quarto-subfloat-tbl figure"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coup_year_counts-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) by country frequency
 </figcaption><div aria-describedby="tbl-coup_year_counts-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1381,9 +1381,9 @@ Table&nbsp;1: Coups by year and by country
 </div>
 <section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
 <span class="header-section-number">1</span> Introduction</h2>
-<p>Coups occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> dataset <span class="citation" data-cites="powell2011">(<a href="#ref-powell2011" role="doc-biblioref">J. M. Powell and Thyne 2011</a>)</span>, Latin American countries such as Bolivia witnessed 23 coups between 1950 and 1984, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from 1917 to 2000 saw no coups at all. In Africa, Sudan endured 17 coups between 1955 and 2023, whereas South Africa has not experienced any coup since 1950. Similar patterns are observed in the Middle East and South Asia. The question of why coups occur more frequently in certain regions, countries, and periods, while being less common in others, has captivated scholars for decades. Consequently, scholars have delved into extensive research on coups. Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analyzing coups remains elusive. As highlighted by <span class="citation" data-cites="gassebner2016">Gassebner, Gutmann, and Voigt (<a href="#ref-gassebner2016" role="doc-biblioref">2016</a>)</span>, although approximately one hundred potential determinants of coups have been suggested, the fundamental question remains unanswered.</p>
+<p>Coups occur with varying frequency across different countries, with some experiencing them more frequently than others. According to the Global Instances of Coups (GIC)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> dataset <span class="citation" data-cites="powell2011">(<a href="#ref-powell2011" role="doc-biblioref">J. M. Powell and Thyne 2011</a>)</span>, Latin American countries such as Bolivia witnessed 23 coups between <span class="math inline">\(1950\)</span> and <span class="math inline">\(1984\)</span>, while Argentina experienced 20 during a similar timeframe. However, Mexico’s authoritarian period from <span class="math inline">\(1917\)</span> to <span class="math inline">\(2000\)</span> saw no coups at all. In Africa, Sudan endured 17 coups between <span class="math inline">\(1955\)</span> and <span class="math inline">\(2023\)</span>, whereas South Africa has not experienced any coup since <span class="math inline">\(1950\)</span>. Similar patterns are observed in the Middle East and South Asia. The question of why coups occur more frequently in certain regions, countries, and periods, while being less common in others, has captivated scholars for decades. Consequently, scholars have delved into extensive research on coups. Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analysing coups remains elusive. As highlighted by <span class="citation" data-cites="gassebner2016">Gassebner, Gutmann, and Voigt (<a href="#ref-gassebner2016" role="doc-biblioref">2016</a>)</span>, although approximately one hundred potential determinants of coups have been suggested, the fundamental question remains unanswered.</p>
 <p>However, despite extensive research by scholars, the impact of anticipated outcomes on coup initiation has not received sufficient attention. When analyzing the determinants of coups, it’s crucial not to overlook the most significant characteristic of coups themselves. As noted by <span class="citation" data-cites="powell2011">J. M. Powell and Thyne (<a href="#ref-powell2011" role="doc-biblioref">2011</a>)</span>, coups are “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive.”(P.252) Due to their illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death. In some instances, the repercussions extend to the families of the coup perpetrators.</p>
-<p>Despite the significant risks associated with coups, as shown in <a href="#tbl-coups" class="quarto-xref">Table&nbsp;2</a> since 1950, there have still been as many as 491 coups worldwide. Furthermore, more importantly, half of these coups have been successful. At first glance, coups seem to be a high-success-rate, high-reward political venture and speculation. However, compared to over <span class="math inline">\(12,000\)</span> country-years since 1950, the occurrence of 491 coups appears rather rare, accounting for less than <span class="math inline">\(4\%\)</span>.</p>
+<p>Despite the significant risks associated with coups, as shown in <a href="#tbl-coups" class="quarto-xref">Table&nbsp;2</a> since <span class="math inline">\(1950\)</span>, there have still been as many as 491 coups worldwide. Furthermore, more importantly, half of these coups have been successful. At first glance, coups seem to be a high-success-rate, high-reward political venture and speculation. However, compared to over <span class="math inline">\(12,000\)</span> country-years since <span class="math inline">\(1950\)</span>, the occurrence of 491 coups appears rather rare, accounting for less than <span class="math inline">\(4\%\)</span>.</p>
 <p>The low occurrence rate and high success rate indicate that the initiation of coups is highly selective. In other words, the likelihood of a coup occurring depends greatly on its potential success rate. Coup plotters carefully assess their chances before staging a coup. If they decide to proceed, it suggests that the conditions are relatively ripe, hence the fifty-fifty success rate. Plans with immature conditions and low chances of success are automatically filtered out. Fundamentally, launching a coup is not like participating in a general election, where failure in one election allows for another attempt in the next election. A coup is a high-stakes gamble where success brings substantial rewards, while failure may result in martyrdom. Failure, put differently, means permanent and absolute defeat. Furthermore, the outcomes of coups are typically decided within a matter of days, sometimes even mere hours. Unlike prolonged conflicts where victories or defeats may shift over time, the success of a coup is often sealed at its inception. Every detail must be meticulously planned and arranged beforehand.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>coups <span class="sc">|&gt;</span></span>
@@ -1407,23 +1407,23 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 </figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="tzhbgrctuq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tzhbgrctuq table {
+<div id="cbtaybbups" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cbtaybbups table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#tzhbgrctuq thead, #tzhbgrctuq tbody, #tzhbgrctuq tfoot, #tzhbgrctuq tr, #tzhbgrctuq td, #tzhbgrctuq th {
+#cbtaybbups thead, #cbtaybbups tbody, #cbtaybbups tfoot, #cbtaybbups tr, #cbtaybbups td, #cbtaybbups th {
   border-style: none;
 }
 
-#tzhbgrctuq p {
+#cbtaybbups p {
   margin: 0;
   padding: 0;
 }
 
-#tzhbgrctuq .gt_table {
+#cbtaybbups .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1449,12 +1449,12 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-left-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_caption {
+#cbtaybbups .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#tzhbgrctuq .gt_title {
+#cbtaybbups .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1466,7 +1466,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-width: 0;
 }
 
-#tzhbgrctuq .gt_subtitle {
+#cbtaybbups .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1478,7 +1478,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-top-width: 0;
 }
 
-#tzhbgrctuq .gt_heading {
+#cbtaybbups .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1490,13 +1490,13 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_bottom_border {
+#cbtaybbups .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_col_headings {
+#cbtaybbups .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1511,7 +1511,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_col_heading {
+#cbtaybbups .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1531,7 +1531,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   overflow-x: hidden;
 }
 
-#tzhbgrctuq .gt_column_spanner_outer {
+#cbtaybbups .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1543,15 +1543,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 4px;
 }
 
-#tzhbgrctuq .gt_column_spanner_outer:first-child {
+#cbtaybbups .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tzhbgrctuq .gt_column_spanner_outer:last-child {
+#cbtaybbups .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tzhbgrctuq .gt_column_spanner {
+#cbtaybbups .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1563,11 +1563,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   width: 100%;
 }
 
-#tzhbgrctuq .gt_spanner_row {
+#cbtaybbups .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#tzhbgrctuq .gt_group_heading {
+#cbtaybbups .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1593,7 +1593,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   text-align: left;
 }
 
-#tzhbgrctuq .gt_empty_group_heading {
+#cbtaybbups .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1608,15 +1608,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   vertical-align: middle;
 }
 
-#tzhbgrctuq .gt_from_md > :first-child {
+#cbtaybbups .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tzhbgrctuq .gt_from_md > :last-child {
+#cbtaybbups .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tzhbgrctuq .gt_row {
+#cbtaybbups .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1635,7 +1635,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   overflow-x: hidden;
 }
 
-#tzhbgrctuq .gt_stub {
+#cbtaybbups .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1648,7 +1648,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#tzhbgrctuq .gt_stub_row_group {
+#cbtaybbups .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1662,15 +1662,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   vertical-align: top;
 }
 
-#tzhbgrctuq .gt_row_group_first td {
+#cbtaybbups .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#tzhbgrctuq .gt_row_group_first th {
+#cbtaybbups .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#tzhbgrctuq .gt_summary_row {
+#cbtaybbups .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1680,16 +1680,16 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#tzhbgrctuq .gt_first_summary_row {
+#cbtaybbups .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_first_summary_row.thick {
+#cbtaybbups .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#tzhbgrctuq .gt_last_summary_row {
+#cbtaybbups .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1699,7 +1699,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_grand_summary_row {
+#cbtaybbups .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1709,7 +1709,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#tzhbgrctuq .gt_first_grand_summary_row {
+#cbtaybbups .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1719,7 +1719,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-top-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_last_grand_summary_row_top {
+#cbtaybbups .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1729,11 +1729,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_striped {
+#cbtaybbups .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tzhbgrctuq .gt_table_body {
+#cbtaybbups .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1742,7 +1742,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_footnotes {
+#cbtaybbups .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1756,7 +1756,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_footnote {
+#cbtaybbups .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1765,7 +1765,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#tzhbgrctuq .gt_sourcenotes {
+#cbtaybbups .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1779,7 +1779,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#tzhbgrctuq .gt_sourcenote {
+#cbtaybbups .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1787,63 +1787,63 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#tzhbgrctuq .gt_left {
+#cbtaybbups .gt_left {
   text-align: left;
 }
 
-#tzhbgrctuq .gt_center {
+#cbtaybbups .gt_center {
   text-align: center;
 }
 
-#tzhbgrctuq .gt_right {
+#cbtaybbups .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tzhbgrctuq .gt_font_normal {
+#cbtaybbups .gt_font_normal {
   font-weight: normal;
 }
 
-#tzhbgrctuq .gt_font_bold {
+#cbtaybbups .gt_font_bold {
   font-weight: bold;
 }
 
-#tzhbgrctuq .gt_font_italic {
+#cbtaybbups .gt_font_italic {
   font-style: italic;
 }
 
-#tzhbgrctuq .gt_super {
+#cbtaybbups .gt_super {
   font-size: 65%;
 }
 
-#tzhbgrctuq .gt_footnote_marks {
+#cbtaybbups .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#tzhbgrctuq .gt_asterisk {
+#cbtaybbups .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#tzhbgrctuq .gt_indent_1 {
+#cbtaybbups .gt_indent_1 {
   text-indent: 5px;
 }
 
-#tzhbgrctuq .gt_indent_2 {
+#cbtaybbups .gt_indent_2 {
   text-indent: 10px;
 }
 
-#tzhbgrctuq .gt_indent_3 {
+#cbtaybbups .gt_indent_3 {
   text-indent: 15px;
 }
 
-#tzhbgrctuq .gt_indent_4 {
+#cbtaybbups .gt_indent_4 {
   text-indent: 20px;
 }
 
-#tzhbgrctuq .gt_indent_5 {
+#cbtaybbups .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1941,7 +1941,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 </div>
 <p>Hence, the factors influencing the success rates of coups play a significant role in shaping coup attempts. This study employs a sample selection model to examine the factors affecting the success rates of coups and, consequently, the likelihood of coup attempts. I posit that the power dynamics among coup perpetrators, incumbents, and other ruling elites are pivotal in determining the success of coups. These dynamics are largely contingent on regime types, highlighting the pivotal role of regime types in shaping coup attempts.</p>
 <p>This study offers two potential contributions to the existing literature: firstly, it highlights the significance of power dynamics within various regime types as critical factors influencing coup attempts; secondly, it demonstrates how sample selection models can enhance our understanding of coup attempts by taking into account the success rates of coups.</p>
-<p>The subsequent section of this paper delves into previous research on coups. Following that, in Part 3, I present the research framework and propose hypotheses. Part 4 provides insights into the data and variables utilized in the study. The testing results are discussed in Part 5, followed by the conclusion in Part 6.</p>
+<p>The subsequent section of this paper delves into previous research on coups. Following that, in Part <span class="math inline">\(3\)</span>, I present the research framework and propose hypotheses. Part 4 provides insights into the data and variables utilized in the study. The testing results are discussed in Part <span class="math inline">\(5\)</span>, followed by the conclusion in Part <span class="math inline">\(6\)</span>.</p>
 </section><section id="theory" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="theory">
 <span class="header-section-number">2</span> Theory</h2>
 <p>When coup plotters weigh the decision to stage a coup, they naturally consider two crucial factors, which are also the primary concerns of coup scholars. One aspect is the disposition, namely, why they would risk their future to instigate a coup. The other aspect is the capability or opportunity, namely, whether they can garner enough support to succeed in their endeavour.</p>
@@ -1960,23 +1960,33 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 \end{aligned}
 \tag{2}\]</span></span></p>
 <p>Drawing from these equations, <span class="citation" data-cites="aidt2019">Aidt and Leon (<a href="#ref-aidt2019" role="doc-biblioref">2019</a>)</span> suggests that the decision to initiate a coup hinges on whether the expected benefits of a successful coup outweigh the potential costs of failure. Both the disposition to attempt a coup and the opportunity to stage a successful coup are encompassed within the equation. The disposition is captured in the gain from a successful coup, denoted as <span class="math inline">\(V_S-V_I\)</span>. Meanwhile, the opportunity is represented by the probability of a successful coup, denoted as <span class="math inline">\(\sigma\)</span>. Although this logical framework seems plausible, it immediately poses practical challenges in quantifying the values of <span class="math inline">\(V_S\)</span> and <span class="math inline">\(C\)</span>, which are not easily measurable in real-world terms. How can one accurately measure the cost of losing freedom, life, or even beloved family members if a coup fails? Similarly, how can the value of assuming leadership of a country be quantified if the coup succeeds? These are not commodities that can be exchanged in a market.</p>
-<p>While <span class="math inline">\(V_S\)</span> and <span class="math inline">\(C\)</span> may be impossible to measure in precise terms, this does not render the equations useless. Firstly, the underlying logic of the equations remains robust and provides a valuable framework for understanding the decision-making process of coup plotters. Secondly, there is no need for precise measurements of <span class="math inline">\(V_S\)</span> and <span class="math inline">\(C\)</span>. It is sufficient to consider them as invaluable, with both potentially considered roughly equal. Additionally, coup plotters are driven by factors beyond mere economic gains or losses. As long as the coup succeeds, they win anyway. This suggests that in <a href="#eq-eq2" class="quarto-xref">Equation&nbsp;2</a>, the values of <span class="math inline">\(V_S-V_I\)</span> and <span class="math inline">\(C\)</span> can be disregarded, and the focus can solely be on the probability of the coup’s success, <span class="math inline">\(\sigma\)</span>.</p>
+<p>While <span class="math inline">\(V_S\)</span> and <span class="math inline">\(C\)</span> may be impossible to measure in precise terms, this does not render the equations useless. Firstly, the underlying logic of the equations remains robust and provides a valuable framework for understanding the decision-making process of coup plotters. Secondly, there is no need for precise measurements of <span class="math inline">\(V_S\)</span> and <span class="math inline">\(C\)</span>. It is sufficient to consider them as invaluable, with both potentially considered roughly equal. Additionally, coup plotters are driven by factors beyond mere economic gains or losses. As long as the coup succeeds, they win anyway. This suggests that in <a href="#eq-eq2" class="quarto-xref">Equation&nbsp;2</a>, the values of <span class="math inline">\(V_S-V_I\)</span> and <span class="math inline">\(C\)</span> can be disregarded, and the focus can solely be on the probability of the coup’s success, <span class="math inline">\(\sigma\)</span>:</p>
+<p><span id="eq-eq3"><span class="math display">\[
+\begin{aligned}
+\sigma &gt; (1-\sigma)
+\end{aligned}
+\tag{3}\]</span></span></p>
 </section><section id="disposition" class="level3" data-number="2.2"><h3 data-number="2.2" class="anchored" data-anchor-id="disposition">
 <span class="header-section-number">2.2</span> Disposition</h3>
 <p>To simplify understanding, coups can be categorized into three types based on their motivations: those driven by personal ambitions, those purportedly for the benefit of the country, and those undertaken for self-preservation.</p>
 <p>First and most, coup plotters are motivated by the allure of unrestrained power, revered status, and access to substantial financial resources. <span class="citation" data-cites="wintrobe2019">Wintrobe (<a href="#ref-wintrobe2019" role="doc-biblioref">2019</a>)</span> explores various forms of dictatorships, distinguishing between totalitarian leaders and tinpot leaders. Totalitarian leaders exert control over every aspect of their citizens’ lives, relishing the power they wield. On the other hand, tinpot leaders are primarily motivated by personal consumption, indulging in luxuries such as living in opulent palaces, driving luxury cars like Mercedes, and adorning themselves with prestigious accessories like Rolex watches.</p>
-<p>Secondly, at times, coups are justified by motives such as rescuing a country in crisis, upholding constitutional authority, or facilitating democratic transition. However, this rationale is often met with skepticism, as the first type of coup plotters often use similar excuses to justify their actions. Nonetheless, there are indeed cases that validate the purported objectives. For instance, in Niger in 2010, a coup ousted President Tandja, who sought to secure a third term in office contrary to constitutional limits. Tandja’s attempt to extend his presidency led to the dissolution of the Constitutional Court when it opposed his proposal, prompting a referendum for a new constitution to enable a third term. This triggered the coup to protect the constitution <span class="citation" data-cites="ginsburg2019">(<a href="#ref-ginsburg2019" role="doc-biblioref">Ginsburg and Elkins 2019</a>)</span>.</p>
-<p>Thirdly, in certain instances, staging a coup serves as a final resort for self-preservation, aimed at evading political persecution by adversaries. Coup perpetrators may not harbor further ambitions and may be content with the status quo. However, their mere existence could be perceived as a threat by the incumbent leader, prompting the need for their removal. Consequently, the coup is triggered rather than initiated by the coup perpetrators themselves. An illustrative example is Idi Amin, who, as the army commander-in-chief of Uganda in 1971, staged a coup against President Obote, who was attempting to undermine Amin <span class="citation" data-cites="sudduth2017">(<a href="#ref-sudduth2017" role="doc-biblioref">Sudduth 2017</a>)</span>.</p>
-<p>Theoretically, these three types of coup plotters can emerge from any type of regimes. While they may be more prevalent in autocracies, ambitious individuals can also exist within democracies. Moreover, unstable societies, economic downturns, and democratic backsliding can occur even in democracies. Although political persecutions may be rare in stable democracies, they are not uncommon in newly established or poorly governed ones. However, despite these factors, the occurrence of coups remains relatively low, accounting for only 4% of country-years since 1950. This is primarily because the disposition to stage coups is heavily contingent upon the opportunity to do so.</p>
+<p>Secondly, at times, coups are justified by motives such as rescuing a country in crisis, upholding constitutional authority, or facilitating democratic transition. However, this rationale is often met with scepticism, as the first type of coup plotters often use similar excuses to justify their actions. Nonetheless, there are indeed cases that validate the purported objectives. For instance, in Niger in <span class="math inline">\(2010\)</span>, a coup ousted President Tandja, who sought to secure a third term in office contrary to constitutional limits. Tandja’s attempt to extend his presidency led to the dissolution of the Constitutional Court when it opposed his proposal, prompting a referendum for a new constitution to enable a third term. This triggered the coup to protect the constitution <span class="citation" data-cites="ginsburg2019">(<a href="#ref-ginsburg2019" role="doc-biblioref">Ginsburg and Elkins 2019</a>)</span>.</p>
+<p>Thirdly, in certain instances, staging a coup serves as a final resort for self-preservation, aimed at evading political persecution by adversaries. Coup perpetrators may not harbour further ambitions and may be content with the status quo. However, their mere existence could be perceived as a threat by the incumbent leader, prompting the need for their removal. Consequently, the coup is triggered rather than initiated by the coup perpetrators themselves. An illustrative example is Idi Amin, who, as the army commander-in-chief of Uganda in <span class="math inline">\(1971\)</span>, staged a coup against President Obote, who was attempting to undermine Amin <span class="citation" data-cites="sudduth2017">(<a href="#ref-sudduth2017" role="doc-biblioref">Sudduth 2017</a>)</span>.</p>
+<p>Theoretically, these three types of coup plotters can emerge from any type of regimes. While they may be more prevalent in autocracies, ambitious individuals can also exist within democracies. Moreover, unstable societies, economic downturns, and democratic backsliding can occur even in democracies. Although political persecutions may be rare in stable democracies, they are not uncommon in newly established or poorly governed ones. However, despite these factors, the occurrence of coups remains relatively low, accounting for only <span class="math inline">\(4\%\)</span> of country-years since <span class="math inline">\(1950\)</span>. This is primarily because the disposition to stage coups is heavily contingent upon the opportunity to do so.</p>
 </section><section id="opportunity" class="level3" data-number="2.3"><h3 data-number="2.3" class="anchored" data-anchor-id="opportunity">
 <span class="header-section-number">2.3</span> Opportunity</h3>
-<p>While there may be numerous ambitious political figures aspiring to seize supreme power for various reasons as mentioned above, only a select few have the opportunity to orchestrate a successful coup. Among them, those who control the military forces wield the greatest potential as coup plotters. This is why military coups are often the focal point of discussion in political science.</p>
-<p>There are three dimensions when we analyse coup outcomes. The first dimension is straightforward: why some coups succeed while others fail <span class="citation" data-cites="quinlivan1999 kebschull1994">(<a href="#ref-quinlivan1999" role="doc-biblioref">Quinlivan 1999</a>; <a href="#ref-kebschull1994" role="doc-biblioref">Kebschull 1994</a>)</span>. The second dimension focuses on the potential influences: what happens after failed coups and successful coups. In particular, whether it helps the shifts towards democracy following successful coups. This debate is exemplified by the arguments between Michael Miller <span class="citation" data-cites="miller2016">(<a href="#ref-miller2016" role="doc-biblioref">Miller 2016</a>)</span> and Derpanopoulos, Frantz &amp; Gedde <span class="citation" data-cites="derpanopoulos2016 derpanopoulos2017">(<a href="#ref-derpanopoulos2016" role="doc-biblioref">Derpanopoulos et al. 2016</a>, <a href="#ref-derpanopoulos2017" role="doc-biblioref">2017</a>)</span>. However, the third dimension, which explores how the expected success of coups influences coup attempts, remains underexplored.</p>
+<p>As previously mentioned, while there may be numerous ambitious political figures aspiring to seize supreme power for various reasons, only a select few have the opportunity to orchestrate a successful coup. When coup plotters conspire to stage a coup, their foremost consideration is the likelihood of success. According to <a href="#eq-eq3" class="quarto-xref">Equation&nbsp;3</a>, if the probability of success, <span class="math inline">\(\sigma\)</span>, exceeds <span class="math inline">\(0.5\)</span>, the equation holds true. This assertion finds some support in empirical data on coups since <span class="math inline">\(1950\)</span>. As indicated in <a href="#tbl-coups" class="quarto-xref">Table&nbsp;2</a>, the overall success rate of coups stands at <span class="math inline">\(49.9%\)</span>. Although this figure falls just below the threshold of <span class="math inline">\(0.5\)</span>, it is important to acknowledge that this is an average rate calculated post-coups. In reality, coup plotters typically require more certainty about success than a mere fifty-fifty chance. Furthermore, outliers do exist, such as irrational political careerists or coup attempts driven more by self-protection instincts than strategic planning. In such cases, coup perpetrators may not prioritize or even consider the potential outcomes, as the consequences of being purged are no different from those of a failed coup.</p>
+<p>Given the pivotal role of coup success in determining coup attempts, the factors influencing coup success inevitably become the determinants of coup attempts themselves. While the specific determinants may vary, the fundamental factor lies in the balance of power between the coup perpetrators and the incumbent leaders. I will delve into the factors that could potentially tip the scales of power among different political factions.</p>
+<section id="regime-types" class="level4" data-number="2.3.1"><h4 data-number="2.3.1" class="anchored" data-anchor-id="regime-types">
+<span class="header-section-number">2.3.1</span> Regime types</h4>
+<p>When discussing the balance of power, the first aspect that comes to mind is military strength. It’s evident that control over the military gives individuals the upper hand in coup attempts. This explains why military coups are often at the forefront of political science discussions. In much of the literature on coups, the terms “coup” and “military coup” are used interchangeably, with little exploration into why this is the case. Consequently, more attention is directed towards preventing military involvement in politics. Strategies such as “<em>Keeping the military happy</em>” <span class="citation" data-cites="aidt2019">(<a href="#ref-aidt2019" role="doc-biblioref">Aidt and Leon 2019, 15</a>)</span> or “<em>giving them toys</em>” <span class="citation" data-cites="huntington1991democratization">(<a href="#ref-huntington1991democratization" role="doc-biblioref">Huntington 1991, 252</a>)</span> have been proposed to mitigate military intervention. Many coup-proofing strategies, informed by empirical research, aim to either diminish the military’s inclination to stage coups or create obstacles to their success. For example, studies by <span class="citation" data-cites="leon2013a">Leon (<a href="#ref-leon2013a" role="doc-biblioref">2013b</a>)</span> suggest that nations with lower military spending as a percentage of GDP are more susceptible to coups. Similarly, <span class="citation" data-cites="powell2018">J. Powell et al. (<a href="#ref-powell2018" role="doc-biblioref">2018</a>)</span> argues that increased military expenditures may reduce the likelihood of coups among military factions.</p>
+<p>However, as <span class="citation" data-cites="powell2012">J. Powell (<a href="#ref-powell2012" role="doc-biblioref">2012</a>)</span> posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup’s success.</p>
+<p>There are three dimensions when we analyse coup outcomes. The first dimension is straightforward: why some coups succeed while others fail <span class="citation" data-cites="quinlivan1999 kebschull1994">(<a href="#ref-quinlivan1999" role="doc-biblioref">Quinlivan 1999</a>; <a href="#ref-kebschull1994" role="doc-biblioref">Kebschull 1994</a>)</span>. The second dimension focuses on the potential influences: what happens after failed coups and successful coups. In particular, whether it helps the shifts towards democracy following successful coups. This debate is exemplified by the arguments between Michael Miller <span class="citation" data-cites="miller2016">(<a href="#ref-miller2016" role="doc-biblioref">Miller 2016</a>)</span> and Derpanopoulos, Frantz &amp; Geddes <span class="citation" data-cites="derpanopoulos2016 derpanopoulos2017">(<a href="#ref-derpanopoulos2016" role="doc-biblioref">Derpanopoulos et al. 2016</a>, <a href="#ref-derpanopoulos2017" role="doc-biblioref">2017</a>)</span>. However, the third dimension, which explores how the expected success of coups influences coup attempts, remains underexplored.</p>
 <p>Among the limited discussions on the influence of coup success on coup attempts, <span class="citation" data-cites="powell2012">J. Powell (<a href="#ref-powell2012" role="doc-biblioref">2012</a>)</span> utilizes a selection model with global data spanning 1961 to 2000. Powell’s findings suggest that coup-proofing strategies, such as balancing and providing resources to the military, reduce the likelihood of coups but increase their chances of success.</p>
 <p>However, few of the aforementioned studies have explored the interdependence between coup attempts and coup success. In other words, as demonstrated in <a href="#eq-eq1" class="quarto-xref">Equation&nbsp;1</a> and <a href="#eq-eq2" class="quarto-xref">Equation&nbsp;2</a>, they do not consider the likelihood of coup success as a primary determinant of coup attempts.</p>
-<p>If the likelihood of coup success is predetermined, what factors influence or potentially determine the success rates of coups? Much attention is understandably given to military strength, as it is believed that the control of military forces often determines the success of coups. Consequently, coup-proofing strategies are designed to either decrease the inclination of military forces to stage coups or to erect barriers that impede their success. For instance, studies by <span class="citation" data-cites="leon2013a">Leon (<a href="#ref-leon2013a" role="doc-biblioref">2013b</a>)</span> suggest that coups are more probable in nations where military spending as a percentage of GDP is low. <span class="citation" data-cites="powell2018">J. Powell et al. (<a href="#ref-powell2018" role="doc-biblioref">2018</a>)</span> also argue that increased military expenditures may decrease the propensity for coups among military factions. However, as <span class="citation" data-cites="powell2012">J. Powell (<a href="#ref-powell2012" role="doc-biblioref">2012</a>)</span> posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup’s success.</p>
+<p>If the likelihood of coup success is predetermined, what factors influence or potentially determine the success rates of coups? Much attention is understandably given to military strength, as it is believed that the control of military forces often determines the success of coups.</p>
 <p>In addition to military factors, research delves into other determinants as well. For instance, <span class="citation" data-cites="bell2016">Bell (<a href="#ref-bell2016" role="doc-biblioref">2016</a>)</span> contends that democracies are less susceptible to coups, yet coup attempts against democracies are more likely to succeed.</p>
-</section></section><section id="research-framework-and-hypotheses" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="research-framework-and-hypotheses">
+</section></section></section><section id="research-framework-and-hypotheses" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="research-framework-and-hypotheses">
 <span class="header-section-number">3</span> Research Framework and Hypotheses</h2>
 </section><section id="data-and-variables" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="data-and-variables">
 <span class="header-section-number">4</span> Data and Variables</h2>
@@ -2018,6 +2028,9 @@ Gassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. <span>“When to Expect
 <div id="ref-ginsburg2019" class="csl-entry" role="listitem">
 Ginsburg, Tom, and Zachary Elkins. 2019. <span>“One Size Does Not Fit All.”</span> In, 37–52. Oxford University Press. <a href="https://doi.org/10.1093/oso/9780198837404.003.0003">https://doi.org/10.1093/oso/9780198837404.003.0003</a>.
 </div>
+<div id="ref-huntington1991democratization" class="csl-entry" role="listitem">
+Huntington, Samuel P. 1991. <span>“The Third Wave: Democratization in the Late Twentieth Century.”</span> <em>Norman, OK: University of Oklahoma</em>.
+</div>
 <div id="ref-kebschull1994" class="csl-entry" role="listitem">
 Kebschull, Harvey G. 1994. <span>“Operation <span>"</span>Just Missed<span>"</span>: Lessons From Failed Coup Attempts.”</span> <em>Armed Forces &amp; Society</em> 20 (4): 565–79. <a href="https://doi.org/10.1177/0095327x9402000405">https://doi.org/10.1177/0095327x9402000405</a>.
 </div>
@@ -2050,7 +2063,7 @@ Wintrobe, Ronald. 2019. <span>“Are There Types of Dictatorship?”</span> Edit
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 <ol>
-<li id="fn1"><p><a href="https://www.uky.edu/~clthyn2/coup_data/home.htm" class="uri">https://www.uky.edu/~clthyn2/coup_data/home.htm</a>, accessed on 2024-04-17<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><a href="https://www.uky.edu/~clthyn2/coup_data/home.htm" class="uri">https://www.uky.edu/~clthyn2/coup_data/home.htm</a>, accessed on 2024-04-18<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -2512,7 +2525,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">---</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="an">title:</span><span class="co"> "Sample Selection Effects and the Likelihood of Coups"</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="an">title:</span><span class="co"> "Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis"</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="an">author:</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="co">  - name: Zhu Qi</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co">    affiliations: University of Essex</span></span>
@@ -2599,13 +2612,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-90"><a href="#cb4-90"></a><span class="fu">## Introduction</span></span>
 <span id="cb4-91"><a href="#cb4-91"></a></span>
 <span id="cb4-92"><a href="#cb4-92"></a>Coups occur with varying frequency across different countries, with some experiencing them more frequently than others.</span>
-<span id="cb4-93"><a href="#cb4-93"></a>According to the Global Instances of Coups (GIC)<span class="ot">[^1]</span> dataset <span class="co">[</span><span class="ot">@powell2011</span><span class="co">]</span>, Latin American countries such as Bolivia witnessed <span class="in">`r coups |&gt; filter(country == "Bolivia") |&gt; pull(2)`</span> coups between 1950 and 1984, while Argentina experienced <span class="in">`r coups |&gt; filter(country == "Argentina") |&gt; pull(2)`</span> during a similar timeframe.</span>
-<span id="cb4-94"><a href="#cb4-94"></a>However, Mexico's authoritarian period from 1917 to 2000 saw no coups at all.</span>
-<span id="cb4-95"><a href="#cb4-95"></a>In Africa, Sudan endured <span class="in">`r coups |&gt; filter(country == "Sudan") |&gt; pull(2)`</span> coups between 1955 and 2023, whereas South Africa has not experienced any coup since 1950.</span>
+<span id="cb4-93"><a href="#cb4-93"></a>According to the Global Instances of Coups (GIC)<span class="ot">[^1]</span> dataset <span class="co">[</span><span class="ot">@powell2011</span><span class="co">]</span>, Latin American countries such as Bolivia witnessed <span class="in">`r coups |&gt; filter(country == "Bolivia") |&gt; pull(2)`</span> coups between $1950$ and $1984$, while Argentina experienced <span class="in">`r coups |&gt; filter(country == "Argentina") |&gt; pull(2)`</span> during a similar timeframe.</span>
+<span id="cb4-94"><a href="#cb4-94"></a>However, Mexico's authoritarian period from $1917$ to $2000$ saw no coups at all.</span>
+<span id="cb4-95"><a href="#cb4-95"></a>In Africa, Sudan endured <span class="in">`r coups |&gt; filter(country == "Sudan") |&gt; pull(2)`</span> coups between $1955$ and $2023$, whereas South Africa has not experienced any coup since $1950$.</span>
 <span id="cb4-96"><a href="#cb4-96"></a>Similar patterns are observed in the Middle East and South Asia.</span>
 <span id="cb4-97"><a href="#cb4-97"></a>The question of why coups occur more frequently in certain regions, countries, and periods, while being less common in others, has captivated scholars for decades.</span>
 <span id="cb4-98"><a href="#cb4-98"></a>Consequently, scholars have delved into extensive research on coups.</span>
-<span id="cb4-99"><a href="#cb4-99"></a>Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analyzing coups remains elusive.</span>
+<span id="cb4-99"><a href="#cb4-99"></a>Despite numerous efforts in past studies to shed light on these disparities, a definitive model or set of determinants for analysing coups remains elusive.</span>
 <span id="cb4-100"><a href="#cb4-100"></a>As highlighted by @gassebner2016, although approximately one hundred potential determinants of coups have been suggested, the fundamental question remains unanswered.</span>
 <span id="cb4-101"><a href="#cb4-101"></a></span>
 <span id="cb4-102"><a href="#cb4-102"></a><span class="ot">[^1]: &lt;https://www.uky.edu/~clthyn2/coup_data/home.htm&gt;</span>, accessed on <span class="in">`r Sys.Date()`</span></span>
@@ -2615,10 +2628,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-106"><a href="#cb4-106"></a>As noted by @powell2011, coups are "illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive."(P.252) Due to their illegality, the consequences of a failed coup could be severe, with perpetrators risking imprisonment, exile, or even death.</span>
 <span id="cb4-107"><a href="#cb4-107"></a>In some instances, the repercussions extend to the families of the coup perpetrators.</span>
 <span id="cb4-108"><a href="#cb4-108"></a></span>
-<span id="cb4-109"><a href="#cb4-109"></a>Despite the significant risks associated with coups, as shown in @tbl-coups since 1950, there have still been as many as <span class="in">`r attempts`</span> coups worldwide.</span>
+<span id="cb4-109"><a href="#cb4-109"></a>Despite the significant risks associated with coups, as shown in @tbl-coups since $1950$, there have still been as many as <span class="in">`r attempts`</span> coups worldwide.</span>
 <span id="cb4-110"><a href="#cb4-110"></a>Furthermore, more importantly, half of these coups have been successful.</span>
 <span id="cb4-111"><a href="#cb4-111"></a>At first glance, coups seem to be a high-success-rate, high-reward political venture and speculation.</span>
-<span id="cb4-112"><a href="#cb4-112"></a>However, compared to over $12,000$ country-years since 1950, the occurrence of <span class="in">`r attempts`</span> coups appears rather rare, accounting for less than $4\%$.</span>
+<span id="cb4-112"><a href="#cb4-112"></a>However, compared to over $12,000$ country-years since $1950$, the occurrence of <span class="in">`r attempts`</span> coups appears rather rare, accounting for less than $4\%$.</span>
 <span id="cb4-113"><a href="#cb4-113"></a></span>
 <span id="cb4-114"><a href="#cb4-114"></a>The low occurrence rate and high success rate indicate that the initiation of coups is highly selective.</span>
 <span id="cb4-115"><a href="#cb4-115"></a>In other words, the likelihood of a coup occurring depends greatly on its potential success rate.</span>
@@ -2662,9 +2675,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-155"><a href="#cb4-155"></a>This study offers two potential contributions to the existing literature: firstly, it highlights the significance of power dynamics within various regime types as critical factors influencing coup attempts; secondly, it demonstrates how sample selection models can enhance our understanding of coup attempts by taking into account the success rates of coups.</span>
 <span id="cb4-156"><a href="#cb4-156"></a></span>
 <span id="cb4-157"><a href="#cb4-157"></a>The subsequent section of this paper delves into previous research on coups.</span>
-<span id="cb4-158"><a href="#cb4-158"></a>Following that, in Part 3, I present the research framework and propose hypotheses.</span>
+<span id="cb4-158"><a href="#cb4-158"></a>Following that, in Part $3$, I present the research framework and propose hypotheses.</span>
 <span id="cb4-159"><a href="#cb4-159"></a>Part 4 provides insights into the data and variables utilized in the study.</span>
-<span id="cb4-160"><a href="#cb4-160"></a>The testing results are discussed in Part 5, followed by the conclusion in Part 6.</span>
+<span id="cb4-160"><a href="#cb4-160"></a>The testing results are discussed in Part $5$, followed by the conclusion in Part $6$.</span>
 <span id="cb4-161"><a href="#cb4-161"></a></span>
 <span id="cb4-162"><a href="#cb4-162"></a><span class="fu">## Theory</span></span>
 <span id="cb4-163"><a href="#cb4-163"></a></span>
@@ -2707,85 +2720,111 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-200"><a href="#cb4-200"></a>It is sufficient to consider them as invaluable, with both potentially considered roughly equal.</span>
 <span id="cb4-201"><a href="#cb4-201"></a>Additionally, coup plotters are driven by factors beyond mere economic gains or losses.</span>
 <span id="cb4-202"><a href="#cb4-202"></a>As long as the coup succeeds, they win anyway.</span>
-<span id="cb4-203"><a href="#cb4-203"></a>This suggests that in @eq-eq2, the values of $V_S-V_I$ and $C$ can be disregarded, and the focus can solely be on the probability of the coup's success, $\sigma$.</span>
+<span id="cb4-203"><a href="#cb4-203"></a>This suggests that in @eq-eq2, the values of $V_S-V_I$ and $C$ can be disregarded, and the focus can solely be on the probability of the coup's success, $\sigma$:</span>
 <span id="cb4-204"><a href="#cb4-204"></a></span>
-<span id="cb4-205"><a href="#cb4-205"></a><span class="fu">### Disposition</span></span>
-<span id="cb4-206"><a href="#cb4-206"></a></span>
-<span id="cb4-207"><a href="#cb4-207"></a>To simplify understanding, coups can be categorized into three types based on their motivations: those driven by personal ambitions, those purportedly for the benefit of the country, and those undertaken for self-preservation.</span>
-<span id="cb4-208"><a href="#cb4-208"></a></span>
-<span id="cb4-209"><a href="#cb4-209"></a>First and most, coup plotters are motivated by the allure of unrestrained power, revered status, and access to substantial financial resources.</span>
-<span id="cb4-210"><a href="#cb4-210"></a>@wintrobe2019 explores various forms of dictatorships, distinguishing between totalitarian leaders and tinpot leaders.</span>
-<span id="cb4-211"><a href="#cb4-211"></a>Totalitarian leaders exert control over every aspect of their citizens' lives, relishing the power they wield.</span>
-<span id="cb4-212"><a href="#cb4-212"></a>On the other hand, tinpot leaders are primarily motivated by personal consumption, indulging in luxuries such as living in opulent palaces, driving luxury cars like Mercedes, and adorning themselves with prestigious accessories like Rolex watches.</span>
-<span id="cb4-213"><a href="#cb4-213"></a></span>
-<span id="cb4-214"><a href="#cb4-214"></a>Secondly, at times, coups are justified by motives such as rescuing a country in crisis, upholding constitutional authority, or facilitating democratic transition.</span>
-<span id="cb4-215"><a href="#cb4-215"></a>However, this rationale is often met with skepticism, as the first type of coup plotters often use similar excuses to justify their actions.</span>
-<span id="cb4-216"><a href="#cb4-216"></a>Nonetheless, there are indeed cases that validate the purported objectives.</span>
-<span id="cb4-217"><a href="#cb4-217"></a>For instance, in Niger in 2010, a coup ousted President Tandja, who sought to secure a third term in office contrary to constitutional limits.</span>
-<span id="cb4-218"><a href="#cb4-218"></a>Tandja's attempt to extend his presidency led to the dissolution of the Constitutional Court when it opposed his proposal, prompting a referendum for a new constitution to enable a third term.</span>
-<span id="cb4-219"><a href="#cb4-219"></a>This triggered the coup to protect the constitution <span class="co">[</span><span class="ot">@ginsburg2019</span><span class="co">]</span>.</span>
-<span id="cb4-220"><a href="#cb4-220"></a></span>
-<span id="cb4-221"><a href="#cb4-221"></a>Thirdly, in certain instances, staging a coup serves as a final resort for self-preservation, aimed at evading political persecution by adversaries.</span>
-<span id="cb4-222"><a href="#cb4-222"></a>Coup perpetrators may not harbor further ambitions and may be content with the status quo.</span>
-<span id="cb4-223"><a href="#cb4-223"></a>However, their mere existence could be perceived as a threat by the incumbent leader, prompting the need for their removal.</span>
-<span id="cb4-224"><a href="#cb4-224"></a>Consequently, the coup is triggered rather than initiated by the coup perpetrators themselves.</span>
-<span id="cb4-225"><a href="#cb4-225"></a>An illustrative example is Idi Amin, who, as the army commander-in-chief of Uganda in 1971, staged a coup against President Obote, who was attempting to undermine Amin <span class="co">[</span><span class="ot">@sudduth2017</span><span class="co">]</span>.</span>
+<span id="cb4-205"><a href="#cb4-205"></a>$$</span>
+<span id="cb4-206"><a href="#cb4-206"></a>\begin{aligned}</span>
+<span id="cb4-207"><a href="#cb4-207"></a>\sigma &gt; (1-\sigma)</span>
+<span id="cb4-208"><a href="#cb4-208"></a>\end{aligned}</span>
+<span id="cb4-209"><a href="#cb4-209"></a>$$ {#eq-eq3}</span>
+<span id="cb4-210"><a href="#cb4-210"></a></span>
+<span id="cb4-211"><a href="#cb4-211"></a><span class="fu">### Disposition</span></span>
+<span id="cb4-212"><a href="#cb4-212"></a></span>
+<span id="cb4-213"><a href="#cb4-213"></a>To simplify understanding, coups can be categorized into three types based on their motivations: those driven by personal ambitions, those purportedly for the benefit of the country, and those undertaken for self-preservation.</span>
+<span id="cb4-214"><a href="#cb4-214"></a></span>
+<span id="cb4-215"><a href="#cb4-215"></a>First and most, coup plotters are motivated by the allure of unrestrained power, revered status, and access to substantial financial resources.</span>
+<span id="cb4-216"><a href="#cb4-216"></a>@wintrobe2019 explores various forms of dictatorships, distinguishing between totalitarian leaders and tinpot leaders.</span>
+<span id="cb4-217"><a href="#cb4-217"></a>Totalitarian leaders exert control over every aspect of their citizens' lives, relishing the power they wield.</span>
+<span id="cb4-218"><a href="#cb4-218"></a>On the other hand, tinpot leaders are primarily motivated by personal consumption, indulging in luxuries such as living in opulent palaces, driving luxury cars like Mercedes, and adorning themselves with prestigious accessories like Rolex watches.</span>
+<span id="cb4-219"><a href="#cb4-219"></a></span>
+<span id="cb4-220"><a href="#cb4-220"></a>Secondly, at times, coups are justified by motives such as rescuing a country in crisis, upholding constitutional authority, or facilitating democratic transition.</span>
+<span id="cb4-221"><a href="#cb4-221"></a>However, this rationale is often met with scepticism, as the first type of coup plotters often use similar excuses to justify their actions.</span>
+<span id="cb4-222"><a href="#cb4-222"></a>Nonetheless, there are indeed cases that validate the purported objectives.</span>
+<span id="cb4-223"><a href="#cb4-223"></a>For instance, in Niger in $2010$, a coup ousted President Tandja, who sought to secure a third term in office contrary to constitutional limits.</span>
+<span id="cb4-224"><a href="#cb4-224"></a>Tandja's attempt to extend his presidency led to the dissolution of the Constitutional Court when it opposed his proposal, prompting a referendum for a new constitution to enable a third term.</span>
+<span id="cb4-225"><a href="#cb4-225"></a>This triggered the coup to protect the constitution <span class="co">[</span><span class="ot">@ginsburg2019</span><span class="co">]</span>.</span>
 <span id="cb4-226"><a href="#cb4-226"></a></span>
-<span id="cb4-227"><a href="#cb4-227"></a>Theoretically, these three types of coup plotters can emerge from any type of regimes.</span>
-<span id="cb4-228"><a href="#cb4-228"></a>While they may be more prevalent in autocracies, ambitious individuals can also exist within democracies.</span>
-<span id="cb4-229"><a href="#cb4-229"></a>Moreover, unstable societies, economic downturns, and democratic backsliding can occur even in democracies.</span>
-<span id="cb4-230"><a href="#cb4-230"></a>Although political persecutions may be rare in stable democracies, they are not uncommon in newly established or poorly governed ones.</span>
-<span id="cb4-231"><a href="#cb4-231"></a>However, despite these factors, the occurrence of coups remains relatively low, accounting for only 4% of country-years since 1950.</span>
-<span id="cb4-232"><a href="#cb4-232"></a>This is primarily because the disposition to stage coups is heavily contingent upon the opportunity to do so.</span>
-<span id="cb4-233"><a href="#cb4-233"></a></span>
-<span id="cb4-234"><a href="#cb4-234"></a><span class="fu">### Opportunity</span></span>
-<span id="cb4-235"><a href="#cb4-235"></a></span>
-<span id="cb4-236"><a href="#cb4-236"></a>While there may be numerous ambitious political figures aspiring to seize supreme power for various reasons as mentioned above, only a select few have the opportunity to orchestrate a successful coup.</span>
-<span id="cb4-237"><a href="#cb4-237"></a>Among them, those who control the military forces wield the greatest potential as coup plotters.</span>
-<span id="cb4-238"><a href="#cb4-238"></a>This is why military coups are often the focal point of discussion in political science.</span>
+<span id="cb4-227"><a href="#cb4-227"></a>Thirdly, in certain instances, staging a coup serves as a final resort for self-preservation, aimed at evading political persecution by adversaries.</span>
+<span id="cb4-228"><a href="#cb4-228"></a>Coup perpetrators may not harbour further ambitions and may be content with the status quo.</span>
+<span id="cb4-229"><a href="#cb4-229"></a>However, their mere existence could be perceived as a threat by the incumbent leader, prompting the need for their removal.</span>
+<span id="cb4-230"><a href="#cb4-230"></a>Consequently, the coup is triggered rather than initiated by the coup perpetrators themselves.</span>
+<span id="cb4-231"><a href="#cb4-231"></a>An illustrative example is Idi Amin, who, as the army commander-in-chief of Uganda in $1971$, staged a coup against President Obote, who was attempting to undermine Amin <span class="co">[</span><span class="ot">@sudduth2017</span><span class="co">]</span>.</span>
+<span id="cb4-232"><a href="#cb4-232"></a></span>
+<span id="cb4-233"><a href="#cb4-233"></a>Theoretically, these three types of coup plotters can emerge from any type of regimes.</span>
+<span id="cb4-234"><a href="#cb4-234"></a>While they may be more prevalent in autocracies, ambitious individuals can also exist within democracies.</span>
+<span id="cb4-235"><a href="#cb4-235"></a>Moreover, unstable societies, economic downturns, and democratic backsliding can occur even in democracies.</span>
+<span id="cb4-236"><a href="#cb4-236"></a>Although political persecutions may be rare in stable democracies, they are not uncommon in newly established or poorly governed ones.</span>
+<span id="cb4-237"><a href="#cb4-237"></a>However, despite these factors, the occurrence of coups remains relatively low, accounting for only $4\%$ of country-years since $1950$.</span>
+<span id="cb4-238"><a href="#cb4-238"></a>This is primarily because the disposition to stage coups is heavily contingent upon the opportunity to do so.</span>
 <span id="cb4-239"><a href="#cb4-239"></a></span>
-<span id="cb4-240"><a href="#cb4-240"></a>There are three dimensions when we analyse coup outcomes.</span>
-<span id="cb4-241"><a href="#cb4-241"></a>The first dimension is straightforward: why some coups succeed while others fail <span class="co">[</span><span class="ot">@quinlivan1999; @kebschull1994</span><span class="co">]</span>.</span>
-<span id="cb4-242"><a href="#cb4-242"></a>The second dimension focuses on the potential influences: what happens after failed coups and successful coups.</span>
-<span id="cb4-243"><a href="#cb4-243"></a>In particular, whether it helps the shifts towards democracy following successful coups.</span>
-<span id="cb4-244"><a href="#cb4-244"></a>This debate is exemplified by the arguments between Michael Miller <span class="co">[</span><span class="ot">@miller2016</span><span class="co">]</span> and Derpanopoulos, Frantz &amp; Gedde <span class="co">[</span><span class="ot">@derpanopoulos2016; @derpanopoulos2017</span><span class="co">]</span>.</span>
-<span id="cb4-245"><a href="#cb4-245"></a>However, the third dimension, which explores how the expected success of coups influences coup attempts, remains underexplored.</span>
-<span id="cb4-246"><a href="#cb4-246"></a></span>
-<span id="cb4-247"><a href="#cb4-247"></a>Among the limited discussions on the influence of coup success on coup attempts, @powell2012 utilizes a selection model with global data spanning 1961 to 2000.</span>
-<span id="cb4-248"><a href="#cb4-248"></a>Powell's findings suggest that coup-proofing strategies, such as balancing and providing resources to the military, reduce the likelihood of coups but increase their chances of success.</span>
-<span id="cb4-249"><a href="#cb4-249"></a></span>
-<span id="cb4-250"><a href="#cb4-250"></a>However, few of the aforementioned studies have explored the interdependence between coup attempts and coup success.</span>
-<span id="cb4-251"><a href="#cb4-251"></a>In other words, as demonstrated in @eq-eq1 and @eq-eq2, they do not consider the likelihood of coup success as a primary determinant of coup attempts.</span>
-<span id="cb4-252"><a href="#cb4-252"></a></span>
-<span id="cb4-253"><a href="#cb4-253"></a>If the likelihood of coup success is predetermined, what factors influence or potentially determine the success rates of coups?</span>
-<span id="cb4-254"><a href="#cb4-254"></a>Much attention is understandably given to military strength, as it is believed that the control of military forces often determines the success of coups.</span>
-<span id="cb4-255"><a href="#cb4-255"></a>Consequently, coup-proofing strategies are designed to either decrease the inclination of military forces to stage coups or to erect barriers that impede their success.</span>
-<span id="cb4-256"><a href="#cb4-256"></a>For instance, studies by @leon2013a suggest that coups are more probable in nations where military spending as a percentage of GDP is low.</span>
-<span id="cb4-257"><a href="#cb4-257"></a>@powell2018 also argue that increased military expenditures may decrease the propensity for coups among military factions.</span>
-<span id="cb4-258"><a href="#cb4-258"></a>However, as @powell2012 posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup's success.</span>
-<span id="cb4-259"><a href="#cb4-259"></a></span>
-<span id="cb4-260"><a href="#cb4-260"></a>In addition to military factors, research delves into other determinants as well.</span>
-<span id="cb4-261"><a href="#cb4-261"></a>For instance, @bell2016 contends that democracies are less susceptible to coups, yet coup attempts against democracies are more likely to succeed.</span>
-<span id="cb4-262"><a href="#cb4-262"></a></span>
-<span id="cb4-263"><a href="#cb4-263"></a><span class="fu">## Research Framework and Hypotheses</span></span>
-<span id="cb4-264"><a href="#cb4-264"></a></span>
-<span id="cb4-265"><a href="#cb4-265"></a><span class="fu">## Data and Variables</span></span>
-<span id="cb4-266"><a href="#cb4-266"></a></span>
-<span id="cb4-267"><a href="#cb4-267"></a><span class="fu">## Results and Discussion</span></span>
-<span id="cb4-268"><a href="#cb4-268"></a></span>
-<span id="cb4-269"><a href="#cb4-269"></a><span class="fu">## Conclusion</span></span>
-<span id="cb4-270"><a href="#cb4-270"></a></span>
-<span id="cb4-273"><a href="#cb4-273"></a><span class="in">```{r}</span></span>
-<span id="cb4-274"><a href="#cb4-274"></a><span class="co">#| results: asis</span></span>
-<span id="cb4-275"><a href="#cb4-275"></a><span class="co">#| eval: !expr format == "latex"</span></span>
-<span id="cb4-276"><a href="#cb4-276"></a><span class="co">#| echo: false</span></span>
-<span id="cb4-277"><a href="#cb4-277"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">newpage</span></span>
-<span id="cb4-278"><a href="#cb4-278"></a><span class="st">## References"</span>)</span>
-<span id="cb4-279"><a href="#cb4-279"></a><span class="in">```</span></span>
-<span id="cb4-280"><a href="#cb4-280"></a></span>
-<span id="cb4-283"><a href="#cb4-283"></a><span class="in">```{r}</span></span>
-<span id="cb4-284"><a href="#cb4-284"></a>mtcars </span>
-<span id="cb4-285"><a href="#cb4-285"></a><span class="in">```</span></span>
+<span id="cb4-240"><a href="#cb4-240"></a><span class="fu">### Opportunity</span></span>
+<span id="cb4-241"><a href="#cb4-241"></a></span>
+<span id="cb4-242"><a href="#cb4-242"></a>As previously mentioned, while there may be numerous ambitious political figures aspiring to seize supreme power for various reasons, only a select few have the opportunity to orchestrate a successful coup.</span>
+<span id="cb4-243"><a href="#cb4-243"></a>When coup plotters conspire to stage a coup, their foremost consideration is the likelihood of success.</span>
+<span id="cb4-244"><a href="#cb4-244"></a>According to @eq-eq3, if the probability of success, $\sigma$, exceeds $0.5$, the equation holds true.</span>
+<span id="cb4-245"><a href="#cb4-245"></a>This assertion finds some support in empirical data on coups since $1950$.</span>
+<span id="cb4-246"><a href="#cb4-246"></a>As indicated in @tbl-coups, the overall success rate of coups stands at $49.9%$.</span>
+<span id="cb4-247"><a href="#cb4-247"></a>Although this figure falls just below the threshold of $0.5$, it is important to acknowledge that this is an average rate calculated post-coups.</span>
+<span id="cb4-248"><a href="#cb4-248"></a>In reality, coup plotters typically require more certainty about success than a mere fifty-fifty chance.</span>
+<span id="cb4-249"><a href="#cb4-249"></a>Furthermore, outliers do exist, such as irrational political careerists or coup attempts driven more by self-protection instincts than strategic planning.</span>
+<span id="cb4-250"><a href="#cb4-250"></a>In such cases, coup perpetrators may not prioritize or even consider the potential outcomes, as the consequences of being purged are no different from those of a failed coup.</span>
+<span id="cb4-251"><a href="#cb4-251"></a></span>
+<span id="cb4-252"><a href="#cb4-252"></a>Given the pivotal role of coup success in determining coup attempts, the factors influencing coup success inevitably become the determinants of coup attempts themselves.</span>
+<span id="cb4-253"><a href="#cb4-253"></a>While the specific determinants may vary, the fundamental factor lies in the balance of power between the coup perpetrators and the incumbent leaders.</span>
+<span id="cb4-254"><a href="#cb4-254"></a>I will delve into the factors that could potentially tip the scales of power among different political factions.</span>
+<span id="cb4-255"><a href="#cb4-255"></a></span>
+<span id="cb4-256"><a href="#cb4-256"></a><span class="fu">#### Regime types</span></span>
+<span id="cb4-257"><a href="#cb4-257"></a></span>
+<span id="cb4-258"><a href="#cb4-258"></a>When discussing the balance of power, the first aspect that comes to mind is military strength.</span>
+<span id="cb4-259"><a href="#cb4-259"></a>It's evident that control over the military gives individuals the upper hand in coup attempts.</span>
+<span id="cb4-260"><a href="#cb4-260"></a>This explains why military coups are often at the forefront of political science discussions.</span>
+<span id="cb4-261"><a href="#cb4-261"></a>In much of the literature on coups, the terms "coup" and "military coup" are used interchangeably, with little exploration into why this is the case.</span>
+<span id="cb4-262"><a href="#cb4-262"></a>Consequently, more attention is directed towards preventing military involvement in politics.</span>
+<span id="cb4-263"><a href="#cb4-263"></a>Strategies such as "*Keeping the military happy*" [@aidt2019, P. 15] or "*giving them toys*" <span class="co">[</span><span class="ot">@huntington1991democratization, P. 252</span><span class="co">]</span> have been proposed to mitigate military intervention.</span>
+<span id="cb4-264"><a href="#cb4-264"></a>Many coup-proofing strategies, informed by empirical research, aim to either diminish the military's inclination to stage coups or create obstacles to their success.</span>
+<span id="cb4-265"><a href="#cb4-265"></a>For example, studies by @leon2013a suggest that nations with lower military spending as a percentage of GDP are more susceptible to coups.</span>
+<span id="cb4-266"><a href="#cb4-266"></a>Similarly, @powell2018 argues that increased military expenditures may reduce the likelihood of coups among military factions.</span>
+<span id="cb4-267"><a href="#cb4-267"></a></span>
+<span id="cb4-268"><a href="#cb4-268"></a>However, as @powell2012 posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup's success.</span>
+<span id="cb4-269"><a href="#cb4-269"></a></span>
+<span id="cb4-270"><a href="#cb4-270"></a>There are three dimensions when we analyse coup outcomes.</span>
+<span id="cb4-271"><a href="#cb4-271"></a>The first dimension is straightforward: why some coups succeed while others fail <span class="co">[</span><span class="ot">@quinlivan1999; @kebschull1994</span><span class="co">]</span>.</span>
+<span id="cb4-272"><a href="#cb4-272"></a>The second dimension focuses on the potential influences: what happens after failed coups and successful coups.</span>
+<span id="cb4-273"><a href="#cb4-273"></a>In particular, whether it helps the shifts towards democracy following successful coups.</span>
+<span id="cb4-274"><a href="#cb4-274"></a>This debate is exemplified by the arguments between Michael Miller <span class="co">[</span><span class="ot">@miller2016</span><span class="co">]</span> and Derpanopoulos, Frantz &amp; Geddes <span class="co">[</span><span class="ot">@derpanopoulos2016; @derpanopoulos2017</span><span class="co">]</span>.</span>
+<span id="cb4-275"><a href="#cb4-275"></a>However, the third dimension, which explores how the expected success of coups influences coup attempts, remains underexplored.</span>
+<span id="cb4-276"><a href="#cb4-276"></a></span>
+<span id="cb4-277"><a href="#cb4-277"></a>Among the limited discussions on the influence of coup success on coup attempts, @powell2012 utilizes a selection model with global data spanning 1961 to 2000.</span>
+<span id="cb4-278"><a href="#cb4-278"></a>Powell's findings suggest that coup-proofing strategies, such as balancing and providing resources to the military, reduce the likelihood of coups but increase their chances of success.</span>
+<span id="cb4-279"><a href="#cb4-279"></a></span>
+<span id="cb4-280"><a href="#cb4-280"></a>However, few of the aforementioned studies have explored the interdependence between coup attempts and coup success.</span>
+<span id="cb4-281"><a href="#cb4-281"></a>In other words, as demonstrated in @eq-eq1 and @eq-eq2, they do not consider the likelihood of coup success as a primary determinant of coup attempts.</span>
+<span id="cb4-282"><a href="#cb4-282"></a></span>
+<span id="cb4-283"><a href="#cb4-283"></a>If the likelihood of coup success is predetermined, what factors influence or potentially determine the success rates of coups?</span>
+<span id="cb4-284"><a href="#cb4-284"></a>Much attention is understandably given to military strength, as it is believed that the control of military forces often determines the success of coups.</span>
+<span id="cb4-285"><a href="#cb4-285"></a></span>
+<span id="cb4-286"><a href="#cb4-286"></a>In addition to military factors, research delves into other determinants as well.</span>
+<span id="cb4-287"><a href="#cb4-287"></a>For instance, @bell2016 contends that democracies are less susceptible to coups, yet coup attempts against democracies are more likely to succeed.</span>
+<span id="cb4-288"><a href="#cb4-288"></a></span>
+<span id="cb4-289"><a href="#cb4-289"></a><span class="fu">## Research Framework and Hypotheses</span></span>
+<span id="cb4-290"><a href="#cb4-290"></a></span>
+<span id="cb4-291"><a href="#cb4-291"></a><span class="fu">## Data and Variables</span></span>
+<span id="cb4-292"><a href="#cb4-292"></a></span>
+<span id="cb4-293"><a href="#cb4-293"></a><span class="fu">## Results and Discussion</span></span>
+<span id="cb4-294"><a href="#cb4-294"></a></span>
+<span id="cb4-295"><a href="#cb4-295"></a><span class="fu">## Conclusion</span></span>
+<span id="cb4-296"><a href="#cb4-296"></a></span>
+<span id="cb4-299"><a href="#cb4-299"></a><span class="in">```{r}</span></span>
+<span id="cb4-300"><a href="#cb4-300"></a><span class="co">#| results: asis</span></span>
+<span id="cb4-301"><a href="#cb4-301"></a><span class="co">#| eval: !expr format == "latex"</span></span>
+<span id="cb4-302"><a href="#cb4-302"></a><span class="co">#| echo: false</span></span>
+<span id="cb4-303"><a href="#cb4-303"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">newpage</span></span>
+<span id="cb4-304"><a href="#cb4-304"></a><span class="st">## References"</span>)</span>
+<span id="cb4-305"><a href="#cb4-305"></a><span class="in">```</span></span>
+<span id="cb4-306"><a href="#cb4-306"></a></span>
+<span id="cb4-309"><a href="#cb4-309"></a><span class="in">```{r}</span></span>
+<span id="cb4-310"><a href="#cb4-310"></a>mtcars </span>
+<span id="cb4-311"><a href="#cb4-311"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
