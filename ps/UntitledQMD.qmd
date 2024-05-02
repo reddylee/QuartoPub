@@ -1,6 +1,89 @@
 ```{r}
 library(tidyverse)
+library(janitor)
 library(democracyData)
-democracyData::gwf_all |> 
+gwf_all |> 
   view()
+gwf_all_extended |> 
+  view()
+```
+
+```{r}
+gwf_all |> 
+  select(1:5, gwf_party) |>
+  drop_na() |>
+  filter(gwf_party == 1) |>  
+  #show the unique of gwf_regimetype
+  distinct(gwf_regimetype) 
+```
+
+```{r}
+gwf_all |>
+  select(1:5, gwf_military) |>
+  drop_na() |>
+  filter(gwf_military == 1) |>  
+  #show the unique of gwf_regimetype
+  distinct(gwf_regimetype) 
+```
+
+```{r}
+gwf_all |>
+  select(1:5, gwf_personal) |>
+  drop_na() |>
+  filter(gwf_personal == 1) |>  
+  #show the unique of gwf_regimetype
+  distinct(gwf_regimetype) 
+```
+
+```{r}
+gwf_all |>
+  select(1:5, gwf_nonautocracy) |>
+  # drop_na() |>
+  #filter(gwf_nonautocracy == 1) |>  
+  #show the unique of gwf_regimetype
+  distinct(gwf_nonautocracy) 
+```
+
+```{r}
+REIGN |> 
+  distinct(gwf_regimetype) 
+```
+
+gwf_party Binary indicator of party regime type (groups party-based, party-personal, party-military, party-personal-military, oligarchy, and Iran 1979-2010)
+
+gwf_personal Binary indicator of personalist regime type
+
+gwf_military Binary indicator of military regime type (groups military, military-personal, indirect military)
+
+gwf_monarchy Binary indicator of monarchy regime type
+
+```{r}
+REIGN |> 
+  mutate(regime_type = case_when(
+    gwf_regimetype %in% c("party-based", "party-personal", "party-military", "party-personal-military", "oligarchy") ~ "dominant_party",
+    gwf_regimetype == "personal" ~ "personal",
+    gwf_regimetype %in% c("military", "military personal", "indirect military") ~ "military",
+    gwf_regimetype == "monarchy" ~ "monarchy",
+    gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
+    TRUE ~ "other"
+  )) |> 
+  # filter(regime_type == "other") |> 
+  filter(year > 1949) |> 
+  # view()
+  tabyl(regime_type)
+```
+
+```{r}
+gwf_all |> 
+  mutate(regimetype = case_when(
+    gwf_party == 1 ~ "Dominant_Party",
+    gwf_military == 1 ~ "Military",
+    gwf_personal == 1 ~ "Personal",
+    gwf_monarchy == 1 ~ "Monarchy",
+    gwf_nonautocracy == "democracy" ~ "Democracy",
+    TRUE ~ "other"
+  )) |>
+  select(1:5, regimetype) |>
+  filter(year > 1949) |>
+  tabyl(regimetype)
 ```
