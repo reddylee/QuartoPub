@@ -31,7 +31,6 @@ library(gt)
 library(janitor)
 library(scales)
 library(democracyData)
-library(kableExtra)
 ```
 
 ```{r}
@@ -41,6 +40,7 @@ library(kableExtra)
 #|   - "by year frequency"
 #|   - "by country frequency"
 #| layout-ncol: 2
+#| tbl-colwidths: auto
 #| echo: !expr format == "html"
 #| include: !expr format == "html"
 #load coup data
@@ -65,7 +65,9 @@ coup |>
   clean_names(case = "title") |> 
   gt() |> 
   tab_options(table.width = pct(90),
+              column_labels.font.size = 16,
               column_labels.font.weight = "bold") |>
+  opt_row_striping() |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 
 coup |> 
@@ -76,7 +78,9 @@ coup |>
   clean_names(case = "title") |> 
   gt() |> 
   tab_options(table.width = pct(90),
+              column_labels.font.size = 16,
               column_labels.font.weight = "bold") |>
+  opt_row_striping() |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 ```
 
@@ -125,21 +129,17 @@ Every detail must be meticulously planned and arranged beforehand.
 coups |>
   # add one row which adds up the total
   arrange(desc(`Coup attempted`)) |>
-  head(11) |> 
+  head(11) |>
   add_row(
     country = "Total",
     `Coup attempted` = sum(coups[, 2]),
     `Coup succeeded` = sum(coups[, 3])
   ) |>
-  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`, 
-                                accuracy = 0.1
-                                )) |>   
+  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`, accuracy = 0.1)) |>   
   clean_names(case = "title") |>
   gt() |>
-  tab_options(
-    #table.width = "90%",
-    column_labels.font.weight = "bold"
-              ) |> 
+  tab_options(table.width = pct(90),
+              column_labels.font.weight = "bold") |> 
   tab_source_note(source_note = md("***Source: GIC dataset***")) 
 ```
 
@@ -304,7 +304,7 @@ While powerful leaders may emerge within such regimes, such as Stalin in the Sov
 #| tbl-cap: Regime types and their distribution since 1950 
 #| echo: !expr format == "html"
 
-REIGN |> 
+REIGN %>%
   mutate(regime_type = case_when(
     gwf_regimetype %in% c("party-based", "party-personal", "party-military", "party-personal-military", "oligarchy") ~ "dominant-party",
     gwf_regimetype == "personal" ~ "personal",
@@ -312,21 +312,22 @@ REIGN |>
     gwf_regimetype == "monarchy" ~ "monarchy",
     gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
     TRUE ~ "other"
-  )) |> 
-  filter(year > 1949) |>  
-  summarise(counts = n(),
-            .by = regime_type) |> 
-  arrange(desc(counts)) |>
-  mutate(regime_type = str_to_title(regime_type),
-         share = counts / sum(counts),
-         share = percent(share)) |>
-  adorn_totals(where = "row", fill = "100%") |> 
-  clean_names(case = "title") |> 
-  gt() |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    table.width = pct(90)
-              ) |>
+  )) %>%
+  filter(year > 1949) %>%
+  tabyl(regime_type) %>%
+  arrange(-n) %>%
+  bind_rows(summarise(., across(where(is.numeric), sum),
+                         across(where(is.character), ~'Total'))) %>%
+  mutate(percent = percent(percent),
+         regime_type = str_to_title(regime_type),
+         counts_of_country_year = n) %>%
+  select(-n) %>%
+  clean_names(case = "title") %>%
+  gt() %>%
+  tab_options(table.width = pct(90),
+              column_labels.font.size = 16,
+              column_labels.font.weight = "bold") %>%
+  opt_row_striping() %>%
   tab_source_note(source_note = md("***Source: REIGN dataset***"))
 ```
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.554">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Can.Do.So - Doing More with Bigger Data: An Introduction to Arrow for R Users</title>
 <style>
@@ -282,7 +282,7 @@ $ PublicationYear &lt;string&gt; "c2011.", "2010.", "2015", "2005.", "c2004.", "
 </div>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>85.557 sec elapsed</code></pre>
+<pre><code>14.821 sec elapsed</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -301,7 +301,7 @@ $ PublicationYear &lt;string&gt; "c2011.", "2010.", "2015", "2005.", "c2004.", "
 </div>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>27.761 sec elapsed</code></pre>
+<pre><code>19.458 sec elapsed</code></pre>
 </div>
 </div>
 <p>And it took about 20 seconds to count the <strong>Checkouts</strong> by year.</p>
@@ -381,7 +381,7 @@ See $.data for the source Arrow object</code></pre>
 <span id="cb21-8"><a href="#cb21-8"></a>csvtime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 22.589   6.705  33.465 </code></pre>
+ 20.009   3.322  20.048 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -395,10 +395,10 @@ See $.data for the source Arrow object</code></pre>
 <span id="cb23-8"><a href="#cb23-8"></a>pqtime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.326   0.063   0.432 </code></pre>
+  0.449   0.071   0.131 </code></pre>
 </div>
 </div>
-<p>Parquet file took 0.432 seconds while csv file took 33.465 seconds. The Parquet file is extremely faster, about 100 times, than the CSV file. Totally worth the trouble.</p>
+<p>Parquet file took 0.131 seconds while csv file took 20.048 seconds. The Parquet file is extremely faster, about 100 times, than the CSV file. Totally worth the trouble.</p>
 </section></section><section id="using-duckdb-with-arrow" class="level2" data-number="5"><h2 data-number="5" class="anchored" data-anchor-id="using-duckdb-with-arrow">
 <span class="header-section-number">5</span> Using duckdb with arrow</h2>
 <p>There’s one last advantage of parquet and arrow — it’s very easy to turn an arrow dataset into a <code>DuckDB</code> database by calling <code><a href="https://arrow.apache.org/docs/r/reference/to_duckdb.html">arrow::to_duckdb()</a></code>:</p>
@@ -425,7 +425,7 @@ This warning is displayed once every 8 hours.</code></pre>
 </div>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>0.737 sec elapsed</code></pre>
+<pre><code>0.361 sec elapsed</code></pre>
 </div>
 </div>
 <p>It took a little longer than without transition. However, the neat thing about <code>to_duckdb()</code> is that the transfer doesn’t involve any memory copying, and speaks to the goals of the arrow ecosystem: enabling seamless transitions from one computing environment to another.</p>
