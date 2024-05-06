@@ -122,6 +122,11 @@ Furthermore, the outcomes of coups are typically decided within a matter of days
 Unlike prolonged conflicts where victories or defeats may shift over time, the success of a coup is often sealed at its inception.
 Every detail must be meticulously planned and arranged beforehand.
 
+Hence, the factors influencing the success rates of coups play a significant role in shaping coup attempts.
+This study employs a sample selection model to examine the factors affecting the success rates of coups and, consequently, the likelihood of coup attempts.
+I posit that the power dynamics among coup perpetrators, incumbents, and other ruling elites are pivotal in determining the success of coups.
+These dynamics are largely contingent on regime types, highlighting the pivotal role of regime types in shaping coup attempts.
+
 \clearpage
 
 ```{r}
@@ -157,11 +162,6 @@ coups |>
   ) |> 
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
-
-Hence, the factors influencing the success rates of coups play a significant role in shaping coup attempts.
-This study employs a sample selection model to examine the factors affecting the success rates of coups and, consequently, the likelihood of coup attempts.
-I posit that the power dynamics among coup perpetrators, incumbents, and other ruling elites are pivotal in determining the success of coups.
-These dynamics are largely contingent on regime types, highlighting the pivotal role of regime types in shaping coup attempts.
 
 This study offers two potential contributions to the existing literature: firstly, it highlights the significance of power dynamics within various regime types as critical factors influencing coup attempts; secondly, it demonstrates how sample selection models can enhance our understanding of coup attempts by taking into account the success rates of coups.
 
@@ -213,27 +213,27 @@ To avoid the severe consequences of exposure or failure, coup plots must remain 
 Coup plotters cannot openly recruit supporters to bolster their strength, while incumbents can openly implement coup-proofing strategies to thwart coup attempts.
 
 Secondly, coup plotters are uncertain about how other ruling factions might react to their actions, particularly those capable of altering the balance of power.
-Conversely, incumbent leaders possess a keen understanding of power dynamics and take proactive measures to tilt the balance in their favor.
+Conversely, incumbent leaders possess a keen understanding of power dynamics and take proactive measures to tilt the balance in their favour.
 Though unaware of specific coup instigators, incumbent leaders are keenly aware of potential threats and adapt accordingly to those who possess the capability to challenge them.
 
 Thirdly, coup plotters grapple with a loyalty dilemma and unreliable commitment among participants.
 The risks involved are considerable, and anticipated benefits are highly uncertain.
-Even in the event of a successful coup, there is no guarantee that promises made by coup leaders will be honored.
-Additionally, post-coup purges often target capable assistants to preempt future challenges.
+Even in the event of a successful coup, there is no guarantee that promises made by coup leaders will be honoured.
+Additionally, post-coup purges often target capable assistants to pre-empt future challenges.
 Consequently, defecting to support the incumbent leader seems less risky and offers a safer bet with predictable rewards.
 
 Given these challenges, rational coup plotters are unlikely to risk their lives for a coup with low odds of success.
-They may either abandon their plans or wait until success is more probable.
-Therefore, when coup perpetrators decide to act, they must have meticulously assessed their chances of success and deemed the risk worthwhile.
-However, determining the criteria or threshold for success calculation proves challenging due to varying risk preferences among coup plotters.
-While the exact threshold for a 'good enough' chance of success remains elusive, historical data suggests a surprisingly high success rate for coups, roughly $50\%$ as depicted in @tbl-coups.
+Instead, they may opt to abandon their plans or bide their time until success becomes more feasible.
+Therefore, when coup perpetrators decide to take action, they must have meticulously assessed their chances of success and deemed the risk worthwhile.
 
-This might seem counter-intuitive, but it highlights the importance of the next section: understanding the factors coup plotters consider when calculating their odds.
+But what constitutes a 'good enough' chance of success for coup plotters to proceed?
+Before delving into a theoretical framework to analyze this question, let's first examine historical data to gain a rough idea.
+Surprisingly, previous coups since 1950 suggest a rather satisfactory success rate, nearly $50\%$, as depicted in @tbl-coups.
 
 ### Basic framework
 
-An oft-cited framework for assessing the disposition and opportunity of coup attempts is formalized by @leon2013 to evaluate the anticipated benefits for coup plotters.
-This framework can be outlined as follows:
+An oft-cited framework for assessing the disposition and capability of coup attempts is formalized by @leon2013, aimed at evaluating the anticipated benefits for coup plotters.
+This framework can be represented as follows:
 
 $$
 \begin{aligned}
@@ -242,7 +242,7 @@ $$
 $$ {#eq-eq1}
 
 Here, $V_S$ represents the return of a successful coup, $V_I$ denotes the normal value paid by the incumbent in the status quo, $C$ signifies the cost of the failed coup, and $\sigma$ represents the probability of coup success.
-By rearranging the equation, we can derive:
+Rearranging the equation yields:
 
 $$
 \begin{aligned}
@@ -250,22 +250,22 @@ $$
 \end{aligned}
 $$ {#eq-eq2}
 
-Drawing from these equations, @aidt2019 suggests that the decision to initiate a coup hinges on whether the expected benefits of a successful coup outweigh the potential costs of failure.
-Both the disposition to attempt a coup and the opportunity to stage a successful coup are encompassed within the equation.
-The disposition is captured in the gain from a successful coup, denoted as $V_S-V_I$.
-Meanwhile, the opportunity is represented by the probability of a successful coup, denoted as $\sigma$.
-Although this logical framework seems plausible, it immediately poses practical challenges in quantifying the values of $V_S$ and $C$, which are not easily measurable in real-world terms.
-How can one accurately measure the cost of losing freedom, life, or even beloved family members if a coup fails?
-Similarly, how can the value of assuming leadership of a country be quantified if the coup succeeds?
-These are not commodities that can be exchanged in a market.
+Drawing from these equations, @aidt2019 this equation captures the core decision-making process: will the potential rewards outweigh the risks?
+Both the motivation (disposition) and chance of success (capability) are embedded within the equation.
+Motivation is reflected by the difference in benefits $V_S - V_I$, while opportunity is represented by the probability of success, $\sigma$.
 
-While $V_S$ and $C$ may be impossible to measure in precise terms, this does not render the equations useless.
-Firstly, the underlying logic of the equations remains robust and provides a valuable framework for understanding the decision-making process of coup plotters.
-Secondly, there is no need for precise measurements of $V_S$ and $C$.
-It is sufficient to consider them as invaluable, with both potentially considered roughly equal.
-Additionally, coup plotters are driven by factors beyond mere economic gains or losses.
-As long as the coup succeeds, they win anyway.
-This suggests that in @eq-eq2, the values of $V_S-V_I$ and $C$ can be disregarded, and the focus can solely be on the probability of the coup's success, $\sigma$:
+While seemingly clear, the equation faces practical challenges.
+Quantifying $V_S$ (value of a successful coup) and $C$ (cost of failure) is difficult.
+How do we measure the loss of life, freedom, or loved ones in a failed coup?
+Similarly, how do we quantify the value of leadership in a successful coup?
+These are intangible concepts.
+However, these challenges don't render the framework useless.
+First, the core logic remains valuable.
+It helps us understand how coup plotters might think.
+Second, there is no need to concern the precise values for $V_S$ and $C$.
+It's enough to consider them significant, possibly roughly equal.
+Coup plotters often have goals beyond mere economic gain.
+Third, we can potentially shift focus from $V_S$ and $C$ to the probability of success, $\sigma$:
 
 $$
 \begin{aligned}
@@ -273,24 +273,21 @@ $$
 \end{aligned}
 $$ {#eq-eq3}
 
-When coup plotters conspire to stage a coup, their foremost consideration is the likelihood of success.
-They might have many incentives to launch a coup, for instance, to fulfil their political ambitions, to implement policies that they prefer, to protect themselves from purge, or to prevent the destruction of the regime, but they are less likely to put the plot into practice if the chance of success is low.
+@eq-eq3 suggests that, to hold the equation true, a success probability greater than $50\%$ is necessary.
+Interestingly, empirical data on coups since 1950 somewhat supports this notion.
+As shown in @tbl-coups, the overall success rate is $49.9\%$.
+While this falls short of the $50\%$ threshold, it's important to consider two factors.
+Firstly, this is an average rate, not necessarily reflective of the probabilities assessed by coup plotters beforehand.
+Secondly, outliers such as irrational actors and coups driven by self-preservation may not prioritize success probabilities.
+Taking these points into account, we can propose our first hypothesis:
 
-As previously mentioned,
+> ***H1: The primary determinant of a coup attempt is the perceived chance of success. Coup plotters likely require a success threshold of at least*** $50\%$***.***
 
-According to @eq-eq3, if the probability of success, $\sigma$, exceeds $0.5$, the equation holds true.
-This assertion finds some support in empirical data on coups since $1950$.
-As indicated in @tbl-coups, the overall success rate of coups stands at $49.9\%$.
-Although this figure falls just below the threshold of $0.5$, it is important to acknowledge that this is an average rate calculated post-coups.
-In reality, coup plotters typically require more certainty about success than a mere fifty-fifty chance.
-Furthermore, outliers do exist, such as irrational political careerists or coup attempts driven more by self-protection instincts than strategic planning.
-In such cases, coup perpetrators may not prioritize or even consider the potential outcomes, as the consequences of being purged are no different from those of a failed coup.
+This leads us to the next crucial question: what factors determine a coup's success, influencing the very decision to attempt one?
+While specifics may vary, the core element hinges on the power dynamic between coup plotters and the incumbent regime.
+Logically, the more powerful entity holds a greater advantage in this high-stakes struggle for control.
 
-Given the pivotal role of coup success in determining coup attempts, the factors influencing coup success inevitably become the determinants of coup attempts themselves.
-While the specific determinants may vary, the fundamental factor lies in the balance of power between the coup perpetrators and the incumbent leaders.
-I will delve into the factors that could potentially tip the scales of power among different political factions.
-
-### Regime types and balance of power
+### Regime types and power dynamics
 
 When discussing the balance of power, the first aspect that comes to mind is military strength.
 It's evident that control over the military gives individuals the upper hand in coup attempts.
