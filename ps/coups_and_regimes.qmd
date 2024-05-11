@@ -283,9 +283,10 @@ depicted in @tbl-coups.
 
 ### Framework of coup success
 
-An oft-cited framework for assessing the disposition and capability of coup
-attempts is formalized by @leon2013, aimed at evaluating the anticipated benefits
-for coup plotters. This framework can be represented as follows:
+An oft-cited framework, formalized by @leon2013 and @aidt2019, provides a
+structured approach to assess the disposition and capability of coup attempts by
+evaluating the anticipated benefits for coup plotters. This framework can be
+represented by the equation:
 
 $$
 \begin{aligned}
@@ -294,32 +295,39 @@ $$
 $$ {#eq-eq1}
 
 Here, $V_S$ represents the return of a successful coup, $V_I$ denotes the normal
-value paid by the incumbent in the status quo, $C$ signifies the cost of the
-failed coup, and $\sigma$ represents the probability of coup success. Rearranging
-the equation yields:
+value paid by the incumbent in the status quo, $C$ signifies the cost of a failed
+coup, and $\sigma$ represents the probability of coup success. The condition for
+staging a coup is when the expected benefit is positive, meaning that the
+expected pay-off is greater than 0. Rearranging and simplifying the equation, we
+get:
 
 $$
 \begin{aligned}
-\sigma(V_S - V_I) > (1-\sigma)C
+\sigma[V_S - V_I] > (1-\sigma)C
 \end{aligned}
 $$ {#eq-eq2}
 
-Drawing from these equations, @aidt2019 this equation captures the core
-decision-making process: will the potential rewards outweigh the risks? Both the
+@eq-eq2 implies that for @eq-eq1 to hold, the expected benefits earned from
+successful coups must outweigh the expected cost of failed coups. Both the
 motivation (disposition) and chance of success (capability) are embedded within
-the equation. Motivation is reflected by the difference in benefits $V_S - V_I$,
-while opportunity is represented by the probability of success, $\sigma$.
+@eq-eq2. The motivation is reflected by the difference in benefits ($V_S - V_I$),
+while the opportunity is represented by the probability of success ($\sigma$).
 
 While seemingly clear, the equation faces practical challenges. Quantifying $V_S$
-(value of a successful coup) and $C$ (cost of failure) is difficult. How do we
-measure the loss of life, freedom, or loved ones in a failed coup? Similarly, how
-do we quantify the value of leadership in a successful coup? These are intangible
-concepts. However, these challenges don't render the framework useless. First,
-the core logic remains valuable. It helps us understand how coup plotters might
-think. Second, there is no need to concern the precise values for $V_S$ and $C$.
-It's enough to consider them significant, possibly roughly equal. Coup plotters
-often have goals beyond mere economic gain. Third, we can potentially shift focus
-from $V_S$ and $C$ to the probability of success, $\sigma$:
+(the value of a successful coup) and $C$ (the cost of failure) is difficult. The
+loss of life, freedom, or loved ones after a failed coup, as well as the value of
+assuming leadership after a successful coup, are intangible concepts that defy
+precise measurement. As evidenced by the 1979 coup in Ghana[^2], the fate of the
+coup leader(s) hangs in the balance; they are high likely to be killed if the
+coup fails, or to execute others if the coup succeeds [@aidt2019].
+
+However, these challenges do not render the framework useless. Firstly, its core
+logic remains valuable, offering insights into how coup plotters might assess the
+return and cost of their actions. Secondly, given the significant and elusive
+nature of precise values for $V_S$ and $C$, they can be treated as roughly equal.
+Consequently, there is no need to fret over how to measure and compare these
+values precisely. Instead, we can shift our focus from $V_S$​ and $C$ to the
+probability of success ($\sigma$), simplifying @eq-eq2 to:
 
 $$
 \begin{aligned}
@@ -327,10 +335,10 @@ $$
 \end{aligned}
 $$ {#eq-eq3}
 
-@eq-eq3 suggests that, to hold the equation true, a success probability greater
-than $50\%$ is necessary. Interestingly, empirical data on coups since 1950
-somewhat supports this notion. As shown in @tbl-coups, the overall success rate
-is $49.9\%$. While this falls short of the $50\%$ threshold, it's important to
+@eq-eq3 suggests that, to hold @eq-eq2 true, a success probability greater than
+$50\%$ is necessary. Interestingly, empirical data on coups since 1950 somewhat
+supports this notion. As shown in @tbl-coups, the overall success rate is
+$49.9\%$. While this falls short of the $50\%$ threshold, it's important to
 consider two factors. Firstly, this is an average rate, not necessarily
 reflective of the probabilities assessed by coup plotters beforehand. Secondly,
 outliers such as irrational actors and coups driven by self-preservation may not
@@ -344,7 +352,7 @@ propose our first hypothesis:
 This leads us to the next crucial question: what factors determine a coup's
 success, influencing the very decision to attempt one? While specifics may vary,
 the core element hinges on the power dynamic between coup plotters and the
-incumbent regime. Logically, the more powerful entity holds a greater advantage
+incumbent leaders. Logically, the more powerful entity holds a greater advantage
 in this high-stakes struggle for control.
 
 ### Regime types and power dynamics
@@ -491,3 +499,9 @@ cat("\\newpage
 
 [^1]: <https://www.uky.edu/~clthyn2/coup_data/home.htm>, accessed on
     `r Sys.Date()`
+
+[^2]: In the case of the Ghanaian coup, flight lieutenant Jerry John Rawlings
+    narrowly avoided execution after his initial failure, being freed by mutinous
+    soldiers. Three weeks later, following Rawlings' successful overthrow of the
+    government, the deposed leader, General Fred Akuffo, was executed along with
+    many other senior members of his government.
