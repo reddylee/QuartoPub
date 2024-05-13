@@ -1,0 +1,14 @@
+```{r}
+coups_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t", header = TRUE)
+
+coups_all <- coups_all %>%
+  filter(coup == 1) %>%
+  select(-coup)
+```
+
+```{r}
+REIGN |> 
+  filter(year >= 1950,
+         reign_cowcode != GWn) |> 
+  view()
+```

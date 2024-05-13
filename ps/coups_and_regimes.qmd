@@ -397,68 +397,70 @@ coup was swiftly thwarted by Niger's security forces, resulting in the failure o
 the coup within an hour[^3]. Therefore, the success of a coup heavily depends on
 the reactions of other military factions [@geddes1999].
 
-Furthermore, the structure of military forces, especially their relationships
-with other state departments, particularly civilian officials, varies across
-different regime types. In democratic countries, the military is nationalized and
-bound by constitutional authority rather than individual leaders. For instance,
-the United States Armed Forces are under the command of the President but remain
-loyal to the Constitution, refraining from intervening in politics. In military
-regimes, power is often centralized in the hands of top generals or a junta,
-while in personal dictatorships, the leader retains ultimate authority over the
-military. In dominant-party regimes, the military serves the interests of the
-ruling party. Thus, the balance of power within military forces is deeply
-influenced by the nature of the regime in question.
+More importantly, the relationship between a government and its military varies
+significantly across different regime types. In democracies, civilian authority
+reigns supreme. The military is considered a national institution, bound by the
+constitution rather than individual leaders, whether military or civilian. For
+instance, the United States Armed Forces serve under the President's command but
+ultimately answer to the Constitution, ensuring they remain politically neutral.
 
-To gain a thorough understanding of military power dynamics across diverse
-political landscapes, it is imperative to explore their intricate nuances. This
-section adopts the foundational concepts articulated by @geddes2014 (GWF), which
-categorize regimes based on the origins of their leadership and the factors
-influencing their policy decisions. These regimes are broadly classified into
-four categories: military regimes, personalist regimes (including monarchies),
-dominant-party regimes, and democratic regimes.
+In contrast, non-democracies present a more complex picture. The lines of
+authority are often either poorly defined in written documents or blatantly
+disregarded by those in actual power. Identifying the true leader of the military
+hinges on the specific regime type. To explore this further, we will utilize the
+foundational concepts outlined by by @geddes2014 (GWF), which categorise
+autocratic regimes based on leadership origins and decision-making factors. These
+regimes fall into three broad categories: military regimes, personalist regimes
+(including monarchies), and dominant-party regimes. Democracies will also be
+included in our analysis for comparative purposes.
 
-**Military regimes**, as defined by GWF, are characterized by the dominance of a
-junta composed of military officers who exercise control over the regime's power
-structure, including leadership selection and policy formulation. Examples of
-such regimes include the Brazilian regime (1964–1985), the Argentine regime
-(1976–1983), and the Salvadoran regime (1948–1984) [@geddes1999]. It's noteworthy
-that within military regimes, political parties may persist, but they typically
-serve as conduits for the military junta or align with the directives of military
-officers to avoid being categorized as dominant-party regimes. Additionally,
-while a junta may appoint a senior officer as the executive or enlist civilian
-administrators and technocrats as intermediaries, their authority over other
-officers remains restricted, distinguishing military regimes from personalist
-ones.
+**Military Regimes**
 
-In a typical **personalist regime**, supreme power rests with the dictator,
-encompassing policy making, control over the military, and the authority to
-nominate top officials and successors. Personalist rules often emerge under
-charismatic leaders, particularly founding fathers of newly independent nations.
-Regimes such as Rafael Trujillo’s in the Dominican Republic (1930–1961), Idi
-Amin’s in Uganda (1971–1979), and Jean-Bédel Bokassa’s in the Central African
-Republic (1966–1979) serve as illustrative examples of personalist rule
-[@geddes1999]. In such regimes, either political parties are absent or they are
-established by or subservient to the dictator. Importantly, the dictator may or
-may not be a military officer themselves, but the military is invariably under
-the dictator's control.
+As defined by GWF, military regimes are characterized by the dominance of a junta
+– a group of military officers who control the regime's power structure,
+including leadership selection and policy formulation. Examples include the
+Brazilian regime (1964-1985), the Argentine regime (1976-1983), and the
+Salvadoran regime (1948-1984) [@geddes1999]. Notably, political parties might
+still exist within military regimes, but they typically act as mouthpieces for
+the junta or align themselves with the military's directives to avoid being
+categorized as dominant-party regimes. Additionally, while a junta may appoint a
+senior officer as the head of state or utilize civilian administrators as
+intermediaries, the authority of these intermediaries over other officers remains
+limited, differentiating military regimes from personalist ones.
 
-In a typical **dominant-party regime**, supreme power lies within the party, with
-the incumbent serving as its representative and subject to collective party
-leadership. Examples of dominant-party regimes include the Partido Revolucionario
-Institucional (PRI) in Mexico, the Revolutionary Party of Tanzania (CCM), and
-Leninist parties in various East European countries [@geddes1999]. The party
-functions as a well-organized and highly disciplined entity, with its own
-ideology and political agenda to unite and mobilize its members and supporters.
-While powerful leaders may emerge within such regimes, such as Stalin in the
-Soviet Union (1924-1953 and Mao Zedong in China (1949-1976), they do not wield
-enough power to supplant or replace the party with a new one.
+**Personalist Regimes**
+
+In a typical personalist regime, absolute power rests with a single dictator.
+This encompasses policy making, control over the military, and the authority to
+appoint top officials and successors. Personalist regimes often emerge under
+charismatic leaders, particularly founding figures of newly independent nations.
+Regimes like Rafael Trujillo's in the Dominican Republic (1930-1961), Idi Amin's
+in Uganda (1971-1979), and Jean-Bédel Bokassa's in the Central African Republic
+(1966-1979) exemplify personalist rule [@geddes1999]. In such regimes, political
+parties are either absent or completely subservient to the dictator. Importantly,
+the dictator may or may not have a military background, but the military itself
+falls under their control.
+
+**Dominant-Party Regimes**
+
+In a dominant-party regime, supreme power resides within the ruling party, with
+the leader acting as its representative and subject to its collective leadership.
+Examples include the Partido Revolucionario Institucional (PRI) in Mexico, the
+Revolutionary Party of Tanzania (CCM), and Leninist parties in various Eastern
+European countries [@geddes1999]. The dominant party is a well-organized and
+disciplined entity with its own ideology and political agenda used to unite and
+mobilize its members and supporters. While powerful leaders may emerge within
+such regimes, like Stalin in the Soviet Union (1924-1953) and Mao Zedong in China
+(1949-1976), they lack the absolute power to dismantle or replace the party
+altogether.
 
 ```{r}
 #| label: tbl-regimes
 #| tbl-cap: Regime types and their distribution since 1950 
 #| echo: !expr format == "html"
-
-REIGN |> 
+view(REIGN)
+regimes <- REIGN |> 
+  distinct(reign_cowcode, year, .keep_all = T) |> 
   mutate(regime_type = case_when(
     gwf_regimetype %in% c("party-based", "party-personal", "party-military", "party-personal-military", "oligarchy") ~ "dominant-party",
     gwf_regimetype == "personal" ~ "personal",
@@ -467,12 +469,13 @@ REIGN |>
     gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
     TRUE ~ "other"
   )) |> 
-  filter(year > 1949) |>  
-  summarise(counts = n(),
+  filter(year > 1949) 
+regimes|>  
+  summarise(country_year = n(),
             .by = regime_type) |>
-  arrange(desc(counts)) |>
+  arrange(desc(country_year)) |>
   mutate(regime_type = str_to_title(regime_type),
-         share = counts / sum(counts),
+         share = country_year / sum(country_year),
          share = percent(share)) |>
   adorn_totals(where = "row", fill = "100%") |>
   clean_names(case = "title") |> 
@@ -485,6 +488,16 @@ REIGN |>
   #            2:3 ~ px(100)
   # ) |>
   tab_source_note(source_note = md("*Source: REIGN dataset*"))
+
+regime <- regimes |> 
+  select(ccode = reign_cowcode, year, regime_type)
+
+coup |> 
+  select(country, ccode, year, coup) |> 
+  left_join(regime, by = join_by(ccode, year)) |> 
+  #filter(regime_type != NA) |> 
+  summarise(count = n(),
+            .by = regime_type)
 ```
 
 ## Research Framework and Hypotheses
