@@ -29,6 +29,7 @@ library(tidyverse)
 library(gt)
 library(janitor)
 library(scales)
+library(zoo)
 library(democracyData)
 ```
 
@@ -152,8 +153,6 @@ firstly, it highlights the significance of power dynamics within various regime
 types as critical factors influencing coup attempts; secondly, it demonstrates
 how sample selection models can enhance our understanding of coup attempts by
 taking into account the success rates of coups.
-
-\clearpage
 
 ```{r}
 #| label: tbl-coups
@@ -454,50 +453,93 @@ such regimes, like Stalin in the Soviet Union (1924-1953) and Mao Zedong in Chin
 (1949-1976), they lack the absolute power to dismantle or replace the party
 altogether.
 
+According to @geddes1999, different factions within a regime – military officers,
+party cadres in dominant-party systems, and members of cliques in personalist
+regimes – have distinct interests. For instance, professional soldiers prioritize
+military survival and efficacy, party cadres seek to hold office, and members of
+cliques depend on supporting the incumbent leader for their own survival and
+relationships. While their strategies may differ, all ruling groups ultimately
+prioritize self-preservation and advancement.
+
+The key distinction between military, dominant-party, and personalist regimes
+lies in the unique balance of power established by each. This power dynamic
+emerges during the power seizure process. The most competent group, be it a
+military junta, a political party, or a strongman, typically rises to power due
+to the demanding nature of seizing control. @sudduth2017 and @roessler2011
+analyse the purging of co-conspirators after power seizures, arguing that these
+purges are more likely in the early stages of new regimes.
+
+Following these purges and any external challenges, a new power dynamic emerges
+among the factions. These regimes evolve into one of the three main types
+discussed earlier: military regimes, personalist regimes, and dominant-party
+regimes.
+
+The differing power dynamics significantly impact the likelihood of coup
+attempts. According to @tbl-regimes, military regimes face the highest risk of
+coups, representing only 5.6% of country-years yet accounting for over 22% of
+coups. Personalist regimes follow, comprising 13% of country-years and
+responsible for 23% of coups. Dominant-party regimes, however, have the lowest
+incidence among these three types, constituting 22.6% of country-years but
+accounting for only 16.7% of coups.
+
 ```{r}
 #| label: tbl-regimes
-#| tbl-cap: Regime types and their distribution since 1950 
+#| tbl-cap: Regime types and coups since 1950 
 #| echo: !expr format == "html"
-view(REIGN)
-regimes <- REIGN |> 
-  distinct(reign_cowcode, year, .keep_all = T) |> 
-  mutate(regime_type = case_when(
-    gwf_regimetype %in% c("party-based", "party-personal", "party-military", "party-personal-military", "oligarchy") ~ "dominant-party",
-    gwf_regimetype == "personal" ~ "personal",
-    gwf_regimetype %in% c("military", "military personal", "indirect military") ~ "military",
-    gwf_regimetype == "monarchy" ~ "monarchy",
-    gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
-    TRUE ~ "other"
-  )) |> 
-  filter(year > 1949) 
-regimes|>  
-  summarise(country_year = n(),
-            .by = regime_type) |>
+
+regimes <- REIGN |>
+  distinct(reign_cowcode, year, .keep_all = T) |>
+  mutate(
+    regime_type = case_when(
+      gwf_regimetype %in% c(
+        "party-based",
+        "party-personal",
+        "party-military",
+        "party-personal-military",
+        "oligarchy"
+      ) ~ "dominant-party",
+      gwf_regimetype == "personal" ~ "personal",
+      gwf_regimetype %in% c("military", "military personal", "indirect military") ~ "military",
+      gwf_regimetype == "monarchy" ~ "monarchy",
+      gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
+      TRUE ~ "other"
+    )
+  ) |>
+  filter(year > 1949)
+
+regime_total <- regimes |>
+  summarise(country_year = n(), .by = regime_type) |>
   arrange(desc(country_year)) |>
-  mutate(regime_type = str_to_title(regime_type),
-         share = country_year / sum(country_year),
-         share = percent(share)) |>
-  adorn_totals(where = "row", fill = "100%") |>
-  clean_names(case = "title") |> 
+  mutate(
+    share_of_country_year = country_year / sum(country_year),
+    share_of_country_year = percent(share_of_country_year)
+  ) |>
+  adorn_totals(where = "row", fill = "100%")
+
+coup1 <- coup |>
+  select(country, ccode, year, coup)
+
+coup_by_regime <- regimes |>
+  select(ccode = reign_cowcode, extended_country_name, year, regime_type) |>
+  full_join(coup1, by = join_by(ccode, year)) |>
+  mutate(regime = na.locf(regime_type, .by = ccode)) |>
+  filter(!is.na(coup)) |>
+  summarise(no_of_coups = n(), .by = regime) |>
+  mutate(
+    percent_of_coups = no_of_coups / sum(no_of_coups),
+    percent_of_coups = percent(percent_of_coups)
+  ) |>
+  adorn_totals(where = "row", fill = "100%")
+
+regime_total |>
+  left_join(coup_by_regime, join_by(regime_type == regime)) |>
+  mutate(regime_type = str_to_title(regime_type)) |>
+  clean_names(case = "title") |>
   gt() |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    table.width = pct(90)
-              ) |>
-  # cols_width(1 ~ px(200),
-  #            2:3 ~ px(100)
-  # ) |>
-  tab_source_note(source_note = md("*Source: REIGN dataset*"))
-
-regime <- regimes |> 
-  select(ccode = reign_cowcode, year, regime_type)
-
-coup |> 
-  select(country, ccode, year, coup) |> 
-  left_join(regime, by = join_by(ccode, year)) |> 
-  #filter(regime_type != NA) |> 
-  summarise(count = n(),
-            .by = regime_type)
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(95),
+              table.align = "center") |>
+  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
 ```
 
 ## Research Framework and Hypotheses
