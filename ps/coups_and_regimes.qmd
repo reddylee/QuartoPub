@@ -154,6 +154,8 @@ types as critical factors influencing coup attempts; secondly, it demonstrates
 how sample selection models can enhance our understanding of coup attempts by
 taking into account the success rates of coups.
 
+\clearpage
+
 ```{r}
 #| label: tbl-coups
 #| tbl-cap: Top 10 countries with the most coup attempts
@@ -345,8 +347,7 @@ prioritize success probabilities. Taking these points into account, we can
 propose our first hypothesis:
 
 > ***H1: The primary determinant of a coup attempt is the perceived chance of
-> success. Coup plotters likely require a success threshold of at least***
-> $50\%$***.***
+> success. Coup plotters likely require a success threshold of at least 50%.***
 
 This leads us to the next crucial question: what factors determine a coup's
 success, influencing the very decision to attempt one? While specifics may vary,
@@ -469,18 +470,47 @@ to the demanding nature of seizing control. @sudduth2017 and @roessler2011
 analyse the purging of co-conspirators after power seizures, arguing that these
 purges are more likely in the early stages of new regimes.
 
-Following these purges and any external challenges, a new power dynamic emerges
-among the factions. These regimes evolve into one of the three main types
-discussed earlier: military regimes, personalist regimes, and dominant-party
-regimes.
+Following internal purges and external challenges, a new power dynamic emerges
+among the factions within a regime, typically solidifying into one of three main
+types: military regimes, personalist regimes, or dominant-party regimes.
 
-The differing power dynamics significantly impact the likelihood of coup
-attempts. According to @tbl-regimes, military regimes face the highest risk of
-coups, representing only 5.6% of country-years yet accounting for over 22% of
-coups. Personalist regimes follow, comprising 13% of country-years and
-responsible for 23% of coups. Dominant-party regimes, however, have the lowest
-incidence among these three types, constituting 22.6% of country-years but
-accounting for only 16.7% of coups.
+Dominant-party regimes are the most stable due to their institutionalized
+structure. A dominant party is a highly organized group with shared political
+beliefs, goals, and ideologies. This shared ideology fosters internal cohesion
+and a long-term vision, further bolstering stability. Unlike typical political
+parties, dominant parties often rise to power through revolutions or coups,
+resulting in a robust structure with no single individual wielding absolute
+power. The military force aligns with the party itself, not individual leaders,
+contributing significantly to greater regime stability compared to personalist or
+military regimes.
+
+Personalist regimes exhibit a degree of temporary stability. Dictators, often
+ruthless and battle-hardened, emerge from intense competition. While lacking
+strong institutions, purges create a temporary status quo. However, the lack of a
+clear successor creates a vulnerability during leadership transitions. When
+dictators die or are assassinated, the absence of an established succession plan
+can trigger coups d'état.
+
+Military regimes tend to be the least stable, often ruling through a junta.
+Juntas lack a unified vision and are prone to internal power struggles, hindering
+stability. For example, General Augusto Pinochet's rise to power in Chile after
+the 1973 coup demonstrates the inherent instability of juntas. While his
+colleagues initially saw him as a safe choice, his actions proved otherwise. This
+lack of cohesion within juntas makes them particularly susceptible to internal
+fracturing.
+
+The strength of political institutions further supports this assessment. Studies
+by @frantz2017 show that 97% of country-years in dominant-party regimes have
+formalized institutional succession rules, compared to 77% in personalist regimes
+and a mere 59% in military regimes.
+
+These differing power dynamics significantly impact the likelihood of coup
+attempts. According to @tbl-regimes, military regimes face the highest risk,
+representing only 5.6% of country-years yet accounting for over 22% of coups.
+Personalist regimes follow, with 23% of coups despite comprising only 13% of
+country-years. Dominant-party regimes, with their stronger institutions and
+unified leadership, have the lowest incidence of coups – constituting 22.6% of
+country-years but responsible for only 16.7% of coups.
 
 ```{r}
 #| label: tbl-regimes
@@ -541,6 +571,10 @@ regime_total |>
               table.align = "center") |>
   tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
 ```
+
+> ***H2: Due to their balance of power dynamics, military regimes are more prone
+> to coups, followed by personalist regimes, while dominant-party regimes are the
+> least likely to experience coups among the three.***
 
 ## Research Framework and Hypotheses
 
