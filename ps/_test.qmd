@@ -8,13 +8,20 @@ gwf_all |>
   view()
 gwf_all_extended |> 
   view()
+library(splines)
+
+REIGN |> 
+  head()
 ```
 
-gwf_party Binary indicator of party regime type (groups party-based, party-personal, party-military, party-personal-military, oligarchy, and Iran 1979-2010)
+gwf_party Binary indicator of party regime type (groups party-based,
+party-personal, party-military, party-personal-military, oligarchy, and Iran
+1979-2010)
 
 gwf_personal Binary indicator of personalist regime type
 
-gwf_military Binary indicator of military regime type (groups military, military-personal, indirect military)
+gwf_military Binary indicator of military regime type (groups military,
+military-personal, indirect military)
 
 gwf_monarchy Binary indicator of monarchy regime type
 
@@ -106,102 +113,162 @@ REIGN %>%
 
 Dominant party regimes
 
-In a typical dominant party regime, the ruling party holds supreme power, with the incumbent leader serving as the representative of the party and subject to the collective leadership of the party.
-Examples such as the Partido Revolucionario Institucional (PRI) in Mexico, the Revolutionary Party of Tanzania (CCM), and Leninist parties in various East European countries illustrate this dynamic (Geddes 1999).
-The party's power is enshrined in its well-structured and highly disciplined organization, with internal institutions, regulations, and ordinations governing its members.
+In a typical dominant party regime, the ruling party holds supreme power, with
+the incumbent leader serving as the representative of the party and subject to
+the collective leadership of the party. Examples such as the Partido
+Revolucionario Institucional (PRI) in Mexico, the Revolutionary Party of Tanzania
+(CCM), and Leninist parties in various East European countries illustrate this
+dynamic (Geddes 1999). The party's power is enshrined in its well-structured and
+highly disciplined organization, with internal institutions, regulations, and
+ordinations governing its members.
 
-The selection of the incumbent is controlled by the party, ensuring their support from within.
-Any power challenger faces not only the incumbent and their allies but the entire party apparatus.
-This balance of power makes success elusive for coup perpetrators, as seen in Mexico's history, where three power challengers from the dominant party, PRI, ran for the presidency under different party banners in 1940, 1952, and 1988 (Langston 2002).
-Despite considerable support, they all ultimately failed, highlighting the difficulty of challenging the dominant party's rule.
+The selection of the incumbent is controlled by the party, ensuring their support
+from within. Any power challenger faces not only the incumbent and their allies
+but the entire party apparatus. This balance of power makes success elusive for
+coup perpetrators, as seen in Mexico's history, where three power challengers
+from the dominant party, PRI, ran for the presidency under different party
+banners in 1940, 1952, and 1988 (Langston 2002). Despite considerable support,
+they all ultimately failed, highlighting the difficulty of challenging the
+dominant party's rule.
 
-Although not coups, these examples demonstrate the similar balance of power between challengers and the dominant party.
-Moreover, leadership in dominant party regimes typically has term limits, providing opportunities for succession through legitimate means.
-The collective leadership of the party selects successors, aiming to maintain governance stability by choosing the most competent and suitable candidates.
-This reduces the likelihood of successful coups, as challengers are less likely to garner support when a respected successor has been appointed.
+Although not coups, these examples demonstrate the similar balance of power
+between challengers and the dominant party. Moreover, leadership in dominant
+party regimes typically has term limits, providing opportunities for succession
+through legitimate means. The collective leadership of the party selects
+successors, aiming to maintain governance stability by choosing the most
+competent and suitable candidates. This reduces the likelihood of successful
+coups, as challengers are less likely to garner support when a respected
+successor has been appointed.
 
-Mexico's PRI serves as a notable example of a dominant party regime, where the president wields extensive power during the authoritarian period.
-Despite this, strict adherence to term limits prevented any coups during PRI's rule.
-This example illustrates how the balance of power within dominant party regimes mitigates coup attempts.
+Mexico's PRI serves as a notable example of a dominant party regime, where the
+president wields extensive power during the authoritarian period. Despite this,
+strict adherence to term limits prevented any coups during PRI's rule. This
+example illustrates how the balance of power within dominant party regimes
+mitigates coup attempts.
 
-In summary, the power balance inherent in dominant party regimes reduces the likelihood of coup success and consequently leads to fewer coup attempts compared to military and personal regimes.
+In summary, the power balance inherent in dominant party regimes reduces the
+likelihood of coup success and consequently leads to fewer coup attempts compared
+to military and personal regimes.
 
-However, as @powell2012 posits, while measures aimed at pacifying the military may diminish the likelihood of a coup being attempted, greater military resources may simultaneously enhance the probability of a coup's success.
+However, as @powell2012 posits, while measures aimed at pacifying the military
+may diminish the likelihood of a coup being attempted, greater military resources
+may simultaneously enhance the probability of a coup's success.
 
-There are three dimensions when we analyse coup outcomes.
-The first dimension is straightforward: why some coups succeed while others fail [@quinlivan1999; @kebschull1994].
-The second dimension focuses on the potential influences: what happens after failed coups and successful coups.
-In particular, whether it helps the shifts towards democracy following successful coups.
-This debate is exemplified by the arguments between Michael Miller [@miller2016] and Derpanopoulos, Frantz & Geddes [@derpanopoulos2016; @derpanopoulos2017].
-However, the third dimension, which explores how the expected success of coups influences coup attempts, remains underexplored.
+There are three dimensions when we analyse coup outcomes. The first dimension is
+straightforward: why some coups succeed while others fail [@quinlivan1999;
+@kebschull1994]. The second dimension focuses on the potential influences: what
+happens after failed coups and successful coups. In particular, whether it helps
+the shifts towards democracy following successful coups. This debate is
+exemplified by the arguments between Michael Miller [@miller2016] and
+Derpanopoulos, Frantz & Geddes [@derpanopoulos2016; @derpanopoulos2017]. However,
+the third dimension, which explores how the expected success of coups influences
+coup attempts, remains underexplored.
 
-Among the limited discussions on the influence of coup success on coup attempts, @powell2012 utilizes a selection model with global data spanning 1961 to 2000.
-Powell's findings suggest that coup-proofing strategies, such as balancing and providing resources to the military, reduce the likelihood of coups but increase their chances of success.
+Among the limited discussions on the influence of coup success on coup attempts,
+@powell2012 utilizes a selection model with global data spanning 1961 to 2000.
+Powell's findings suggest that coup-proofing strategies, such as balancing and
+providing resources to the military, reduce the likelihood of coups but increase
+their chances of success.
 
-However, few of the aforementioned studies have explored the interdependence between coup attempts and coup success.
-In other words, as demonstrated in @eq-eq1 and @eq-eq2, they do not consider the likelihood of coup success as a primary determinant of coup attempts.
+However, few of the aforementioned studies have explored the interdependence
+between coup attempts and coup success. In other words, as demonstrated in
+@eq-eq1 and @eq-eq2, they do not consider the likelihood of coup success as a
+primary determinant of coup attempts.
 
-If the likelihood of coup success is predetermined, what factors influence or potentially determine the success rates of coups?
-Much attention is understandably given to military strength, as it is believed that the control of military forces often determines the success of coups.
+If the likelihood of coup success is predetermined, what factors influence or
+potentially determine the success rates of coups? Much attention is
+understandably given to military strength, as it is believed that the control of
+military forces often determines the success of coups.
 
 In addition to military factors, research delves into other determinants as well.
-For instance, @bell2016 contends that democracies are less susceptible to coups, yet coup attempts against democracies are more likely to succeed.
+For instance, @bell2016 contends that democracies are less susceptible to coups,
+yet coup attempts against democracies are more likely to succeed.
 
-Let's take a look at the data and variables used in this study.
-## Welcome to my political science research page.
-As a Ph.D. student specializing in political science, my focus is on democratization, with a particular interest in coups.
-Here, you'll find a collection of my work, where I employ various methodologies such as experiments, surveys, and observational data analysis.
-Currently, I'm engaged in a project exploring coups, self-coups, and survival analyses of political leaders of successful coups or self-coups.
-Explore my research to delve deeper into these fascinating topics.
+Let's take a look at the data and variables used in this study. \## Welcome to my
+political science research page. As a Ph.D. student specializing in political
+science, my focus is on democratization, with a particular interest in coups.
+Here, you'll find a collection of my work, where I employ various methodologies
+such as experiments, surveys, and observational data analysis. Currently, I'm
+engaged in a project exploring coups, self-coups, and survival analyses of
+political leaders of successful coups or self-coups. Explore my research to delve
+deeper into these fascinating topics.
 
-Consectetur sapien justo dictum: metus at turpis.
-Quis non et sollicitudin curabitur posuere mattis!
-Blandit dignissim a vitae nam phasellus integer blandit eros, felis nibh vitae velit!
-Faucibus hac urna cras interdum massa et lacus scelerisque; convallis parturient ridiculus – phasellus feugiat auctor arcu faucibus nisi vehicula.
+Consectetur sapien justo dictum: metus at turpis. Quis non et sollicitudin
+curabitur posuere mattis! Blandit dignissim a vitae nam phasellus integer blandit
+eros, felis nibh vitae velit! Faucibus hac urna cras interdum massa et lacus
+scelerisque; convallis parturient ridiculus – phasellus feugiat auctor arcu
+faucibus nisi vehicula.
 
-Lorem ad pretium: ultrices litora turpis mus viverra quisque, aliquam nam quis aenean.
-Aenean lobortis varius, ultrices metus sagittis primis mauris.
-Risus pharetra inceptos fringilla mollis nullam volutpat; litora sollicitudin diam facilisi.
-Parturient felis nullam rutrum iaculis, at egestas tortor inceptos porttitor.
+Lorem ad pretium: ultrices litora turpis mus viverra quisque, aliquam nam quis
+aenean. Aenean lobortis varius, ultrices metus sagittis primis mauris. Risus
+pharetra inceptos fringilla mollis nullam volutpat; litora sollicitudin diam
+facilisi. Parturient felis nullam rutrum iaculis, at egestas tortor inceptos
+porttitor.
 
-Consectetur interdum porttitor egestas quam vivamus, tellus libero – euismod dignissim.
-Ultricies nibh luctus gravida; vestibulum libero nisi mus rhoncus fermentum platea tristique venenatis?
-Neque ac sollicitudin augue mattis ante dignissim, hendrerit nostra quis.
-Risus mi ridiculus ante, eget ornare lacus duis quis aptent commodo.
-Luctus quam sociosqu quam.
-Metus nunc elementum lectus rutrum nunc dis euismod mus eu faucibus malesuada per, imperdiet mollis.
+Consectetur interdum porttitor egestas quam vivamus, tellus libero – euismod
+dignissim. Ultricies nibh luctus gravida; vestibulum libero nisi mus rhoncus
+fermentum platea tristique venenatis? Neque ac sollicitudin augue mattis ante
+dignissim, hendrerit nostra quis. Risus mi ridiculus ante, eget ornare lacus duis
+quis aptent commodo. Luctus quam sociosqu quam. Metus nunc elementum lectus
+rutrum nunc dis euismod mus eu faucibus malesuada per, imperdiet mollis.
 
-Adipiscing duis, vivamus quisque, commodo: ligula molestie felis fusce himenaeos placerat magna nec cubilia!
-Vel duis – id diam porttitor phasellus tristique erat, sed lectus!
-Orci laoreet rhoncus duis magna dis.
-Tortor nibh lobortis donec nostra – id, porttitor semper libero curae, mollis molestie aliquam facilisis hac integer.
+Adipiscing duis, vivamus quisque, commodo: ligula molestie felis fusce himenaeos
+placerat magna nec cubilia! Vel duis – id diam porttitor phasellus tristique
+erat, sed lectus! Orci laoreet rhoncus duis magna dis. Tortor nibh lobortis donec
+nostra – id, porttitor semper libero curae, mollis molestie aliquam facilisis hac
+integer.
 
-Lorem inceptos dictum ante scelerisque commodo.
-Urna bibendum ante dignissim id felis accumsan dis, at magnis malesuada sodales conubia.
-Pretium viverra luctus vehicula: dis purus pharetra nibh pellentesque natoque.
-Dignissim aliquet lectus, himenaeos sociis laoreet volutpat class?
+Lorem inceptos dictum ante scelerisque commodo. Urna bibendum ante dignissim id
+felis accumsan dis, at magnis malesuada sodales conubia. Pretium viverra luctus
+vehicula: dis purus pharetra nibh pellentesque natoque. Dignissim aliquet lectus,
+himenaeos sociis laoreet volutpat class?
 
-Dolor ac varius cum natoque torquent conubia – est, blandit enim inceptos.
-Eu facilisis pulvinar, natoque metus iaculis id – eu iaculis ridiculus.
-Praesent leo felis elementum vel suscipit a sociis placerat.
-Praesent mus cum elementum fusce ligula, pellentesque dui: magnis accumsan metus, erat potenti.
+Dolor ac varius cum natoque torquent conubia – est, blandit enim inceptos. Eu
+facilisis pulvinar, natoque metus iaculis id – eu iaculis ridiculus. Praesent leo
+felis elementum vel suscipit a sociis placerat. Praesent mus cum elementum fusce
+ligula, pellentesque dui: magnis accumsan metus, erat potenti.
 
-Sit eleifend nisi mauris tempor, pretium, augue inceptos rhoncus mi; consequat varius dui posuere.
-Leo nascetur integer eros etiam, mauris egestas semper – curae vulputate elementum.
-Dui sodales semper dis, potenti mi dis sodales ad.
-Tempor id, ante mi vehicula parturient natoque potenti inceptos, nunc urna laoreet.
+Sit eleifend nisi mauris tempor, pretium, augue inceptos rhoncus mi; consequat
+varius dui posuere. Leo nascetur integer eros etiam, mauris egestas semper –
+curae vulputate elementum. Dui sodales semper dis, potenti mi dis sodales ad.
+Tempor id, ante mi vehicula parturient natoque potenti inceptos, nunc urna
+laoreet.
 
-Consectetur vestibulum ornare dignissim fusce sociosqu quam, malesuada, torquent cursus aliquet.
-Aliquam malesuada et viverra pretium sociis habitant quisque ridiculus!
-Suspendisse metus magnis imperdiet facilisis suspendisse, faucibus; primis leo eros?
-Accumsan pharetra justo cras nibh fringilla suscipit, sed urna eleifend.
+Consectetur vestibulum ornare dignissim fusce sociosqu quam, malesuada, torquent
+cursus aliquet. Aliquam malesuada et viverra pretium sociis habitant quisque
+ridiculus! Suspendisse metus magnis imperdiet facilisis suspendisse, faucibus;
+primis leo eros? Accumsan pharetra justo cras nibh fringilla suscipit, sed urna
+eleifend.
 
-Sit donec lacinia scelerisque, himenaeos morbi mollis etiam?
-Suspendisse dictumst ad dignissim cum: himenaeos aenean cursus!
-Euismod fermentum tincidunt natoque convallis interdum faucibus?
-Vel sociis pretium ullamcorper vestibulum lacus habitasse cum, potenti, odio libero torquent ultrices et.
+Sit donec lacinia scelerisque, himenaeos morbi mollis etiam? Suspendisse dictumst
+ad dignissim cum: himenaeos aenean cursus! Euismod fermentum tincidunt natoque
+convallis interdum faucibus? Vel sociis pretium ullamcorper vestibulum lacus
+habitasse cum, potenti, odio libero torquent ultrices et.
 
-Elit condimentum, proin cum enim, odio venenatis pulvinar?
-Quisque venenatis mi nisl porttitor pretium mattis id consequat fusce?
-Aptent consequat semper posuere ullamcorper, feugiat platea litora.
-Imperdiet scelerisque senectus hendrerit, semper nulla etiam auctor neque, vitae imperdiet ligula habitant primis libero commodo justo?
+Elit condimentum, proin cum enim, odio venenatis pulvinar? Quisque venenatis mi
+nisl porttitor pretium mattis id consequat fusce? Aptent consequat semper posuere
+ullamcorper, feugiat platea litora. Imperdiet scelerisque senectus hendrerit,
+semper nulla etiam auctor neque, vitae imperdiet ligula habitant primis libero
+commodo justo?
+
+```{r}
+# Example in R
+# Install the package if you haven't
+# install.packages("splines")
+
+# Load the package
+# library(splines)
+
+# Create a data frame
+set.seed(123)
+x <- 1:10
+y <- rnorm(10, mean = 5 * sin(x), sd = 0.2)
+data <- data.frame(x, y)
+
+# Fit a model using natural splines
+model <- lm(y ~ ns(x, df = 4), data = data)
+
+# Plot the data and the fitted spline
+plot(x, y)
+lines(x, predict(model, newdata = data), col = "blue")
+```

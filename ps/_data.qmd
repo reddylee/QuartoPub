@@ -1,4 +1,8 @@
 ```{r}
+library(vdemdata)
+```
+
+```{r}
 coups_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t", header = TRUE)
 
 coups_all <- coups_all %>%
@@ -8,7 +12,40 @@ coups_all <- coups_all %>%
 
 ```{r}
 REIGN |> 
-  filter(year >= 1950,
-         reign_cowcode != GWn) |> 
   view()
+
+read.csv("https://cdn.jsdelivr.net/gh/OEFDataScience/REIGN.github.io@gh-pages/data_sets/REIGN_2021_8.csv") |> 
+  View()
+
+view(gwf_all)
+
+democracyData::gwf_autocratic_extended |>
+  view()
+
+anckar |>
+  view()
+
+codebook |> 
+  view()
+
+
+
+vdem |> 
+  select(COWcode, year, country_name, e_gdp, e_gdppc) |>
+  filter(year > 1945,
+         !is.na(e_gdppc)) |> 
+  view()
+```
+
+```{r}
+# Example data frame
+df <- data.frame(
+  regime = c("A", "A", "B", "B", "C", "C", "A", "B", "C"),
+  coup = c(0, 1, 1, 2, 0, 2, 2, 2, 1)
+)
+df %>%
+  #tabyl(regime) %>%
+  adorn_totals("row") %>%
+  adorn_percentages("col") %>%
+  adorn_pct_formatting(digits = 2)
 ```

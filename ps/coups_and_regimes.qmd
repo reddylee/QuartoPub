@@ -18,6 +18,10 @@ bibliography: references.bib
 abstract: |
   A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high chance of success. Thus, the expected outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.
 keywords: [Coup, Autocracy, Regime types, Sample selection]
+
+execute:
+  warning: false
+  message: false
 ---
 
 ```{r}
@@ -284,55 +288,51 @@ depicted in @tbl-coups.
 
 ### Framework of coup success
 
-An oft-cited framework, formalized by @leon2013 and @aidt2019, provides a
-structured approach to assess the disposition and capability of coup attempts by
-evaluating the anticipated benefits for coup plotters. This framework can be
+An oft-cited framework [@gassebner2016a; @aidt2019] provides a structured
+approach to assess the disposition and capability of coup attempts by evaluating
+the anticipated benefits for coup plotters. The expected payoff of coups can be
 represented by the equation:
 
 $$
 \begin{aligned}
-\text{Expected Payoff of coups} = \sigma V_S + (1 - \sigma)  (V_I - C)
+E(U) = p \times B + (1 - p) \times (-C)
 \end{aligned}
 $$ {#eq-eq1}
 
-Here, $V_S$ represents the return of a successful coup, $V_I$ denotes the normal
-value paid by the incumbent in the status quo, $C$ signifies the cost of a failed
-coup, and $\sigma$ represents the probability of coup success. The condition for
-staging a coup is when the expected benefit is positive, meaning that the
-expected pay-off is greater than 0. Rearranging and simplifying the equation, we
-get:
+Here, $\mathbf B$ represents the return of a successful coup, $\mathbf C$
+signifies the cost of a failed coup, and $p$ represents the probability of coup
+success. The condition for staging a coup is when the expected benefit is
+positive, meaning that the expected pay-off is greater than 0. Rearranging the
+equation, we get:
 
 $$
 \begin{aligned}
-\sigma[V_S - V_I] > (1-\sigma)C
+p \times B > (1 - p) \times C
 \end{aligned}
 $$ {#eq-eq2}
 
 @eq-eq2 implies that for @eq-eq1 to hold, the expected benefits earned from
-successful coups must outweigh the expected cost of failed coups. Both the
-motivation (disposition) and chance of success (capability) are embedded within
-@eq-eq2. The motivation is reflected by the difference in benefits ($V_S - V_I$),
-while the opportunity is represented by the probability of success ($\sigma$).
+successful coups must outweigh the expected cost of failed coups.
 
-While seemingly clear, the equation faces practical challenges. Quantifying $V_S$
-(the value of a successful coup) and $C$ (the cost of failure) is difficult. The
-loss of life, freedom, or loved ones after a failed coup, as well as the value of
-assuming leadership after a successful coup, are intangible concepts that defy
-precise measurement. As evidenced by the 1979 coup in Ghana[^2], the fate of the
-coup leader(s) hangs in the balance; they are high likely to be killed if the
-coup fails, or to execute others if the coup succeeds [@aidt2019].
+While seemingly clear, the equation faces practical challenges. Quantifying
+$\mathbf B$ (the value of a successful coup) and $\mathbf C$ (the cost of
+failure) is difficult. The loss of life, freedom, or loved ones after a failed
+coup, as well as the value of assuming leadership after a successful coup, are
+intangible concepts that defy precise measurement. As evidenced by the 1979 coup
+in Ghana[^2], the fate of the coup leader(s) hangs in the balance; they are high
+likely to be killed if the coup fails, or to execute others if the coup succeeds.
 
 However, these challenges do not render the framework useless. Firstly, its core
 logic remains valuable, offering insights into how coup plotters might assess the
 return and cost of their actions. Secondly, given the significant and elusive
-nature of precise values for $V_S$ and $C$, they can be treated as roughly equal.
-Consequently, there is no need to fret over how to measure and compare these
-values precisely. Instead, we can shift our focus from $V_S$​ and $C$ to the
-probability of success ($\sigma$), simplifying @eq-eq2 to:
+nature of precise values for $\mathbf B$ and $\mathbf C$, they can be treated as
+roughly equal. Consequently, there is no need to fret over how to measure and
+compare these values precisely. Instead, we can shift our focus from $\mathbf B$
+and $\mathbf C$, to the probability of success ($p$), simplifying @eq-eq2 to:
 
 $$
 \begin{aligned}
-\sigma > (1-\sigma)
+p > (1-p)
 \end{aligned}
 $$ {#eq-eq3}
 
@@ -538,13 +538,13 @@ regimes <- REIGN |>
   filter(year > 1949)
 
 regime_total <- regimes |>
-  summarise(country_year = n(), .by = regime_type) |>
-  arrange(desc(country_year)) |>
-  mutate(
-    share_of_country_year = country_year / sum(country_year),
-    share_of_country_year = percent(share_of_country_year)
-  ) |>
-  adorn_totals(where = "row", fill = "100%")
+  tabyl(regime_type) |> 
+  arrange(-n) |> 
+  adorn_totals("row") |> 
+  mutate(country_year =n,
+         share = percent(percent),
+         .keep = "unused") 
+  
 
 coup1 <- coup |>
   select(country, ccode, year, coup)
@@ -554,20 +554,34 @@ coup_by_regime <- regimes |>
   full_join(coup1, by = join_by(ccode, year)) |>
   mutate(regime = na.locf(regime_type, .by = ccode)) |>
   filter(!is.na(coup)) |>
-  summarise(no_of_coups = n(), .by = regime) |>
-  mutate(
-    percent_of_coups = no_of_coups / sum(no_of_coups),
-    percent_of_coups = percent(percent_of_coups)
-  ) |>
-  adorn_totals(where = "row", fill = "100%")
+  tabyl(regime) |> 
+  adorn_totals("row") |> 
+  mutate(num_of_coups = n,
+         percent_of_coups = percent(percent,accuracy = 0.1),
+         .keep = "unused") 
+
+coup_by_succeed <- regimes |>
+  select(ccode = reign_cowcode, extended_country_name, year, regime_type) |>
+  full_join(coup1, by = join_by(ccode, year)) |>
+  mutate(regime = na.locf(regime_type, .by = ccode)) |>
+  filter(!is.na(coup),
+         coup == 2) |>
+  tabyl(regime) |> 
+  adorn_totals("row") |> 
+  select(regime, succeeded_coup = n) 
+
+coup_regimes <-  coup_by_regime |> 
+  left_join(coup_by_succeed) |> 
+  mutate(success_rate = percent(succeeded_coup / num_of_coups, accuracy = 0.1))
 
 regime_total |>
-  left_join(coup_by_regime, join_by(regime_type == regime)) |>
+  left_join(coup_regimes, join_by(regime_type == regime)) |>
   mutate(regime_type = str_to_title(regime_type)) |>
+  select(-succeeded_coup) |> 
   clean_names(case = "title") |>
   gt() |>
   tab_options(column_labels.font.weight = "bold",
-              table.width = pct(95),
+              table.width = pct(100),
               table.align = "center") |>
   tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
 ```
@@ -576,9 +590,142 @@ regime_total |>
 > to coups, followed by personalist regimes, while dominant-party regimes are the
 > least likely to experience coups among the three.***
 
-## Research Framework and Hypotheses
+## Research Design
 
-## Data and Variables
+### Two-stage sample selection model
+
+This study employs a sample selection model [@heckman1979] to assess the
+probability of coup attempts and their likelihood of success. The most
+appropriate model for this research is the two-stage `probit` model, as detailed
+by @vandeven1981 and utilized by @powell2012. The first stage examines the
+probability that a regime experiences a coup attempt, while the second stage
+evaluates the probability of the attempt's success.
+
+The primary explanatory variables are regime types, as previously discussed.
+Control variables are included in $\mathbf{XB}$. The selection equation (first
+stage) models the probability that a coup attempt occurs and can be expressed as
+follows:
+
+$$
+\begin{aligned}
+y_1^*=\alpha_0 + \alpha_1 Regime_i + \mathbf {XA} + \mu_{1i}
+\end{aligned}
+$$ {#eq-eq4}
+
+Here, ${y_1}^*$ is an unobserved variable, which may be known to coup plotters.
+$Regime_i$ is a categorical variable (*military*, *personalist*, or
+*dominant-party*). ***XB*** captures other control variables, such as the
+economic crisis index, previous coups, military expenditure, etc.
+
+The observed binary outcome $\mathbf{y_1}$ is:
+
+$$
+\begin{aligned}
+y_1 = 
+\begin{cases} 
+1 &\text{if $y_1^*>0$ (coup attempt occurs)} \\
+0 &\text{if $y_1^*\le0$ (no coup attempt)}
+\end{cases}
+\end{aligned}
+$$\
+
+In the first stage, if $y_1^*\le0$, no coup attempt occurs in a given
+country-year, indicating that the unobserved variable does not reach the
+threshold. If $y_1^*>0$, at least one coup attempt is made in a country-year,
+indicating that the unobserved variable surpasses the threshold. The probability
+is expressed as:
+
+$$
+\begin{aligned}
+Prob(y_1 =1)&=Prob(y_{1}^*>0) \\
+&=\Phi(\alpha_0 + \alpha_1 Regime_i + \mathbf{XA})
+\end{aligned}
+$$ {#eq-eq4a}
+
+Similarly, the outcome equation (second stage) models the probability that a coup
+attempt is successful, given that it occurs:
+
+$$
+\begin{aligned}
+y_2^*=\beta_0 + \beta_1 Regime_i + \mathbf {XB} + \mu_{2i}
+\end{aligned}
+$$ {#eq-eq5}
+
+The observed outcome $y_2$ is:
+
+$$
+\begin{aligned}
+y_2 = 
+\begin{cases} 
+1 &\text{if $y_2^*>0$ (coup succeeds)} \\
+0 &\text{if $y_2^*\le0$ (coup fails)}
+\end{cases}
+\end{aligned}
+$$
+
+The probability equations is:
+
+$$
+\begin{aligned}
+Prob(y_2=1|y_1 =1)=\Phi(\beta_0 + \beta_1 Regime_i + \mathbf{XB})
+\end{aligned}
+$$ {#eq-eq5a}
+
+In a two-stage sample selection model, the second-stage model cannot be identical
+to the first-stage model. Therefore, the first-stage model includes an additional
+independent variable: the tenure of the incumbent leader, which captures the
+number of years since the incumbent leader assumed office. Thus, @eq-eq5a
+becomes:
+
+$$
+\begin{aligned}
+Prob(y_1 =1)&=Prob(y_{1}^*>0) \\
+&=\Phi(\alpha_0 + \alpha_1 Regime_i + \alpha_2 Tenure_i + \mathbf{XA})
+\end{aligned}
+$$ {#eq-eq5b}
+
+### Variables
+
+#### Dependent variable
+
+To test our argument, we use the coup attempts and outcomes from @powell2011 as
+the dependent variable. Successful coups are those in which the incumbent is
+removed from the office for over seven days. Data are available from 1950 to
+2023, accounting for 491 coup attempts, of which 245 succeeded. The coup
+descriptive statistics have been discussed in previous part.
+
+#### Independent variables
+
+The main independent variable, as analysed, is the regime type. We follow the
+category from @geddes2014 (GWF). Our main concern focuses on the military,
+personal and dominant-party regimes, while democracy and monarchy will be
+included as references. The descriptive statistics is shown in @tbl-regimes.
+
+#### Control variables
+
+**Economic performance:** we use the current‐trend (CT) ratio explored by
+@krishnarajan2019 to measure the economic performance. This measurement
+calculates the ratio between the\
+current level of gross domestic product per capita (GDP/cap) and the average\
+GDP/cap level of the previous 5 years. For a country 𝑖 at year 𝑡 the approach is\
+given as follow:
+
+$$
+CT_{i,t} = {GDP/cap_{i,t} \over \sum_{k=1}^5{GDP/cap_{i,t-k} \over 5}}
+$$
+
+Since a given year's situation is mainly determined by the previous, the variable
+is lagged for one year. The GDP per capita (in constant 2017 international
+dollars, PPP) uses the vdem dataset which comes from @fariss2022.
+
+**Violence:** Violence is an index which captures all kinds of violence and wars
+(internal or\
+interstate). The dataset is from Major Episodes of Political Violence
+[@marshall2005current].
+
+**Military expending:** Military expending per capita measure how much money is
+expended per capita per year in a regime. The data source is the Correlates of
+War Project [@sarkees2010].
 
 ## Results and Discussion
 
