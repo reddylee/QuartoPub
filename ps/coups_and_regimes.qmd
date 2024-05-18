@@ -31,10 +31,14 @@ execute:
 format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 library(tidyverse)
 library(gt)
+library(gtsummary)
 library(janitor)
 library(scales)
 library(zoo)
 library(democracyData)
+library(vdemdata)
+library(sampleSelection)
+library(stargazer)
 ```
 
 ```{r}
@@ -477,40 +481,47 @@ types: military regimes, personalist regimes, or dominant-party regimes.
 Dominant-party regimes are the most stable due to their institutionalized
 structure. A dominant party is a highly organized group with shared political
 beliefs, goals, and ideologies. This shared ideology fosters internal cohesion
-and a long-term vision, further bolstering stability. Unlike typical political
-parties, dominant parties often rise to power through revolutions or coups,
-resulting in a robust structure with no single individual wielding absolute
-power. The military force aligns with the party itself, not individual leaders,
-contributing significantly to greater regime stability compared to personalist or
-military regimes.
+and a long-term vision, resulting in a robust structure with no single individual
+wielding absolute power. The military force aligns with the party itself rather
+than individual leaders, contributing significantly to greater regime stability
+compared to personalist or military regimes. Dominant-party regimes also manage
+leadership succession more effectively, as they typically regulate the process
+and enforce term limits. As demonstrated by @frantz2017, 97% of country-years in
+dominant-party regimes have formalized institutional succession rules, compared
+to 77% in personalist regimes and a mere 59% in military regimes.
 
-Personalist regimes exhibit a degree of temporary stability. Dictators, often
-ruthless and battle-hardened, emerge from intense competition. While lacking
-strong institutions, purges create a temporary status quo. However, the lack of a
-clear successor creates a vulnerability during leadership transitions. When
-dictators die or are assassinated, the absence of an established succession plan
-can trigger coups d'état.
+Personalist regimes also exhibit a degree of stability, as dictators usually
+emerge from intense internal and external competition, with the most competent,
+tough, and powerful individuals ultimately prevailing. Potential challengers have
+often been purged, resulting in a relatively stable status quo within the
+dictator's close circle. However, personalist regimes are vulnerable due to the
+sudden death of incumbents. Rarely is there a universally accepted successor
+during the chaos of power transitions, as incumbent dictators often purge
+potential rivals. This uncertainty can trigger coups. Thus, while personalist
+regimes maintain relative stability as long as succession is not an immediate
+issue.
 
-Military regimes tend to be the least stable, often ruling through a junta.
-Juntas lack a unified vision and are prone to internal power struggles, hindering
-stability. For example, General Augusto Pinochet's rise to power in Chile after
-the 1973 coup demonstrates the inherent instability of juntas. While his
-colleagues initially saw him as a safe choice, his actions proved otherwise. This
-lack of cohesion within juntas makes them particularly susceptible to internal
-fracturing.
-
-The strength of political institutions further supports this assessment. Studies
-by @frantz2017 show that 97% of country-years in dominant-party regimes have
-formalized institutional succession rules, compared to 77% in personalist regimes
-and a mere 59% in military regimes.
+In contrast, military regimes are typically the least stable. These regimes often
+rule through a junta, where power is shared equally among members. Mistrust and
+suspicion are common, leading to frequent conflicts over benefits and policies.
+Without a single authority figure, resolving these conflicts is challenging, as
+no member is willing to concede, and no senior authority can enforce resolutions.
+For example, General Augusto Pinochet was chosen to lead the junta in Chile after
+the 1973 coup because his colleagues saw him as a safe choice due to his
+professionalism, respect for rules, and uncharismatic demeanor
+[@arriagadaherrera1988]. Although Pinochet later surprised them, this example
+illustrates that juntas are generally unstable leadership groups.
 
 These differing power dynamics significantly impact the likelihood of coup
-attempts. According to @tbl-regimes, military regimes face the highest risk,
-representing only 5.6% of country-years yet accounting for over 22% of coups.
-Personalist regimes follow, with 23% of coups despite comprising only 13% of
-country-years. Dominant-party regimes, with their stronger institutions and
-unified leadership, have the lowest incidence of coups – constituting 22.6% of
-country-years but responsible for only 16.7% of coups.
+attempts. Military regimes, in particular, have an inherent predisposition
+towards coups, as junta members typically command their own military factions,
+eliminating the need to organize an army for a coup. According to @tbl-regimes,
+military regimes face the highest risk, representing only 5.6% of country-years
+yet accounting for over 22% of coups. Personalist regimes follow, with 23% of
+coups despite comprising only 13% of country-years. Dominant-party regimes, with
+their stronger institutions and unified leadership, have the lowest incidence of
+coups, constituting 22.6% of country-years but responsible for only 16.7% of
+coups.
 
 ```{r}
 #| label: tbl-regimes
@@ -594,12 +605,15 @@ regime_total |>
 
 ### Two-stage sample selection model
 
-This study employs a sample selection model [@heckman1979] to assess the
-probability of coup attempts and their likelihood of success. The most
-appropriate model for this research is the two-stage `probit` model, as detailed
-by @vandeven1981 and utilized by @powell2012. The first stage examines the
-probability that a regime experiences a coup attempt, while the second stage
-evaluates the probability of the attempt's success.
+To account for the determinants of coup attempts, this study utilizes a sample
+selection model [@heckman1979]. While coup attempt rates vary across regimes,
+success rates tend to converge around 50% (@tbl-regimes). This suggests coup
+attempts are strategically planned, targeting situations with a perceived high
+chance of success. Consequently, a standard regression model would yield biased
+results. Therefore, we use the two-stage `probit` model, as detailed by
+@vandeven1981 and utilized by @powell2012, for empirical analysis. The first
+stage examines the probability that a regime experiences a coup attempt, while
+the second stage evaluates the probability of the attempt's success.
 
 The primary explanatory variables are regime types, as previously discussed.
 Control variables are included in $\mathbf{XB}$. The selection equation (first
@@ -628,7 +642,6 @@ y_1 =
 \end{cases}
 \end{aligned}
 $$\
-
 In the first stage, if $y_1^*\le0$, no coup attempt occurs in a given
 country-year, indicating that the unobserved variable does not reach the
 threshold. If $y_1^*>0$, at least one coup attempt is made in a country-year,
@@ -688,46 +701,120 @@ $$ {#eq-eq5b}
 
 #### Dependent variable
 
-To test our argument, we use the coup attempts and outcomes from @powell2011 as
-the dependent variable. Successful coups are those in which the incumbent is
-removed from the office for over seven days. Data are available from 1950 to
-2023, accounting for 491 coup attempts, of which 245 succeeded. The coup
-descriptive statistics have been discussed in previous part.
+To test our hypotheses, we use coup attempts and outcomes data from @powell2011
+as the dependent variable. Successful coups are those in which the incumbent is
+removed from office for more than seven days. The dataset spans from 1950 to
+2023, accounting for 491 coup attempts, of which 245 were successful. Descriptive
+statistics are presented in @tbl-coups and @tbl-regimes.
 
 #### Independent variables
 
-The main independent variable, as analysed, is the regime type. We follow the
-category from @geddes2014 (GWF). Our main concern focuses on the military,
-personal and dominant-party regimes, while democracy and monarchy will be
-included as references. The descriptive statistics is shown in @tbl-regimes.
+The primary independent variable in our analysis is the regime type. We follow
+the categories defined by @geddes2014 (GWF). Our main focus is on military,
+personalist, and dominant-party regimes, with democracy and monarchy included as
+reference categories. Descriptive statistics are presented in @tbl-regimes.
 
 #### Control variables
 
-**Economic performance:** we use the current‐trend (CT) ratio explored by
-@krishnarajan2019 to measure the economic performance. This measurement
-calculates the ratio between the\
-current level of gross domestic product per capita (GDP/cap) and the average\
-GDP/cap level of the previous 5 years. For a country 𝑖 at year 𝑡 the approach is\
-given as follow:
+**Economic performance:** We use the current-trend ($CT$) ratio developed by
+@krishnarajan2019 to measure economic performance. This metric calculates the
+ratio between the current level of gross domestic product per capita (GDP/cap)
+and the average GDP/cap level of the previous five years. For a country $i$ at
+year $t$, the $CT$ ratio is calculated as follows:
 
 $$
-CT_{i,t} = {GDP/cap_{i,t} \over \sum_{k=1}^5{GDP/cap_{i,t-k} \over 5}}
+CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
 $$
 
-Since a given year's situation is mainly determined by the previous, the variable
-is lagged for one year. The GDP per capita (in constant 2017 international
-dollars, PPP) uses the vdem dataset which comes from @fariss2022.
+Since a given year's situation is primarily determined by the previous year, the
+variable is lagged by one year. The GDP per capita (in constant 2017
+international dollars, PPP) is sourced from the V-Dem dataset provided by
+@fariss2022.
 
-**Violence:** Violence is an index which captures all kinds of violence and wars
-(internal or\
-interstate). The dataset is from Major Episodes of Political Violence
-[@marshall2005current].
+**Violence:** The violence index captures all types of violence and wars
+(internal or interstate). The data is sourced from the Major Episodes of
+Political Violence [@marshall2005current].
 
-**Military expending:** Military expending per capita measure how much money is
-expended per capita per year in a regime. The data source is the Correlates of
+**Military expending:** Military spending per capita measures the amount expended
+per capita per year on the military. This data is sourced from the Correlates of
 War Project [@sarkees2010].
 
 ## Results and Discussion
+
+```{r}
+#| label: tbl-regression
+#| tbl-cap: Results of the two-stage sample selection model
+
+political_violence <- read_excel("ps/MEPVv2018.xls") |> 
+  select(ccode, year, violence = actotal)
+
+gdp <- vdem |> 
+  select(ccode = COWcode, year, gdppc = e_gdppc) |> 
+  filter(year > 1944) |> 
+  mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
+                               align = 'right', fill = NA)),
+         .by = c(ccode)) 
+
+coup_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t") |> 
+  mutate(coup = case_when(
+    coup1 == 0 ~ 0,
+    coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
+    TRUE ~ 1
+  )) |>
+  select(ccode, year, coup)
+
+reg_data <- regimes |> 
+  select(country = extended_country_name,
+         ccode = reign_cowcode, year, regime_type) |>
+  left_join(coup_all, by = join_by(ccode, year)) |> 
+  left_join(political_violence, by = join_by(ccode, year)) |>
+  left_join(gdp, by = join_by(ccode, year)) |> 
+  filter(!is.na(gdppc)) |> 
+  mutate(violence = na.locf(violence, .by = ccode)) 
+
+model_2step <- reg_data |>
+  mutate(coup_attempt = ifelse(coup == 0, 0, 1),
+         coup_succeed = case_when(coup == 2 ~ 1, 
+                                  coup == 1 ~ 0,
+                                  TRUE ~ NA)) |>
+  filter(regime_type != "other") |>
+  #view()
+  selection(coup_attempt ~ regime_type + ct + violence + gdppc,
+            coup_succeed ~ regime_type + ct + violence , method = "2step",
+            data = _) 
+
+stargazer(model_2step, type = "text", selection.equation = T)
+stargazer(model_2step, type = "text", selection.equation = F)
+  
+```
+
+```{r}
+new_data <- reg_data |> 
+  mutate(coup_attempt = ifelse(coup == 0, 0, 1),
+         coup_succeed = case_when(coup == 2 ~ 1, 
+                                  coup == 1 ~ 0,
+                                  TRUE ~ NA)) |>
+  filter(regime_type != "other")
+probit <- new_data |> 
+  mutate(coup_attempt = ifelse(coup == 0, 0, 1),
+         coup_succeed = case_when(coup == 2 ~ 1, 
+                                  coup == 1 ~ 0,
+                                  TRUE ~ NA)) |>
+  filter(regime_type != "other") |>
+  glm(coup_attempt ~ regime_type + ct + violence + gdppc, family = binomial(link = "probit"), data = _) 
+
+probit_lp <-  predict(probit)
+mills0 <-  dnorm(probit_lp)/pnorm(probit_lp)
+
+summary(mills0)
+
+imr <- mills0[new_data$coup_attempt == 1]
+summary(imr)
+ggplot2::qplot(imr, geom = 'histogram')
+
+glm(coup_succeed ~ regime_type + ct + violence  + imr, family = binomial(link = "probit"), data = new_data[new_data$coup_attempt == 1, ]) |> 
+  summary()
+```
 
 ## Conclusion
 

@@ -1,5 +1,7 @@
 ```{r}
+library(tidyverse)
 library(vdemdata)
+library(democracyData)
 ```
 
 ```{r}
@@ -38,14 +40,64 @@ vdem |>
 ```
 
 ```{r}
-# Example data frame
-df <- data.frame(
-  regime = c("A", "A", "B", "B", "C", "C", "A", "B", "C"),
-  coup = c(0, 1, 1, 2, 0, 2, 2, 2, 1)
-)
-df %>%
-  #tabyl(regime) %>%
-  adorn_totals("row") %>%
-  adorn_percentages("col") %>%
-  adorn_pct_formatting(digits = 2)
+polstab <- read_excel("ps/MEPVv2018.xls") |> 
+  select(country, ccode, year, violence = actotal)
+getwd()
+```
+
+```{r}
+data( Mroz87 )
+summary( selection( lfp ~ age + I( age^2 ) + faminc + kids5 + educ,
+   wage ~ exper + I( exper^2 ) + educ + city, Mroz87 ) )
+```
+
+```{r}
+data("RandHIE")
+view(RandHIE)
+
+
+subsample <- RandHIE$year == 2 & !is.na( RandHIE$educdec )
+selectEq <- binexp ~ logc + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp + linc + lfam + educdec + xage + female + child + fchild + black
+outcomeEq <- lnmeddol ~ logc + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp + linc + lfam + educdec + xage + female + child + fchild + black
+
+selection( selectEq, outcomeEq, data = RandHIE[ subsample, ], method = "2step" ) |> 
+  summary()
+```
+
+```{r}
+selection( selectEq, outcomeEq, data = RandHIE[ subsample, ]) |> 
+  summary()
+```
+
+```{r}
+
+
+set.seed(123456)
+
+N = 10000
+educ = sample(1:16, N, replace = TRUE)
+age  = sample(18:64, N, replace = TRUE)
+
+covmat = matrix(c(.46^2, .25*.46, .25*.46, 1), ncol = 2)
+errors = mvtnorm::rmvnorm(N, sigma = covmat)
+z = rnorm(N)
+e = errors[, 1]
+v = errors[, 2]
+
+wearnl = 4.49 + .08 * educ + .012 * age + e
+
+d_star = -1.5 + 0.15 * educ + 0.01 * age + 0.15 * z + v
+
+observed_index  = d_star > 0
+
+d = data.frame(wearnl, educ, age, z, observed_index)
+d
+
+selection(observed_index ~ educ + age + z, wearnl ~ educ + age, 
+                            method = '2step') |> 
+  summary()
+```
+
+```{r}
+d[observed_index, ]
 ```
