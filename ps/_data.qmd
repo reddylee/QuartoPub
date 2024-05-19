@@ -1,103 +1,20 @@
+---
+format: pdf
+---
+
 ```{r}
 library(tidyverse)
-library(vdemdata)
-library(democracyData)
+library(stargazer)
 ```
 
 ```{r}
-coups_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t", header = TRUE)
-
-coups_all <- coups_all %>%
-  filter(coup == 1) %>%
-  select(-coup)
+#| results: 'asis'
+model <- lm(mpg ~ wt, data = mtcars)
+stargazer(model, type = "latex",
+          header = F,
+          out.header = F,
+          title = "Regression model of cars",
+          label = "tblcars")
 ```
 
-```{r}
-REIGN |> 
-  view()
-
-read.csv("https://cdn.jsdelivr.net/gh/OEFDataScience/REIGN.github.io@gh-pages/data_sets/REIGN_2021_8.csv") |> 
-  View()
-
-view(gwf_all)
-
-democracyData::gwf_autocratic_extended |>
-  view()
-
-anckar |>
-  view()
-
-codebook |> 
-  view()
-
-
-
-vdem |> 
-  select(COWcode, year, country_name, e_gdp, e_gdppc) |>
-  filter(year > 1945,
-         !is.na(e_gdppc)) |> 
-  view()
-```
-
-```{r}
-polstab <- read_excel("ps/MEPVv2018.xls") |> 
-  select(country, ccode, year, violence = actotal)
-getwd()
-```
-
-```{r}
-data( Mroz87 )
-summary( selection( lfp ~ age + I( age^2 ) + faminc + kids5 + educ,
-   wage ~ exper + I( exper^2 ) + educ + city, Mroz87 ) )
-```
-
-```{r}
-data("RandHIE")
-view(RandHIE)
-
-
-subsample <- RandHIE$year == 2 & !is.na( RandHIE$educdec )
-selectEq <- binexp ~ logc + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp + linc + lfam + educdec + xage + female + child + fchild + black
-outcomeEq <- lnmeddol ~ logc + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp + linc + lfam + educdec + xage + female + child + fchild + black
-
-selection( selectEq, outcomeEq, data = RandHIE[ subsample, ], method = "2step" ) |> 
-  summary()
-```
-
-```{r}
-selection( selectEq, outcomeEq, data = RandHIE[ subsample, ]) |> 
-  summary()
-```
-
-```{r}
-
-
-set.seed(123456)
-
-N = 10000
-educ = sample(1:16, N, replace = TRUE)
-age  = sample(18:64, N, replace = TRUE)
-
-covmat = matrix(c(.46^2, .25*.46, .25*.46, 1), ncol = 2)
-errors = mvtnorm::rmvnorm(N, sigma = covmat)
-z = rnorm(N)
-e = errors[, 1]
-v = errors[, 2]
-
-wearnl = 4.49 + .08 * educ + .012 * age + e
-
-d_star = -1.5 + 0.15 * educ + 0.01 * age + 0.15 * z + v
-
-observed_index  = d_star > 0
-
-d = data.frame(wearnl, educ, age, z, observed_index)
-d
-
-selection(observed_index ~ educ + age + z, wearnl ~ educ + age, 
-                            method = '2step') |> 
-  summary()
-```
-
-```{r}
-d[observed_index, ]
-```
+We can see the regression model in Table @tblcars.

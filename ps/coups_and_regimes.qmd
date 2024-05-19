@@ -31,7 +31,6 @@ execute:
 format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 library(tidyverse)
 library(gt)
-library(gtsummary)
 library(janitor)
 library(scales)
 library(zoo)
@@ -720,14 +719,12 @@ reference categories. Descriptive statistics are presented in @tbl-regimes.
 @krishnarajan2019 to measure economic performance. This metric calculates the
 ratio between the current level of gross domestic product per capita (GDP/cap)
 and the average GDP/cap level of the previous five years. For a country $i$ at
-year $t$, the $CT$ ratio is calculated as follows:
-
-$$
+year $t$, the $CT$ ratio is calculated as follows: $$
+\begin{aligned}
 CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
-$$
-
-Since a given year's situation is primarily determined by the previous year, the
-variable is lagged by one year. The GDP per capita (in constant 2017
+\end{aligned}
+$$ Since a given year's situation is primarily determined by the previous year,
+the variable is lagged by one year. The GDP per capita (in constant 2017
 international dollars, PPP) is sourced from the V-Dem dataset provided by
 @fariss2022.
 
@@ -742,10 +739,11 @@ War Project [@sarkees2010].
 ## Results and Discussion
 
 ```{r}
-#| label: tbl-regression
-#| tbl-cap: Results of the two-stage sample selection model
+#| results: asis
+#| echo: false
 
-political_violence <- read_excel("ps/MEPVv2018.xls") |> 
+library(readxl)
+political_violence <- read_excel("MEPVv2018.xls") |> 
   select(ccode, year, violence = actotal)
 
 gdp <- vdem |> 
@@ -773,48 +771,27 @@ reg_data <- regimes |>
   mutate(violence = na.locf(violence, .by = ccode)) 
 
 model_2step <- reg_data |>
-  mutate(coup_attempt = ifelse(coup == 0, 0, 1),
-         coup_succeed = case_when(coup == 2 ~ 1, 
-                                  coup == 1 ~ 0,
-                                  TRUE ~ NA)) |>
   filter(regime_type != "other") |>
-  #view()
-  selection(coup_attempt ~ regime_type + ct + violence + gdppc,
-            coup_succeed ~ regime_type + ct + violence , method = "2step",
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  selection(coup > 0 ~ regime + ct + violence + gdppc,
+            coup > 1 ~ regime + ct + violence ,
             data = _) 
 
-stargazer(model_2step, type = "text", selection.equation = T)
-stargazer(model_2step, type = "text", selection.equation = F)
-  
+model_selection <- model_2step
+model_selection$param$index$betaO <- model_2step$param$index$betaS
+model_selection$param$index$betaS <- model_2step$param$index$betaO
+
+stargazer(model_selection, model_2step,
+          header = F,
+          column.labels = c("Selection", "Outcome"),
+          dep.var.labels.include = F,
+          intercept.bottom = F,
+          title = "Results of the two-stage sample selection model",
+          label = "results")
 ```
 
-```{r}
-new_data <- reg_data |> 
-  mutate(coup_attempt = ifelse(coup == 0, 0, 1),
-         coup_succeed = case_when(coup == 2 ~ 1, 
-                                  coup == 1 ~ 0,
-                                  TRUE ~ NA)) |>
-  filter(regime_type != "other")
-probit <- new_data |> 
-  mutate(coup_attempt = ifelse(coup == 0, 0, 1),
-         coup_succeed = case_when(coup == 2 ~ 1, 
-                                  coup == 1 ~ 0,
-                                  TRUE ~ NA)) |>
-  filter(regime_type != "other") |>
-  glm(coup_attempt ~ regime_type + ct + violence + gdppc, family = binomial(link = "probit"), data = _) 
-
-probit_lp <-  predict(probit)
-mills0 <-  dnorm(probit_lp)/pnorm(probit_lp)
-
-summary(mills0)
-
-imr <- mills0[new_data$coup_attempt == 1]
-summary(imr)
-ggplot2::qplot(imr, geom = 'histogram')
-
-glm(coup_succeed ~ regime_type + ct + violence  + imr, family = binomial(link = "probit"), data = new_data[new_data$coup_attempt == 1, ]) |> 
-  summary()
-```
+We can see from Table \ref{results} that the regime type has a significant impact
+on.
 
 ## Conclusion
 

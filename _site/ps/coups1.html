@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.554">
 <meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-05-17">
+<meta name="dcterms.date" content="2024-05-20">
 <meta name="keywords" content="Coup, Autocracy, Regime types, Sample selection">
 <title>Can.Do.So - Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -453,7 +453,7 @@ Zhu Qi
     </div>
 </div>
 
-  <p class="date">2024-05-17</p>
+  <p class="date">2024-05-20</p>
 </section><section class="slide level2"><details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co">#load coup data</span></span>
 <span id="cb1-2"><a></a>coup <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt"</span>,</span>
 <span id="cb1-3"><a></a>                 <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
@@ -501,23 +501,23 @@ Table&nbsp;1: Coups by year and by country
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coup_year_counts" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-cell-subref" data-ref-parent="tbl-coup_year_counts">
-<div id="bhxdijunsc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bhxdijunsc table {
+<div id="uhfascdjar" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uhfascdjar table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bhxdijunsc thead, #bhxdijunsc tbody, #bhxdijunsc tfoot, #bhxdijunsc tr, #bhxdijunsc td, #bhxdijunsc th {
+#uhfascdjar thead, #uhfascdjar tbody, #uhfascdjar tfoot, #uhfascdjar tr, #uhfascdjar td, #uhfascdjar th {
   border-style: none;
 }
 
-#bhxdijunsc p {
+#uhfascdjar p {
   margin: 0;
   padding: 0;
 }
 
-#bhxdijunsc .gt_table {
+#uhfascdjar .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -543,12 +543,12 @@ Table&nbsp;1: Coups by year and by country
   border-left-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_caption {
+#uhfascdjar .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bhxdijunsc .gt_title {
+#uhfascdjar .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -560,7 +560,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-width: 0;
 }
 
-#bhxdijunsc .gt_subtitle {
+#uhfascdjar .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -572,7 +572,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-width: 0;
 }
 
-#bhxdijunsc .gt_heading {
+#uhfascdjar .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -584,13 +584,13 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_bottom_border {
+#uhfascdjar .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_col_headings {
+#uhfascdjar .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -605,7 +605,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_col_heading {
+#uhfascdjar .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -625,7 +625,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#bhxdijunsc .gt_column_spanner_outer {
+#uhfascdjar .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -637,15 +637,15 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 4px;
 }
 
-#bhxdijunsc .gt_column_spanner_outer:first-child {
+#uhfascdjar .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bhxdijunsc .gt_column_spanner_outer:last-child {
+#uhfascdjar .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bhxdijunsc .gt_column_spanner {
+#uhfascdjar .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -657,11 +657,11 @@ Table&nbsp;1: Coups by year and by country
   width: 100%;
 }
 
-#bhxdijunsc .gt_spanner_row {
+#uhfascdjar .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bhxdijunsc .gt_group_heading {
+#uhfascdjar .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -687,7 +687,7 @@ Table&nbsp;1: Coups by year and by country
   text-align: left;
 }
 
-#bhxdijunsc .gt_empty_group_heading {
+#uhfascdjar .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -702,15 +702,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: middle;
 }
 
-#bhxdijunsc .gt_from_md > :first-child {
+#uhfascdjar .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bhxdijunsc .gt_from_md > :last-child {
+#uhfascdjar .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bhxdijunsc .gt_row {
+#uhfascdjar .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -729,7 +729,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#bhxdijunsc .gt_stub {
+#uhfascdjar .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -742,7 +742,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#bhxdijunsc .gt_stub_row_group {
+#uhfascdjar .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -756,15 +756,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: top;
 }
 
-#bhxdijunsc .gt_row_group_first td {
+#uhfascdjar .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bhxdijunsc .gt_row_group_first th {
+#uhfascdjar .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bhxdijunsc .gt_summary_row {
+#uhfascdjar .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -774,16 +774,16 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#bhxdijunsc .gt_first_summary_row {
+#uhfascdjar .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_first_summary_row.thick {
+#uhfascdjar .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bhxdijunsc .gt_last_summary_row {
+#uhfascdjar .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -793,7 +793,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_grand_summary_row {
+#uhfascdjar .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -803,7 +803,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#bhxdijunsc .gt_first_grand_summary_row {
+#uhfascdjar .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -813,7 +813,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_last_grand_summary_row_top {
+#uhfascdjar .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -823,11 +823,11 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_striped {
+#uhfascdjar .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bhxdijunsc .gt_table_body {
+#uhfascdjar .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -836,7 +836,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_footnotes {
+#uhfascdjar .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -850,7 +850,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_footnote {
+#uhfascdjar .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -859,7 +859,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#bhxdijunsc .gt_sourcenotes {
+#uhfascdjar .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -873,7 +873,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#bhxdijunsc .gt_sourcenote {
+#uhfascdjar .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -881,76 +881,76 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#bhxdijunsc .gt_left {
+#uhfascdjar .gt_left {
   text-align: left;
 }
 
-#bhxdijunsc .gt_center {
+#uhfascdjar .gt_center {
   text-align: center;
 }
 
-#bhxdijunsc .gt_right {
+#uhfascdjar .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bhxdijunsc .gt_font_normal {
+#uhfascdjar .gt_font_normal {
   font-weight: normal;
 }
 
-#bhxdijunsc .gt_font_bold {
+#uhfascdjar .gt_font_bold {
   font-weight: bold;
 }
 
-#bhxdijunsc .gt_font_italic {
+#uhfascdjar .gt_font_italic {
   font-style: italic;
 }
 
-#bhxdijunsc .gt_super {
+#uhfascdjar .gt_super {
   font-size: 65%;
 }
 
-#bhxdijunsc .gt_footnote_marks {
+#uhfascdjar .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bhxdijunsc .gt_asterisk {
+#uhfascdjar .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bhxdijunsc .gt_indent_1 {
+#uhfascdjar .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bhxdijunsc .gt_indent_2 {
+#uhfascdjar .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bhxdijunsc .gt_indent_3 {
+#uhfascdjar .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bhxdijunsc .gt_indent_4 {
+#uhfascdjar .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bhxdijunsc .gt_indent_5 {
+#uhfascdjar .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bhxdijunsc .katex-display {
+#uhfascdjar .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bhxdijunsc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#uhfascdjar div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<div id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment quarto-float" data-quarto-postprocess="true" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
+<div id="tbl-coup_year_counts-1" class="gt_table do-not-create-environment quarto-float" data-quarto-disable-processing="false" data-quarto-postprocess="true" data-quarto-bootstrap="false">
 <figure class="quarto-float quarto-subfloat-tbl"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coup_year_counts-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) by year frequency
 </figcaption><div aria-describedby="tbl-coup_year_counts-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1042,23 +1042,23 @@ Table&nbsp;1: Coups by year and by country
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coup_year_counts" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-layout-cell-subref" data-ref-parent="tbl-coup_year_counts">
-<div id="zszjlqgrhh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zszjlqgrhh table {
+<div id="ifcyxdkkux" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ifcyxdkkux table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zszjlqgrhh thead, #zszjlqgrhh tbody, #zszjlqgrhh tfoot, #zszjlqgrhh tr, #zszjlqgrhh td, #zszjlqgrhh th {
+#ifcyxdkkux thead, #ifcyxdkkux tbody, #ifcyxdkkux tfoot, #ifcyxdkkux tr, #ifcyxdkkux td, #ifcyxdkkux th {
   border-style: none;
 }
 
-#zszjlqgrhh p {
+#ifcyxdkkux p {
   margin: 0;
   padding: 0;
 }
 
-#zszjlqgrhh .gt_table {
+#ifcyxdkkux .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1084,12 +1084,12 @@ Table&nbsp;1: Coups by year and by country
   border-left-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_caption {
+#ifcyxdkkux .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zszjlqgrhh .gt_title {
+#ifcyxdkkux .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1101,7 +1101,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-width: 0;
 }
 
-#zszjlqgrhh .gt_subtitle {
+#ifcyxdkkux .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1113,7 +1113,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-width: 0;
 }
 
-#zszjlqgrhh .gt_heading {
+#ifcyxdkkux .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1125,13 +1125,13 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_bottom_border {
+#ifcyxdkkux .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_col_headings {
+#ifcyxdkkux .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1146,7 +1146,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_col_heading {
+#ifcyxdkkux .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1166,7 +1166,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#zszjlqgrhh .gt_column_spanner_outer {
+#ifcyxdkkux .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1178,15 +1178,15 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 4px;
 }
 
-#zszjlqgrhh .gt_column_spanner_outer:first-child {
+#ifcyxdkkux .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zszjlqgrhh .gt_column_spanner_outer:last-child {
+#ifcyxdkkux .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zszjlqgrhh .gt_column_spanner {
+#ifcyxdkkux .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1198,11 +1198,11 @@ Table&nbsp;1: Coups by year and by country
   width: 100%;
 }
 
-#zszjlqgrhh .gt_spanner_row {
+#ifcyxdkkux .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zszjlqgrhh .gt_group_heading {
+#ifcyxdkkux .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1228,7 +1228,7 @@ Table&nbsp;1: Coups by year and by country
   text-align: left;
 }
 
-#zszjlqgrhh .gt_empty_group_heading {
+#ifcyxdkkux .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1243,15 +1243,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: middle;
 }
 
-#zszjlqgrhh .gt_from_md > :first-child {
+#ifcyxdkkux .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zszjlqgrhh .gt_from_md > :last-child {
+#ifcyxdkkux .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zszjlqgrhh .gt_row {
+#ifcyxdkkux .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1270,7 +1270,7 @@ Table&nbsp;1: Coups by year and by country
   overflow-x: hidden;
 }
 
-#zszjlqgrhh .gt_stub {
+#ifcyxdkkux .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1283,7 +1283,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#zszjlqgrhh .gt_stub_row_group {
+#ifcyxdkkux .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1297,15 +1297,15 @@ Table&nbsp;1: Coups by year and by country
   vertical-align: top;
 }
 
-#zszjlqgrhh .gt_row_group_first td {
+#ifcyxdkkux .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zszjlqgrhh .gt_row_group_first th {
+#ifcyxdkkux .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zszjlqgrhh .gt_summary_row {
+#ifcyxdkkux .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1315,16 +1315,16 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#zszjlqgrhh .gt_first_summary_row {
+#ifcyxdkkux .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_first_summary_row.thick {
+#ifcyxdkkux .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zszjlqgrhh .gt_last_summary_row {
+#ifcyxdkkux .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1334,7 +1334,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_grand_summary_row {
+#ifcyxdkkux .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1344,7 +1344,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#zszjlqgrhh .gt_first_grand_summary_row {
+#ifcyxdkkux .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1354,7 +1354,7 @@ Table&nbsp;1: Coups by year and by country
   border-top-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_last_grand_summary_row_top {
+#ifcyxdkkux .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1364,11 +1364,11 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_striped {
+#ifcyxdkkux .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zszjlqgrhh .gt_table_body {
+#ifcyxdkkux .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1377,7 +1377,7 @@ Table&nbsp;1: Coups by year and by country
   border-bottom-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_footnotes {
+#ifcyxdkkux .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1391,7 +1391,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_footnote {
+#ifcyxdkkux .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1400,7 +1400,7 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#zszjlqgrhh .gt_sourcenotes {
+#ifcyxdkkux .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1414,7 +1414,7 @@ Table&nbsp;1: Coups by year and by country
   border-right-color: #D3D3D3;
 }
 
-#zszjlqgrhh .gt_sourcenote {
+#ifcyxdkkux .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1422,76 +1422,76 @@ Table&nbsp;1: Coups by year and by country
   padding-right: 5px;
 }
 
-#zszjlqgrhh .gt_left {
+#ifcyxdkkux .gt_left {
   text-align: left;
 }
 
-#zszjlqgrhh .gt_center {
+#ifcyxdkkux .gt_center {
   text-align: center;
 }
 
-#zszjlqgrhh .gt_right {
+#ifcyxdkkux .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zszjlqgrhh .gt_font_normal {
+#ifcyxdkkux .gt_font_normal {
   font-weight: normal;
 }
 
-#zszjlqgrhh .gt_font_bold {
+#ifcyxdkkux .gt_font_bold {
   font-weight: bold;
 }
 
-#zszjlqgrhh .gt_font_italic {
+#ifcyxdkkux .gt_font_italic {
   font-style: italic;
 }
 
-#zszjlqgrhh .gt_super {
+#ifcyxdkkux .gt_super {
   font-size: 65%;
 }
 
-#zszjlqgrhh .gt_footnote_marks {
+#ifcyxdkkux .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zszjlqgrhh .gt_asterisk {
+#ifcyxdkkux .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zszjlqgrhh .gt_indent_1 {
+#ifcyxdkkux .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zszjlqgrhh .gt_indent_2 {
+#ifcyxdkkux .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zszjlqgrhh .gt_indent_3 {
+#ifcyxdkkux .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zszjlqgrhh .gt_indent_4 {
+#ifcyxdkkux .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zszjlqgrhh .gt_indent_5 {
+#ifcyxdkkux .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zszjlqgrhh .katex-display {
+#ifcyxdkkux .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zszjlqgrhh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ifcyxdkkux div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<div id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment quarto-float" data-quarto-postprocess="true" data-quarto-bootstrap="false" data-quarto-disable-processing="false">
+<div id="tbl-coup_year_counts-2" class="gt_table do-not-create-environment quarto-float" data-quarto-disable-processing="false" data-quarto-postprocess="true" data-quarto-bootstrap="false">
 <figure class="quarto-float quarto-subfloat-tbl"><figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coup_year_counts-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) by country frequency
 </figcaption><div aria-describedby="tbl-coup_year_counts-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1629,23 +1629,23 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 </figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="jqydaypztn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#jqydaypztn table {
+<div id="oxzdbbaqtx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oxzdbbaqtx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#jqydaypztn thead, #jqydaypztn tbody, #jqydaypztn tfoot, #jqydaypztn tr, #jqydaypztn td, #jqydaypztn th {
+#oxzdbbaqtx thead, #oxzdbbaqtx tbody, #oxzdbbaqtx tfoot, #oxzdbbaqtx tr, #oxzdbbaqtx td, #oxzdbbaqtx th {
   border-style: none;
 }
 
-#jqydaypztn p {
+#oxzdbbaqtx p {
   margin: 0;
   padding: 0;
 }
 
-#jqydaypztn .gt_table {
+#oxzdbbaqtx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1671,12 +1671,12 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-left-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_caption {
+#oxzdbbaqtx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#jqydaypztn .gt_title {
+#oxzdbbaqtx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1688,7 +1688,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-width: 0;
 }
 
-#jqydaypztn .gt_subtitle {
+#oxzdbbaqtx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1700,7 +1700,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-top-width: 0;
 }
 
-#jqydaypztn .gt_heading {
+#oxzdbbaqtx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1712,13 +1712,13 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_bottom_border {
+#oxzdbbaqtx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_col_headings {
+#oxzdbbaqtx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1733,7 +1733,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_col_heading {
+#oxzdbbaqtx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1753,7 +1753,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   overflow-x: hidden;
 }
 
-#jqydaypztn .gt_column_spanner_outer {
+#oxzdbbaqtx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1765,15 +1765,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 4px;
 }
 
-#jqydaypztn .gt_column_spanner_outer:first-child {
+#oxzdbbaqtx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jqydaypztn .gt_column_spanner_outer:last-child {
+#oxzdbbaqtx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jqydaypztn .gt_column_spanner {
+#oxzdbbaqtx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1785,11 +1785,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   width: 100%;
 }
 
-#jqydaypztn .gt_spanner_row {
+#oxzdbbaqtx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#jqydaypztn .gt_group_heading {
+#oxzdbbaqtx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1815,7 +1815,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   text-align: left;
 }
 
-#jqydaypztn .gt_empty_group_heading {
+#oxzdbbaqtx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1830,15 +1830,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   vertical-align: middle;
 }
 
-#jqydaypztn .gt_from_md > :first-child {
+#oxzdbbaqtx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jqydaypztn .gt_from_md > :last-child {
+#oxzdbbaqtx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jqydaypztn .gt_row {
+#oxzdbbaqtx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1857,7 +1857,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   overflow-x: hidden;
 }
 
-#jqydaypztn .gt_stub {
+#oxzdbbaqtx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1870,7 +1870,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#jqydaypztn .gt_stub_row_group {
+#oxzdbbaqtx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1884,15 +1884,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   vertical-align: top;
 }
 
-#jqydaypztn .gt_row_group_first td {
+#oxzdbbaqtx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#jqydaypztn .gt_row_group_first th {
+#oxzdbbaqtx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#jqydaypztn .gt_summary_row {
+#oxzdbbaqtx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1902,16 +1902,16 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#jqydaypztn .gt_first_summary_row {
+#oxzdbbaqtx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_first_summary_row.thick {
+#oxzdbbaqtx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#jqydaypztn .gt_last_summary_row {
+#oxzdbbaqtx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1921,7 +1921,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_grand_summary_row {
+#oxzdbbaqtx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1931,7 +1931,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#jqydaypztn .gt_first_grand_summary_row {
+#oxzdbbaqtx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1941,7 +1941,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-top-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_last_grand_summary_row_top {
+#oxzdbbaqtx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1951,11 +1951,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_striped {
+#oxzdbbaqtx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jqydaypztn .gt_table_body {
+#oxzdbbaqtx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1964,7 +1964,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-bottom-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_footnotes {
+#oxzdbbaqtx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1978,7 +1978,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_footnote {
+#oxzdbbaqtx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1987,7 +1987,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#jqydaypztn .gt_sourcenotes {
+#oxzdbbaqtx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2001,7 +2001,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   border-right-color: #D3D3D3;
 }
 
-#jqydaypztn .gt_sourcenote {
+#oxzdbbaqtx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2009,72 +2009,72 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
   padding-right: 5px;
 }
 
-#jqydaypztn .gt_left {
+#oxzdbbaqtx .gt_left {
   text-align: left;
 }
 
-#jqydaypztn .gt_center {
+#oxzdbbaqtx .gt_center {
   text-align: center;
 }
 
-#jqydaypztn .gt_right {
+#oxzdbbaqtx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jqydaypztn .gt_font_normal {
+#oxzdbbaqtx .gt_font_normal {
   font-weight: normal;
 }
 
-#jqydaypztn .gt_font_bold {
+#oxzdbbaqtx .gt_font_bold {
   font-weight: bold;
 }
 
-#jqydaypztn .gt_font_italic {
+#oxzdbbaqtx .gt_font_italic {
   font-style: italic;
 }
 
-#jqydaypztn .gt_super {
+#oxzdbbaqtx .gt_super {
   font-size: 65%;
 }
 
-#jqydaypztn .gt_footnote_marks {
+#oxzdbbaqtx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#jqydaypztn .gt_asterisk {
+#oxzdbbaqtx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#jqydaypztn .gt_indent_1 {
+#oxzdbbaqtx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#jqydaypztn .gt_indent_2 {
+#oxzdbbaqtx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#jqydaypztn .gt_indent_3 {
+#oxzdbbaqtx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#jqydaypztn .gt_indent_4 {
+#oxzdbbaqtx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#jqydaypztn .gt_indent_5 {
+#oxzdbbaqtx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#jqydaypztn .katex-display {
+#oxzdbbaqtx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#jqydaypztn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#oxzdbbaqtx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2177,7 +2177,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts
 </div>
 </div>
 <p>The subsequent section of this paper delves into previous research on coups. Following that, in Part <span class="math inline">\(3\)</span>, I present the research framework and propose hypotheses. Part 4 provides insights into the data and variables utilized in the study. The testing results are discussed in Part <span class="math inline">\(5\)</span>, followed by the conclusion in Part <span class="math inline">\(6\)</span>.</p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p><a href="https://www.uky.edu/~clthyn2/coup_data/home.htm" class="uri">https://www.uky.edu/~clthyn2/coup_data/home.htm</a>, accessed on 2024-05-17</p></li></ol></aside></section><section id="dynamics-of-coup-attempts-and-outcomes" class="slide level2 scrollable" data-number="2"><h2>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><a href="https://www.uky.edu/~clthyn2/coup_data/home.htm" class="uri">https://www.uky.edu/~clthyn2/coup_data/home.htm</a>, accessed on 2024-05-20</p></li></ol></aside></section><section id="dynamics-of-coup-attempts-and-outcomes" class="slide level2 scrollable" data-number="2"><h2>
 <span class="header-section-number">2</span> Dynamics of coup attempts and outcomes</h2>
 <p>When contemplating a coup, plotters grapple with two crucial factors that also occupy coup scholars: <strong><em>disposition</em></strong> (why they take the risk) and <strong><em>capability</em></strong> (whether they can succeed).</p>
 <h3 data-number="2.1" id="disposition-motivations-for-coups">
@@ -2239,11 +2239,10 @@ p &gt; (1-p)
 <p>According to <span class="citation" data-cites="geddes1999">Geddes (<a href="#/conclusion" role="doc-biblioref" onclick="">1999</a>)</span>, different factions within a regime – military officers, party cadres in dominant-party systems, and members of cliques in personalist regimes – have distinct interests. For instance, professional soldiers prioritize military survival and efficacy, party cadres seek to hold office, and members of cliques depend on supporting the incumbent leader for their own survival and relationships. While their strategies may differ, all ruling groups ultimately prioritize self-preservation and advancement.</p>
 <p>The key distinction between military, dominant-party, and personalist regimes lies in the unique balance of power established by each. This power dynamic emerges during the power seizure process. The most competent group, be it a military junta, a political party, or a strongman, typically rises to power due to the demanding nature of seizing control. <span class="citation" data-cites="sudduth2017">Sudduth (<a href="#/conclusion" role="doc-biblioref" onclick="">2017</a>)</span> and <span class="citation" data-cites="roessler2011">Roessler (<a href="#/conclusion" role="doc-biblioref" onclick="">2011</a>)</span> analyse the purging of co-conspirators after power seizures, arguing that these purges are more likely in the early stages of new regimes.</p>
 <p>Following internal purges and external challenges, a new power dynamic emerges among the factions within a regime, typically solidifying into one of three main types: military regimes, personalist regimes, or dominant-party regimes.</p>
-<p>Dominant-party regimes are the most stable due to their institutionalized structure. A dominant party is a highly organized group with shared political beliefs, goals, and ideologies. This shared ideology fosters internal cohesion and a long-term vision, further bolstering stability. Unlike typical political parties, dominant parties often rise to power through revolutions or coups, resulting in a robust structure with no single individual wielding absolute power. The military force aligns with the party itself, not individual leaders, contributing significantly to greater regime stability compared to personalist or military regimes.</p>
-<p>Personalist regimes exhibit a degree of temporary stability. Dictators, often ruthless and battle-hardened, emerge from intense competition. While lacking strong institutions, purges create a temporary status quo. However, the lack of a clear successor creates a vulnerability during leadership transitions. When dictators die or are assassinated, the absence of an established succession plan can trigger coups d’état.</p>
-<p>Military regimes tend to be the least stable, often ruling through a junta. Juntas lack a unified vision and are prone to internal power struggles, hindering stability. For example, General Augusto Pinochet’s rise to power in Chile after the 1973 coup demonstrates the inherent instability of juntas. While his colleagues initially saw him as a safe choice, his actions proved otherwise. This lack of cohesion within juntas makes them particularly susceptible to internal fracturing.</p>
-<p>The strength of political institutions further supports this assessment. Studies by <span class="citation" data-cites="frantz2017">Frantz and Stein (<a href="#/conclusion" role="doc-biblioref" onclick="">2017</a>)</span> show that 97% of country-years in dominant-party regimes have formalized institutional succession rules, compared to 77% in personalist regimes and a mere 59% in military regimes.</p>
-<p>These differing power dynamics significantly impact the likelihood of coup attempts. According to <a href="#/dynamics-of-coup-attempts-and-outcomes" class="quarto-xref">Table&nbsp;3</a>, military regimes face the highest risk, representing only 5.6% of country-years yet accounting for over 22% of coups. Personalist regimes follow, with 23% of coups despite comprising only 13% of country-years. Dominant-party regimes, with their stronger institutions and unified leadership, have the lowest incidence of coups – constituting 22.6% of country-years but responsible for only 16.7% of coups.</p>
+<p>Dominant-party regimes are the most stable due to their institutionalized structure. A dominant party is a highly organized group with shared political beliefs, goals, and ideologies. This shared ideology fosters internal cohesion and a long-term vision, resulting in a robust structure with no single individual wielding absolute power. The military force aligns with the party itself rather than individual leaders, contributing significantly to greater regime stability compared to personalist or military regimes. Dominant-party regimes also manage leadership succession more effectively, as they typically regulate the process and enforce term limits. As demonstrated by <span class="citation" data-cites="frantz2017">Frantz and Stein (<a href="#/conclusion" role="doc-biblioref" onclick="">2017</a>)</span>, 97% of country-years in dominant-party regimes have formalized institutional succession rules, compared to 77% in personalist regimes and a mere 59% in military regimes.</p>
+<p>Personalist regimes also exhibit a degree of stability, as dictators usually emerge from intense internal and external competition, with the most competent, tough, and powerful individuals ultimately prevailing. Potential challengers have often been purged, resulting in a relatively stable status quo within the dictator’s close circle. However, personalist regimes are vulnerable due to the sudden death of incumbents. Rarely is there a universally accepted successor during the chaos of power transitions, as incumbent dictators often purge potential rivals. This uncertainty can trigger coups. Thus, while personalist regimes maintain relative stability as long as succession is not an immediate issue.</p>
+<p>In contrast, military regimes are typically the least stable. These regimes often rule through a junta, where power is shared equally among members. Mistrust and suspicion are common, leading to frequent conflicts over benefits and policies. Without a single authority figure, resolving these conflicts is challenging, as no member is willing to concede, and no senior authority can enforce resolutions. For example, General Augusto Pinochet was chosen to lead the junta in Chile after the 1973 coup because his colleagues saw him as a safe choice due to his professionalism, respect for rules, and uncharismatic demeanor <span class="citation" data-cites="arriagadaherrera1988">(<a href="#/conclusion" role="doc-biblioref" onclick="">Arriagada Herrera 1988</a>)</span>. Although Pinochet later surprised them, this example illustrates that juntas are generally unstable leadership groups.</p>
+<p>These differing power dynamics significantly impact the likelihood of coup attempts. Military regimes, in particular, have an inherent predisposition towards coups, as junta members typically command their own military factions, eliminating the need to organize an army for a coup. According to <a href="#/dynamics-of-coup-attempts-and-outcomes" class="quarto-xref">Table&nbsp;3</a>, military regimes face the highest risk, representing only 5.6% of country-years yet accounting for over 22% of coups. Personalist regimes follow, with 23% of coups despite comprising only 13% of country-years. Dominant-party regimes, with their stronger institutions and unified leadership, have the lowest incidence of coups, constituting 22.6% of country-years but responsible for only 16.7% of coups.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>regimes <span class="ot">&lt;-</span> REIGN <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a></a>  <span class="fu">distinct</span>(reign_cowcode, year, <span class="at">.keep_all =</span> T) <span class="sc">|&gt;</span></span>
@@ -2321,23 +2320,23 @@ Table&nbsp;3: Regime types and coups since 1950
 </figcaption><div aria-describedby="tbl-regimes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="omjnuxwdqm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#omjnuxwdqm table {
+<div id="unvtyliujy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#unvtyliujy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#omjnuxwdqm thead, #omjnuxwdqm tbody, #omjnuxwdqm tfoot, #omjnuxwdqm tr, #omjnuxwdqm td, #omjnuxwdqm th {
+#unvtyliujy thead, #unvtyliujy tbody, #unvtyliujy tfoot, #unvtyliujy tr, #unvtyliujy td, #unvtyliujy th {
   border-style: none;
 }
 
-#omjnuxwdqm p {
+#unvtyliujy p {
   margin: 0;
   padding: 0;
 }
 
-#omjnuxwdqm .gt_table {
+#unvtyliujy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2363,12 +2362,12 @@ Table&nbsp;3: Regime types and coups since 1950
   border-left-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_caption {
+#unvtyliujy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#omjnuxwdqm .gt_title {
+#unvtyliujy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2380,7 +2379,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-bottom-width: 0;
 }
 
-#omjnuxwdqm .gt_subtitle {
+#unvtyliujy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2392,7 +2391,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-top-width: 0;
 }
 
-#omjnuxwdqm .gt_heading {
+#unvtyliujy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2404,13 +2403,13 @@ Table&nbsp;3: Regime types and coups since 1950
   border-right-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_bottom_border {
+#unvtyliujy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_col_headings {
+#unvtyliujy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2425,7 +2424,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-right-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_col_heading {
+#unvtyliujy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2445,7 +2444,7 @@ Table&nbsp;3: Regime types and coups since 1950
   overflow-x: hidden;
 }
 
-#omjnuxwdqm .gt_column_spanner_outer {
+#unvtyliujy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2457,15 +2456,15 @@ Table&nbsp;3: Regime types and coups since 1950
   padding-right: 4px;
 }
 
-#omjnuxwdqm .gt_column_spanner_outer:first-child {
+#unvtyliujy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#omjnuxwdqm .gt_column_spanner_outer:last-child {
+#unvtyliujy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#omjnuxwdqm .gt_column_spanner {
+#unvtyliujy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2477,11 +2476,11 @@ Table&nbsp;3: Regime types and coups since 1950
   width: 100%;
 }
 
-#omjnuxwdqm .gt_spanner_row {
+#unvtyliujy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#omjnuxwdqm .gt_group_heading {
+#unvtyliujy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2507,7 +2506,7 @@ Table&nbsp;3: Regime types and coups since 1950
   text-align: left;
 }
 
-#omjnuxwdqm .gt_empty_group_heading {
+#unvtyliujy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2522,15 +2521,15 @@ Table&nbsp;3: Regime types and coups since 1950
   vertical-align: middle;
 }
 
-#omjnuxwdqm .gt_from_md > :first-child {
+#unvtyliujy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#omjnuxwdqm .gt_from_md > :last-child {
+#unvtyliujy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#omjnuxwdqm .gt_row {
+#unvtyliujy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2549,7 +2548,7 @@ Table&nbsp;3: Regime types and coups since 1950
   overflow-x: hidden;
 }
 
-#omjnuxwdqm .gt_stub {
+#unvtyliujy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2562,7 +2561,7 @@ Table&nbsp;3: Regime types and coups since 1950
   padding-right: 5px;
 }
 
-#omjnuxwdqm .gt_stub_row_group {
+#unvtyliujy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2576,15 +2575,15 @@ Table&nbsp;3: Regime types and coups since 1950
   vertical-align: top;
 }
 
-#omjnuxwdqm .gt_row_group_first td {
+#unvtyliujy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#omjnuxwdqm .gt_row_group_first th {
+#unvtyliujy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#omjnuxwdqm .gt_summary_row {
+#unvtyliujy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2594,16 +2593,16 @@ Table&nbsp;3: Regime types and coups since 1950
   padding-right: 5px;
 }
 
-#omjnuxwdqm .gt_first_summary_row {
+#unvtyliujy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_first_summary_row.thick {
+#unvtyliujy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#omjnuxwdqm .gt_last_summary_row {
+#unvtyliujy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2613,7 +2612,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-bottom-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_grand_summary_row {
+#unvtyliujy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2623,7 +2622,7 @@ Table&nbsp;3: Regime types and coups since 1950
   padding-right: 5px;
 }
 
-#omjnuxwdqm .gt_first_grand_summary_row {
+#unvtyliujy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2633,7 +2632,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-top-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_last_grand_summary_row_top {
+#unvtyliujy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2643,11 +2642,11 @@ Table&nbsp;3: Regime types and coups since 1950
   border-bottom-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_striped {
+#unvtyliujy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#omjnuxwdqm .gt_table_body {
+#unvtyliujy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2656,7 +2655,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-bottom-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_footnotes {
+#unvtyliujy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2670,7 +2669,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-right-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_footnote {
+#unvtyliujy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2679,7 +2678,7 @@ Table&nbsp;3: Regime types and coups since 1950
   padding-right: 5px;
 }
 
-#omjnuxwdqm .gt_sourcenotes {
+#unvtyliujy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2693,7 +2692,7 @@ Table&nbsp;3: Regime types and coups since 1950
   border-right-color: #D3D3D3;
 }
 
-#omjnuxwdqm .gt_sourcenote {
+#unvtyliujy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2701,72 +2700,72 @@ Table&nbsp;3: Regime types and coups since 1950
   padding-right: 5px;
 }
 
-#omjnuxwdqm .gt_left {
+#unvtyliujy .gt_left {
   text-align: left;
 }
 
-#omjnuxwdqm .gt_center {
+#unvtyliujy .gt_center {
   text-align: center;
 }
 
-#omjnuxwdqm .gt_right {
+#unvtyliujy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#omjnuxwdqm .gt_font_normal {
+#unvtyliujy .gt_font_normal {
   font-weight: normal;
 }
 
-#omjnuxwdqm .gt_font_bold {
+#unvtyliujy .gt_font_bold {
   font-weight: bold;
 }
 
-#omjnuxwdqm .gt_font_italic {
+#unvtyliujy .gt_font_italic {
   font-style: italic;
 }
 
-#omjnuxwdqm .gt_super {
+#unvtyliujy .gt_super {
   font-size: 65%;
 }
 
-#omjnuxwdqm .gt_footnote_marks {
+#unvtyliujy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#omjnuxwdqm .gt_asterisk {
+#unvtyliujy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#omjnuxwdqm .gt_indent_1 {
+#unvtyliujy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#omjnuxwdqm .gt_indent_2 {
+#unvtyliujy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#omjnuxwdqm .gt_indent_3 {
+#unvtyliujy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#omjnuxwdqm .gt_indent_4 {
+#unvtyliujy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#omjnuxwdqm .gt_indent_5 {
+#unvtyliujy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#omjnuxwdqm .katex-display {
+#unvtyliujy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#omjnuxwdqm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#unvtyliujy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2859,11 +2858,11 @@ Table&nbsp;3: Regime types and coups since 1950
 <blockquote>
 <p><strong><em>H2: Due to their balance of power dynamics, military regimes are more prone to coups, followed by personalist regimes, while dominant-party regimes are the least likely to experience coups among the three.</em></strong></p>
 </blockquote>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>In the case of the Ghanaian coup, flight lieutenant Jerry John Rawlings narrowly avoided execution after his initial failure, being freed by mutinous soldiers. Three weeks later, following Rawlings’ successful overthrow of the government, the deposed leader, General Fred Akuffo, was executed along with many other senior members of his government.</p></li><li id="fn3"><p>Niger: Attack on presidential palace an ‘attempted coup’. Source: Al Jazeera. Retrieved from <a href="https://www.aljazeera.com/news/2021/3/31/heavy-gunfire-heard-near-nigers-presidency." class="uri">https://www.aljazeera.com/news/2021/3/31/heavy-gunfire-heard-near-nigers-presidency.</a> Accessed on 2024-05-17.</p></li></ol></aside></section><section id="research-design" class="slide level2" data-number="3"><h2>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>In the case of the Ghanaian coup, flight lieutenant Jerry John Rawlings narrowly avoided execution after his initial failure, being freed by mutinous soldiers. Three weeks later, following Rawlings’ successful overthrow of the government, the deposed leader, General Fred Akuffo, was executed along with many other senior members of his government.</p></li><li id="fn3"><p>Niger: Attack on presidential palace an ‘attempted coup’. Source: Al Jazeera. Retrieved from <a href="https://www.aljazeera.com/news/2021/3/31/heavy-gunfire-heard-near-nigers-presidency." class="uri">https://www.aljazeera.com/news/2021/3/31/heavy-gunfire-heard-near-nigers-presidency.</a> Accessed on 2024-05-20.</p></li></ol></aside></section><section id="research-design" class="slide level2" data-number="3"><h2>
 <span class="header-section-number">3</span> Research Design</h2>
 <h3 data-number="3.1" id="two-stage-sample-selection-model">
 <span class="header-section-number">3.1</span> Two-stage sample selection model</h3>
-<p>This study employs a sample selection model <span class="citation" data-cites="heckman1979">(<a href="#/conclusion" role="doc-biblioref" onclick="">Heckman 1979</a>)</span> to assess the probability of coup attempts and their likelihood of success. The most appropriate model for this research is the two-stage <code>probit</code> model, as detailed by <span class="citation" data-cites="vandeven1981">Van de Ven and Van Praag (<a href="#/conclusion" role="doc-biblioref" onclick="">1981</a>)</span> and utilized by <span class="citation" data-cites="powell2012">J. Powell (<a href="#/conclusion" role="doc-biblioref" onclick="">2012</a>)</span>. The first stage examines the probability that a regime experiences a coup attempt, while the second stage evaluates the probability of the attempt’s success.</p>
+<p>To account for the determinants of coup attempts, this study utilizes a sample selection model <span class="citation" data-cites="heckman1979">(<a href="#/conclusion" role="doc-biblioref" onclick="">Heckman 1979</a>)</span>. While coup attempt rates vary across regimes, success rates tend to converge around 50% (<a href="#/dynamics-of-coup-attempts-and-outcomes" class="quarto-xref">Table&nbsp;3</a>). This suggests coup attempts are strategically planned, targeting situations with a perceived high chance of success. Consequently, a standard regression model would yield biased results. Therefore, we use the two-stage <code>probit</code> model, as detailed by <span class="citation" data-cites="vandeven1981">Van de Ven and Van Praag (<a href="#/conclusion" role="doc-biblioref" onclick="">1981</a>)</span> and utilized by <span class="citation" data-cites="powell2012">J. Powell (<a href="#/conclusion" role="doc-biblioref" onclick="">2012</a>)</span>, for empirical analysis. The first stage examines the probability that a regime experiences a coup attempt, while the second stage evaluates the probability of the attempt’s success.</p>
 <p>The primary explanatory variables are regime types, as previously discussed. Control variables are included in <span class="math inline">\(\mathbf{XB}\)</span>. The selection equation (first stage) models the probability that a coup attempt occurs and can be expressed as follows:</p>
 <p><span id="eq-eq4"><span class="math display">\[
 \begin{aligned}
@@ -2880,8 +2879,8 @@ y_1 =
 0 &amp;\text{if $y_1^*\le0$ (no coup attempt)}
 \end{cases}
 \end{aligned}
-\]</span><br></p>
-<p>In the first stage, if <span class="math inline">\(y_1^*\le0\)</span>, no coup attempt occurs in a given country-year, indicating that the unobserved variable does not reach the threshold. If <span class="math inline">\(y_1^*&gt;0\)</span>, at least one coup attempt is made in a country-year, indicating that the unobserved variable surpasses the threshold. The probability is expressed as:</p>
+\]</span><br>
+In the first stage, if <span class="math inline">\(y_1^*\le0\)</span>, no coup attempt occurs in a given country-year, indicating that the unobserved variable does not reach the threshold. If <span class="math inline">\(y_1^*&gt;0\)</span>, at least one coup attempt is made in a country-year, indicating that the unobserved variable surpasses the threshold. The probability is expressed as:</p>
 <p><span id="eq-eq4a"><span class="math display">\[
 \begin{aligned}
 Prob(y_1 =1)&amp;=Prob(y_{1}^*&gt;0) \\
@@ -2921,25 +2920,22 @@ Prob(y_1 =1)&amp;=Prob(y_{1}^*&gt;0) \\
 <span class="header-section-number">3.2</span> Variables</h3>
 <h4 data-number="3.2.1" id="dependent-variable">
 <span class="header-section-number">3.2.1</span> Dependent variable</h4>
-<p>To test our argument, we use the coup attempts and outcomes from <span class="citation" data-cites="powell2011">J. M. Powell and Thyne (<a href="#/conclusion" role="doc-biblioref" onclick="">2011</a>)</span> as the dependent variable. Successful coups are those in which the incumbent is removed from the office for over seven days. Data are available from 1950 to 2023, accounting for 491 coup attempts, of which 245 succeeded. The coup descriptive statistics have been discussed in previous part.</p>
+<p>To test our hypotheses, we use coup attempts and outcomes data from <span class="citation" data-cites="powell2011">J. M. Powell and Thyne (<a href="#/conclusion" role="doc-biblioref" onclick="">2011</a>)</span> as the dependent variable. Successful coups are those in which the incumbent is removed from office for more than seven days. The dataset spans from 1950 to 2023, accounting for 491 coup attempts, of which 245 were successful. Descriptive statistics are presented in <a href="#/introduction" class="quarto-xref">Table&nbsp;2</a> and <a href="#/dynamics-of-coup-attempts-and-outcomes" class="quarto-xref">Table&nbsp;3</a>.</p>
 <h4 data-number="3.2.2" id="independent-variables">
 <span class="header-section-number">3.2.2</span> Independent variables</h4>
-<p>The main independent variable, as analysed, is the regime type. We follow the category from <span class="citation" data-cites="geddes2014">Geddes, Wright, and Frantz (<a href="#/conclusion" role="doc-biblioref" onclick="">2014</a>)</span> (GWF). Our main concern focuses on the military, personal and dominant-party regimes, while democracy and monarchy will be included as references. The descriptive statistics is shown in <a href="#/dynamics-of-coup-attempts-and-outcomes" class="quarto-xref">Table&nbsp;3</a>.</p>
+<p>The primary independent variable in our analysis is the regime type. We follow the categories defined by <span class="citation" data-cites="geddes2014">Geddes, Wright, and Frantz (<a href="#/conclusion" role="doc-biblioref" onclick="">2014</a>)</span> (GWF). Our main focus is on military, personalist, and dominant-party regimes, with democracy and monarchy included as reference categories. Descriptive statistics are presented in <a href="#/dynamics-of-coup-attempts-and-outcomes" class="quarto-xref">Table&nbsp;3</a>.</p>
 <h4 data-number="3.2.3" id="control-variables">
 <span class="header-section-number">3.2.3</span> Control variables</h4>
-<p><strong>Economic performance:</strong> we use the current‐trend (CT) ratio explored by <span class="citation" data-cites="krishnarajan2019">Krishnarajan (<a href="#/conclusion" role="doc-biblioref" onclick="">2019</a>)</span> to measure the economic performance. This measurement calculates the ratio between the<br>
-current level of gross domestic product per capita (GDP/cap) and the average<br>
-GDP/cap level of the previous 5 years. For a country 𝑖 at year 𝑡 the approach is<br>
-given as follow:</p>
-<p><span class="math display">\[
-CT_{i,t} = {GDP/cap_{i,t} \over \sum_{k=1}^5{GDP/cap_{i,t-k} \over 5}}
-\]</span></p>
-<p>Since a given year’s situation is mainly determined by the previous, the variable is lagged for one year. The GDP per capita (in constant 2017 international dollars, PPP) uses the vdem dataset which comes from <span class="citation" data-cites="fariss2022">Fariss et al. (<a href="#/conclusion" role="doc-biblioref" onclick="">2022</a>)</span>.</p>
-<p><strong>Violence:</strong> Violence is an index which captures all kinds of violence and wars (internal or<br>
-interstate). The dataset is from Major Episodes of Political Violence <span class="citation" data-cites="marshall2005current">(<a href="#/conclusion" role="doc-biblioref" onclick="">Marshall 2005</a>)</span>.</p>
-<p><strong>Military expending:</strong> Military expending per capita measure how much money is expended per capita per year in a regime. The data source is the Correlates of War Project <span class="citation" data-cites="sarkees2010">(<a href="#/conclusion" role="doc-biblioref" onclick="">Sarkees and Wayman 2010</a>)</span>.</p>
+<p><strong>Economic performance:</strong> We use the current-trend (<span class="math inline">\(CT\)</span>) ratio developed by <span class="citation" data-cites="krishnarajan2019">Krishnarajan (<a href="#/conclusion" role="doc-biblioref" onclick="">2019</a>)</span> to measure economic performance. This metric calculates the ratio between the current level of gross domestic product per capita (GDP/cap) and the average GDP/cap level of the previous five years. For a country <span class="math inline">\(i\)</span> at year <span class="math inline">\(t\)</span>, the <span class="math inline">\(CT\)</span> ratio is calculated as follows: <span class="math display">\[
+\begin{aligned}
+CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
+\end{aligned}
+\]</span> Since a given year’s situation is primarily determined by the previous year, the variable is lagged by one year. The GDP per capita (in constant 2017 international dollars, PPP) is sourced from the V-Dem dataset provided by <span class="citation" data-cites="fariss2022">Fariss et al. (<a href="#/conclusion" role="doc-biblioref" onclick="">2022</a>)</span>.</p>
+<p><strong>Violence:</strong> The violence index captures all types of violence and wars (internal or interstate). The data is sourced from the Major Episodes of Political Violence <span class="citation" data-cites="marshall2005current">(<a href="#/conclusion" role="doc-biblioref" onclick="">Marshall 2005</a>)</span>.</p>
+<p><strong>Military expending:</strong> Military spending per capita measures the amount expended per capita per year on the military. This data is sourced from the Correlates of War Project <span class="citation" data-cites="sarkees2010">(<a href="#/conclusion" role="doc-biblioref" onclick="">Sarkees and Wayman 2010</a>)</span>.</p>
 </section><section id="results-and-discussion" class="slide level2" data-number="4"><h2>
 <span class="header-section-number">4</span> Results and Discussion</h2>
+<p>We can see from <span class="math inline">\(\ref{results}\)</span> that the regime type has a significant impact on.</p>
 </section><section id="conclusion" class="slide level2 smaller scrollable" data-number="5"><h2>
 <span class="header-section-number">5</span> Conclusion</h2>
 
@@ -2952,6 +2948,9 @@ interstate). The dataset is from Major Episodes of Political Violence <span clas
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-aidt2019" class="csl-entry" role="listitem">
 Aidt, Toke, and Gabriel Leon. 2019. <span>“The Coup.”</span> Edited by Roger D. Congleton, Bernard Grofman, and Stefan Voigt, February. <a href="https://doi.org/10.1093/oxfordhb/9780190469771.013.15">https://doi.org/10.1093/oxfordhb/9780190469771.013.15</a>.
+</div>
+<div id="ref-arriagadaherrera1988" class="csl-entry" role="listitem">
+Arriagada Herrera, Genaro. 1988. <em>Pinochet: the politics of power</em>. Thematic studies in Latin America. Boston: Unwin Hyman.
 </div>
 <div id="ref-fariss2022" class="csl-entry" role="listitem">
 Fariss, Christopher J., Therese Anders, Jonathan N. Markowitz, and Miriam Barnum. 2022. <span>“New Estimates of Over 500 Years of Historic GDP and Population Data.”</span> <em>Journal of Conflict Resolution</em> 66 (3): 553–91. <a href="https://doi.org/10.1177/00220027211054432">https://doi.org/10.1177/00220027211054432</a>.
