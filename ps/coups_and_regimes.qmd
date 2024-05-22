@@ -291,9 +291,9 @@ depicted in @tbl-coups.
 
 ### Framework of coup success
 
-An oft-cited framework [@gassebner2016a; @aidt2019] provides a structured
-approach to assess the disposition and capability of coup attempts by evaluating
-the anticipated benefits for coup plotters. The expected payoff of coups can be
+An oft-cited framework [@gassebner2016; @aidt2019] provides a structured approach
+to assess the disposition and capability of coup attempts by evaluating the
+anticipated benefits for coup plotters. The expected payoff of coups can be
 represented by the equation:
 
 $$
@@ -413,9 +413,9 @@ disregarded by those in actual power. Identifying the true leader of the militar
 hinges on the specific regime type. To explore this further, we will utilize the
 foundational concepts outlined by by @geddes2014 (GWF), which categorise
 autocratic regimes based on leadership origins and decision-making factors. These
-regimes fall into three broad categories: military regimes, personalist regimes
-(including monarchies), and dominant-party regimes. Democracies will also be
-included in our analysis for comparative purposes.
+regimes fall into three broad categories: military regimes, personalist regimes,
+and dominant-party regimes. Democracies and monarchies will also be included in
+our analysis for comparative purposes.
 
 **Military Regimes**
 
@@ -683,19 +683,6 @@ Prob(y_2=1|y_1 =1)=\Phi(\beta_0 + \beta_1 Regime_i + \mathbf{XB})
 \end{aligned}
 $$ {#eq-eq5a}
 
-In a two-stage sample selection model, the second-stage model cannot be identical
-to the first-stage model. Therefore, the first-stage model includes an additional
-independent variable: the tenure of the incumbent leader, which captures the
-number of years since the incumbent leader assumed office. Thus, @eq-eq5a
-becomes:
-
-$$
-\begin{aligned}
-Prob(y_1 =1)&=Prob(y_{1}^*>0) \\
-&=\Phi(\alpha_0 + \alpha_1 Regime_i + \alpha_2 Tenure_i + \mathbf{XA})
-\end{aligned}
-$$ {#eq-eq5b}
-
 ### Variables
 
 #### Dependent variable
@@ -715,6 +702,14 @@ reference categories. Descriptive statistics are presented in @tbl-regimes.
 
 #### Control variables
 
+In selecting control variables, we draw on the research by @gassebner2016, who
+test the robustness of 66 factors proposed in the empirical literature using a
+monthly sample of 164 countries from 1952 to 2011. They find that slow economic
+growth rates, previous coup experiences, and other forms of political violence
+are particularly conducive to inciting coups. Therefore, our main control
+variables are economic performance, political violence, and the number of
+previous coups.
+
 **Economic performance:** We use the current-trend ($CT$) ratio developed by
 @krishnarajan2019 to measure economic performance. This metric calculates the
 ratio between the current level of gross domestic product per capita (GDP/cap)
@@ -723,18 +718,23 @@ year $t$, the $CT$ ratio is calculated as follows: $$
 \begin{aligned}
 CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
 \end{aligned}
-$$ Since a given year's situation is primarily determined by the previous year,
-the variable is lagged by one year. The GDP per capita (in constant 2017
+$$
+
+Since a given year's situation is primarily determined by the previous year, the
+variable is lagged by one year. The GDP per capita (in constant 2017
 international dollars, PPP) is sourced from the V-Dem dataset provided by
 @fariss2022.
 
 **Violence:** The violence index captures all types of violence and wars
-(internal or interstate). The data is sourced from the Major Episodes of
-Political Violence [@marshall2005current].
+(internal or interstate), indicating the stability of the regime. This data is
+sourced from the Major Episodes of Political Violence [@marshall2005current].
 
-**Military expending:** Military spending per capita measures the amount expended
-per capita per year on the military. This data is sourced from the Correlates of
-War Project [@sarkees2010].
+**Previous coups:** This variable captures the number of previous coups in each
+country. In a two-stage sample selection model, the second-stage model cannot be
+identical to the first-stage model. Therefore, the first-stage model includes the
+number of previous coups, while the second-stage does not. Previous coups may
+have a greater impact on coup attempts, while once a coup is launched, the number
+of previous coups might not significantly explain the outcome.
 
 ## Results and Discussion
 
@@ -744,10 +744,10 @@ War Project [@sarkees2010].
 
 library(readxl)
 political_violence <- read_excel("MEPVv2018.xls") |> 
-  select(ccode, year, violence = actotal)
+  dplyr::select(ccode, year, violence = actotal)
 
 gdp <- vdem |> 
-  select(ccode = COWcode, year, gdppc = e_gdppc) |> 
+  dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
   filter(year > 1944) |> 
   mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
                                align = 'right', fill = NA)),
@@ -759,10 +759,11 @@ coup_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_
     coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
     TRUE ~ 1
   )) |>
-  select(ccode, year, coup)
+  mutate(pre_coups = cumsum(lag(coup)  %in% c(1,2))) |> 
+  dplyr::select(ccode, year, coup, pre_coups)
 
 reg_data <- regimes |> 
-  select(country = extended_country_name,
+  dplyr::select(country = extended_country_name,
          ccode = reign_cowcode, year, regime_type) |>
   left_join(coup_all, by = join_by(ccode, year)) |> 
   left_join(political_violence, by = join_by(ccode, year)) |>
@@ -773,9 +774,11 @@ reg_data <- regimes |>
 model_2step <- reg_data |>
   filter(regime_type != "other") |>
   mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
-  selection(coup > 0 ~ regime + ct + violence + gdppc,
-            coup > 1 ~ regime + ct + violence ,
+  selection(coup > 0 ~ regime + ct + violence + gdppc + pre_coups,
+            coup > 1 ~ regime + ct + violence + gdppc,
             data = _) 
+
+summary(model_2step)
 
 model_selection <- model_2step
 model_selection$param$index$betaO <- model_2step$param$index$betaS
@@ -790,8 +793,73 @@ stargazer(model_selection, model_2step,
           label = "results")
 ```
 
-We can see from Table \ref{results} that the regime type has a significant impact
-on.
+### Interpretation and Discussion
+
+The findings from the two-stage probit model, as presented in Table
+\ref{results}, provide valuable insights into the dynamics of coup attempts and
+their likelihood of success across different regime types:
+
+As hypothesized, both the coefficients for military and personalist regimes are
+positive and significant at the 1% level, indicating a higher likelihood of
+experiencing coup attempts compared to dominant-party regimes, holding other
+factors constant. This higher propensity for coup attempts in military and
+personalist regimes aligns with our hypothesis that these regimes face distinct
+internal power dynamics, increasing the likelihood of coup attempts.
+
+All control variables are statistically significant at the 1% level. As expected,
+better economic performance and higher levels of GDP per capita help reduce the
+risk of coups. Surprisingly, more previous coups appear to reduce the risk of
+coups, but this finding is not substantially significant. This indicates that
+even after accounting for various relevant factors, regime type remains a
+critical determinant of coup likelihood. This underscores the robustness of our
+findings and the importance of regime type in understanding coup dynamics.
+
+In the outcome equation, most variables are not significant at the 5% level. This
+supports our hypothesis that coup attempts are highly selective at the attempt
+stage, which removes the influence of these variables on the coup outcome.
+Interestingly, higher GDP per capita shows a positive relationship with the
+likelihood of coup success at the 5% significance level. This suggests that
+better economic conditions may provide more resources to coup plotters, thereby
+increasing the chances of a successful coup once attempted. Conversely, weak
+economies may trigger more coup attempts, though many of these are less likely to
+succeed.
+
+The correlation coefficient ($\rho$) between the error terms of the selection and
+outcome equations is 0.7086 with a p-value of 0.111. Although positive, this
+correlation is not statistically significant, indicating that there may not be a
+strong correlation between the errors in the selection and outcome equations.
+This suggests that the selection bias might not be as severe as initially
+hypothesized.
+
+Overall, the regression results indicate that the sample selection model is a
+well-specified choice for this research. The significant coefficients and
+theoretically consistent directions suggest that the model effectively captures
+key aspects of coup dynamics. Specifically:
+
+-   The direction and significance of the coefficients align with theoretical
+    expectations. Regimes with less institutional stability, such as military and
+    personalist regimes, are more likely to experience coup attempts.
+
+-   Better economic conditions, while reducing the likelihood of coup attempts,
+    increase the likelihood of coup success.
+
+-   Coup attempts are not random events; they occur under specific conditions.
+    Thus, treating the selection process (whether a coup attempt occurs)
+    separately from the outcome (whether the coup is successful) effectively
+    captures this non-randomness.
+
+-   The Heckman two-step model is designed to correct for selection bias. The
+    similar success rates of coups across different regimes, despite varying
+    attempt rates, indicate potential selection bias. This supports the need for
+    a sample selection model, as coup plotters are likely to attempt coups only
+    when they perceive a high likelihood of success.
+
+In conclusion, the use of a sample selection model is appropriate for this
+research, providing robust insights into the factors influencing coup attempts
+and their outcomes across different regime types. The results highlight the
+significant role of regime type in coup dynamics and the selective nature of coup
+attempts, thereby validating the theoretical framework and empirical strategy
+employed in this study.
 
 ## Conclusion
 

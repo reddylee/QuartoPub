@@ -5,16 +5,170 @@ format: pdf
 ```{r}
 library(tidyverse)
 library(stargazer)
+library(sampleSelection)
+library(vdemdata)
 ```
 
 ```{r}
 #| results: 'asis'
-model <- lm(mpg ~ wt, data = mtcars)
-stargazer(model, type = "latex",
-          header = F,
-          out.header = F,
-          title = "Regression model of cars",
-          label = "tblcars")
+
+mydata <- reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |> 
+  drop_na() 
+
+model_selection <- mydata |> 
+  glm(coup > 0 ~ regime + ct + violence + gdppc, 
+      data = _,
+      family = binomial(link = probit)) 
+summary(model_selection)
+```
+
+```{r}
+probit_lp <- predict(model_selection)
+mills0 <- dnorm(probit_lp) / pnorm(probit_lp)
+summary(mills0)
+imr <- mills0[mydata$coup > 0]
+summary(imr)
 ```
 
 We can see the regression model in Table @tblcars.
+
+```{r}
+qplot(imr, geom = 'histogram', bins = 30)
+```
+
+```{r}
+mydata |> 
+  filter(coup > 0) |>
+  glm(coup > 1 ~ regime + ct + violence + imr, 
+      data = _,
+      family = binomial(link = probit)) |>
+  summary()
+```
+
+```{r}
+data()
+```
+
+```{r}
+0.754*1.6
+exp(1.2064)
+```
+
+```{r}
+0.774/(1-0.774)
+
+pnorm(0.1 + 0.774 + 0.15)
+pnorm(0.1 + 0.15)
+```
+
+```{r}
+0.85/0.59
+```
+
+```{r}
+0.774/0.5
+```
+
+```{r}
+(0.32)
+```
+
+```{r}
+pnorm(0.53)/0.5
+```
+
+```{r}
+exp(2.2)
+exp(0.862)
+```
+
+```{r}
+pnorm(0.7) - pnorm(0.5)
+```
+
+```{r}
+pnorm(0.2)
+```
+
+```{r}
+library(mfx)
+library(foreign)
+mydata <- read.dta("https://dss.princeton.edu/training/Panel101.dta")
+probitmfx(y_bin ~ x1 + x2 + x3, data=mydata)
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  glm(coup > 0 ~ regime + ct + violence + gdppc, 
+    data = _,
+    family = binomial(link = probit)) |> 
+  summary()
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  probitmfx(coup > 0 ~ regime + ct + violence + gdppc, 
+    data = _)
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  logitmfx(model_2step, data = _)
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  logitor(model_2step, data = _)
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  logitor(coup > 0 ~ regime + ct + violence + gdppc, data = _)
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  glm(coup > 0 ~ regime + ct + violence + gdppc, 
+      data = _,
+       family=binomial(link = logit)) |> 
+  summary()
+```
+
+```{r}
+reg_data |> 
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  selection(coup > 0 ~ regime + ct + violence + gdppc,
+            coup > 1 ~ regime + ct + violence, data = _
+            ) |> 
+  summary()
+```
+
+```{r}
+pnorm(0.754)/(1-pnorm(0.754))
+pnorm(0)/(1-pnorm(0))
+pnorm(0.755)/pnorm(0)
+```
+
+```{r}
+leader <- read.csv("ps/leader_list_8_21.csv")
+```
+
+```{r}
+codebook |> 
+  view()
+```
