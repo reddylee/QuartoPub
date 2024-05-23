@@ -15,8 +15,10 @@ format:
     output-file: coups1.html
 categories: [Article, Coups]
 bibliography: references.bib
+
 abstract: |
-  A substantial body of research has examined coups, with much of it focusing on the factors that lead to coup attempts. However, consensus remains elusive regarding why coups are more prevalent in certain countries while less so in others. Previous scholarship exploring the determinants of coup attempts has often overlooked the crucial aspect of coup success. Given the severe consequences of a failed coup, coup plotters are unlikely to proceed unless they perceive a high chance of success. Thus, the expected outcome of a coup—whether successful or unsuccessful—is not merely incidental but serves as a pivotal determinant of coup attempts. The decision to stage a coup is a self-selected variable contingent upon the anticipated success rate of coups. This study employs a sample selection model (specifically, a two-stage probit model) to elucidate why coups are more common in some autocratic countries but rare in others. I contend that coup attempts are largely shaped by the likelihood of coup success, which, in turn, hinges on the power dynamics between coup perpetrators and incumbents. These power dynamics are influenced by the regime type and their distinct responses to internal and external shocks.
+  Previous research on the determinants of coup attempts has predominantly focused on the factors or conditions present when or before coups are launched, with less emphasis on the outcomes following the coups. However, the results of post-coup events play a crucial role in the decision-making process of coup attempts, either attracting potential plotters with significant benefits or deterring them with substantial costs. Inspired by the observed success rates of coups, this study posits that the expected outcomes of a coup are pivotal determinants of coup attempts. Utilizing a sample selection model, specifically a two-stage probit model, this research aims to elucidate why coups are more prevalent in certain autocratic countries while being rare in others. The findings suggest that, influenced by the distinct power dynamics between coup perpetrators and incumbents, coups are more likely to occur in military and personalist regimes compared to dominant-party regimes.
+
 keywords: [Coup, Autocracy, Regime types, Sample selection]
 
 execute:
@@ -115,8 +117,8 @@ coups have been suggested, the fundamental question remains unanswered.
 
 However, despite extensive research by scholars, the impact of anticipated
 outcomes on coup initiation has not received sufficient attention. When analysing
-the determinants of coups, it's crucial not to overlook the most significant
-characteristic of coups themselves. As noted by @powell2011, coups are "illegal
+the determinants of coups, it is crucial not to overlook the most significant
+characteristic of coups themselves. As defined by @powell2011, coups are "illegal
 and overt attempts by the military or other elites within the state apparatus to
 unseat the sitting executive."[@powell2011, P.252]. Due to their illegality, the
 consequences of a failed coup could be severe, with perpetrators risking
@@ -130,38 +132,6 @@ glance, coups seem to be a high-success-rate, high-reward political venture and
 speculation. However, compared to over $12,000$ country-years since $1950$, the
 occurrence of `r attempts` coups appears rather rare, accounting for less than
 $4\%$ [@powell2011].
-
-The low occurrence rate and high success rate indicate that the initiation of
-coups is highly selective. In other words, the likelihood of a coup occurring
-depends greatly on its potential success rate. Coup plotters carefully assess
-their chances before staging a coup. If they decide to proceed, it suggests that
-the conditions are relatively ripe, hence the fifty-fifty success rate. Plans
-with immature conditions and low chances of success are automatically filtered
-out. Fundamentally, launching a coup is not like participating in a general
-election, where failure in one election allows for another attempt in the next
-election. A coup is a high-stakes gamble where success brings substantial
-rewards, while failure may result in martyrdom. Failure, put differently, means
-permanent and absolute defeat. Furthermore, the outcomes of coups are typically
-decided within a matter of days, sometimes even mere hours. Unlike prolonged
-conflicts where victories or defeats may shift over time, the success of a coup
-is often sealed at its inception. Every detail must be meticulously planned and
-arranged beforehand.
-
-Hence, the factors influencing the success rates of coups play a significant role
-in shaping coup attempts. This study employs a sample selection model to examine
-the factors affecting the success rates of coups and, consequently, the
-likelihood of coup attempts. I posit that the power dynamics among coup
-perpetrators, incumbents, and other ruling elites are pivotal in determining the
-success of coups. These dynamics are largely contingent on regime types,
-highlighting the pivotal role of regime types in shaping coup attempts.
-
-This study offers two potential contributions to the existing literature:
-firstly, it highlights the significance of power dynamics within various regime
-types as critical factors influencing coup attempts; secondly, it demonstrates
-how sample selection models can enhance our understanding of coup attempts by
-taking into account the success rates of coups.
-
-\clearpage
 
 ```{r}
 #| label: tbl-coups
@@ -196,11 +166,41 @@ coups |>
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
 
-The subsequent section of this paper delves into previous research on coups.
-Following that, in Part $3$, I present the research framework and propose
-hypotheses. Part 4 provides insights into the data and variables utilized in the
-study. The testing results are discussed in Part $5$, followed by the conclusion
-in Part $6$.
+The low occurrence rate and high success rate indicate that the initiation of
+coups is highly selective. In other words, the likelihood of a coup occurring
+depends greatly on its potential success rate. Coup plotters carefully assess
+their chances before staging a coup. If they decide to proceed, it suggests that
+the conditions are relatively ripe, hence the fifty-fifty success rate. Plans
+with immature conditions and low chances of success will be filtered out.
+Fundamentally, launching a coup is not like participating in a general election,
+where failure in one election allows for another attempt in the next election. A
+coup is a high-stakes gamble where success brings substantial rewards, while
+failure may result in martyrdom. Failure, put differently, means permanent and
+absolute defeat. Furthermore, the outcomes of coups are typically decided within
+a matter of days, sometimes even mere hours. Unlike prolonged conflicts where
+victories or defeats may shift over time, the success of a coup is often sealed
+at its inception. Every detail must be meticulously planned and arranged
+beforehand.
+
+Hence, the factors influencing the success rates of coups play a significant role
+in shaping coup attempts. This study employs a sample selection model to examine
+the factors affecting the success rates of coups and, consequently, the
+likelihood of coup attempts. I posit that the power dynamics among coup
+perpetrators, incumbents, and other ruling elites are pivotal in determining the
+success of coups. These dynamics are largely contingent on regime types,
+highlighting the pivotal role of regime types in shaping coup attempts.
+
+This study offers two potential contributions to the existing literature:
+firstly, it highlights the significance of power dynamics within various regime
+types as critical factors influencing coup attempts; secondly, it demonstrates
+how sample selection models can enhance our understanding of coup attempts by
+taking into account the success rates of coups.
+
+The subsequent section of this paper explores the dynamics of coup attempts and
+their outcomes. In Part 3, I detail the research design, outlining the
+methodology and variables used in the analysis. Part 4 presents and discusses the
+empirical findings. Finally, Part 5 concludes the study, summarizing the key
+insights and their implications.
 
 ## Dynamics of coup attempts and outcomes
 
@@ -738,6 +738,8 @@ of previous coups might not significantly explain the outcome.
 
 ## Results and Discussion
 
+### Interpretation and Discussion
+
 ```{r}
 #| results: asis
 #| echo: false
@@ -774,11 +776,9 @@ reg_data <- regimes |>
 model_2step <- reg_data |>
   filter(regime_type != "other") |>
   mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
-  selection(coup > 0 ~ regime + ct + violence + gdppc + pre_coups,
-            coup > 1 ~ regime + ct + violence + gdppc,
+  selection(coup > 0 ~ regime + ct + gdppc + violence + pre_coups,
+            coup > 1 ~ regime + ct + gdppc + violence,
             data = _) 
-
-summary(model_2step)
 
 model_selection <- model_2step
 model_selection$param$index$betaO <- model_2step$param$index$betaS
@@ -786,14 +786,17 @@ model_selection$param$index$betaS <- model_2step$param$index$betaO
 
 stargazer(model_selection, model_2step,
           header = F,
-          column.labels = c("Selection", "Outcome"),
-          dep.var.labels.include = F,
+          column.labels = c("Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,
-          title = "Results of the two-stage sample selection model",
-          label = "results")
+          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
+          label = "results",
+          covariate.labels = c("Constant", "Democracy", "Regime: Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
+          dep.var.caption = "",
+          dep.var.labels.include = F,
+          summary.logical = T,
+          column.sep.width = "50pt"
+          )
 ```
-
-### Interpretation and Discussion
 
 The findings from the two-stage probit model, as presented in Table
 \ref{results}, provide valuable insights into the dynamics of coup attempts and
@@ -862,6 +865,33 @@ attempts, thereby validating the theoretical framework and empirical strategy
 employed in this study.
 
 ## Conclusion
+
+The findings of this study underscore the critical role of regime type in
+determining the likelihood of coup attempts. Through the application of a
+two-stage sample selection model, this research highlights that coups are
+significantly more probable in military and personalist regimes compared to
+dominant-party regimes. The results suggest that the power dynamics inherent in
+different regime types influence the propensity for coups, with less
+institutional stability and more fragmented power structures increasing the risk.
+
+Moreover, the study reveals that better economic conditions, while reducing the
+overall likelihood of coup attempts, paradoxically enhance the chances of coup
+success. This implies that economic resources can provide the necessary support
+for successful coups, even as they deter initial attempts.
+
+The significant coefficients and the alignment of results with theoretical
+expectations validate the use of the sample selection model in this context. By
+accounting for the selection bias in coup attempts, the model offers robust
+insights into the factors influencing both the occurrence and success of coups.
+These findings contribute to a deeper understanding of coup dynamics, emphasizing
+the importance of regime type and economic conditions in shaping political
+stability.
+
+In conclusion, this study provides a nuanced perspective on coup attempts and
+their outcomes, reinforcing the need to consider regime-specific characteristics
+and economic contexts in analyses of political instability. Future research could
+further explore the interplay between these factors and examine additional
+variables that may influence coup dynamics.
 
 ```{r}
 #| results: asis
