@@ -17,7 +17,7 @@ categories: [Article, Coups]
 bibliography: references.bib
 
 abstract: |
-  Previous research on the determinants of coup attempts has predominantly focused on the factors or conditions present when or before coups are launched, with less emphasis on the outcomes following the coups. However, the results of post-coup events play a crucial role in the decision-making process of coup attempts, either attracting potential plotters with significant benefits or deterring them with substantial costs. Inspired by the observed success rates of coups, this study posits that the expected outcomes of a coup are pivotal determinants of coup attempts. Utilizing a sample selection model, specifically a two-stage probit model, this research aims to elucidate why coups are more prevalent in certain autocratic countries while being rare in others. The findings suggest that, influenced by the distinct power dynamics between coup perpetrators and incumbents, coups are more likely to occur in military and personalist regimes compared to dominant-party regimes.
+  Previous research on the determinants of coup attempts has predominantly focused on the factors or conditions present when or before coups are launched, with less emphasis on the outcomes following the coups. However, the results of post-coup events play a crucial role in the decision-making process of coup attempts, either attracting potential plotters with significant benefits or deterring them with substantial costs. Inspired by the observed success rates of coups, this study posits that the expected outcomes of a coup are pivotal determinants of coup attempts. Utilizing the double probit with sample selection model, this research aims to elucidate why coups are more prevalent in certain autocratic countries while being rare in others. The findings suggest that, influenced by the distinct power dynamics between coup perpetrators and incumbents, coups are more likely to occur in military and personalist regimes compared to dominant-party regimes.
 
 keywords: [Coup, Autocracy, Regime types, Sample selection]
 
@@ -602,17 +602,18 @@ regime_total |>
 
 ## Research Design
 
-### Two-stage sample selection model
+### Double probit with sample selection model
 
 To account for the determinants of coup attempts, this study utilizes a sample
 selection model [@heckman1979]. While coup attempt rates vary across regimes,
-success rates tend to converge around 50% (@tbl-regimes). This suggests coup
-attempts are strategically planned, targeting situations with a perceived high
-chance of success. Consequently, a standard regression model would yield biased
-results. Therefore, we use the two-stage `probit` model, as detailed by
-@vandeven1981 and utilized by @powell2012, for empirical analysis. The first
-stage examines the probability that a regime experiences a coup attempt, while
-the second stage evaluates the probability of the attempt's success.
+success rates tend to converge around 50% (@tbl-regimes). This convergence cannot
+be attributed to chance and suggests that coup attempts are strategically planned
+and self-selected, targeting situations with a perceived high chance of success.
+Consequently, a standard regression model would yield biased results. Therefore,
+we use a double probit model with sample selection, as employed by @powell2012,
+for empirical analysis. The first stage (selection equation) examines the
+probability that a regime experiences a coup attempt, while the second stage
+(outcome equation) evaluates the probability of the success of those coups.
 
 The primary explanatory variables are regime types, as previously discussed.
 Control variables are included in $\mathbf{XB}$. The selection equation (first
@@ -730,11 +731,11 @@ international dollars, PPP) is sourced from the V-Dem dataset provided by
 sourced from the Major Episodes of Political Violence [@marshall2005current].
 
 **Previous coups:** This variable captures the number of previous coups in each
-country. In a two-stage sample selection model, the second-stage model cannot be
-identical to the first-stage model. Therefore, the first-stage model includes the
-number of previous coups, while the second-stage does not. Previous coups may
-have a greater impact on coup attempts, while once a coup is launched, the number
-of previous coups might not significantly explain the outcome.
+country. In the double probit with sample selection model, the second-stage model
+cannot be identical to the first-stage model. Therefore, the first-stage model
+includes the number of previous coups, while the second-stage does not. Previous
+coups may have a greater impact on coup attempts, while once a coup is launched,
+the number of previous coups might not significantly explain the outcome.
 
 ## Results and Discussion
 
@@ -798,9 +799,10 @@ stargazer(model_selection, model_2step,
           )
 ```
 
-The findings from the two-stage probit model, as presented in Table
-\ref{results}, provide valuable insights into the dynamics of coup attempts and
-their likelihood of success across different regime types:
+Using the R package `sampleSelection` [@sampleSelection], the findings from the
+double probit model, as presented in Table \ref{results}, provide valuable
+insights into the dynamics of coup attempts and their likelihood of success
+across different regime types:
 
 As hypothesized, both the coefficients for military and personalist regimes are
 positive and significant at the 1% level, indicating a higher likelihood of
@@ -851,11 +853,11 @@ key aspects of coup dynamics. Specifically:
     separately from the outcome (whether the coup is successful) effectively
     captures this non-randomness.
 
--   The Heckman two-step model is designed to correct for selection bias. The
-    similar success rates of coups across different regimes, despite varying
-    attempt rates, indicate potential selection bias. This supports the need for
-    a sample selection model, as coup plotters are likely to attempt coups only
-    when they perceive a high likelihood of success.
+-   The double probit with samle selection model is designed to correct for
+    selection bias. The similar success rates of coups across different regimes,
+    despite varying attempt rates, indicate potential selection bias. This
+    supports the need for a sample selection model, as coup plotters are likely
+    to attempt coups only when they perceive a high likelihood of success.
 
 In conclusion, the use of a sample selection model is appropriate for this
 research, providing robust insights into the factors influencing coup attempts
@@ -867,8 +869,8 @@ employed in this study.
 ## Conclusion
 
 The findings of this study underscore the critical role of regime type in
-determining the likelihood of coup attempts. Through the application of a
-two-stage sample selection model, this research highlights that coups are
+determining the likelihood of coup attempts. Through the application of a double
+probit with sample selection model, this research highlights that coups are
 significantly more probable in military and personalist regimes compared to
 dominant-party regimes. The results suggest that the power dynamics inherent in
 different regime types influence the propensity for coups, with less
