@@ -1,0 +1,319 @@
+---
+title: "Prospective Impact of Expected Coup Outcomes on Coup Attempts: A Selection Mechanism Analysis" 
+author:
+  - name: Zhu Qi
+    affiliations: University of Essex
+    email: qz21485@essex.ac.uk
+date: "`r Sys.Date()`"
+format: 
+  revealjs: 
+    theme: serif
+    transition: fade
+    slide-level: 2
+    slide-number: c/t
+    code-fold: true
+    code-tools: true
+    code-link: true
+    code-line-numbers: true
+    code-overflow: wrap
+    code-block-bg: #f8f9fa
+    highlight-style: atom-one
+    chalkboard: true
+    logo: /fig/essex.jpeg
+    header: Quarto Presentations
+    number-sections: true
+    scrollable: true
+    output-location: fragment
+    incremental: true
+    preview-links: auto
+    controls: auto
+    multiplex: true
+    touch: true
+categories: [Slides, Article, Coups]
+bibliography: references.bib
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(gt)
+library(janitor)
+library(scales)
+library(zoo)
+library(democracyData)
+library(vdemdata)
+library(sampleSelection)
+library(stargazer)
+```
+
+## Introduction
+
+<br>
+
+> About [one hundred potential determinants]{.underline} of coups have been
+> proposed, but no consensus has emerged on an established baseline model for
+> analysing coups.
+>
+> *When to expect a coup d’e ́tat? An extreme bounds analysis of coup
+> determinants* [@gassebner2016, p.293]
+
+---------------------------------------------------------------------------------
+
+##  {.unnumbered .center}
+
+### A hundred potential determinants proposed, yet no consensus. {.unnumbered}
+
+<br>
+
+### Is there any possibility of agreeing on convincing and widely accepted determinants of coups? {.unnumbered}
+
+---------------------------------------------------------------------------------
+
+### Review of Proposed Variables {.unnumbered}
+
+::: r-stack
+![](image1.png){fig-align="center" width="100%"}
+![](image2.png){fig-align="center" width="100%"}
+![](image3.png){fig-align="center" width="100%"}
+![](image4.png){fig-align="center" width="100%"}
+![](image5.png){fig-align="center" width="100%"}
+:::
+
+## What do we find? {.unnumbered}
+
+. . .
+
+::: {style="font-size: 1.5em; margin-top: 100px"}
+All the variables used in previous studies focus on pre-coup conditions, with no
+consideration given to post-coup factors.
+:::
+
+---------------------------------------------------------------------------------
+
+## Dynamics of coup attempts and outcomes
+
+### Coup success
+
+#### The expected payoff of coups can be represented by the equation: {.unnumbered}
+
+$$
+\begin{aligned}
+E(U) = p \times B + (1 - p) \times (-C)
+\end{aligned}
+$$
+
+#### The condition for staging a coup is when the expected benefit is positive, meaning that the expected pay-off is greater than 0. Rearranging the equation, we get: {.unnumbered}
+
+$$
+\begin{aligned}
+p \times B > (1 - p) \times C
+\end{aligned}
+$$
+
+#### B and C are difficult to capture and measure, but we can consider them equally significant. Therefore, we can omit them and focus our attention on $p$: {.unnumbered}
+
+$$
+\begin{aligned}
+p > (1-p)
+\end{aligned}
+$$
+
+---------------------------------------------------------------------------------
+
+```{r}
+coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
+                 sep = "\t")
+
+coups <- coup |>
+  summarise(
+    `Coup attempted` = n(),
+    `Coup succeeded` = sum(coup == 2),
+    .by = country
+  )
+```
+
+```{r}
+#| label: tbl-coups
+#| tbl-cap: Top 10 countries with the most coup attempts
+
+coups |>
+  # add one row which adds up the total
+  arrange(desc(`Coup attempted`)) |>
+  head(11) |> 
+  add_row(
+    country = "Total",
+    `Coup attempted` = sum(coups[, 2]),
+    `Coup succeeded` = sum(coups[, 3])
+  ) |>
+  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`, 
+                                accuracy = 0.1
+                                )) |>   
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(
+    table.width = pct(90),
+    column_labels.font.weight = "bold"
+              ) |> 
+  # cols_width(1 ~ px(120),
+  #            2:4 ~ px(88)
+  # ) |>
+  cols_align(
+    align = "center",
+    columns = 2:3
+  ) |> 
+  tab_source_note(source_note = md("*Source: GIC dataset*"))
+```
+
+@tbl-coups presents the top 10 countries with the highest number of coup
+attempts, along with their respective success rates. Notably, the data indicates
+that the average success rate of these coup attempts is approximately 50%.
+
+---------------------------------------------------------------------------------
+
+### But what does the success rate of coups imply? {.unnumbered}
+
+-   If we focus on the success rate, we might identify the determinants really
+    impact coup attempts and avoid dwelling on less relevant factors.
+
+-   So, what could most significantly influence the success rate of coups? The
+    answer lies in the balance of power within the ruling elites.
+
+-   What determines this balance of power? The types of regimes.
+
+---------------------------------------------------------------------------------
+
+### Regime types and power dynamics {.unnumbered}
+
+According to @geddes2014 (GWF), autocratic regimes can be categorized into three
+broad types based on leadership origins and decision-making factors:
+
+-   **Military Regimes**: A group of military officers controls the regime's
+    power structure, including leadership selection and policy formulation.
+
+-   **Personalist Regimes**: Absolute power rests with a single dictator.
+
+-   **Dominant-Party Regimes**: Supreme power resides within the ruling party,
+    with the leader acting as its representative and subject to its collective
+    leadership.
+
+---------------------------------------------------------------------------------
+
+```{r}
+#| label: tbl-regimes1
+#| tbl-cap: Regime types and coups since 1950 
+
+regimes <- REIGN |>
+  distinct(reign_cowcode, year, .keep_all = T) |>
+  mutate(
+    regime_type = case_when(
+      gwf_regimetype %in% c(
+        "party-based",
+        "party-personal",
+        "party-military",
+        "party-personal-military",
+        "oligarchy"
+      ) ~ "dominant-party",
+      gwf_regimetype == "personal" ~ "personal",
+      gwf_regimetype %in% c("military", "military personal", "indirect military") ~ "military",
+      gwf_regimetype == "monarchy" ~ "monarchy",
+      gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
+      TRUE ~ "other"
+    )
+  ) |>
+  filter(year > 1949)
+
+regime_total <- regimes |>
+  tabyl(regime_type) |> 
+  arrange(-n) |> 
+  adorn_totals("row") |> 
+  mutate(country_year =n,
+         share = percent(percent),
+         .keep = "unused") 
+  
+
+coup1 <- coup |>
+  select(country, ccode, year, coup)
+
+coup_by_regime <- regimes |>
+  select(ccode = reign_cowcode, extended_country_name, year, regime_type) |>
+  full_join(coup1, by = join_by(ccode, year)) |>
+  mutate(regime = na.locf(regime_type, .by = ccode)) |>
+  filter(!is.na(coup)) |>
+  tabyl(regime) |> 
+  adorn_totals("row") |> 
+  mutate(num_of_coups = n,
+         percent_of_coups = percent(percent,accuracy = 0.1),
+         .keep = "unused") 
+
+regime_total |>
+  left_join(coup_by_regime, join_by(regime_type == regime)) |>
+  mutate(regime_type = str_to_title(regime_type),
+coup_likelihood = percent(num_of_coups / country_year, accuracy = 0.1)) |>
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
+```
+
+@tbl-regimes1 presents the distribution of regime types and their likelihood of
+experiencing coups. It is noticeable that military regimes have the highest
+likelihood of coups, followed by personalist regimes, with the exception of the
+"Other" category.
+
+---------------------------------------------------------------------------------
+
+### Hypotheses
+
+> ***H1: The primary determinant of a coup attempt is the perceived chance of
+> success. Coup plotters likely require a success threshold of at least 50%.\
+> *** <br> ***H2: Due to their balance of power dynamics, military regimes are
+> more prone to coups, followed by personalist regimes, while dominant-party
+> regimes are the least likely to experience coups among the three.***
+
+---------------------------------------------------------------------------------
+
+## Research Design
+
+### Double `probit` with sample selection model
+
+```{r}
+#| label: tbl-regimes2
+#| tbl-cap: Regime types and coup success since 1950 
+
+coup_by_succeed <- regimes |>
+  select(ccode = reign_cowcode, extended_country_name, year, regime_type) |>
+  full_join(coup1, by = join_by(ccode, year)) |>
+  mutate(regime = na.locf(regime_type, .by = ccode)) |>
+  filter(!is.na(coup),
+         coup == 2) |>
+  tabyl(regime) |> 
+  adorn_totals("row") |> 
+  select(regime, succeeded_coup = n) 
+
+coup_regimes <-  coup_by_regime |> 
+  left_join(coup_by_succeed) |> 
+  mutate(success_rate = percent(succeeded_coup / num_of_coups, accuracy = 0.1))
+
+regime_total |>
+  left_join(coup_regimes, join_by(regime_type == regime)) |>
+  mutate(regime_type = str_to_title(regime_type)) |>
+  select(-succeeded_coup) |> 
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
+```
+
+## Thank You! {.unnumbered .center}
+
+Comments and suggestions are welcome and appreciated!
+
+## References {.hidden}
