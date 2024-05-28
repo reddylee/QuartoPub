@@ -609,7 +609,7 @@ success rates tend to converge around 50% (@tbl-regimes). This convergence canno
 be attributed to chance and suggests that coup attempts are strategically planned
 and self-selected, targeting situations with a perceived high chance of success.
 Consequently, a standard regression model would yield biased results. Therefore,
-we use a double probit model with sample selection, as employed by @powell2012,
+we use a double `probit` model with sample selection, as employed by @powell2012,
 for empirical analysis. The first stage (selection equation) examines the
 probability that a regime experiences a coup attempt, while the second stage
 (outcome equation) evaluates the probability of the success of those coups.
@@ -790,7 +790,7 @@ stargazer(model_selection, model_2step,
           intercept.bottom = F,
           title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
           label = "results",
-          covariate.labels = c("Constant", "Democracy", "Regime: Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
+          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
           dep.var.caption = "",
           dep.var.labels.include = F,
           summary.logical = T,

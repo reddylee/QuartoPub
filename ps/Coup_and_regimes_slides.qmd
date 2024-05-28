@@ -311,7 +311,7 @@ regimes because:
 
 ## Research Design
 
-### Double `probit` with sample selection model
+### Double *probit* with sample selection model
 
 ```{r}
 #| label: tbl-regimes2
@@ -333,7 +333,9 @@ coup_regimes <-  coup_by_regime |>
 
 regime_total |>
   left_join(coup_regimes, join_by(regime_type == regime)) |>
-  mutate(regime_type = str_to_title(regime_type)) |>
+  mutate(regime_type = str_to_title(regime_type),
+,
+coup_likelihood = percent(num_of_coups / country_year, accuracy = 0.1)) |>
   select(-succeeded_coup) |> 
   clean_names(case = "title") |>
   gt() |>
@@ -341,6 +343,103 @@ regime_total |>
               table.width = pct(100),
               table.align = "center") |>
   tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
+```
+
+@tbl-regimes2 shows the distribution of regime types and their success rates. It
+is evident that, although the likelihood of coup attempts varies significantly
+across different regime types, their success rates are converging towards 50%.
+
+---------------------------------------------------------------------------------
+
+### Double *probit* with sample selection model (continued) {.unnumbered}
+
+-   This convergence cannot be due to chance.
+
+-   Coup attempts are self-selected.
+
+-   Therefore, a double *probit* model with sample selection is more appropriate.
+
+    -   The first stage (selection equation) examines the probability that a
+        regime experiences a coup attempt.
+    -   The second stage (outcome equation) evaluates the probability of the
+        success of those coups.
+
+---------------------------------------------------------------------------------
+
+### Variables
+
+-   **Dependent variables**: Coup attempt and coup success.
+
+-   **Independent variables**:
+
+    -   Regime type
+    -   Economic performance:
+        -   GDP per capita level
+        -   GDP per capita growth trend
+    -   Political violence
+    -   Number of previous coup attempts
+
+## Results and discussion
+
+```{r}
+#| echo: false
+#| results: asis
+
+library(readxl)
+political_violence <- read_excel("MEPVv2018.xls") |> 
+  dplyr::select(ccode, year, violence = actotal)
+
+gdp <- vdem |> 
+  dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
+  filter(year > 1944) |> 
+  mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
+                               align = 'right', fill = NA)),
+         .by = c(ccode)) 
+
+coup_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t") |> 
+  mutate(coup = case_when(
+    coup1 == 0 ~ 0,
+    coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
+    TRUE ~ 1
+  )) |>
+  mutate(pre_coups = cumsum(lag(coup)  %in% c(1,2))) |> 
+  dplyr::select(ccode, year, coup, pre_coups)
+
+reg_data <- regimes |> 
+  dplyr::select(country = extended_country_name,
+         ccode = reign_cowcode, year, regime_type) |>
+  left_join(coup_all, by = join_by(ccode, year)) |> 
+  left_join(political_violence, by = join_by(ccode, year)) |>
+  left_join(gdp, by = join_by(ccode, year)) |> 
+  filter(!is.na(gdppc)) |> 
+  mutate(violence = na.locf(violence, .by = ccode)) 
+
+model_2step <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  selection(coup > 0 ~ regime + ct + gdppc + violence + pre_coups,
+            coup > 1 ~ regime + ct + gdppc + violence,
+            data = _) 
+
+model_selection <- model_2step
+model_selection$param$index$betaO <- model_2step$param$index$betaS
+model_selection$param$index$betaS <- model_2step$param$index$betaO
+
+stargazer(model_selection, model_2step, 
+          type = "html", 
+          header = F,
+          column.labels = c("Coup Attempts", "Coup Outcome"),
+          intercept.bottom = F,
+          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
+          label = "results",
+          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
+          dep.var.caption = "",
+          dep.var.labels.include = F,
+          summary.logical = T,
+          column.sep.width = "50pt",
+          font.size = "tiny",
+          no.space = T
+          )
 ```
 
 ## Thank You! {.unnumbered .center}
