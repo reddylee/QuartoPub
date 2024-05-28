@@ -34,6 +34,33 @@ bibliography: references.bib
 execute:
   warning: false
   message: false
+  
+include-in-header:
+  - text: |
+      <style>
+      #title-slide .title {
+        font-size: 1.5em;
+        color: #00296b;
+      }
+      .reveal h2 {
+        color: #00296b
+      }
+      .v-center-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 80%;
+        }
+      .reveal p {
+        font-size: 1.2em;
+      }
+      .reveal a {
+        color: purple;
+      }
+      .reveal .slide-number > a[href*='title-slide'] {
+        display: none;
+      }
+      </style>
 ---
 
 ```{r}
@@ -52,28 +79,15 @@ library(stargazer)
 
 ## Introduction
 
-<br>
-
-> About [one hundred potential determinants]{.underline} of coups have been
-> proposed, but no consensus has emerged on an established baseline model for
-> analysing coups.
->
-> *When to expect a coup d’e ́tat? An extreme bounds analysis of coup
-> determinants* [@gassebner2016, p.293]
-
----------------------------------------------------------------------------------
-
-##  {.unnumbered .center}
-
-### A hundred potential determinants proposed, yet no consensus. {.unnumbered}
+### Research Question
 
 <br>
 
-### Is there any possibility of agreeing on convincing and widely accepted determinants of coups? {.unnumbered}
+Why are coups more frequent in some countries than in others?
 
 ---------------------------------------------------------------------------------
 
-### Review of Proposed Variables {.unnumbered}
+### Review of Previously Proposed Variables
 
 ::: r-stack
 ![](image1.png){fig-align="center" width="100%"}
@@ -83,14 +97,28 @@ library(stargazer)
 ![](image5.png){fig-align="center" width="100%"}
 :::
 
-## What do we find? {.unnumbered}
+---------------------------------------------------------------------------------
 
-. . .
+##  {.unnumbered .center}
 
-::: {style="font-size: 1.5em; margin-top: 100px"}
-All the variables used in previous studies focus on pre-coup conditions, with no
-consideration given to post-coup factors.
-:::
+> About **one hundred potential determinants** of coups have been proposed, but
+> no consensus has emerged on an established baseline model for analysing coups.
+>
+> -- *When to expect a coup d’e ́tat? An extreme bounds analysis of coup
+> determinants* [@gassebner2016, p.293]
+
+---------------------------------------------------------------------------------
+
+### Drawbacks of Previous Studies
+
+-   All the variables used in previous studies focus on pre-coup conditions, with
+    no consideration given to post-coup factors.
+
+-   However, coups are high-stakes gambles with an all-or-nothing nature. No coup
+    plotters would stage a coup without some assurance of success.
+
+-   Therefore, the expected outcome of a coup attempt is a crucial determinant of
+    whether a coup is attempted.
 
 ---------------------------------------------------------------------------------
 
@@ -174,7 +202,7 @@ that the average success rate of these coup attempts is approximately 50%.
 
 ---------------------------------------------------------------------------------
 
-### But what does the success rate of coups imply? {.unnumbered}
+### But what does the success rate of coups imply?
 
 -   If we focus on the success rate, we might identify the determinants really
     impact coup attempts and avoid dwelling on less relevant factors.
@@ -186,7 +214,7 @@ that the average success rate of these coup attempts is approximately 50%.
 
 ---------------------------------------------------------------------------------
 
-### Regime types and power dynamics {.unnumbered}
+### Regime types and power dynamics
 
 According to @geddes2014 (GWF), autocratic regimes can be categorized into three
 broad types based on leadership origins and decision-making factors:
@@ -355,12 +383,12 @@ across different regime types, their success rates are converging towards 50%.
 
 -   This convergence cannot be due to chance.
 
--   Coup attempts are self-selected.
+-   Coup attempts are self-selected events.
 
 -   Therefore, a double *probit* model with sample selection is more appropriate.
 
-    -   The first stage (selection equation) examines the probability that a
-        regime experiences a coup attempt.
+    -   The first stage (selection equation) examines the probability of a regime
+        experiencing a coup attempt.
     -   The second stage (outcome equation) evaluates the probability of the
         success of those coups.
 
@@ -381,69 +409,21 @@ across different regime types, their success rates are converging towards 50%.
 
 ## Results and discussion
 
-```{r}
-#| echo: false
-#| results: asis
+![Sample Selection Model of Regime Types and Coups,
+1950-2019](coups_and_regimes.png){#tbl-results}
 
-library(readxl)
-political_violence <- read_excel("MEPVv2018.xls") |> 
-  dplyr::select(ccode, year, violence = actotal)
+---------------------------------------------------------------------------------
 
-gdp <- vdem |> 
-  dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
-  filter(year > 1944) |> 
-  mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
-                               align = 'right', fill = NA)),
-         .by = c(ccode)) 
+##  {.unnumbered .center}
 
-coup_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t") |> 
-  mutate(coup = case_when(
-    coup1 == 0 ~ 0,
-    coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
-    TRUE ~ 1
-  )) |>
-  mutate(pre_coups = cumsum(lag(coup)  %in% c(1,2))) |> 
-  dplyr::select(ccode, year, coup, pre_coups)
+::: {style="font-size: 1.8em; color: purple;"}
+Thanks for your attention!
+:::
 
-reg_data <- regimes |> 
-  dplyr::select(country = extended_country_name,
-         ccode = reign_cowcode, year, regime_type) |>
-  left_join(coup_all, by = join_by(ccode, year)) |> 
-  left_join(political_violence, by = join_by(ccode, year)) |>
-  left_join(gdp, by = join_by(ccode, year)) |> 
-  filter(!is.na(gdppc)) |> 
-  mutate(violence = na.locf(violence, .by = ccode)) 
+<br>
 
-model_2step <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
-  selection(coup > 0 ~ regime + ct + gdppc + violence + pre_coups,
-            coup > 1 ~ regime + ct + gdppc + violence,
-            data = _) 
-
-model_selection <- model_2step
-model_selection$param$index$betaO <- model_2step$param$index$betaS
-model_selection$param$index$betaS <- model_2step$param$index$betaO
-
-stargazer(model_selection, model_2step, 
-          type = "html", 
-          header = F,
-          column.labels = c("Coup Attempts", "Coup Outcome"),
-          intercept.bottom = F,
-          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
-          label = "results",
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
-          dep.var.caption = "",
-          dep.var.labels.include = F,
-          summary.logical = T,
-          column.sep.width = "50pt",
-          font.size = "tiny",
-          no.space = T
-          )
-```
-
-## Thank You! {.unnumbered .center}
-
-Comments and suggestions are welcome and appreciated!
+::: {style="font-size: 1.1em;"}
+Comments and suggestions are appreciated!
+:::
 
 ## References {.hidden}
