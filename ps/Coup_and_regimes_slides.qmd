@@ -52,7 +52,7 @@ include-in-header:
           height: 80%;
         }
       .reveal p {
-        font-size: 1.2em;
+        font-size: 1.1em;
       }
       .reveal a {
         color: purple;
@@ -129,25 +129,19 @@ Why are coups more frequent in some countries than in others?
 #### The expected payoff of coups can be represented by the equation: {.unnumbered}
 
 $$
-\begin{aligned}
 E(U) = p \times B + (1 - p) \times (-C)
-\end{aligned}
 $$
 
 #### The condition for staging a coup is when the expected benefit is positive, meaning that the expected pay-off is greater than 0. Rearranging the equation, we get: {.unnumbered}
 
 $$
-\begin{aligned}
-p \times B > (1 - p) \times C
-\end{aligned}
+p \times B \> (1 - p) \times C
 $$
 
 #### B and C are difficult to capture and measure, but we can consider them equally significant. Therefore, we can omit them and focus our attention on $p$: {.unnumbered}
 
 $$
-\begin{aligned}
 p > (1-p)
-\end{aligned}
 $$
 
 ---------------------------------------------------------------------------------
@@ -196,16 +190,18 @@ coups |>
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
 
-@tbl-coups presents the top 10 countries with the highest number of coup
-attempts, along with their respective success rates. Notably, the data indicates
-that the average success rate of these coup attempts is approximately 50%.
+::: {style="font-size: 0.8em"}
+@tbl-coups presents the top 10 countries of coup attempts and their success
+rates. Notably, the average success rate of these coup attempts is approximately
+50%.
+:::
 
 ---------------------------------------------------------------------------------
 
 ### But what does the success rate of coups imply?
 
--   If we focus on the success rate, we might identify the determinants really
-    impact coup attempts and avoid dwelling on less relevant factors.
+-   If we focus on the success rate, we might identify the determinants that
+    truly impact coup attempts and avoid dwelling on less relevant factors.
 
 -   So, what could most significantly influence the success rate of coups? The
     answer lies in the balance of power within the ruling elites.
@@ -289,41 +285,24 @@ coup_likelihood = percent(num_of_coups / country_year, accuracy = 0.1)) |>
   tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
 ```
 
-@tbl-regimes1 presents the distribution of regime types and their likelihood of
-experiencing coups. It is noticeable that military regimes have the highest
-likelihood of coups, followed by personalist regimes, with the exception of the
-"Other" category.
-
-## Theorey
-
-### Why military regimes are more prone to coups?
-
-A military regime is essentially a temporary and compromise-based regime when a
-formal power structure cannot be established.
-
--   It lacks an institutional arrangement led by a ruling party.
-
--   It does not have a strongman with overwhelming dominance.
-
--   Military leaders often do not trust each other, which easily leads to
-    disputes and conflicts of interest.
-
--   Worse still, since each of these military leaders commands their own military
-    forces, they tend to resolve conflicts and disputes by force.
+@tbl-regimes1 presents the regime types and their likelihood of experiencing
+coups. It is noticeable that military regimes have the highest likelihood of
+coups, followed by personalist regimes, with the exception of the "Other"
+category.
 
 ---------------------------------------------------------------------------------
 
-### Why personalist regimes are also prone to coups?
+### Why military regimes are most prone to coups, followed by personalist regimes?
 
-In comparison, personalist dictatorships are slightly better than military
-regimes because:
+::: {#fig-regimes layout-ncol="3"}
+![Dominant-party](party.png)
 
--   There is a strongman who uses their power and charisma to balance various
-    factions.
+![Personalist](personal.png){width="80%"}
 
--   If the leader faces severe health issues, dies of illness, natural causes, or
-    assassination, the regime is likely to experience turmoil, thereby laying the
-    groundwork for potential coups.
+![Military](military.png)
+
+Features of different regime types
+:::
 
 ---------------------------------------------------------------------------------
 
@@ -373,15 +352,16 @@ coup_likelihood = percent(num_of_coups / country_year, accuracy = 0.1)) |>
   tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
 ```
 
-@tbl-regimes2 shows the distribution of regime types and their success rates. It
-is evident that, although the likelihood of coup attempts varies significantly
-across different regime types, their success rates are converging towards 50%.
+::: {style="font-size: 0.8em"}
+@tbl-regimes2 shows the regime types and success rates. It is evident that the
+success rates in different regime types are quite close.
+:::
 
 ---------------------------------------------------------------------------------
 
 ### Double *probit* with sample selection model (continued) {.unnumbered}
 
--   This convergence cannot be due to chance.
+-   The similar success rates cannot be due to chance.
 
 -   Coup attempts are self-selected events.
 
@@ -414,6 +394,16 @@ across different regime types, their success rates are converging towards 50%.
 
 ---------------------------------------------------------------------------------
 
+### Conclusion
+
+-   The direction and significance of the coefficients align with theoretical
+    expectations. Due to distinct internal power dynamics, Military and
+    personalist regimes, are more likely to experience coup attempts compared to
+    dominant-party regimes, holding other factors constant.
+
+-   Better economic conditions not only reduce the likelihood of coup attempts
+    but also decrease the likelihood of coup success.
+
 ##  {.unnumbered .center}
 
 ::: {style="font-size: 1.8em; color: purple;"}
@@ -423,7 +413,7 @@ Thanks for your attention!
 <br>
 
 ::: {style="font-size: 1.1em;"}
-Comments and suggestions are appreciated!
+Comments and suggestions are welcome!
 :::
 
 ## References {.hidden}
