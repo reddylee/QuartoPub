@@ -513,6 +513,26 @@ professionalism, respect for rules, and uncharismatic demeanor
 [@arriagadaherrera1988]. Although Pinochet later surprised them, this example
 illustrates that juntas are generally unstable leadership groups.
 
+```{r}
+#| label: tbl-regimes1
+#| tbl-cap: Main features of different types of regimes 
+#| echo: !expr format == "html"
+
+read.csv("regimes_comparison.csv") |> 
+  mutate(institutionalized_leadership_succession = percent(institutionalized_leadership_succession)) |> 
+  clean_names(case = "title") |> 
+  gt() |> 
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  cols_width(
+    4 ~ px(180),
+    3 ~ px(80),
+    1:2 ~ px(30)
+  ) |> 
+  tab_source_note(source_note = md("*Source: GWF & Author*"))
+```
+
 These differing power dynamics significantly impact the likelihood of coup
 attempts. Military regimes, in particular, have an inherent predisposition
 towards coups, as junta members typically command their own military factions,
@@ -523,6 +543,8 @@ coups despite comprising only 13% of country-years. Dominant-party regimes, with
 their stronger institutions and unified leadership, have the lowest incidence of
 coups, constituting 22.6% of country-years but responsible for only 16.7% of
 coups.
+
+\cleardoublepage
 
 ```{r}
 #| label: tbl-regimes
