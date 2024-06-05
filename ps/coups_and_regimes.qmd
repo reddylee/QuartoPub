@@ -39,6 +39,8 @@ library(democracyData)
 library(vdemdata)
 library(sampleSelection)
 library(stargazer)
+library(readxl)
+library(here)
 ```
 
 ```{r}
@@ -451,7 +453,7 @@ regimes, personalist regimes, or dominant-party regimes.
 #| tbl-cap: Main features of different types of regimes 
 #| echo: !expr format == "html"
 
-read.csv("regimes_comparison.csv") |> 
+read.csv(here("data/regimes_comparison.csv")) |> 
   mutate(institutionalized_leadership_succession = percent(institutionalized_leadership_succession)) |> 
   clean_names(case = "title") |> 
   gt() |> 
@@ -562,7 +564,7 @@ selective nature of coup attempts. While coup attempt rates vary across regimes
 (as discussed previously), success rates tend to be surprisingly consistent,
 hovering around 50% (as shown in @tbl-regimes). This suggests that coup attempts
 are not random acts, but rather strategically planned and undertaken only when
-the odds of success appear favorable. A standard statistical model would not
+the odds of success appear favourable. A standard statistical model would not
 account for this selectivity, potentially leading to biased results.
 
 To address this issue, we utilize a two-stage sample selection model, similar to
@@ -702,11 +704,11 @@ attempt.
 ### Interpretation and Discussion
 
 ```{r}
+#| label: regression
 #| results: asis
 #| echo: false
 
-library(readxl)
-political_violence <- read_excel("MEPVv2018.xls") |> 
+political_violence <- read_excel("../data/MEPVv2018.xls") |> 
   dplyr::select(ccode, year, violence = actotal)
 
 gdp <- vdem |> 

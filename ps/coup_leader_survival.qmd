@@ -1,0 +1,158 @@
+---
+title: "Survival of Political Leaders After Coups and Autocoups"
+author:
+  - name: Zhu Qi
+    affiliations: University of Essex
+    email: qz21485@essex.ac.uk
+
+date: "`r Sys.Date()`"
+date-modified: last-modified
+format:
+  aps-html: default
+  aps-pdf: default
+  docx: default
+  aps-revealjs:
+    output-file: survival1.html
+categories: [Article, Coups]
+bibliography: references.bib
+
+abstract: |
+  This study explores and compares the survival time of two categories of irregular-entry political leaders: those who ascend to power through coups and those who overstay their legitimate term limits (autocoups). The central hypothesis posits that the mode of accession to power influences the duration of their tenures. Utilizing survival analysis, the results indicate that leaders who overstay their terms through autocoups generally remain in power longer than those who come to power through coups.
+
+keywords: [Coups, Autocoups, Survival, Political Leadership]
+
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+library(tidyverse)
+library(survival)
+library(survminer)
+library(ggsurvfit)
+library(gt)
+library(janitor)
+library(scales)
+library(zoo)
+library(democracyData)
+library(vdemdata)
+library(stargazer)
+library(here)
+```
+
+## Introduction
+
+Survival of political leaders has long been attracted political scholars'
+extensive attention. Although a lot of research has been done on this topic in
+political science, two specific types of leaders, coup-entry leaders and autocoup
+leaders, have not been paid enough attention. Examining the tenures of these two
+irregularly ascended leaders holds particular significance for two reasons.
+
+Firstly, irregularly ascended leaders constitute the majority of irregular exits
+from power. According to [@goemans2009], between 1945 and 2015, out of 1472
+leaders who assumed office through regular channels, approximately 213 exited
+irregularly (14.5%). Conversely, out of 308 leaders who assumed office through
+irregular means, roughly 158 (51.3%) experienced irregular exits.
+
+Secondly, among irregularly ascended leaders, the majority gained power through
+launching coups or overstaying in their office. As per [@goemans2009], out of 374
+leaders who exited irregularly, 246 were ousted through coups, constituting 65.8%
+of these cases. Additionally, between 1945 and 2020, there were 106 attempts to
+overstay in power, of which 86 were successful [@zhu2024]. The overstay leaders,
+who extend their legitimate term limits, technically staged coups against
+legitimate future leaders. Therefore, they could be treated as autocoup leaders.
+Hence, it becomes both relevant and enlightening to delve into and compare the
+tenures of survival between coup-entry leaders and autocoup leaders.
+
+While it is expected that autocoup leaders survive longer than coup-entry leaders
+when considering their total tenures, a more insightful comparison arises when
+examining the tenures following auto-coups in contrast to those of coup-entry
+leaders. Conducting a log-rank test in survival analysis on the leaders dataset
+[@goemans2009] and the author's autocoup dataset [@zhu2024] reveals a distinct
+contrast between autocoup leaders and coup-entry leaders.
+
+```{r}
+#| label: data
+#| echo: !expr format == "html"
+#| include: !expr format == "html"
+
+Mydata1 <- read.csv(here("data/mydata1.csv")) |> 
+  mutate(survival_year = survival_time / 365)
+
+avg <- Mydata1 |>
+  summarise(avg=round(mean(survival_year),1),
+            .by = group)
+
+avg
+```
+
+```{r}
+#| label: fig-logrank
+#| fig-width: 7
+#| fig-height: 5
+#| fig-align: center
+#| fig-cap: Survival curves of overstaying and coup-entry leaders
+#| echo: !expr format == "html"
+
+# Fit survival curves
+fit <- survfit(Surv(survival_year, status) ~ group, data = Mydata1)
+# Create log-rank plot (Kaplan-Meier plot)
+ggsurvplot(fit, 
+           data = Mydata1, 
+           risk.table = TRUE, 
+           risk.table.height = 0.3, 
+           pval = TRUE,
+           surv.median.line = "hv",
+           break.x.by = 5, 
+           legend.title = "Leader Type",
+           legend.labs = c("entry by autocoup", "entry by coup"),
+           xlab = "Survival Years",
+           #title = "Survival Curves of overstay and coup-entry leaders",
+           font.title = 14)
+```
+
+Specifically, according to @fig-logrank, the average survival time after
+auto-coups, excluding their original term duration, is approximately
+`r avg$avg[1]` years. In contrast, leaders who ascend to power via coups
+typically have an average survival time of `r avg$avg[2]` years, signifying an
+average shortfall of 5 years in their tenure compared to autocoup leaders.
+
+Thus, this study posits that the manner in which leaders ascend to power
+significantly influences the duration of their leadership tenure. Unlike leaders
+who overstay, those who seize power through coups encounter greater challenges
+related to legitimacy, uncertainty, instability, and power-sharing, potentially
+curtailing their survival duration.
+
+By employing Cox proportional hazard model and extended Cox model, the results
+suggest that leaders who exceed their term limits generally experience longer
+tenures compared to those who come to power through coups.
+
+This study could offer dual contributions. First, it underscores that the
+duration of survival and unexpected exits is not solely determined by leaders'
+conduct after assuming power but is fundamentally shaped by their methods of
+gaining power. It highlights a notable disparity in tenures between overstaying
+leaders and coup-entry leaders. Second, it provides empirical measurements to
+compare the tenure duration of these two irregularly ascended leaders, offering
+insights into their distinct impacts on leadership longevity.
+
+Subsequent to the introduction, the second chapter of this research comprises a
+comprehensive literature review on political survival, elucidating the potential
+contributions of this paper. The third chapter delves into the examination of
+factors influencing the survival of leaders who have ascended to power through
+coups or self-coups. Chapter 4 outlines the methodology and data utilized,
+employing a survival model for a comprehensive analysis of the determinants of
+leaders' survival. Chapter 5 presents the findings of this analysis, facilitating
+an in-depth discussion of the results. Finally, in Chapter 6, the paper concludes
+by synthesizing these findings and exploring their broader implications.
+
+```{r}
+#| results: asis
+#| eval: !expr format == "latex"
+#| echo: false
+cat("\\newpage
+## References")
+```
