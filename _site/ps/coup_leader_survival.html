@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.4.554">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-06-05">
+<meta name="dcterms.date" content="2024-06-06">
 <meta name="keywords" content="Coups, Autocoups, Survival, Political Leadership">
 <title>Can.Do.So - Irregular Leadership Transitions and Political Stability: A Survival Analysis of Coups and Autocoups</title>
 <style>
@@ -191,6 +191,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
    
   <ul>
 <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review"><span class="header-section-number">2</span> Literature review</a></li>
   </ul><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="coup_leader_survival.pdf"><i class="bi bi-file-pdf"></i>PDF (aps)</a></li><li><a href="coup_leader_survival.docx"><i class="bi bi-file-word"></i>MS Word</a></li><li><a href="survival1.html"><i class="bi bi-file-slides"></i>RevealJS (aps)</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -223,14 +224,14 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 5, 2024</p>
+      <p class="date">June 6, 2024</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 5, 2024</p>
+      <p class="date-modified">June 6, 2024</p>
     </div>
   </div>
     
@@ -253,9 +254,9 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </header><section id="introduction" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="introduction">
 <span class="header-section-number">1</span> Introduction</h2>
 <p>The survival of political leaders has been a well-studied topic in political science. However, two specific types of leaders - those who come to power through coups and those who overstay their legitimate terms (autocoup leaders) - have received comparatively less attention. Examining the tenures of these irregularly ascended leaders holds particular significance for two main reasons.</p>
-<p>Firstly, leaders who ascend through irregular means constitute the majority of irregular exits from power. According to <span class="citation" data-cites="goemans2009">GOEMANS, GLEDITSCH, and CHIOZZA (<a href="#ref-goemans2009" role="doc-biblioref">2009</a>)</span>, between 1945 and 2015, out of 1,472 leaders who assumed office through regular channels, approximately 213 exited irregularly (14.5%). Conversely, out of 308 leaders who assumed office through irregular means, roughly 158 (51.3%) experienced irregular exits.</p>
-<p>Secondly, among irregularly ascended leaders, the majority gained power through launching coups or overstaying in office. As per <span class="citation" data-cites="goemans2009">GOEMANS, GLEDITSCH, and CHIOZZA (<a href="#ref-goemans2009" role="doc-biblioref">2009</a>)</span>, out of 374 leaders who exited irregularly, 246 were ousted through coups, constituting 65.8% of these cases. Additionally, between 1945 and 2020, there were 106 attempts to overstay in power, of which 86 were successful <span class="citation" data-cites="Zhu2024">(<a href="#ref-Zhu2024" role="doc-biblioref"><strong>Zhu2024?</strong></a>)</span>. Leaders who extend their legitimate term limits essentially stage coups against legitimate successors, thereby qualifying as autocoup leaders. Hence, it is both relevant and insightful to delve into and compare the tenures of coup-entry leaders and autocoup leaders.</p>
-<p>While it is expected that autocoup leaders survive longer than coup-entry leaders when considering their total tenures, a more insightful comparison arises when examining the tenures following autocoups in contrast to those of coup-entry leaders. Conducting a log-rank test in survival analysis on the leaders dataset <span class="citation" data-cites="goemans2009">(<a href="#ref-goemans2009" role="doc-biblioref">GOEMANS, GLEDITSCH, and CHIOZZA 2009</a>)</span> and the author’s autocoup dataset <span class="citation" data-cites="zhu2024">Zhu (<a href="#ref-zhu2024" role="doc-biblioref">2024</a>)</span>] reveals a distinct contrast between autocoup leaders and coup-entry leaders.</p>
+<p>Firstly, leaders who ascend through irregular means constitute the majority of irregular exits from power. According to <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#ref-goemans2009" role="doc-biblioref">2009</a>)</span>, between 1945 and 2015, out of 1,472 leaders who assumed office through regular channels, approximately 213 exited irregularly (14.5%). Conversely, out of 308 leaders who assumed office through irregular means, roughly 158 (51.3%) experienced irregular exits.</p>
+<p>Secondly, among irregularly ascended leaders, the majority gained power through launching coups or overstaying in office. As per <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#ref-goemans2009" role="doc-biblioref">2009</a>)</span>, out of 374 leaders who exited irregularly, 246 were ousted through coups, constituting 65.8% of these cases. Additionally, between 1945 and 2020, there were 106 attempts to overstay in power, of which 86 were successful <span class="citation" data-cites="Zhu2024">(<a href="#ref-Zhu2024" role="doc-biblioref"><strong>Zhu2024?</strong></a>)</span>. Leaders who extend their legitimate term limits essentially stage coups against legitimate successors, thereby qualifying as autocoup leaders. Hence, it is both relevant and insightful to delve into and compare the tenures of coup-entry leaders and autocoup leaders.</p>
+<p>While it is expected that autocoup leaders survive longer than coup-entry leaders when considering their total tenures, a more insightful comparison arises when examining the tenures following autocoups in contrast to those of coup-entry leaders. Conducting a log-rank test in survival analysis on the leaders dataset <span class="citation" data-cites="goemans2009">(<a href="#ref-goemans2009" role="doc-biblioref">Goemans, Gleditsch, and Chiozza 2009</a>)</span> and the author’s autocoup dataset <span class="citation" data-cites="zhu2024">Zhu (<a href="#ref-zhu2024" role="doc-biblioref">2024</a>)</span>] reveals a distinct contrast between autocoup leaders and coup-entry leaders.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>Mydata1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/mydata1.csv"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb1-2"><a href="#cb1-2"></a>  <span class="fu">mutate</span>(<span class="at">survival_year =</span> survival_time <span class="sc">/</span> <span class="dv">365</span>)</span>
@@ -304,7 +305,27 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 <p>Thus, we hypothesize that the method of accession significantly influences leadership longevity. Coup leaders likely face greater challenges to their legitimacy, leading to a more precarious initial period in power. They may encounter higher levels of uncertainty, instability, and pressure to share power, all of which could contribute to a shorter average tenure compared to autocoup leaders.</p>
 <p>By employing the Cox proportional hazards model and the extended Cox model, the results suggest that leaders who exceed their term limits generally experience longer tenures compared to those who come to power through coups.</p>
 <p>This study offers two key contributions. First, it highlights a critical factor often overlooked in leadership survival studies: the impact of accession method. Leaders’ survival is not solely determined by their actions after taking power, but also by the way they acquired power in the first place. This research underscores the significant difference in tenure duration between autocoup and coup leaders. Second, it provides empirical measurements to compare the tenure duration of these two irregularly ascended leaders, offering insights into their distinct impacts on leadership longevity.</p>
-<p>The remainder of the paper delves deeper into this topic. Chapter 2 provides a comprehensive literature review on political survival, establishing the context for this research. Chapter 3 explores the factors influencing the survival of coup and autocoup leaders. Chapter 4 outlines the methodology and data used, including the application of survival models to analyze the determinants of leadership longevity. Chapter 5 presents the findings of the analysis and a detailed discussion of the results. Finally, Chapter 6 concludes by synthesizing the key takeaways and exploring their broader implications.</p>
+<p>The remainder of the paper delves deeper into this topic. Chapter 2 provides a comprehensive literature review on political survival, establishing the context for this research. Chapter 3 explores the factors influencing the survival of coup and autocoup leaders. Chapter 4 outlines the methodology and data used, including the application of survival models to analyse the determinants of leadership longevity. Chapter 5 presents the findings of the analysis and a detailed discussion of the results. Finally, Chapter 6 concludes by synthesizing the key takeaways and exploring their broader implications.</p>
+</section><section id="literature-review" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="literature-review">
+<span class="header-section-number">2</span> Literature review</h2>
+<p>The topic of political survival has been a cornerstone of political science research for decades. This enduring interest stems from the vast variations observed across regimes, countries, and historical periods. Before delving deeper into the subject, it is crucial to distinguish between two distinct yet interconnected concepts: regime survival and individual leader survival.</p>
+<p>Regime survival focuses on the longevity of political systems, such as monarchies, political parties, or specific ideological structures. Leader survival, on the other hand, is concerned with the duration of individual leaders’ time in office. These two concepts often exhibit contrasting patterns. For example, in parliamentary democracies like Japan or the UK, specific political parties may hold power for extended periods while individual leaders (Prime Ministers) change frequently. Similarly, communist regimes typically see long-lasting parties in power, with leadership transitions occurring at a slower pace. In contrast, presidential systems like the United States or some military regimes experience more frequent changes in both the ruling party and the head of government. This study specifically investigates the dynamics of individual leader survival, focusing on the factors influencing how long leaders remain in power.</p>
+<p>The existing literature on leader survival is vast and multifaceted, offering a wealth of insightful perspectives. Some studies delve into the specific mechanisms that influence leadership longevity within particular regimes, such as democracies or autocracies. Others seek to develop more generalizable theoretical frameworks that can explain leader survival across diverse political systems. While the development of a universal theory remains an alluring goal, it is important to acknowledge the inherent challenges in creating a single model that encompasses the complexities of leadership survival across all regime types.</p>
+<p><strong>Transparent and inclusive vs.&nbsp;Opaque and exclusive</strong></p>
+<p><strong>First of all</strong>, the mechanisms governing power transitions differ dramatically in different countries, particularly between democracies and autocracies. The key distinctions in the leadership selection process can be characterized as follows: transparent vs.&nbsp;opaque and inclusive vs.&nbsp;exclusive.</p>
+<p>In many autocratic systems, leadership selection is a closed affair. Potential candidates are often restricted to a narrow pool, such as royal families, military elites, or members of the ruling party. Selection processes are shrouded in secrecy, and dissent can be met with harsh consequences. Even elections exist in some autocracies, like Russia, there may have significant barriers to entry for legitimate challengers. Potential rivals may face threats like assassination, imprisonment, or exile.</p>
+<p>This lack of transparency makes it difficult to gauge true levels of public support as in democracies. Calculating selectorates or winning coalitions, as explored by <span class="citation" data-cites="buenodemesquita2003">Bueno de Mesquita et al. (<a href="#ref-buenodemesquita2003" role="doc-biblioref">2003</a>)</span>, becomes a near-impossible task. Leadership transitions in autocracies often hinge on internal power struggles rather than public opinion. A dictator may retain power despite low public support.</p>
+<p>In contrast, democracies have relatively open competition for leadership positions. Challengers can openly campaign and garner support through public speeches, media campaigns, and grassroots movements. If no single candidate commands a majority, factions can collaborate, leading to power transitions with broader public backing. This allows for a more accurate assessment of power dynamics through public opinion polls and electoral performance.</p>
+<p><strong>Regular and predictable vs.&nbsp;Irregular and unpredictable</strong></p>
+<p><strong>Secondly,</strong> beyond the differences in openness and inclusivity, leadership transitions in autocracies and some democracies are far more irregular and unpredictable compared to stable democracies.</p>
+<p>Many autocratic regimes lack institutionalized mechanisms for succession or term limits. A leader’s tenure often hinges on their ability to maintain control and consolidate power. Certain dictators maintain an indefinite grip on power until their death, subsequently transferring authority to family members, such as sons in the cases of Syria and North Korea, or brothers in Cuba. This can also lead to unexpected and irregular leadership changes. Leaders may be ousted through coups, rebellions, uprisings, or popular protests. The opacity surrounding power dynamics can also contribute to instability. Even seemingly strong leaders can be overthrown by a small, well-positioned faction within the regime. Take, for instance, Henri Namphy, who assumed the presidency of Haiti following a coup in June 1988, only to be ousted by another coup a mere three months later in September of the same year. However, Qaddafi, the dictator of Libya, seized power in a coup in 1969 and ruled for over 40 years before being killed in 2011 by NATO-backed rebel forces <span class="citation" data-cites="goemans2009">(<a href="#ref-goemans2009" role="doc-biblioref">Goemans, Gleditsch, and Chiozza 2009</a>)</span>.</p>
+<p>In contrast, stable democracies experience regular and predictable leadership transitions. Formal institutions, such as term limits, set clear boundaries for how long leaders can remain in office. For example, US presidents are limited to a maximum of two terms, regardless of their popularity. Similarly, in autocratic Mexico from 1919 to 2000, each president served a fixed six-year term without facing overthrows or overstays, as noted by <span class="citation" data-cites="klesner2019">(<a href="#ref-klesner2019" role="doc-biblioref">Klesner 2019</a>)</span>.</p>
+<p>The study of political survival is particularly captivating due to the intricacies and uncertainties associated with irregular leadership transitions. While regular and anticipated leadership changes are important, they offer less fertile ground for exploring the dynamics of leader longevity. The vast majority of leaders who assume power through established channels also exit power through established mechanisms <span class="citation" data-cites="goemans2009">(<a href="#ref-goemans2009" role="doc-biblioref">Goemans, Gleditsch, and Chiozza 2009</a>)</span>. This research delves into the factors influencing the survival of leaders who achieve power through irregular means, as these transitions often hinge on complex political calculations, power struggles, and unforeseen events.</p>
+<p>Due to the above discussions, the diverse mechanisms influencing political leadership survival have prompted scholars to delve deeper into regime-specific dynamics. For instance, research by <span class="citation" data-cites="svolik2014">Svolik (<a href="#ref-svolik2014" role="doc-biblioref">2014</a>)</span> examines democracies, while <span class="citation" data-cites="davenport2021">Davenport, RezaeeDaryakenari, and Wood (<a href="#ref-davenport2021" role="doc-biblioref">2021</a>)</span> focuses on autocracies. A particular more focus lies on understanding unexpected tenures, where leaders either fail to complete their terms or overstay their mandates.</p>
+<p>In analysing dterminants of leader survival, two primary perspectives have been used to explain leader survival. The first considers contextual factors and resources available to leaders. These include elements like personal competence <span class="citation" data-cites="yu2016">(<a href="#ref-yu2016" role="doc-biblioref">Yu and Jong-A-Pin 2016</a>)</span>, societal stability <span class="citation" data-cites="arriola2009">(<a href="#ref-arriola2009" role="doc-biblioref">Arriola 2009</a>)</span>, economic development <span class="citation" data-cites="palmer1999 williams2011">(<a href="#ref-palmer1999" role="doc-biblioref">Palmer and Whitten 1999</a>; <a href="#ref-williams2011" role="doc-biblioref">Williams 2011</a>)</span>, access to natural resources <span class="citation" data-cites="smith2004 quirozflores2012 wright2013">(<a href="#ref-smith2004" role="doc-biblioref">Smith 2004</a>; <a href="#ref-quirozflores2012" role="doc-biblioref">Quiroz Flores and Smith 2012</a>; <a href="#ref-wright2013" role="doc-biblioref">Wright, Frantz, and Geddes 2013</a>)</span>, and external support networks<span class="citation" data-cites="licht2009 wright2008 thyne2017">(<a href="#ref-licht2009" role="doc-biblioref">Licht 2009</a>; <a href="#ref-wright2008" role="doc-biblioref">Wright 2008</a>; <a href="#ref-thyne2017" role="doc-biblioref">Thyne et al. 2017</a>)</span>. The second perspective explores the strategies leaders employ to implement their agendas. This includes both the leaders’ political goals and their responses to opposition, challenges, or even coups and rebellions <span class="citation" data-cites="gandhi2007 morrison2009 escribà-folch2013 davenport2021">(<a href="#ref-gandhi2007" role="doc-biblioref">Gandhi and Przeworski 2007</a>; <a href="#ref-morrison2009" role="doc-biblioref">Morrison 2009</a>; <a href="#ref-escrib%C3%A0-folch2013" role="doc-biblioref">Escribà-Folch 2013</a>; <a href="#ref-davenport2021" role="doc-biblioref">Davenport, RezaeeDaryakenari, and Wood 2021</a>)</span>.</p>
+<p>Unsurprisingly, coups have received significant scholarly attention due to their role in removing authoritarian leaders <span class="citation" data-cites="svolik2009 frantz2016">(<a href="#ref-svolik2009" role="doc-biblioref">Svolik 2009</a>; <a href="#ref-frantz2016" role="doc-biblioref">Frantz and Stein 2016</a>)</span>. Existing research explores both strategies for thwarting coups <span class="citation" data-cites="powell2017 sudduth2017 debruin2020">(<a href="#ref-powell2017" role="doc-biblioref">Powell 2017</a>; <a href="#ref-sudduth2017" role="doc-biblioref">Sudduth 2017a</a>; <a href="#ref-debruin2020" role="doc-biblioref">De Bruin 2020</a>)</span> and how leaders extend their tenures after surviving coup attempts <span class="citation" data-cites="easton2018">(<a href="#ref-easton2018" role="doc-biblioref">Easton and Siverson 2018</a>)</span>. For example, <span class="citation" data-cites="sudduth2017a">Sudduth (<a href="#ref-sudduth2017a" role="doc-biblioref">2017b</a>)</span> examines the post-coup actions of dictators, focusing on purge strategies. They argue that coup leaders initially hold more power than elites within the regime, making them less susceptible to subsequent coups. This challenges the conventional view of new leaders as inherently weak <span class="citation" data-cites="roessler2011">(<a href="#ref-roessler2011" role="doc-biblioref">Roessler 2011</a>)</span>. Despite this distinction, both Sudduth and Roessler acknowledge that new leaders often consolidate power by purging rivals (Sudduth suggests this occurs when there is minimal risk, while Roessler argues it happens when threats are perceived). While the debate on the initial strength of coup leaders continues, both perspectives agree that early purges are more likely.</p>
+<p><span class="citation" data-cites="sudduth2018">Sudduth and Bell (<a href="#ref-sudduth2018" role="doc-biblioref">2018</a>)</span> investigates how leaders’ entry methods affect their removal in dictatorships. They argue that irregular entry does not necessarily increase the likelihood of removal. In fact, some forms of irregular entry may offer protection. However, their focus was on how leaders lose office, not how long they stay in power. Additionally, they compared six types of irregular leaders without specifically examining the distinction between coup-entry and autocoup leaders.</p>
+<p>While scholars have extensively analysed leader survival across various contexts, including universal frameworks, autocratic regimes, and the aftermath of failed challenges, a significant gap remains. There is a lack of research specifically exploring and comparing the survival tenures of leaders who extend their tenures through autocoups compared to those who come to power through coups d’état. This study aims to address this gap by investigating and comparing the duration of leadership survival between these two distinct leader types.</p>
 
 
 <!-- -->
@@ -314,8 +335,86 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 </div>
 
 </section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-arriola2009" class="csl-entry" role="listitem">
+Arriola, Leonardo R. 2009. <span>“Patronage and Political Stability in Africa.”</span> <em>Comparative Political Studies</em> 42 (10): 1339–62. <a href="https://doi.org/10.1177/0010414009332126">https://doi.org/10.1177/0010414009332126</a>.
+</div>
+<div id="ref-buenodemesquita2003" class="csl-entry" role="listitem">
+Bueno de Mesquita, Bruce, Alastair Smith, Randolph M. Siverson, and James D. Morrow. 2003. <em>The Logic of Political Survival</em>. The MIT Press. <a href="https://doi.org/10.7551/mitpress/4292.001.0001">https://doi.org/10.7551/mitpress/4292.001.0001</a>.
+</div>
+<div id="ref-davenport2021" class="csl-entry" role="listitem">
+Davenport, Christian, Babak RezaeeDaryakenari, and Reed M Wood. 2021. <span>“Tenure Through Tyranny? Repression, Dissent, and Leader Removal in Africa and Latin America, 1990<span></span>2006.”</span> <em>Journal of Global Security Studies</em> 7 (1). <a href="https://doi.org/10.1093/jogss/ogab023">https://doi.org/10.1093/jogss/ogab023</a>.
+</div>
+<div id="ref-debruin2020" class="csl-entry" role="listitem">
+De Bruin, Erica. 2020. <span>“Preventing Coups d<span>’</span>état.”</span> In, 1–12. Cornell University Press. <a href="https://doi.org/10.7591/cornell/9781501751912.003.0001">https://doi.org/10.7591/cornell/9781501751912.003.0001</a>.
+</div>
+<div id="ref-easton2018" class="csl-entry" role="listitem">
+Easton, Malcolm R, and Randolph M Siverson. 2018. <span>“Leader Survival and Purges After a Failed Coup d<span>’</span>état.”</span> <em>Journal of Peace Research</em> 55 (5): 596–608. <a href="https://doi.org/10.1177/0022343318763713">https://doi.org/10.1177/0022343318763713</a>.
+</div>
+<div id="ref-escribà-folch2013" class="csl-entry" role="listitem">
+Escribà-Folch, Abel. 2013. <span>“Repression, Political Threats, and Survival Under Autocracy.”</span> <em>International Political Science Review</em> 34 (5): 543–60. <a href="https://doi.org/10.1177/0192512113488259">https://doi.org/10.1177/0192512113488259</a>.
+</div>
+<div id="ref-frantz2016" class="csl-entry" role="listitem">
+Frantz, Erica, and Elizabeth A. Stein. 2016. <span>“Countering Coups: Leadership Succession Rules in Dictatorships.”</span> <em>Comparative Political Studies</em> 50 (7): 935–62. <a href="https://doi.org/10.1177/0010414016655538">https://doi.org/10.1177/0010414016655538</a>.
+</div>
+<div id="ref-gandhi2007" class="csl-entry" role="listitem">
+Gandhi, Jennifer, and Adam Przeworski. 2007. <span>“Authoritarian Institutions and the Survival of Autocrats.”</span> <em>Comparative Political Studies</em> 40 (11): 1279–1301. <a href="https://doi.org/10.1177/0010414007305817">https://doi.org/10.1177/0010414007305817</a>.
+</div>
 <div id="ref-goemans2009" class="csl-entry" role="listitem">
-GOEMANS, HENK E., KRISTIAN SKREDE GLEDITSCH, and GIACOMO CHIOZZA. 2009. <span>“Introducing Archigos: A Dataset of Political Leaders.”</span> <em>Journal of Peace Research</em> 46 (2): 269–83. <a href="http://www.jstor.org/stable/25654384">http://www.jstor.org/stable/25654384</a>.
+Goemans, Henk E., Kristian Skrede Gleditsch, and Giacomo Chiozza. 2009. <span>“Introducing Archigos: A Dataset of Political Leaders.”</span> <em>Journal of Peace Research</em> 46 (2): 269–83. <a href="https://doi.org/10.1177/0022343308100719">https://doi.org/10.1177/0022343308100719</a>.
+</div>
+<div id="ref-klesner2019" class="csl-entry" role="listitem">
+Klesner, Joseph L. 2019. <span>“The Politics of Presidential Term Limits in Mexico.”</span> In, 141–58. Oxford University Press. <a href="https://doi.org/10.1093/oso/9780198837404.003.0008">https://doi.org/10.1093/oso/9780198837404.003.0008</a>.
+</div>
+<div id="ref-licht2009" class="csl-entry" role="listitem">
+Licht, Amanda A. 2009. <span>“Coming into Money: The Impact of Foreign Aid on Leader Survival.”</span> <em>Journal of Conflict Resolution</em> 54 (1): 58–87. <a href="https://doi.org/10.1177/0022002709351104">https://doi.org/10.1177/0022002709351104</a>.
+</div>
+<div id="ref-morrison2009" class="csl-entry" role="listitem">
+Morrison, Kevin M. 2009. <span>“Oil, Nontax Revenue, and the Redistributional Foundations of Regime Stability.”</span> <em>International Organization</em> 63 (1): 107–38. <a href="https://doi.org/10.1017/s0020818309090043">https://doi.org/10.1017/s0020818309090043</a>.
+</div>
+<div id="ref-palmer1999" class="csl-entry" role="listitem">
+Palmer, Harvey D., and Guy D. Whitten. 1999. <span>“The Electoral Impact of Unexpected Inflation and Economic Growth.”</span> <em>British Journal of Political Science</em> 29 (4): 623–39. <a href="https://doi.org/10.1017/s0007123499000307">https://doi.org/10.1017/s0007123499000307</a>.
+</div>
+<div id="ref-powell2017" class="csl-entry" role="listitem">
+Powell, Jonathan. 2017. <span>“Leader Survival Strategies and the Onset of Civil Conflict: A Coup-Proofing Paradox.”</span> <em>Armed Forces &amp; Society</em> 45 (1): 27–44. <a href="https://doi.org/10.1177/0095327x17728493">https://doi.org/10.1177/0095327x17728493</a>.
+</div>
+<div id="ref-quirozflores2012" class="csl-entry" role="listitem">
+Quiroz Flores, Alejandro, and Alastair Smith. 2012. <span>“Leader Survival and Natural Disasters.”</span> <em>British Journal of Political Science</em> 43 (4): 821–43. <a href="https://doi.org/10.1017/s0007123412000609">https://doi.org/10.1017/s0007123412000609</a>.
+</div>
+<div id="ref-roessler2011" class="csl-entry" role="listitem">
+Roessler, Philip. 2011. <span>“The Enemy Within: Personal Rule, Coups, and Civil War in Africa.”</span> <em>World Politics</em> 63 (2): 300–346. <a href="https://doi.org/10.1017/s0043887111000049">https://doi.org/10.1017/s0043887111000049</a>.
+</div>
+<div id="ref-smith2004" class="csl-entry" role="listitem">
+Smith, Benjamin. 2004. <span>“Oil Wealth and Regime Survival in the Developing World, 1960<span></span>1999.”</span> <em>American Journal of Political Science</em> 48 (2): 232–46. <a href="https://doi.org/10.1111/j.0092-5853.2004.00067.x">https://doi.org/10.1111/j.0092-5853.2004.00067.x</a>.
+</div>
+<div id="ref-sudduth2017a" class="csl-entry" role="listitem">
+Sudduth, Jun Koga. 2017b. <span>“Strategic Logic of Elite Purges in Dictatorships.”</span> <em>Comparative Political Studies</em> 50 (13): 1768–1801. <a href="https://doi.org/10.1177/0010414016688004">https://doi.org/10.1177/0010414016688004</a>.
+</div>
+<div id="ref-sudduth2017" class="csl-entry" role="listitem">
+———. 2017a. <span>“Strategic Logic of Elite Purges in Dictatorships.”</span> <em>Comparative Political Studies</em> 50 (13): 1768–1801. <a href="https://doi.org/10.1177/0010414016688004">https://doi.org/10.1177/0010414016688004</a>.
+</div>
+<div id="ref-sudduth2018" class="csl-entry" role="listitem">
+Sudduth, Jun Koga, and Curtis Bell. 2018. <span>“The Rise Predicts the Fall: How the Method of Leader Entry Affects the Method of Leader Removal in Dictatorships.”</span> <em>International Studies Quarterly</em> 62 (1): 145–59. <a href="https://doi.org/10.1093/isq/sqx075">https://doi.org/10.1093/isq/sqx075</a>.
+</div>
+<div id="ref-svolik2009" class="csl-entry" role="listitem">
+Svolik, Milan W. 2009. <span>“Power Sharing and Leadership Dynamics in Authoritarian Regimes.”</span> <em>American Journal of Political Science</em> 53 (2): 477–94. <a href="https://doi.org/10.1111/j.1540-5907.2009.00382.x">https://doi.org/10.1111/j.1540-5907.2009.00382.x</a>.
+</div>
+<div id="ref-svolik2014" class="csl-entry" role="listitem">
+———. 2014. <span>“Which Democracies Will Last? Coups, Incumbent Takeovers, and the Dynamic of Democratic Consolidation.”</span> <em>British Journal of Political Science</em> 45 (4): 715–38. <a href="https://doi.org/10.1017/s0007123413000550">https://doi.org/10.1017/s0007123413000550</a>.
+</div>
+<div id="ref-thyne2017" class="csl-entry" role="listitem">
+Thyne, Clayton, Jonathan Powell, Sarah Parrott, and Emily VanMeter. 2017. <span>“Even Generals Need Friends.”</span> <em>Journal of Conflict Resolution</em> 62 (7): 1406–32. <a href="https://doi.org/10.1177/0022002716685611">https://doi.org/10.1177/0022002716685611</a>.
+</div>
+<div id="ref-williams2011" class="csl-entry" role="listitem">
+Williams, Laron K. 2011. <span>“Pick Your Poison: Economic Crises, International Monetary Fund Loans and Leader Survival.”</span> <em>International Political Science Review</em> 33 (2): 131–49. <a href="https://doi.org/10.1177/0192512111399006">https://doi.org/10.1177/0192512111399006</a>.
+</div>
+<div id="ref-wright2008" class="csl-entry" role="listitem">
+Wright, Joseph. 2008. <span>“To Invest or Insure?”</span> <em>Comparative Political Studies</em> 41 (7): 971–1000. <a href="https://doi.org/10.1177/0010414007308538">https://doi.org/10.1177/0010414007308538</a>.
+</div>
+<div id="ref-wright2013" class="csl-entry" role="listitem">
+Wright, Joseph, Erica Frantz, and Barbara Geddes. 2013. <span>“Oil and Autocratic Regime Survival.”</span> <em>British Journal of Political Science</em> 45 (2): 287–306. <a href="https://doi.org/10.1017/s0007123413000252">https://doi.org/10.1017/s0007123413000252</a>.
+</div>
+<div id="ref-yu2016" class="csl-entry" role="listitem">
+Yu, Shu, and Richard Jong-A-Pin. 2016. <span>“Political Leader Survival: Does Competence Matter?”</span> <em>Public Choice</em> 166 (1-2): 113–42. <a href="https://doi.org/10.1007/s11127-016-0317-8">https://doi.org/10.1007/s11127-016-0317-8</a>.
 </div>
 <div id="ref-zhu2024" class="csl-entry" role="listitem">
 Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes.”</span> PhD thesis, University of Essex.
@@ -927,18 +1026,164 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-151"><a href="#cb3-151"></a>comprehensive literature review on political survival, establishing the context</span>
 <span id="cb3-152"><a href="#cb3-152"></a>for this research. Chapter 3 explores the factors influencing the survival of</span>
 <span id="cb3-153"><a href="#cb3-153"></a>coup and autocoup leaders. Chapter 4 outlines the methodology and data used,</span>
-<span id="cb3-154"><a href="#cb3-154"></a>including the application of survival models to analyze the determinants of</span>
+<span id="cb3-154"><a href="#cb3-154"></a>including the application of survival models to analyse the determinants of</span>
 <span id="cb3-155"><a href="#cb3-155"></a>leadership longevity. Chapter 5 presents the findings of the analysis and a</span>
 <span id="cb3-156"><a href="#cb3-156"></a>detailed discussion of the results. Finally, Chapter 6 concludes by synthesizing</span>
 <span id="cb3-157"><a href="#cb3-157"></a>the key takeaways and exploring their broader implications.</span>
 <span id="cb3-158"><a href="#cb3-158"></a></span>
-<span id="cb3-161"><a href="#cb3-161"></a><span class="in">```{r}</span></span>
-<span id="cb3-162"><a href="#cb3-162"></a><span class="co">#| results: asis</span></span>
-<span id="cb3-163"><a href="#cb3-163"></a><span class="co">#| eval: !expr format == "latex"</span></span>
-<span id="cb3-164"><a href="#cb3-164"></a><span class="co">#| echo: false</span></span>
-<span id="cb3-165"><a href="#cb3-165"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">newpage</span></span>
-<span id="cb3-166"><a href="#cb3-166"></a><span class="st">## References"</span>)</span>
-<span id="cb3-167"><a href="#cb3-167"></a><span class="in">```</span></span>
+<span id="cb3-159"><a href="#cb3-159"></a><span class="fu">## Literature review</span></span>
+<span id="cb3-160"><a href="#cb3-160"></a></span>
+<span id="cb3-161"><a href="#cb3-161"></a>The topic of political survival has been a cornerstone of political science</span>
+<span id="cb3-162"><a href="#cb3-162"></a>research for decades. This enduring interest stems from the vast variations</span>
+<span id="cb3-163"><a href="#cb3-163"></a>observed across regimes, countries, and historical periods. Before delving deeper</span>
+<span id="cb3-164"><a href="#cb3-164"></a>into the subject, it is crucial to distinguish between two distinct yet</span>
+<span id="cb3-165"><a href="#cb3-165"></a>interconnected concepts: regime survival and individual leader survival.</span>
+<span id="cb3-166"><a href="#cb3-166"></a></span>
+<span id="cb3-167"><a href="#cb3-167"></a>Regime survival focuses on the longevity of political systems, such as</span>
+<span id="cb3-168"><a href="#cb3-168"></a>monarchies, political parties, or specific ideological structures. Leader</span>
+<span id="cb3-169"><a href="#cb3-169"></a>survival, on the other hand, is concerned with the duration of individual</span>
+<span id="cb3-170"><a href="#cb3-170"></a>leaders' time in office. These two concepts often exhibit contrasting patterns.</span>
+<span id="cb3-171"><a href="#cb3-171"></a>For example, in parliamentary democracies like Japan or the UK, specific</span>
+<span id="cb3-172"><a href="#cb3-172"></a>political parties may hold power for extended periods while individual leaders</span>
+<span id="cb3-173"><a href="#cb3-173"></a>(Prime Ministers) change frequently. Similarly, communist regimes typically see</span>
+<span id="cb3-174"><a href="#cb3-174"></a>long-lasting parties in power, with leadership transitions occurring at a slower</span>
+<span id="cb3-175"><a href="#cb3-175"></a>pace. In contrast, presidential systems like the United States or some military</span>
+<span id="cb3-176"><a href="#cb3-176"></a>regimes experience more frequent changes in both the ruling party and the head of</span>
+<span id="cb3-177"><a href="#cb3-177"></a>government. This study specifically investigates the dynamics of individual</span>
+<span id="cb3-178"><a href="#cb3-178"></a>leader survival, focusing on the factors influencing how long leaders remain in</span>
+<span id="cb3-179"><a href="#cb3-179"></a>power.</span>
+<span id="cb3-180"><a href="#cb3-180"></a></span>
+<span id="cb3-181"><a href="#cb3-181"></a>The existing literature on leader survival is vast and multifaceted, offering a</span>
+<span id="cb3-182"><a href="#cb3-182"></a>wealth of insightful perspectives. Some studies delve into the specific</span>
+<span id="cb3-183"><a href="#cb3-183"></a>mechanisms that influence leadership longevity within particular regimes, such as</span>
+<span id="cb3-184"><a href="#cb3-184"></a>democracies or autocracies. Others seek to develop more generalizable theoretical</span>
+<span id="cb3-185"><a href="#cb3-185"></a>frameworks that can explain leader survival across diverse political systems.</span>
+<span id="cb3-186"><a href="#cb3-186"></a>While the development of a universal theory remains an alluring goal, it is</span>
+<span id="cb3-187"><a href="#cb3-187"></a>important to acknowledge the inherent challenges in creating a single model that</span>
+<span id="cb3-188"><a href="#cb3-188"></a>encompasses the complexities of leadership survival across all regime types.</span>
+<span id="cb3-189"><a href="#cb3-189"></a></span>
+<span id="cb3-190"><a href="#cb3-190"></a>**Transparent and inclusive vs. Opaque and exclusive**</span>
+<span id="cb3-191"><a href="#cb3-191"></a></span>
+<span id="cb3-192"><a href="#cb3-192"></a>**First of all**, the mechanisms governing power transitions differ dramatically</span>
+<span id="cb3-193"><a href="#cb3-193"></a>in different countries, particularly between democracies and autocracies. The key</span>
+<span id="cb3-194"><a href="#cb3-194"></a>distinctions in the leadership selection process can be characterized as follows:</span>
+<span id="cb3-195"><a href="#cb3-195"></a>transparent vs. opaque and inclusive vs. exclusive.</span>
+<span id="cb3-196"><a href="#cb3-196"></a></span>
+<span id="cb3-197"><a href="#cb3-197"></a>In many autocratic systems, leadership selection is a closed affair. Potential</span>
+<span id="cb3-198"><a href="#cb3-198"></a>candidates are often restricted to a narrow pool, such as royal families,</span>
+<span id="cb3-199"><a href="#cb3-199"></a>military elites, or members of the ruling party. Selection processes are shrouded</span>
+<span id="cb3-200"><a href="#cb3-200"></a>in secrecy, and dissent can be met with harsh consequences. Even elections exist</span>
+<span id="cb3-201"><a href="#cb3-201"></a>in some autocracies, like Russia, there may have significant barriers to entry</span>
+<span id="cb3-202"><a href="#cb3-202"></a>for legitimate challengers. Potential rivals may face threats like assassination,</span>
+<span id="cb3-203"><a href="#cb3-203"></a>imprisonment, or exile.</span>
+<span id="cb3-204"><a href="#cb3-204"></a></span>
+<span id="cb3-205"><a href="#cb3-205"></a>This lack of transparency makes it difficult to gauge true levels of public</span>
+<span id="cb3-206"><a href="#cb3-206"></a>support as in democracies. Calculating selectorates or winning coalitions, as</span>
+<span id="cb3-207"><a href="#cb3-207"></a>explored by @buenodemesquita2003, becomes a near-impossible task. Leadership</span>
+<span id="cb3-208"><a href="#cb3-208"></a>transitions in autocracies often hinge on internal power struggles rather than</span>
+<span id="cb3-209"><a href="#cb3-209"></a>public opinion. A dictator may retain power despite low public support.</span>
+<span id="cb3-210"><a href="#cb3-210"></a></span>
+<span id="cb3-211"><a href="#cb3-211"></a>In contrast, democracies have relatively open competition for leadership</span>
+<span id="cb3-212"><a href="#cb3-212"></a>positions. Challengers can openly campaign and garner support through public</span>
+<span id="cb3-213"><a href="#cb3-213"></a>speeches, media campaigns, and grassroots movements. If no single candidate</span>
+<span id="cb3-214"><a href="#cb3-214"></a>commands a majority, factions can collaborate, leading to power transitions with</span>
+<span id="cb3-215"><a href="#cb3-215"></a>broader public backing. This allows for a more accurate assessment of power</span>
+<span id="cb3-216"><a href="#cb3-216"></a>dynamics through public opinion polls and electoral performance.</span>
+<span id="cb3-217"><a href="#cb3-217"></a></span>
+<span id="cb3-218"><a href="#cb3-218"></a>**Regular and predictable vs. Irregular and unpredictable**</span>
+<span id="cb3-219"><a href="#cb3-219"></a></span>
+<span id="cb3-220"><a href="#cb3-220"></a>**Secondly,** beyond the differences in openness and inclusivity, leadership</span>
+<span id="cb3-221"><a href="#cb3-221"></a>transitions in autocracies and some democracies are far more irregular and</span>
+<span id="cb3-222"><a href="#cb3-222"></a>unpredictable compared to stable democracies.</span>
+<span id="cb3-223"><a href="#cb3-223"></a></span>
+<span id="cb3-224"><a href="#cb3-224"></a>Many autocratic regimes lack institutionalized mechanisms for succession or term</span>
+<span id="cb3-225"><a href="#cb3-225"></a>limits. A leader's tenure often hinges on their ability to maintain control and</span>
+<span id="cb3-226"><a href="#cb3-226"></a>consolidate power. Certain dictators maintain an indefinite grip on power until</span>
+<span id="cb3-227"><a href="#cb3-227"></a>their death, subsequently transferring authority to family members, such as sons</span>
+<span id="cb3-228"><a href="#cb3-228"></a>in the cases of Syria and North Korea, or brothers in Cuba. This can also lead to</span>
+<span id="cb3-229"><a href="#cb3-229"></a>unexpected and irregular leadership changes. Leaders may be ousted through coups,</span>
+<span id="cb3-230"><a href="#cb3-230"></a>rebellions, uprisings, or popular protests. The opacity surrounding power</span>
+<span id="cb3-231"><a href="#cb3-231"></a>dynamics can also contribute to instability. Even seemingly strong leaders can be</span>
+<span id="cb3-232"><a href="#cb3-232"></a>overthrown by a small, well-positioned faction within the regime. Take, for</span>
+<span id="cb3-233"><a href="#cb3-233"></a>instance, Henri Namphy, who assumed the presidency of Haiti following a coup in</span>
+<span id="cb3-234"><a href="#cb3-234"></a>June 1988, only to be ousted by another coup a mere three months later in</span>
+<span id="cb3-235"><a href="#cb3-235"></a>September of the same year. However, Qaddafi, the dictator of Libya, seized power</span>
+<span id="cb3-236"><a href="#cb3-236"></a>in a coup in 1969 and ruled for over 40 years before being killed in 2011 by</span>
+<span id="cb3-237"><a href="#cb3-237"></a>NATO-backed rebel forces <span class="co">[</span><span class="ot">@goemans2009</span><span class="co">]</span>.</span>
+<span id="cb3-238"><a href="#cb3-238"></a></span>
+<span id="cb3-239"><a href="#cb3-239"></a>In contrast, stable democracies experience regular and predictable leadership</span>
+<span id="cb3-240"><a href="#cb3-240"></a>transitions. Formal institutions, such as term limits, set clear boundaries for</span>
+<span id="cb3-241"><a href="#cb3-241"></a>how long leaders can remain in office. For example, US presidents are limited to</span>
+<span id="cb3-242"><a href="#cb3-242"></a>a maximum of two terms, regardless of their popularity. Similarly, in autocratic</span>
+<span id="cb3-243"><a href="#cb3-243"></a>Mexico from 1919 to 2000, each president served a fixed six-year term without</span>
+<span id="cb3-244"><a href="#cb3-244"></a>facing overthrows or overstays, as noted by <span class="co">[</span><span class="ot">@klesner2019</span><span class="co">]</span>.</span>
+<span id="cb3-245"><a href="#cb3-245"></a></span>
+<span id="cb3-246"><a href="#cb3-246"></a>The study of political survival is particularly captivating due to the</span>
+<span id="cb3-247"><a href="#cb3-247"></a>intricacies and uncertainties associated with irregular leadership transitions.</span>
+<span id="cb3-248"><a href="#cb3-248"></a>While regular and anticipated leadership changes are important, they offer less</span>
+<span id="cb3-249"><a href="#cb3-249"></a>fertile ground for exploring the dynamics of leader longevity. The vast majority</span>
+<span id="cb3-250"><a href="#cb3-250"></a>of leaders who assume power through established channels also exit power through</span>
+<span id="cb3-251"><a href="#cb3-251"></a>established mechanisms <span class="co">[</span><span class="ot">@goemans2009</span><span class="co">]</span>. This research delves into the factors</span>
+<span id="cb3-252"><a href="#cb3-252"></a>influencing the survival of leaders who achieve power through irregular means, as</span>
+<span id="cb3-253"><a href="#cb3-253"></a>these transitions often hinge on complex political calculations, power struggles,</span>
+<span id="cb3-254"><a href="#cb3-254"></a>and unforeseen events.</span>
+<span id="cb3-255"><a href="#cb3-255"></a></span>
+<span id="cb3-256"><a href="#cb3-256"></a>Due to the above discussions, the diverse mechanisms influencing political</span>
+<span id="cb3-257"><a href="#cb3-257"></a>leadership survival have prompted scholars to delve deeper into regime-specific</span>
+<span id="cb3-258"><a href="#cb3-258"></a>dynamics. For instance, research by @svolik2014 examines democracies, while</span>
+<span id="cb3-259"><a href="#cb3-259"></a>@davenport2021 focuses on autocracies. A particular more focus lies on</span>
+<span id="cb3-260"><a href="#cb3-260"></a>understanding unexpected tenures, where leaders either fail to complete their</span>
+<span id="cb3-261"><a href="#cb3-261"></a>terms or overstay their mandates.</span>
+<span id="cb3-262"><a href="#cb3-262"></a></span>
+<span id="cb3-263"><a href="#cb3-263"></a>In analysing dterminants of leader survival, two primary perspectives have been</span>
+<span id="cb3-264"><a href="#cb3-264"></a>used to explain leader survival. The first considers contextual factors and</span>
+<span id="cb3-265"><a href="#cb3-265"></a>resources available to leaders. These include elements like personal competence</span>
+<span id="cb3-266"><a href="#cb3-266"></a><span class="co">[</span><span class="ot">@yu2016</span><span class="co">]</span>, societal stability <span class="co">[</span><span class="ot">@arriola2009</span><span class="co">]</span>, economic development [@palmer1999;</span>
+<span id="cb3-267"><a href="#cb3-267"></a>@williams2011], access to natural resources [@smith2004; @quirozflores2012;</span>
+<span id="cb3-268"><a href="#cb3-268"></a>@wright2013], and external support networks<span class="co">[</span><span class="ot">@licht2009; @wright2008; @thyne2017</span><span class="co">]</span>.</span>
+<span id="cb3-269"><a href="#cb3-269"></a>The second perspective explores the strategies leaders employ to implement their</span>
+<span id="cb3-270"><a href="#cb3-270"></a>agendas. This includes both the leaders' political goals and their responses to</span>
+<span id="cb3-271"><a href="#cb3-271"></a>opposition, challenges, or even coups and rebellions [@gandhi2007; @morrison2009;</span>
+<span id="cb3-272"><a href="#cb3-272"></a>@escribà-folch2013; @davenport2021].</span>
+<span id="cb3-273"><a href="#cb3-273"></a></span>
+<span id="cb3-274"><a href="#cb3-274"></a>Unsurprisingly, coups have received significant scholarly attention due to their</span>
+<span id="cb3-275"><a href="#cb3-275"></a>role in removing authoritarian leaders <span class="co">[</span><span class="ot">@svolik2009; @frantz2016</span><span class="co">]</span>. Existing</span>
+<span id="cb3-276"><a href="#cb3-276"></a>research explores both strategies for thwarting coups [@powell2017; @sudduth2017;</span>
+<span id="cb3-277"><a href="#cb3-277"></a>@debruin2020] and how leaders extend their tenures after surviving coup attempts</span>
+<span id="cb3-278"><a href="#cb3-278"></a><span class="co">[</span><span class="ot">@easton2018</span><span class="co">]</span>. For example, @sudduth2017a examines the post-coup actions of</span>
+<span id="cb3-279"><a href="#cb3-279"></a>dictators, focusing on purge strategies. They argue that coup leaders initially</span>
+<span id="cb3-280"><a href="#cb3-280"></a>hold more power than elites within the regime, making them less susceptible to</span>
+<span id="cb3-281"><a href="#cb3-281"></a>subsequent coups. This challenges the conventional view of new leaders as</span>
+<span id="cb3-282"><a href="#cb3-282"></a>inherently weak <span class="co">[</span><span class="ot">@roessler2011</span><span class="co">]</span>. Despite this distinction, both Sudduth and</span>
+<span id="cb3-283"><a href="#cb3-283"></a>Roessler acknowledge that new leaders often consolidate power by purging rivals</span>
+<span id="cb3-284"><a href="#cb3-284"></a>(Sudduth suggests this occurs when there is minimal risk, while Roessler argues</span>
+<span id="cb3-285"><a href="#cb3-285"></a>it happens when threats are perceived). While the debate on the initial strength</span>
+<span id="cb3-286"><a href="#cb3-286"></a>of coup leaders continues, both perspectives agree that early purges are more</span>
+<span id="cb3-287"><a href="#cb3-287"></a>likely.</span>
+<span id="cb3-288"><a href="#cb3-288"></a></span>
+<span id="cb3-289"><a href="#cb3-289"></a>@sudduth2018 investigates how leaders' entry methods affect their removal in</span>
+<span id="cb3-290"><a href="#cb3-290"></a>dictatorships. They argue that irregular entry does not necessarily increase the</span>
+<span id="cb3-291"><a href="#cb3-291"></a>likelihood of removal. In fact, some forms of irregular entry may offer</span>
+<span id="cb3-292"><a href="#cb3-292"></a>protection. However, their focus was on how leaders lose office, not how long</span>
+<span id="cb3-293"><a href="#cb3-293"></a>they stay in power. Additionally, they compared six types of irregular leaders</span>
+<span id="cb3-294"><a href="#cb3-294"></a>without specifically examining the distinction between coup-entry and autocoup</span>
+<span id="cb3-295"><a href="#cb3-295"></a>leaders.</span>
+<span id="cb3-296"><a href="#cb3-296"></a></span>
+<span id="cb3-297"><a href="#cb3-297"></a>While scholars have extensively analysed leader survival across various contexts,</span>
+<span id="cb3-298"><a href="#cb3-298"></a>including universal frameworks, autocratic regimes, and the aftermath of failed</span>
+<span id="cb3-299"><a href="#cb3-299"></a>challenges, a significant gap remains. There is a lack of research specifically</span>
+<span id="cb3-300"><a href="#cb3-300"></a>exploring and comparing the survival tenures of leaders who extend their tenures</span>
+<span id="cb3-301"><a href="#cb3-301"></a>through autocoups compared to those who come to power through coups d'état. This</span>
+<span id="cb3-302"><a href="#cb3-302"></a>study aims to address this gap by investigating and comparing the duration of</span>
+<span id="cb3-303"><a href="#cb3-303"></a>leadership survival between these two distinct leader types.</span>
+<span id="cb3-304"><a href="#cb3-304"></a></span>
+<span id="cb3-307"><a href="#cb3-307"></a><span class="in">```{r}</span></span>
+<span id="cb3-308"><a href="#cb3-308"></a><span class="co">#| results: asis</span></span>
+<span id="cb3-309"><a href="#cb3-309"></a><span class="co">#| eval: !expr format == "latex"</span></span>
+<span id="cb3-310"><a href="#cb3-310"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-311"><a href="#cb3-311"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">newpage</span></span>
+<span id="cb3-312"><a href="#cb3-312"></a><span class="st">## References"</span>)</span>
+<span id="cb3-313"><a href="#cb3-313"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
@@ -960,7 +1205,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </ul>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"openEffect":"fade","descPosition":"bottom","selector":".lightbox","loop":true,"closeEffect":"fade"});
+</footer><script>var lightboxQuarto = GLightbox({"openEffect":"fade","selector":".lightbox","descPosition":"bottom","loop":true,"closeEffect":"fade"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
