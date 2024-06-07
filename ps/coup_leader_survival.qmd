@@ -1,5 +1,5 @@
 ---
-title: "Irregular Leadership Transitions and Political Stability: A Survival Analysis of Coups and Autocoups"
+title: "Irregular Leadership Transitions and Political Survival: An Analysis of Coup-entry leaders and Autocoup leaders"
 author:
   - name: Zhu Qi
     affiliations: University of Essex
@@ -296,10 +296,269 @@ through autocoups compared to those who come to power through coups d'état. Thi
 study aims to address this gap by investigating and comparing the duration of
 leadership survival between these two distinct leader types.
 
+## Survival dynamics of autocoup leaders and coup-entry leaders
+
+### Autocoup leader and coup-entry leader
+
+As highlighted in Chapter 2, investigating leadership survival presents inherent
+challenges due to factors such as the opacity and varied mechanisms of power
+transitions. However, these challenges underscore the importance of this
+research, as it provides insights into understudied dynamics.
+
+While the succession of political leaders exhibits complexity and variation, it
+is not entirely devoid of patterns. Leaders of similar types often display
+significant comparability. This study leverages this comparative approach to
+analyse the ruling tenures of two distinct leader categories: coup-entry leaders
+and autocoup leaders.
+
+This study defines an autocoup as a situation where an incumbent leader utilizes
+illegitimate or unconstitutional methods to extend their tenure and remain in
+power. An autocoup is deemed successful if this power extension lasts for at
+least six months. Coups d'état, on the other hand, are defined as illegal and
+overt attempts by the military or other powerful groups within the state to
+unseat the sitting leader [@powell2011]. Similar to coups, successful autocoups
+in this study will be measured by a power usurpation lasting at least six months,
+differing from the seven-day duration coded by Powell and Thyne.
+
+It is also important to clarify the distinction between an autocoup leader and a
+coup-entry leader, as the topic of this study is the survival of leaders.
+
+-   **Autocoup Leader:** This refers to an incumbent leader who successfully uses
+    illegitimate or unconstitutional means to extend their tenure in power. In an
+    autocoup, the leader orchestrates the power grab and continues to rule
+    afterwards.
+
+-   **Coup-Entry Leader:** This term designates the leader who assumes power
+    after a successful coup d'état. Unlike in autocoups, coups often involve
+    multiple coup leaders (individuals or groups) who overthrow the incumbent
+    leader. The coup-entry leader is the individual who ultimately takes the
+    reins of power after the coup succeeds. While coup leaders may play a role in
+    selecting the coup-entry leader, this is not always the case. In some
+    instances, they may support someone outside the coup plot to become the new
+    leader. Regardless of the selection process, the coup-entry leader is the one
+    who assumes formal leadership following a successful coup.
+
+As autocoup leaders normally exhibit longer overall tenures compared to
+coup-entry leaders, this study concentrates on a more nuanced comparison.
+Specifically, we will analyze the **post-autocoup** tenure of autocoup leaders,
+contrasting it with the tenure of coup-entry leaders. This study examines the
+survival tenures of coup-entry leaders and autocoup leaders for three key
+reasons:
+
+-   **Illegitimacy:** Both leader types lack legitimacy, though it manifests
+    differently. Coup leaders seize power through force or the threat of force,
+    making their illegitimacy explicit. Autocoups often employ seemingly legal
+    procedures like court rulings or votes, but these processes are frequently
+    manipulated by incumbents leveraging their control [@zhu2024]. This
+    perception of illegitimacy can be used to justify the removal of such
+    leaders, even if the means of removal are themselves illegitimate.
+
+-   **Uncertainty:** The irregular means by which coup-entry and autocoup leaders
+    take or retain power create significant uncertainty regarding their long-term
+    rule and eventual exit. The established power transition process is
+    undermined, raising questions about whether these leaders will enact
+    constitutional succession protocols, and if so, whether those protocols will
+    be followed. This ambiguity affects not only elites and citizens but also the
+    leaders themselves, who face ongoing uncertainties about when, how, and to
+    whom power might be transferred. Historical data on irregular leaders
+    supports this point. Leader dataset shows that over half of irregular leaders
+    experience irregular exits, and coup-related exits constitute more than
+    two-thirds of all irregular exits [@goemans2009]. Furthermore, @frantz2016
+    show that coup-related exits account for roughly one-third of all exits in
+    autocracies, surpassing any other type, including regular transitions.
+
+-   **Instability:** Coup-entry and autocoup leaders are aware of their own
+    legitimacy and uncertainty challenges, which can fuel insecurity and a sense
+    of crisis. In attempts to consolidate power, they may resort to reshuffling
+    power structures or purging potential challengers. However, these efforts to
+    maintain stability and strengthen their position often backfire, triggering
+    greater instability.
+
+The interplay of illegitimacy, uncertainty, and instability creates a complex
+environment that significantly influences leader tenure.
+
+### Hypothesis
+
+While both coup-entry and autocoup leaders face similar challenges – lack of
+legitimacy, irregularity, and fostering uncertainty – the severity of these
+challenges often differ. Coup-entry leaders typically encounter these obstacles
+to a greater degree. Consequently, they are expected to have shorter tenures in
+power compared to autocoup leaders.
+
+#### Legitimacy
+
+Coup-entry leaders face an inherent legitimacy gap due to their sudden, often
+violent, and unconstitutional rise to power. This approach is widely viewed as
+illegal and sets a dangerous precedent, encouraging others to attempt similar
+takeovers. Haiti's history exemplifies this, with Henri Namphy's brief presidency
+in 1988 being cut short by another coup just three months later [@goemans2009].
+Beyond immediate internal power grabs, coups can embolden external actors to
+intervene, potentially leading to uprisings, revolutions, and civil wars
+[@dahl2023].
+
+In contrast, autocoup leaders manipulate power transition processes to extend
+their rule, often through constitutional reinterpretations, engineered
+parliamentary votes, or influenced Supreme Court decisions. These actions lack
+genuine legitimacy as they exploit power and use illegal measures like silencing
+opposition. Although their legitimacy is also contested, autocoup leaders
+maintain a superficial veneer of legality, forcing challengers to operate within
+legal frameworks. Replicating autocoup is more challenging than staging a coup
+because it requires holding a leadership position first.
+
+Furthermore, overthrowing incumbents who overstay in power through autocoups
+presents significant hurdles due to the incumbent's power advantage. This
+advantage is evident in cases like China (2018), where the National People's
+Congress granted Xi Jinping the potential to rule for life[^1], and Russia
+(2020), where constitutional changes allow Putin to potentially remain in power
+until 2036[^2]. These actions demonstrate the consolidation of power by
+incumbents, even if they do not reflect genuine public support.
+
 ```{r}
+#| label: tbl-coups
+#| tbl-cap: Top 10 countries with the most coup attempts (1950–2023)
+#| echo: !expr format == "html"
+
+coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
+                 sep = "\t")
+
+coups <- coup |>
+  summarise(
+    `Coup attempted` = n(),
+    `Coup succeeded` = sum(coup == 2),
+    .by = country
+  )
+
+coups |>
+  # add one row which adds up the total
+  arrange(desc(`Coup attempted`)) |>
+  head(11) |> 
+  add_row(
+    country = "Total",
+    `Coup attempted` = sum(coups[, 2]),
+    `Coup succeeded` = sum(coups[, 3])
+  ) |>
+  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`, 
+                                accuracy = 0.1
+                                )) |>   
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(
+    table.width = pct(90),
+    column_labels.font.weight = "bold"
+              ) |> 
+  cols_align(
+    align = "center",
+    columns = 2:3
+  ) |> 
+  tab_source_note(source_note = md("*Source: GIC dataset*"))
+```
+
+### Uncertainty
+
+Coup-entry and autocoup leaders face different levels of uncertainty immediately
+following their rise to or overstay power.
+
+After a coup, at least three major uncertainties arise regarding leadership and
+its tenure. First, it is unclear who will assume leadership. Although coup
+leaders often take power, some may return or promise to return power to civilian
+leaders. Even among coup leaders, determining who will lead can be problematic,
+as coup plotters are sometimes a group without a clear core leader. For instance,
+following the 1973 Chilean coup, the initial plan for a rotating presidency among
+military leaders was abandoned when General Pinochet consolidated control and
+remained in power until 1990 [@svolik2014]. Second, the duration of the coup
+leader's rule is uncertain. Leaders like Gamal Abdel Nasser in Egypt (1954 coup),
+Muammar Gaddafi in Libya (1969 coup), and Idi Amin in Uganda (1971 coup) aimed to
+retain power for life [@geddes2018], but their ability to do so was uncertain.
+Others promise to transfer power to civilian authorities, but the timing and
+fulfillment of these promises are unclear. For example, Myanmar's military junta
+(2021 coup) has repeatedly extended a state of emergency, clinging to power
+beyond the promised time-frame[^3]. Conversely, after the 2010 coup in Niger, the
+military honoured their promise by restoring civilian rule within the same year
+[@ginsburg2019]. Third, the successors of coup leaders are uncertain. Some may
+designate successors from their inner circle, including family members, while
+others may support general elections, though whether this will be fulfilled as
+intended remains uncertain.
+
+In contrast, autocoup leaders present a clearer picture regarding leadership and
+tenure. There is no uncertainty about who will rule after an autocoup. In the
+medium term, autocoup leaders typically hold office themselves. Many, like Putin
+in Russia and Xi Jinping in China, seek to extend their rule indefinitely and are
+unlikely to relinquish power voluntarily. Others attempt to extend their terms
+incrementally, such as President Menem of Argentina, who overstayed until 1993
+but failed in his bid for another term in 1999 [@llanos2019].
+
+### Instability
+
+The stability of a regime, particularly in an autocracy, hinges on maintaining a
+balance of power. Coups, however, inevitably disrupt this balance, even when they
+are bloodless, necessitating the creation of a new equilibrium. The ousting of
+previous rulers requires dismantling the established governing structure and
+reshuffling high-ranking officials, actions that inherently generate instability
+and create adversaries for the new leadership. This makes restoring order and
+establishing a balanced power structure notably challenging. Studies show that
+new leaders often purge rival elite groups to consolidate their power at the
+outset of their tenure [@sudduth2017; @roessler2011]. Such actions can provoke
+backlash even from close allies. For instance, in Uganda, President Obote's
+attempt to undermine the army commander-in-chief, Idi Amin, led to Amin gaining
+the army's support and ultimately ousting Obote in a 1971 coup. Similarly, in
+Pakistan in 1999, shortly after Prime Minister Sharif dismissed powerful army
+chief General Pervez Musharraf, Sharif himself was ousted in a coup orchestrated
+by Musharraf and his supporters [@sudduth2017].
+
+To consolidate power, coup-entry leaders often have to compromise with internal
+or external power challengers. However, these compromises are frequently unstable
+and easily broken. The situation becomes even more complex when there is a risk
+of civil war. Leaders may attempt to reduce the likelihood of subsequent coups,
+potentially increasing the chances of societal rebellions and civil wars
+[@roessler2011].
+
+Moreover, instability extends beyond leadership to policies. A new leadership
+group often brings new policies, and coups are sometimes triggered by
+disagreements over significant policies. Major policy shifts can instigate
+dissent or grievances from various ruling factions, communities, regions,
+ethnicities, or religions.
+
+In contrast, autocoup leaders encounter far fewer of these issues, as their
+regimes experience fewer abrupt changes. They face less pressure to dismantle the
+existing ruling paradigm and establish a new order. Even when adjustments are
+necessary, they have more time to implement changes gradually.
+
+These factors contribute to a shorter expected lifespan for coup-entry leaders
+compared to the relatively longer tenures of autocoup leaders. The average
+survival period following an autocoup is approximately five years longer than
+that of coup-entry leaders (@fig-logrank). Building on these observations, I
+propose the following hypothesis:
+
+> ***H1: Political leaders who successfully prolong their tenure in power are
+> more likely to experience extended regime survival compared to coup-entry
+> leaders.***
+
+In the subsequent section, I will outline the research methodology used in this
+paper. I will introduce several control variables to determine if the hypothesis
+remains persistent and robust.
+
+## Research Design
+
+### Survival analysis
+
+```{r}
+#| label: end
 #| results: asis
 #| eval: !expr format == "latex"
 #| echo: false
 cat("\\newpage
 ## References")
 ```
+
+[^1]: https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to
+    remain ‘president for life’ as term limits removed. Accessed on
+    `r Sys.Date()`.
+
+[^2]: https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-\
+    rule-until-2036: Analysis: Vladimir Putin secures constitutional changes
+    allowing him to rule until 2036. Accessed\
+    on `r Sys.Date()`.
+
+[^3]: https://thediplomat.com/2023/08/myanmar-junta-extends-state-of-emergency-for-fourth-time/:
+    Myanmar\
+    Junta Extends State of Emergency for Fourth Time. Accessed on `r Sys.Date()`.
