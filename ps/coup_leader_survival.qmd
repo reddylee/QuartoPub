@@ -47,33 +47,39 @@ library(here)
 ## Introduction
 
 The survival of political leaders has been a well-studied topic in political
-science. However, two specific types of leaders - those who come to power through
-coups and those who overstay their legitimate terms (autocoup leaders) - have
-received comparatively less attention. Examining the tenures of these irregularly
-ascended leaders holds particular significance for two main reasons.
+science. While the general framework has garnered significant attention, specific
+types of leaders, particularly coup-entry leaders and autocoup leaders (discussed
+in more detail in Chapter 3), have received comparatively less scrutiny. However,
+examining the tenures of these leader types is particularly significant.
 
-Firstly, leaders who ascend through irregular means constitute the majority of
-irregular exits from power. According to @goemans2009, between 1945 and 2015, out
-of 1,472 leaders who assumed office through regular channels, approximately 213
-exited irregularly (14.5%). Conversely, out of 308 leaders who assumed office
-through irregular means, roughly 158 (51.3%) experienced irregular exits.
+Leaders who ascend through irregular means, such as coups or autocoups, attract
+more interest from both academics and journalists. The processes of entry,
+tenure, and exit are more predictable for leaders who come to power through
+regular channels, making their survival easier to anticipate and thus less
+compelling to study. In contrast, the uncertainty surrounding the tenures of
+irregular leaders draws more attention. According to @goemans2009, leaders with
+irregular entries or exits are quite common and therefore worth analysing.
+Between 1945 and 2015, approximately 14.5% (213 out of 1,472) of leaders who
+assumed office through regular channels exited irregularly. The proportion is
+even higher among leaders with irregular entries. During the same period,
+approximately 51.3% (158 out of 308) of those who assumed office through
+irregular means experienced irregular exits.
 
-Secondly, among irregularly ascended leaders, the majority gained power through
-launching coups or overstaying in office. As per @goemans2009, out of 374 leaders
-who exited irregularly, 246 were ousted through coups, constituting 65.8% of
-these cases. Additionally, between 1945 and 2020, there were 106 attempts to
-overstay in power, of which 86 were successful [@zhu2024]. Leaders who extend
-their legitimate term limits essentially stage coups against legitimate
-successors, thereby qualifying as autocoup leaders. Hence, it is both relevant
-and insightful to delve into and compare the tenures of coup-entry leaders and
-autocoup leaders.
+Coup-entry and autocoup leaders constitute the majority of those who ascend to or
+exit from power irregularly. Most leaders who gained power through irregular
+means did so by launching coups or overstaying in office. According to
+@goemans2009, out of 374 leaders who exited irregularly, 246 were ousted through
+coups, accounting for 65.8% of these cases. @frantz2016 show that coup-related
+exits account for roughly one-third of all exits in autocracies, surpassing any
+other type, including regular transitions. Additionally, between 1945 and 2020,
+there were 106 autocoup attempts, with 86 being successful [@zhu2024].
 
-While it is expected that autocoup leaders survive longer than coup-entry leaders
-when considering their total tenures, a more insightful comparison arises when
-examining the tenures following autocoups in contrast to those of coup-entry
-leaders. Conducting a log-rank test in survival analysis on the leaders dataset
-[@goemans2009] and the author's autocoup dataset @zhu2024\] reveals a distinct
-contrast between autocoup leaders and coup-entry leaders.
+Due to their irregularity and inherent uncertainty, it is challenging to
+precisely measure the tenure of coup-entry and autocoup leaders. Nonetheless,
+comparing the tenures of these two types of leaders is both possible and
+insightful. Conducting a log-rank test in survival analysis on the leaders
+dataset [@goemans2009] and the autocoup dataset [@zhu2024] reveals a distinct
+contrast in the tenures of autocoup leaders and coup-entry leaders.
 
 ```{r}
 #| label: data
@@ -116,36 +122,38 @@ ggsurvplot(fit,
 ```
 
 Preliminary findings from survival analysis (see @fig-logrank) indicate a
-significant difference. Leaders who consolidate power through autocoups appear to
-have a longer average tenure after the autocoup itself (approximately
-`r avg$avg[1]`) compared to coup leaders (approximately `r avg$avg[2]`). This
-suggests a potential shortfall of 5 years in the average tenure of coup leaders.
+significant difference in leadership tenures. Leaders who consolidate power
+through autocoups have a longer average tenure post-autocoup (approximately
+`r avg$avg[1]` years) compared to coup-entry leaders (approximately
+`r avg$avg[2]` years). This suggests a potential shortfall of about 5 years in
+the average tenure of coup-entry leaders.
 
-Thus, we hypothesize that the method of accession significantly influences
-leadership longevity. Coup leaders likely face greater challenges to their
-legitimacy, leading to a more precarious initial period in power. They may
-encounter higher levels of uncertainty, instability, and pressure to share power,
-all of which could contribute to a shorter average tenure compared to autocoup
-leaders.
+We argue that the method of accession significantly influences leadership
+longevity. Coup leaders likely face greater challenges to their legitimacy,
+resulting in a more precarious initial period in power. They encounter higher
+levels of uncertainty, instability, and pressure to share power, all of which
+contribute to a shorter average tenure compared to autocoup leaders.
 
-By employing the Cox proportional hazards model and the extended Cox model, the
-results suggest that leaders who exceed their term limits generally experience
-longer tenures compared to those who come to power through coups.
+Employing the Cox proportional hazards model and the extended Cox model, our
+results indicate that autocoup leaders generally experience longer post-autocoup
+tenures compared to coup-entry leaders.
 
-This study offers two key contributions. First, it highlights a critical factor
-often overlooked in leadership survival studies: the impact of accession method.
-Leaders' survival is not solely determined by their actions after taking power,
-but also by the way they acquired power in the first place. This research
-underscores the significant difference in tenure duration between autocoup and
-coup leaders. Second, it provides empirical measurements to compare the tenure
-duration of these two irregularly ascended leaders, offering insights into their
-distinct impacts on leadership longevity.
+This study makes two significant contributions. Firstly, it sheds light on a
+critical factor often overlooked in leadership survival studies: the impact of
+the method of accession to power. Leaders' survival is not solely determined by
+their actions after taking power but also by how they acquired power in the first
+place. Secondly, utilizing survival models, this research provides empirical
+evidence of the significant difference in tenure duration between autocoup and
+coup-entry leaders. This finding may help explain the increasing prevalence of
+overstaying in power through autocoups since 2000, as more incumbents may be
+encouraged by precedents, and ruling elites tend to follow and support such
+actions, benefiting from a relatively longer tenure.
 
 The remainder of the paper delves deeper into this topic. Chapter 2 provides a
 comprehensive literature review on political survival, establishing the context
 for this research. Chapter 3 explores the factors influencing the survival of
 coup and autocoup leaders. Chapter 4 outlines the methodology and data used,
-including the application of survival models to analyse the determinants of
+including the application of survival models to analyze the determinants of
 leadership longevity. Chapter 5 presents the findings of the analysis and a
 detailed discussion of the results. Finally, Chapter 6 concludes by synthesizing
 the key takeaways and exploring their broader implications.
@@ -153,10 +161,10 @@ the key takeaways and exploring their broader implications.
 ## Literature review
 
 The topic of political survival has been a cornerstone of political science
-research for decades. This enduring interest stems from the vast variations
-observed across regimes, countries, and historical periods. Before delving deeper
-into the subject, it is crucial to distinguish between two distinct yet
-interconnected concepts: regime survival and individual leader survival.
+research for decades. This enduring interest arises from the wide-ranging
+variations observed across regimes, countries, and historical periods. Previous
+studies have identified two crucial yet interconnected aspects of political
+survival: regime survival and individual leader survival.
 
 Regime survival focuses on the longevity of political systems, such as
 monarchies, political parties, or specific ideological structures. Leader
@@ -167,161 +175,107 @@ political parties may hold power for extended periods while individual leaders
 (Prime Ministers) change frequently. Similarly, communist regimes typically see
 long-lasting parties in power, with leadership transitions occurring at a slower
 pace. In contrast, presidential systems like the United States or some military
-regimes experience more frequent changes in both the ruling party and the head of
-government. This study specifically investigates the dynamics of individual
-leader survival, focusing on the factors influencing how long leaders remain in
-power.
+regimes experience more frequent changes in both the ruling party or junta and
+the leader of the country. This study specifically investigates the dynamics of
+individual leader survival, focusing on the factors influencing how long leaders
+remain in power.
 
 The existing literature on leader survival is vast and multifaceted, offering a
 wealth of insightful perspectives. Some studies delve into the specific
 mechanisms that influence leadership longevity within particular regimes, such as
-democracies or autocracies. Others seek to develop more generalizable theoretical
-frameworks that can explain leader survival across diverse political systems.
-While the development of a universal theory remains an alluring goal, it is
-important to acknowledge the inherent challenges in creating a single model that
-encompasses the complexities of leadership survival across all regime types.
+democracies or autocracies [@svolik2014; @davenport2021]. Others seek to develop
+more generalizable theoretical frameworks that can explain leader survival across
+diverse political systems [@buenodemesquita2003]. While the development of a
+universal theory remains an alluring goal, it is important to acknowledge the
+inherent challenges in creating a single model that encompasses the complexities
+of leadership survival across all regime types.
 
-**Transparent and inclusive vs. Opaque and exclusive**
+The mechanisms governing power transitions vary significantly across different
+regimes, particularly between democracies and autocracies. In many autocratic
+systems, leadership selection is a closed affair. Potential candidates are often
+restricted to a narrow pool, such as royal families, military elites, or members
+of the ruling party. While political competition and elections may exist in some
+autocracies, there are often significant barriers to entry for legitimate
+challengers. Potential rivals may face threats such as assassination,
+imprisonment, or exile. Moreover, selection processes are shrouded in secrecy,
+with outsiders unable to participate or obtain information on the selections, let
+alone express dissent or complain about the results. This lack of inclusivity and
+transparency makes it challenging to gauge true levels of public support compared
+to democracies. Consequently, calculating selectorates or winning coalitions, as
+explored by @buenodemesquita2003, becomes a near-impossible task in autocracies.
 
-**First of all**, the mechanisms governing power transitions differ dramatically
-in different countries, particularly between democracies and autocracies. The key
-distinctions in the leadership selection process can be characterized as follows:
-transparent vs. opaque and inclusive vs. exclusive.
+Therefore, focusing research on more specific regimes or types of leaders may be
+more appropriate. While regular and anticipated leadership changes are important
+as well, they offer less fertile ground for exploring the dynamics of leader
+longevity, as the vast majority of leaders who assume power through established
+channels also exit power through established mechanisms [@goemans2009]. In
+contrast, the study of political survival among irregular leaders is particularly
+captivating due to the intricacies and uncertainties associated with irregular
+leadership transitions.
 
-In many autocratic systems, leadership selection is a closed affair. Potential
-candidates are often restricted to a narrow pool, such as royal families,
-military elites, or members of the ruling party. Selection processes are shrouded
-in secrecy, and dissent can be met with harsh consequences. Even elections exist
-in some autocracies, like Russia, there may have significant barriers to entry
-for legitimate challengers. Potential rivals may face threats like assassination,
-imprisonment, or exile.
+The diverse mechanisms influencing political leadership survival, as discussed
+above, have prompted scholars to delve deeper into more specific determinants.
+Two primary perspectives have emerged to explain the dynamics of leader survival.
 
-This lack of transparency makes it difficult to gauge true levels of public
-support as in democracies. Calculating selectorates or winning coalitions, as
-explored by @buenodemesquita2003, becomes a near-impossible task. Leadership
-transitions in autocracies often hinge on internal power struggles rather than
-public opinion. A dictator may retain power despite low public support.
+The first perspective considers objective factors and resources available to
+leaders. These include elements such as personal competence [@yu2016], societal
+stability [@arriola2009], economic development [@palmer1999; @williams2011],
+access to natural resources [@smith2004; @quirozflores2012; @wright2013], or
+external support networks [@licht2009; @wright2008; @thyne2017].
 
-In contrast, democracies have relatively open competition for leadership
-positions. Challengers can openly campaign and garner support through public
-speeches, media campaigns, and grassroots movements. If no single candidate
-commands a majority, factions can collaborate, leading to power transitions with
-broader public backing. This allows for a more accurate assessment of power
-dynamics through public opinion polls and electoral performance.
-
-**Regular and predictable vs. Irregular and unpredictable**
-
-**Secondly,** beyond the differences in openness and inclusivity, leadership
-transitions in autocracies and some democracies are far more irregular and
-unpredictable compared to stable democracies.
-
-Many autocratic regimes lack institutionalized mechanisms for succession or term
-limits. A leader's tenure often hinges on their ability to maintain control and
-consolidate power. Certain dictators maintain an indefinite grip on power until
-their death, subsequently transferring authority to family members, such as sons
-in the cases of Syria and North Korea, or brothers in Cuba. This can also lead to
-unexpected and irregular leadership changes. Leaders may be ousted through coups,
-rebellions, uprisings, or popular protests. The opacity surrounding power
-dynamics can also contribute to instability. Even seemingly strong leaders can be
-overthrown by a small, well-positioned faction within the regime. Take, for
-instance, Henri Namphy, who assumed the presidency of Haiti following a coup in
-June 1988, only to be ousted by another coup a mere three months later in
-September of the same year. However, Qaddafi, the dictator of Libya, seized power
-in a coup in 1969 and ruled for over 40 years before being killed in 2011 by
-NATO-backed rebel forces [@goemans2009].
-
-In contrast, stable democracies experience regular and predictable leadership
-transitions. Formal institutions, such as term limits, set clear boundaries for
-how long leaders can remain in office. For example, US presidents are limited to
-a maximum of two terms, regardless of their popularity. Similarly, in autocratic
-Mexico from 1919 to 2000, each president served a fixed six-year term without
-facing overthrows or overstays, as noted by [@klesner2019].
-
-The study of political survival is particularly captivating due to the
-intricacies and uncertainties associated with irregular leadership transitions.
-While regular and anticipated leadership changes are important, they offer less
-fertile ground for exploring the dynamics of leader longevity. The vast majority
-of leaders who assume power through established channels also exit power through
-established mechanisms [@goemans2009]. This research delves into the factors
-influencing the survival of leaders who achieve power through irregular means, as
-these transitions often hinge on complex political calculations, power struggles,
-and unforeseen events.
-
-Due to the above discussions, the diverse mechanisms influencing political
-leadership survival have prompted scholars to delve deeper into regime-specific
-dynamics. For instance, research by @svolik2014 examines democracies, while
-@davenport2021 focuses on autocracies. A particular more focus lies on
-understanding unexpected tenures, where leaders either fail to complete their
-terms or overstay their mandates.
-
-In analysing dterminants of leader survival, two primary perspectives have been
-used to explain leader survival. The first considers contextual factors and
-resources available to leaders. These include elements like personal competence
-[@yu2016], societal stability [@arriola2009], economic development [@palmer1999;
-@williams2011], access to natural resources [@smith2004; @quirozflores2012;
-@wright2013], and external support networks[@licht2009; @wright2008; @thyne2017].
-The second perspective explores the strategies leaders employ to implement their
-agendas. This includes both the leaders' political goals and their responses to
+The second perspective explores subjective factors, focusing on the strategies
+leaders employ to consolidate their power. This encompasses both the formulation
+and implementation of political policies and the leaders' responses to
 opposition, challenges, or even coups and rebellions [@gandhi2007; @morrison2009;
 @escribà-folch2013; @davenport2021].
 
-Unsurprisingly, coups have received significant scholarly attention due to their
-role in removing authoritarian leaders [@svolik2009; @frantz2016]. Existing
-research explores both strategies for thwarting coups [@powell2017; @sudduth2017;
-@debruin2020] and how leaders extend their tenures after surviving coup attempts
-[@easton2018]. For example, @sudduth2017a examines the post-coup actions of
-dictators, focusing on purge strategies. They argue that coup leaders initially
-hold more power than elites within the regime, making them less susceptible to
-subsequent coups. This challenges the conventional view of new leaders as
-inherently weak [@roessler2011]. Despite this distinction, both Sudduth and
-Roessler acknowledge that new leaders often consolidate power by purging rivals
-(Sudduth suggests this occurs when there is minimal risk, while Roessler argues
-it happens when threats are perceived). While the debate on the initial strength
-of coup leaders continues, both perspectives agree that early purges are more
-likely.
-
-@sudduth2018 investigates how leaders' entry methods affect their removal in
-dictatorships. They argue that irregular entry does not necessarily increase the
-likelihood of removal. In fact, some forms of irregular entry may offer
-protection. However, their focus was on how leaders lose office, not how long
-they stay in power. Additionally, they compared six types of irregular leaders
-without specifically examining the distinction between coup-entry and autocoup
-leaders.
+Unsurprisingly, coups have garnered significant scholarly attention due to their
+pivotal role in removing leaders [@svolik2009; @frantz2016]. Existing research
+delves into strategies for thwarting coups [@powell2017; @sudduth2017;
+@debruin2020], as well as how leaders extend their tenures after surviving coup
+attempts [@easton2018]. For instance, @sudduth2017 examines the post-coup actions
+of dictators, focusing on purge strategies. They argue that coup leaders
+initially wield more power than elites within the regime, rendering them less
+susceptible to subsequent coups, challenging the conventional view of new leaders
+as inherently weak [@roessler2011]. Meanwhile, @sudduth2018 investigates how
+leaders' entry methods affect their removal in dictatorships, positing that
+irregular entry does not necessarily increase the likelihood of removal; in fact,
+some forms of irregular entry may offer protection.
 
 While scholars have extensively analysed leader survival across various contexts,
 including universal frameworks, autocratic regimes, and the aftermath of failed
-challenges, a significant gap remains. There is a lack of research specifically
-exploring and comparing the survival tenures of leaders who extend their tenures
-through autocoups compared to those who come to power through coups d'état. This
-study aims to address this gap by investigating and comparing the duration of
-leadership survival between these two distinct leader types.
+challenges, a significant gap persists. There is a lack of research specifically
+exploring and comparing the survival tenures of leaders who extend their reigns
+through autocoups compared to coup-entry leaders. This study aims to address this
+gap by investigating and comparing the duration of leadership survival between
+these two distinct leader types.
 
 ## Survival dynamics of autocoup leaders and coup-entry leaders
 
 ### Autocoup leader and coup-entry leader
 
-As highlighted in Chapter 2, investigating leadership survival presents inherent
-challenges due to factors such as the opacity and varied mechanisms of power
-transitions. However, these challenges underscore the importance of this
-research, as it provides insights into understudied dynamics.
+As emphasized in Chapter 2, delving into leadership survival poses inherent
+challenges, given factors such as the opacity and diverse mechanisms of power
+transitions. However, these challenges underscore the significance of this
+research, as it sheds light on understudied dynamics.
 
-While the succession of political leaders exhibits complexity and variation, it
-is not entirely devoid of patterns. Leaders of similar types often display
-significant comparability. This study leverages this comparative approach to
-analyse the ruling tenures of two distinct leader categories: coup-entry leaders
-and autocoup leaders.
+While the survival of political leaders manifests complexity and variation, it is
+not devoid of patterns entirely. Leaders of similar types often exhibit
+significant comparability. Before delving into the comparison, it is necessary to
+clarify several relative terminologies.
 
-This study defines an autocoup as a situation where an incumbent leader utilizes
+We define an autocoup as a situation where an incumbent leader utilizes
 illegitimate or unconstitutional methods to extend their tenure and remain in
 power. An autocoup is deemed successful if this power extension lasts for at
-least six months. Coups d'état, on the other hand, are defined as illegal and
-overt attempts by the military or other powerful groups within the state to
-unseat the sitting leader [@powell2011]. Similar to coups, successful autocoups
-in this study will be measured by a power usurpation lasting at least six months,
+least six months. Coups, on the other hand, are defined as illegal and overt
+attempts by the military or other powerful groups within the state to unseat the
+sitting leader [@powell2011]. Similar to coups, successful autocoups in this
+study will be measured by a power usurpation lasting at least six months,
 differing from the seven-day duration coded by Powell and Thyne.
 
-It is also important to clarify the distinction between an autocoup leader and a
-coup-entry leader, as the topic of this study is the survival of leaders.
+It is also crucial to clarify the distinction between an autocoup leader and a
+coup-entry leader, as the survival of leadership is the main concern of this
+study.
 
 -   **Autocoup Leader:** This refers to an incumbent leader who successfully uses
     illegitimate or unconstitutional means to extend their tenure in power. In an
@@ -338,12 +292,13 @@ coup-entry leader, as the topic of this study is the survival of leaders.
     leader. Regardless of the selection process, the coup-entry leader is the one
     who assumes formal leadership following a successful coup.
 
-As autocoup leaders normally exhibit longer overall tenures compared to
-coup-entry leaders, this study concentrates on a more nuanced comparison.
-Specifically, we will analyze the **post-autocoup** tenure of autocoup leaders,
-contrasting it with the tenure of coup-entry leaders. This study examines the
-survival tenures of coup-entry leaders and autocoup leaders for three key
-reasons:
+Given that autocoup leaders typically exhibit longer overall tenures compared to
+coup-entry leaders, this study focuses on a more nuanced comparison.
+Specifically, we will analyse the **post-autocoup** tenure of autocoup leaders
+and contrast it with the **post-coup** tenure of coup-entry leaders. The
+examination of the survival tenures of coup-entry leaders and autocoup leaders is
+motivated by their relevance and similarity in terms of illegitimacy,
+uncertainty, and instability.
 
 -   **Illegitimacy:** Both leader types lack legitimacy, though it manifests
     differently. Coup leaders seize power through force or the threat of force,
@@ -385,7 +340,7 @@ challenges often differ. Coup-entry leaders typically encounter these obstacles
 to a greater degree. Consequently, they are expected to have shorter tenures in
 power compared to autocoup leaders.
 
-#### Legitimacy
+#### Illegitimacy
 
 Coup-entry leaders face an inherent legitimacy gap due to their sudden, often
 violent, and unconstitutional rise to power. This approach is widely viewed as
