@@ -340,10 +340,8 @@ to maintain power. As long as they can hold onto power or balance it in their
 favour, they can remain in office. However, as discussed earlier, although both
 coup-entry and autocoup leaders face similar challenges related to illegitimacy,
 uncertainty, and instability, the severity of these challenges differs. This
-difference places the two types of leaders at varying levels of advantage or
-disadvantage in terms of power balance. Coup-entry leaders typically encounter
-these obstacles to a greater degree, leading to an expectation of shorter tenures
-in power compared to autocoup leaders.
+difference places the two types of leaders at varying levels of disadvantage in
+terms of power balance.
 
 #### Illegitimacy
 
@@ -353,7 +351,7 @@ for legal processes, often involving force or the threat of force to seize power
 In contrast, autocoups employ a façade of legality through tactics such as
 manipulating constitutional interpretations, engineering parliamentary votes,
 influencing court decisions, and even holding referendums. Despite this veneer,
-these maneuvers do not erase the underlying lack of genuine legitimacy, hence
+these manoeuvres do not erase the underlying lack of genuine legitimacy, hence
 this study categorizes them as autocoups. However, there is considerable debate
 among scholars, with some arguing for less severe terms like "incumbent overstay"
 or "executive takeover" due to the perceived legality.
@@ -361,46 +359,6 @@ or "executive takeover" due to the perceived legality.
 This perceived legitimacy can provide a temporary advantage for autocoup leaders.
 Challengers are often constrained to operate within legal frameworks, making it
 difficult to directly confront the incumbent.
-
-```{r}
-#| label: tbl-coups
-#| tbl-cap: Top 10 countries with the most coup attempts (1950–2023)
-#| echo: !expr format == "html"
-
-coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
-                 sep = "\t")
-
-coups <- coup |>
-  summarise(
-    `Coup attempted` = n(),
-    `Coup succeeded` = sum(coup == 2),
-    .by = country
-  )
-
-coups |>
-  # add one row which adds up the total
-  arrange(desc(`Coup attempted`)) |>
-  head(11) |> 
-  add_row(
-    country = "Total",
-    `Coup attempted` = sum(coups[, 2]),
-    `Coup succeeded` = sum(coups[, 3])
-  ) |>
-  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`, 
-                                accuracy = 0.1
-                                )) |>   
-  clean_names(case = "title") |>
-  gt() |>
-  tab_options(
-    table.width = pct(90),
-    column_labels.font.weight = "bold"
-              ) |> 
-  cols_align(
-    align = "center",
-    columns = 2:3
-  ) |> 
-  tab_source_note(source_note = md("*Source: GIC dataset*"))
-```
 
 #### Uncertainty
 
@@ -491,24 +449,72 @@ read.csv(here("data/leader_comparison.csv")) |>
    data_color(rows = c(2, 4), colors = "#edede9") 
 ```
 
-In conclusion,
+In conclusion, coup-entry leaders typically face a greater degree of the
+challenges discussed earlier, placing them at a significant disadvantage in the
+balance of power compared to autocoup leaders. This disadvantage creates a
+self-perpetuating cycle. Weaker leaders struggle to attract and retain strong
+support, making them more vulnerable to challenges. The perception of risk
+discourages potential allies, further eroding their power base. As shown in
+@tbl-coups, the top 10 countries with the most coup attempts between 1950 and
+2023 are predominantly autocracies. This suggests that the more coups occur in a
+country, the more likely additional coups are to happen in the future.
 
-Furthermore, overthrowing incumbents who overstay in power through autocoups
-presents significant hurdles due to the incumbent's power advantage. This
-advantage is evident in cases like China (2018), where the National People's
-Congress granted Xi Jinping the potential to rule for life[^2], and Russia
-(2020), where constitutional changes allow Putin to potentially remain in power
-until 2036[^3]. These actions demonstrate the consolidation of power by
-incumbents, even if they do not reflect genuine public support.
+```{r}
+#| label: tbl-coups
+#| tbl-cap: Top 10 countries with the most coup attempts (1950–2023)
+#| echo: !expr format == "html"
 
-These factors contribute to a shorter expected lifespan for coup-entry leaders
-compared to the relatively longer tenures of autocoup leaders. The average
-survival period following an autocoup is approximately five years longer than
-that of coup-entry leaders (@fig-logrank). Building on these observations, I
-propose the following hypothesis:
+coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
+                 sep = "\t")
 
-> ***H1: Political leaders who successfully prolong their tenure in power are
-> more likely to experience extended regime survival compared to coup-entry
+coups <- coup |>
+  summarise(
+    `Coup attempted` = n(),
+    `Coup succeeded` = sum(coup == 2),
+    .by = country
+  )
+
+coups |>
+  # add one row which adds up the total
+  arrange(desc(`Coup attempted`)) |>
+  head(11) |>
+  add_row(
+    country = "Total",
+    `Coup attempted` = sum(coups[, 2]),
+    `Coup succeeded` = sum(coups[, 3])
+  ) |>
+  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`,
+                                accuracy = 0.1
+                                )) |>
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(
+    table.width = pct(90),
+    column_labels.font.weight = "bold"
+              ) |>
+  cols_align(
+    align = "center",
+    columns = 2:3
+  ) |>
+  tab_source_note(source_note = md("*Source: GIC dataset*"))
+```
+
+Conversely, autocoup leaders, often benefiting from a veneer of legitimacy and a
+stronger initial position, are better able to consolidate power and attract
+supporters. This advantage can be self-reinforcing, as a strong power base
+discourages challenges and fosters loyalty. This dynamic is evident in cases like
+China (2018), where the National People's Congress granted Xi Jinping the
+potential to rule for life[^2], and Russia (2020), where constitutional changes
+allow Putin to potentially remain in power until 2036[^3].
+
+These features and the balance of power contribute to a shorter expected tenure
+for coup-entry leaders compared to the relatively longer tenures of autocoup
+leaders. The average survival period following an autocoup is approximately five
+years longer than that of coup-entry leaders (@fig-logrank). Based on these
+observations and discussions, I propose the following hypothesis:
+
+> ***H1: Political leaders who successfully extend their tenure through autocoups
+> are more likely to experience longer leadership survival compared to coup-entry
 > leaders.***
 
 In the subsequent section, I will outline the research methodology used in this
@@ -517,7 +523,99 @@ remains persistent and robust.
 
 ## Research Design
 
-### Survival analysis
+### Methodology: Survival analysis
+
+In order to test the hypothesis, I will employ two cox models to analyze the
+survival tenures of leaders who overstay their terms and those who come to power
+through coups. The first model will utilize the Cox proportional hazards model
+(referred to as the Cox PH model), where I only use the variables at the entry
+year and do not consider the changes of these variables among leaders' survival
+times.
+
+However, except the main concern variable in this research, the leader type, the
+control variables, such as economic performance, Polity5, political stability, do
+change over time. The second model will take this into consideration and use the
+time-dependent Cox model (referred to as the Time-dependent Cox model).
+
+Unlike the Kaplan-Meier model, the Cox model enables the estimation of the
+impacts of multiple factors. Although it does not directly estimate the duration
+of tenure in office, it evaluates the hazard rate associated with being ousted
+from power, which essentially represents different facets of the same phenomenon.
+As a leader's cumulative hazard of being ousted increases, their probability of
+survival in office decreases.
+
+```{=tex}
+\begin{equation}
+\begin{aligned}
+Surv(survival\_time, status) &= group + \\
+&GDP\_growth\_trend + GDP\_pc\_log + \\
+&pop\_log + polity5 + polstab + age
+\end{aligned}
+\end{equation}
+```
+### Data
+
+The main variables are as follows.
+
+#### Dependent variables
+
+-   **Survival time:** the duration of leaders' tenure in days. For coup-entry
+    leaders, this time span initiates on the day they assume power, while
+    overstaying leaders' tenure begins on the expiration date of their initial
+    term. For instance, considering Xi Jinping's case, he assumed power in 2013,
+    successfully removing term limits in 2018. However, his initial two-term
+    tenure was due to end in 2023. Hence, his survival time commences from 2023
+    rather than 2013, signifying the start of his original tenure. The survival
+    time concludes on the day the leader exits office, applying to both
+    coup-entry and overstaying leaders.
+
+-   **End point status:** 0 = censored, 1 = ousted. I categorized ousting by
+    force as 1, even in cases where some leaders "voluntarily" resigned under
+    pressure. Other methods of leaving office are considered censored, which can
+    encompass situations where leaders appoint their successors, opt for
+    democratic means of overturn, face health-related issues, or encounter
+    natural death.
+
+#### Independent variable
+
+-   **Leader type:** Group A = overstaying leader, Group B = coup-entry leader.
+    This variable is the primary independent variable of interest, as it serves
+    as the basis for comparison of survival time between the two types of
+    leaders.
+
+The dependent and independent data are sourced from the author's incumbent
+overstay dataset and the leaders dataset by [@goemans2009].
+
+#### Control variables
+
+-   **Indicators of Economic Influence:** To evaluate economic influence, I rely
+    on two primary indicators: the trend in GDP growth (`GDP_growth_trend`) and
+    the logarithm of GDP per capita (`GDP_pc_log)`. The GDP_growth_trend is
+    determined by contrasting the GDP growth in the year of a coup entry or
+    overstaying with the preceding 3-year moving average of the growth rate. The
+    dataset employed for these metrics is sourced from V-Dem Data.
+
+-   **Degree of Democracy:** The level of democracy is gauged using Polity 5
+    scores (`polity`) at the entry year for each respective country. This dataset
+    is sourced from the Center for Systemic Peace (CSP)[^4].
+
+-   **Population Size:** Accounting for its potential impact on leaders' tenures,
+    the log population size (`pop_log`) is considered. This data is obtained from
+    the V-Dem Data and is evaluated in relation to its influence on leadership
+    survival.
+
+-   **Political Stability:** The stability of the political landscape is crucial
+    in evaluating the survival tenures of leaders. To quantify this aspect, the
+    Major Episodes of Political Violence Variables dataset from the CSP is
+    utilized to measure political stability (`polstab`) at the leader's entry
+    year.
+
+-   **Leader's Age:** The age of the leader at the entry year serves as an
+    additional variable in the analysis, providing insight into potential
+    correlations with leadership survival. This data is sourced from the leaders
+    dataset by [@goemans2009].
+
+### 
 
 ```{r}
 #| label: end
@@ -540,3 +638,6 @@ cat("\\newpage
     rule-until-2036: Analysis: Vladimir Putin secures constitutional changes
     allowing him to rule until 2036. Accessed\
     on `r Sys.Date()`.
+
+[^4]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on Dec
+    24, 2023.
