@@ -334,39 +334,33 @@ environment that significantly influences leader tenure.
 
 ### Hypothesis
 
-While both coup-entry and autocoup leaders face similar challenges – lack of
-legitimacy, irregularity, and fostering uncertainty – the severity of these
-challenges often differ. Coup-entry leaders typically encounter these obstacles
-to a greater degree. Consequently, they are expected to have shorter tenures in
-power compared to autocoup leaders.
+As previous studies have shown, while many factors can affect the survival of
+leaders, the fundamental determinant of tenure longevity is the leader's ability
+to maintain power. As long as they can hold onto power or balance it in their
+favour, they can remain in office. However, as discussed earlier, although both
+coup-entry and autocoup leaders face similar challenges related to illegitimacy,
+uncertainty, and instability, the severity of these challenges differs. This
+difference places the two types of leaders at varying levels of advantage or
+disadvantage in terms of power balance. Coup-entry leaders typically encounter
+these obstacles to a greater degree, leading to an expectation of shorter tenures
+in power compared to autocoup leaders.
 
 #### Illegitimacy
 
-Coup-entry leaders face an inherent legitimacy gap due to their sudden, often
-violent, and unconstitutional rise to power. This approach is widely viewed as
-illegal and sets a dangerous precedent, encouraging others to attempt similar
-takeovers. Haiti's history exemplifies this, with Henri Namphy's brief presidency
-in 1988 being cut short by another coup just three months later [@goemans2009].
-Beyond immediate internal power grabs, coups can embolden external actors to
-intervene, potentially leading to uprisings, revolutions, and civil wars
-[@dahl2023].
+While both coup-entry and autocoup leaders lack genuine legitimacy, the nature of
+this illegitimacy differs significantly. Coups represent a more blatant disregard
+for legal processes, often involving force or the threat of force to seize power.
+In contrast, autocoups employ a façade of legality through tactics such as
+manipulating constitutional interpretations, engineering parliamentary votes,
+influencing court decisions, and even holding referendums. Despite this veneer,
+these maneuvers do not erase the underlying lack of genuine legitimacy, hence
+this study categorizes them as autocoups. However, there is considerable debate
+among scholars, with some arguing for less severe terms like "incumbent overstay"
+or "executive takeover" due to the perceived legality.
 
-In contrast, autocoup leaders manipulate power transition processes to extend
-their rule, often through constitutional reinterpretations, engineered
-parliamentary votes, or influenced Supreme Court decisions. These actions lack
-genuine legitimacy as they exploit power and use illegal measures like silencing
-opposition. Although their legitimacy is also contested, autocoup leaders
-maintain a superficial veneer of legality, forcing challengers to operate within
-legal frameworks. Replicating autocoup is more challenging than staging a coup
-because it requires holding a leadership position first.
-
-Furthermore, overthrowing incumbents who overstay in power through autocoups
-presents significant hurdles due to the incumbent's power advantage. This
-advantage is evident in cases like China (2018), where the National People's
-Congress granted Xi Jinping the potential to rule for life[^1], and Russia
-(2020), where constitutional changes allow Putin to potentially remain in power
-until 2036[^2]. These actions demonstrate the consolidation of power by
-incumbents, even if they do not reflect genuine public support.
+This perceived legitimacy can provide a temporary advantage for autocoup leaders.
+Challengers are often constrained to operate within legal frameworks, making it
+difficult to directly confront the incumbent.
 
 ```{r}
 #| label: tbl-coups
@@ -408,7 +402,7 @@ coups |>
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
 
-### Uncertainty
+#### Uncertainty
 
 Coup-entry and autocoup leaders face different levels of uncertainty immediately
 following their rise to or overstay power.
@@ -427,7 +421,7 @@ retain power for life [@geddes2018], but their ability to do so was uncertain.
 Others promise to transfer power to civilian authorities, but the timing and
 fulfillment of these promises are unclear. For example, Myanmar's military junta
 (2021 coup) has repeatedly extended a state of emergency, clinging to power
-beyond the promised time-frame[^3]. Conversely, after the 2010 coup in Niger, the
+beyond the promised time-frame[^1]. Conversely, after the 2010 coup in Niger, the
 military honoured their promise by restoring civilian rule within the same year
 [@ginsburg2019]. Third, the successors of coup leaders are uncertain. Some may
 designate successors from their inner circle, including family members, while
@@ -435,14 +429,14 @@ others may support general elections, though whether this will be fulfilled as
 intended remains uncertain.
 
 In contrast, autocoup leaders present a clearer picture regarding leadership and
-tenure. There is no uncertainty about who will rule after an autocoup. In the
+tenure. There is no ambiguity about who will rule after an autocoup. In the
 medium term, autocoup leaders typically hold office themselves. Many, like Putin
 in Russia and Xi Jinping in China, seek to extend their rule indefinitely and are
 unlikely to relinquish power voluntarily. Others attempt to extend their terms
 incrementally, such as President Menem of Argentina, who overstayed until 1993
 but failed in his bid for another term in 1999 [@llanos2019].
 
-### Instability
+#### Instability
 
 The stability of a regime, particularly in an autocracy, hinges on maintaining a
 balance of power. Coups, however, inevitably disrupt this balance, even when they
@@ -478,6 +472,35 @@ regimes experience fewer abrupt changes. They face less pressure to dismantle th
 existing ruling paradigm and establish a new order. Even when adjustments are
 necessary, they have more time to implement changes gradually.
 
+```{r}
+#| label: tbl-leaders
+#| tbl-cap: Main features of autocoup and coup-entry leaders 
+#| echo: !expr format == "html"
+#| results: asis
+# library(kableExtra)
+read.csv(here("data/leader_comparison.csv")) |> 
+  clean_names(case = "title") |> 
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  cols_width(
+    1 ~ px(100),
+    2:3 ~ px(250)
+  ) |>
+   data_color(rows = c(2, 4), colors = "#edede9") 
+```
+
+In conclusion,
+
+Furthermore, overthrowing incumbents who overstay in power through autocoups
+presents significant hurdles due to the incumbent's power advantage. This
+advantage is evident in cases like China (2018), where the National People's
+Congress granted Xi Jinping the potential to rule for life[^2], and Russia
+(2020), where constitutional changes allow Putin to potentially remain in power
+until 2036[^3]. These actions demonstrate the consolidation of power by
+incumbents, even if they do not reflect genuine public support.
+
 These factors contribute to a shorter expected lifespan for coup-entry leaders
 compared to the relatively longer tenures of autocoup leaders. The average
 survival period following an autocoup is approximately five years longer than
@@ -505,15 +528,15 @@ cat("\\newpage
 ## References")
 ```
 
-[^1]: https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to
+[^1]: https://thediplomat.com/2023/08/myanmar-junta-extends-state-of-emergency-for-fourth-time/:
+    Myanmar\
+    Junta Extends State of Emergency for Fourth Time. Accessed on `r Sys.Date()`.
+
+[^2]: https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to
     remain ‘president for life’ as term limits removed. Accessed on
     `r Sys.Date()`.
 
-[^2]: https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-\
+[^3]: https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-\
     rule-until-2036: Analysis: Vladimir Putin secures constitutional changes
     allowing him to rule until 2036. Accessed\
     on `r Sys.Date()`.
-
-[^3]: https://thediplomat.com/2023/08/myanmar-junta-extends-state-of-emergency-for-fourth-time/:
-    Myanmar\
-    Junta Extends State of Emergency for Fourth Time. Accessed on `r Sys.Date()`.
