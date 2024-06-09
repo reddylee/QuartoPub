@@ -17,8 +17,8 @@ categories: [Article, Coups]
 bibliography: references.bib
 
 abstract: |
-  This study explores and compares the survival time of two categories of irregular-entry political leaders: those who ascend to power through coups and those who overstay their legitimate term limits (autocoups). The central hypothesis posits that the mode of accession to power influences the duration of their tenures. Utilizing survival analysis, the results indicate that leaders who overstay their terms through autocoups generally remain in power longer than those who come to power through coups.
-
+  This study examines how the method of attaining power impacts the longevity of coup-entry leaders and autocoups leaders. We hypothesize that the accession method significantly affects leader tenure. Utilizing Cox proportional hazards and time-dependent Cox models, we provide compelling evidence of differing survival times between these leader types. The findings indicate a 2.42 times higher risk of removal for coup-entry leaders compared to autocoup leaders. This study highlights the implications of these findings for political stability and democratic processes, suggesting that the relative ease and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. The research also underscores the importance of understanding the nuances of irregular leadership transitions and contributes to the academic literature by providing a new dataset on autocoups, which has not been widely recognized previously.
+  
 keywords: [Coups, Autocoups, Survival, Political Leadership, Cox Model]
 
 execute:
@@ -606,9 +606,10 @@ CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
 \end{aligned}
 $$
 
-The GDP per capita data (in constant 2017 international dollars, PPP) is sourced
-from the V-Dem dataset by @fariss2022. To capture the prior year's economic
-impact, the data is lagged by one year.
+The GDP per capita data, expressed in constant 2017 international dollars (PPP)
+and measured in units of \$10,000, is sourced from the V-Dem dataset by
+@fariss2022. To account for the economic impact of the previous year, this data
+is lagged by one year.
 
 -   **Political Stability:** This variable captures overall regime stability by
     including a violence index that encompasses all types of internal and
@@ -653,10 +654,10 @@ $$
 
 ## Results and discussion
 
-Building on the preceding discussion, I investigated my hypothesis regarding the
-likelihood of prolonged regime survival among leaders who overstay their terms
-compared to those who assume power through coups. The regression results of both
-the Cox PH model and the Time-dependent Cox model are presented in @tbl-cox.
+### Model results
+
+Using the @survival package in R, we present the regression results for both the
+Cox PH model and the Time-dependent Cox model in Table @tbl-cox.
 
 ```{r}
 #| label: model
@@ -731,22 +732,34 @@ tbl_merge(list(tbl1, tbl2),
   as_gt()
 ```
 
-It is evident from the table that both models produce comparable outcomes,
-indicating that the type of leader indeed significantly influences the survival
-duration of their regime, even when controlling for other pertinent factors. Here
-I use the Time-dependent Cox model to illustrate the results.
+Generally speaking, both the Cox PH model and time-dependent Cox model analyses
+revealed a statistically significant association between leadership type and the
+hazard of removal from power. Coup-entry leaders were found to have a hazard
+ratio of 2.42 (in time-dependent Cox model) compared to autocoup leaders
+(reference group), assuming all other variables in the model are held constant.
+The analysis suggests that coup-entry leaders face a significantly greater risk
+of removal from power compared to autocoup leaders. At any given time during
+their tenure, coup-entry leaders are 2.42 times more likely to be ousted from
+power compared to autocoup leaders, all else being equal in the model.
 
-The hazard ratio for coup-entry leaders is 2.41, signifying that coup-entry
-leaders are 1.41 times more likely to face ousting compared to overstaying
-leaders, all else being equal.
+All other control variables in Cox PH model are not statistically significant. In
+time-dependent Cox model, however, GDP per capita and the log of population are
+both statistically significant at 5% level.
 
-Additionally, the hazard ratio associated with the logarithm of GDP per capita is
-0.73, suggesting that a 1% increase in GDP per capita is correlated with a 27%
-reduction in the hazard of being ousted, or 1% decrease in GDP per capita is
-correlated with a 37% reduction in the hazard of being ousted.
+-   **GDP per capita:** The hazard ratio of 0.94 indicates that for each unit
+    increase in GDP per capita (measured in constant 2017 international dollars,
+    PPP, in units of \$10,000), the hazard (or risk) of being ousted at any given
+    time is reduced by 6%, assuming all other variables in the model are held
+    constant. Similarly, it indicates that for each unit increase in the log of
+    population, the hazard (or risk) of being oustedat any given time is reduced
+    by 14%, assuming all other variables in the model are held constant.
 
-It is noteworthy that the remaining variables did not exhibit statistical
-significance in this analysis.
+-   **Population:** The hazard ratio of 0.86 indicates that for each unit
+    increase in the logarithm of the population (one percent increase of
+    population), the hazard (or risk) of being ousted at any given time decreases
+    by 14%, assuming all other variables in the model are held constant.
+
+### Discussions
 
 ```{r}
 #| label: fig-coxSurv
@@ -767,17 +780,12 @@ testdata1 <- Mydata1 |>
     polstab = mean(polstab),
     age = mean(age)
   )
-Mydata1 |>
-  mutate(group = factor(group),
-         survt = tstop - tstart) |>
-  coxph(
-    Surv(survival_time, status) ~ group + GDP_trend + GDP_pc + pop_log + polity5 + polstab + age,
-    data = _
-  ) |> 
+
+model_cox1 |> 
   survfit(newdata = testdata1) |>
   ggsurvplot(data = testdata1,
+             xlab = "Days",
              surv.median.line = "hv",
-             conf.int = TRUE,
              legend.title = "Leader Type",
              legend.labs = c("Autocoup leaders", "Coup-entry leaders"))
 
@@ -791,28 +799,26 @@ testdata2 <- Mydata2 |>
     polstab = mean(polstab),
     age = mean(age)
   )
-Mydata2 |>
-  mutate(group = factor(group),
-         survt = tstop - tstart) |>
-  coxph(
-    Surv(T1, T2, status) ~ group + GDP_trend + GDP_pc + pop_log + polity5 + polstab + age + cluster(id),
-    data = _
-  ) |> 
+
+model_cox2 |> 
   survfit(newdata = testdata2) |>
   ggsurvplot(data = testdata2,
+             xlab = "Days",
              surv.median.line = "hv",
-             conf.int = TRUE,
              legend.title = "Leader Type",
              legend.labs = c("Autocoup leaders", "Coup-entry leaders"))
 ```
 
-The survival curves depicted in @fig-coxSurv illustrate the respective survival
-rates for leaders of both types. Once more, both the Cox proportional hazards
-(PH) model and the Time-dependent model generate analogous plots. Notably, the
-survival curve for leaders who enter through coups exhibits a significantly lower
-trajectory compared to those who overstay their terms. This disparity suggests
-that overstaying leaders are more inclined to endure for longer durations than
-their coup-entry counterparts.
+The survival curves depicted in @fig-coxSurv illustrate the survival rates for
+leaders of both types. Both the Cox Proportional Hazards (Cox PH) model and the
+time-dependent model produce similar plots. Notably, the survival curve for
+coup-entry leaders exhibits a significantly lower trajectory compared to that of
+autocoup leaders. The steeper drop at the early stage for coup-entry leaders
+indicates they are more likely to be ousted shortly after assuming power.
+Additionally, the survival curve for coup-entry leaders crosses the median
+survival line much earlier than that of autocoup leaders. This disparity suggests
+that autocoup leaders tend to remain in power for longer durations than their
+coup-entry counterparts.
 
 ```{r}
 #| label: fig-coxHR
@@ -871,42 +877,87 @@ coxplottidy |>
 ```
 
 @fig-coxHR displays the hazard ratios and corresponding 95% confidence intervals
-for the variables incorporated in the Cox model. Both the Cox proportional
-hazards (PH) model and the Time-dependent model yield nearly identical plots.
-Notably, the hazard ratio for leaders who assume power through coups and the
-logarithm of GDP per capita emerge as statistically significant factors.
+for the variables incorporated in the Cox model. Both the Cox Proportional
+Hazards (PH) model and the time-dependent model yield nearly identical plots. The
+hazard ratio for coup-entry leaders compared to autocoup leaders is significantly
+greater than 1 and statistically significant, indicating that coup-entry leaders
+are at a higher risk of being ousted. Most other variables have hazard ratios
+close to 1, suggesting that a one-unit increase in these variables does not
+significantly affect the risk of being ousted. Although the hazard ratio for GDP
+growth trend is considerably less than 1, it is not statistically significant at
+the 5% level. However, it is statistically significant at the 10% level,
+suggesting that better economic performance may help to consolidate the rule of
+the incumbents to some extent.
+
+@fig-coxHR presents the hazard ratios (HRs) and their corresponding 95%
+confidence intervals (CIs) for the variables included in the Cox proportional
+hazards model (Cox PH) and the time-dependent model. The HR for coup-entry
+leaders compared to autocoup leaders is significantly greater than 1, indicating
+a substantially higher risk of removal from power for coup-entry leaders. Most
+other variables have HRs close to 1, suggesting that a one-unit increase in those
+variables has minimal impact on the risk of removal.
+
+The HR for GDP growth trend is noteworthy. While it is considerably less than 1,
+it is statistically significant at the 10% level (0.10 \> p-value \> 0.05). This
+suggests a possible trend where positive economic performance might reduce the
+risk of removal from power for the incumbents, although the evidence is not
+conclusive.
+
+### Assessing the Proportional Hazards Assumption
+
+The validity of the model assumptions significantly influences our confidence in
+the results. To assess the proportional hazards assumption of the Cox model, we
+use the chi-square test based on Schoenfeld residuals to determine whether the
+covariate effects remain constant (proportional) over time. Although the Cox PH
+model violates the proportional hazards assumption, our primary analysis relies
+on the time-dependent Cox model, which does not show strong evidence of violating
+the proportional hazards assumption for any covariate. The global p-value of
+0.382 is much greater than the 5% significance level, indicating that the
+proportional hazards assumption is reasonably met for the time-dependent Cox
+model.
+
+```{r}
+#| echo: false
+test <- cox.zph(model_cox2)
+```
 
 ## Conclusion
 
-Adipiscing netus morbi facilisis parturient nunc habitant. Mauris penatibus
-taciti penatibus nisi aliquet himenaeos, auctor lobortis tellus. Metus eget
-ornare nullam quisque primis nec ornare bibendum auctor. Nunc tempus natoque
-phasellus senectus pellentesque hendrerit, turpis hac vel odio fames, suscipit
-quisque egestas eros quis.
+This study examined the survival durations of political leaders who come to power
+through irregular means, specifically coups and autocoups. We hypothesized that
+the mode of accession significantly influences leader tenure. Employing survival
+analysis techniques, including the Cox proportional hazards model and a
+time-dependent Cox model, we found strong evidence that autocoup leaders
+generally enjoy longer tenures than coup-entry leaders.
 
-Adipiscing rutrum, enim est eu, luctus; leo tristique posuere taciti, iaculis
-quisque torquent! Torquent phasellus dis aliquam maecenas aptent himenaeos a duis
-semper fringilla fringilla. Arcu volutpat nam sociis nullam sociosqu tristique eu
-habitant. Pellentesque lobortis taciti sodales, habitant posuere massa nascetur
-velit eleifend.
+Our findings revealed a significant difference in average tenure, with
+post-autocoup leaders averaging approximately 10.8 years in power compared to 5.4
+years for coup-entry leaders. The time-dependent Cox model further indicated that
+coup-entry leaders are 2.42 times more likely to be ousted from power at any
+given time compared to autocoup leaders, all else being equal.
 
-Ipsum sociis; risus torquent molestie senectus porttitor, pharetra magna ad
-rutrum convallis. Imperdiet eleifend habitant sociis, aliquet mi, dui himenaeos
-dictum fames? Dis sem ut, vel; lacus tortor duis aptent sociosqu litora cras
-nisi? Nam conubia in vivamus porttitor taciti?
+These results highlight the importance of understanding the phenomenon of
+autocoups, where leaders extend their rule by manipulating legal frameworks. Due
+to the relative ease and potential benefits of autocoups, this method of power
+retention might incentivize more leaders to employ it. Consequently, democratic
+backsliding could become more prevalent as autocoups weaken democratic
+institutions and constitutional norms, particularly in nascent democracies or
+those transitioning from autocracy.
 
-Elit vitae leo ante orci, erat vestibulum primis elementum laoreet? Ante massa
-condimentum pellentesque odio ligula velit fringilla. Hac habitant ullamcorper
-interdum phasellus, pulvinar orci mi, convallis gravida odio taciti. Elementum
-ligula per donec fermentum class duis nisi ultrices?
+This study contributes to the field of leadership survival by demonstrating that
+the mode of accession significantly impacts leader tenure, a factor previously
+under-explored in the literature. By utilizing both Cox models, the research
+offers robust analytical techniques for studying political leadership survival
+and provides strong evidence of divergent tenure lengths between these two types
+of irregular-entry leaders.
 
-Consectetur maecenas sociosqu, netus ad nisi, class urna aptent convallis
-imperdiet nostra tellus. Hendrerit himenaeos sagittis sapien venenatis, eu
-senectus varius lectus. Condimentum dictum arcu ornare lacinia ornare lectus
-magna! Inceptos tempus tempus imperdiet suspendisse mattis enim accumsan quisque,
-proin ridiculus congue, nulla cursus primis.
-
-\newpage
+However, limitations exist. The study relies heavily on the autocoup dataset
+collected and coded by the author. The concept and data itself are relatively
+novel within academia. Future research should refine and establish wider
+recognition for the term "autocoup," leading to more accurate and comprehensive
+data collection efforts. Expanding the dataset to include more cases and
+integrating it with data on other irregular leadership transitions could yield a
+more holistic understanding of political survival in such contexts.
 
 ```{r}
 #| label: references

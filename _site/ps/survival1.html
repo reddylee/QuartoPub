@@ -15,8 +15,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.554">
 <meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-06-08">
-<meta name="keywords" content="Coups, Autocoups, Survival, Political Leadership">
+<meta name="dcterms.date" content="2024-06-09">
+<meta name="keywords" content="Coups, Autocoups, Survival, Political Leadership, Cox Model">
 <title>Can.Do.So - Irregular Leadership Transitions and Political Survival: An Analysis of Coup-entry leaders and Autocoup leaders</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -423,13 +423,13 @@
 <link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <meta property="og:title" content="Can.Do.So - Irregular Leadership Transitions and Political Survival: An Analysis of Coup-entry leaders and Autocoup leaders">
-<meta property="og:description" content="This study explores and compares the survival time of two categories of irregular-entry political leaders: those who ascend to power through coups and those who overstay their legitimate term limits (autocoups). The central hypothesis posits that the mode of accession to power influences the duration of their tenures. Utilizing survival analysis, the results indicate that leaders who overstay their terms through autocoups generally remain in power longer than those who come to power through coups.">
+<meta property="og:description" content="This study examines how the method of attaining power impacts the longevity of coup-entry leaders and autocoups leaders. We hypothesize that the accession method significantly affects leader tenure. Utilizing Cox proportional hazards and time-dependent Cox models, we provide compelling evidence of differing survival times between these leader types. The findings indicate a 2.42 times higher risk of removal for coup-entry leaders compared to autocoup leaders. This study highlights the implications of these findings for political stability and democratic processes, suggesting that the relative ease and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. The research also underscores the importance of understanding the nuances of irregular leadership transitions and contributes to the academic literature by providing a new dataset on autocoups, which has not been widely recognized previously.">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
 <meta name="twitter:title" content="Can.Do.So - Irregular Leadership Transitions and Political Survival: An Analysis of Coup-entry leaders and Autocoup leaders">
-<meta name="twitter:description" content="This study explores and compares the survival time of two categories of irregular-entry political leaders: those who ascend to power through coups and those who overstay their legitimate term limits (autocoups). The central hypothesis posits that the mode of accession to power influences the duration of their tenures. Utilizing survival analysis, the results indicate that leaders who overstay their terms through autocoups generally remain in power longer than those who come to power through coups.">
+<meta name="twitter:description" content="This study examines how the method of attaining power impacts the longevity of coup-entry leaders and autocoups leaders. We hypothesize that the accession method significantly affects leader tenure. Utilizing Cox proportional hazards and time-dependent Cox models, we provide compelling evidence of differing survival times between these leader types. The findings indicate a 2.42 times higher risk of removal for coup-entry leaders compared to autocoup leaders. This study highlights the implications of these findings for political stability and democratic processes, suggesting that the relative ease and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. The research also underscores the importance of understanding the nuances of irregular leadership transitions and contributes to the academic literature by providing a new dataset on autocoups, which has not been widely recognized previously.">
 <meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
 <meta name="twitter:card" content="summary_large_image">
@@ -456,13 +456,13 @@ Zhu Qi
     </div>
 </div>
 
-  <p class="date">2024-06-08</p>
+  <p class="date">2024-06-09</p>
 </section><section id="introduction" class="slide level2" data-number="1"><h2>
 <span class="header-section-number">1</span> Introduction</h2>
 <p>The survival of political leaders has been a well-studied topic in political science. While the general framework has garnered significant attention, specific types of leaders, particularly coup-entry leaders and autocoup leaders (discussed in more detail in Chapter 3), have received comparatively less scrutiny. However, examining the tenures of these leader types is particularly significant.</p>
-<p>Leaders who ascend through irregular means, such as coups or autocoups, attract more interest from both academics and journalists. The processes of entry, tenure, and exit are more predictable for leaders who come to power through regular channels, making their survival easier to anticipate and thus less compelling to study. In contrast, the uncertainty surrounding the tenures of irregular leaders draws more attention. According to <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/research-design" role="doc-biblioref" onclick="">2009</a>)</span>, leaders with irregular entries or exits are quite common and therefore worth analysing. Between 1945 and 2015, approximately 14.5% (213 out of 1,472) of leaders who assumed office through regular channels exited irregularly. The proportion is even higher among leaders with irregular entries. During the same period, approximately 51.3% (158 out of 308) of those who assumed office through irregular means experienced irregular exits.</p>
-<p>Coup-entry and autocoup leaders constitute the majority of those who ascend to or exit from power irregularly. Most leaders who gained power through irregular means did so by launching coups or overstaying in office. According to <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/research-design" role="doc-biblioref" onclick="">2009</a>)</span>, out of 374 leaders who exited irregularly, 246 were ousted through coups, accounting for 65.8% of these cases. <span class="citation" data-cites="frantz2016">Frantz and Stein (<a href="#/research-design" role="doc-biblioref" onclick="">2016</a>)</span> show that coup-related exits account for roughly one-third of all exits in autocracies, surpassing any other type, including regular transitions. Additionally, between 1945 and 2020, there were 106 autocoup attempts, with 86 being successful <span class="citation" data-cites="zhu2024">(<a href="#/research-design" role="doc-biblioref" onclick="">Zhu 2024</a>)</span>.</p>
-<p>Due to their irregularity and inherent uncertainty, it is challenging to precisely measure the tenure of coup-entry and autocoup leaders. Nonetheless, comparing the tenures of these two types of leaders is both possible and insightful. Conducting a log-rank test in survival analysis on the leaders dataset <span class="citation" data-cites="goemans2009">(<a href="#/research-design" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span> and the autocoup dataset <span class="citation" data-cites="zhu2024">(<a href="#/research-design" role="doc-biblioref" onclick="">Zhu 2024</a>)</span> reveals a distinct contrast in the tenures of autocoup leaders and coup-entry leaders.</p>
+<p>Leaders who ascend through irregular means, such as coups or autocoups, attract more interest from both academics and journalists. The processes of entry, tenure, and exit are more predictable for leaders who come to power through regular channels, making their survival easier to anticipate and thus less compelling to study. In contrast, the uncertainty surrounding the tenures of irregular leaders draws more attention. According to <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/conclusion" role="doc-biblioref" onclick="">2009</a>)</span>, leaders with irregular entries or exits are quite common and therefore worth analysing. Between 1945 and 2015, approximately 14.5% (213 out of 1,472) of leaders who assumed office through regular channels exited irregularly. The proportion is even higher among leaders with irregular entries. During the same period, approximately 51.3% (158 out of 308) of those who assumed office through irregular means experienced irregular exits.</p>
+<p>Coup-entry and autocoup leaders constitute the majority of those who ascend to or exit from power irregularly. Most leaders who gained power through irregular means did so by launching coups or overstaying in office. According to <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/conclusion" role="doc-biblioref" onclick="">2009</a>)</span>, out of 374 leaders who exited irregularly, 246 were ousted through coups, accounting for 65.8% of these cases. <span class="citation" data-cites="frantz2016">Frantz and Stein (<a href="#/conclusion" role="doc-biblioref" onclick="">2016</a>)</span> show that coup-related exits account for roughly one-third of all exits in autocracies, surpassing any other type, including regular transitions. Additionally, between 1945 and 2020, there were 106 autocoup attempts, with 86 being successful <span class="citation" data-cites="zhu2024">(<a href="#/conclusion" role="doc-biblioref" onclick="">Zhu 2024</a>)</span>.</p>
+<p>Due to their irregularity and inherent uncertainty, it is challenging to precisely measure the tenure of coup-entry and autocoup leaders. Nonetheless, comparing the tenures of these two types of leaders is both possible and insightful. Conducting a log-rank test in survival analysis on the leaders dataset <span class="citation" data-cites="goemans2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span> and the autocoup dataset <span class="citation" data-cites="zhu2024">(<a href="#/conclusion" role="doc-biblioref" onclick="">Zhu 2024</a>)</span> reveals a distinct contrast in the tenures of autocoup leaders and coup-entry leaders.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>Mydata1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/mydata1.csv"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb1-2"><a></a>  <span class="fu">mutate</span>(<span class="at">survival_year =</span> survival_time <span class="sc">/</span> <span class="dv">365</span>)</span>
@@ -478,7 +478,7 @@ Zhu Qi
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["avg"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"10.9"},{"1":"B","2":"5.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["avg"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"10.8"},{"1":"B","2":"5.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -495,17 +495,17 @@ Zhu Qi
 <span id="cb2-9"><a></a>           <span class="at">surv.median.line =</span> <span class="st">"hv"</span>,</span>
 <span id="cb2-10"><a></a>           <span class="at">break.x.by =</span> <span class="dv">5</span>, </span>
 <span id="cb2-11"><a></a>           <span class="at">legend.title =</span> <span class="st">"Leader Type"</span>,</span>
-<span id="cb2-12"><a></a>           <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"entry by autocoup"</span>, <span class="st">"entry by coup"</span>),</span>
+<span id="cb2-12"><a></a>           <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"Autocoup leaders"</span>, <span class="st">"Coup-entry leaders"</span>),</span>
 <span id="cb2-13"><a></a>           <span class="at">xlab =</span> <span class="st">"Survival Years"</span>,</span>
 <span id="cb2-14"><a></a>           <span class="co">#title = "Survival Curves of overstay and coup-entry leaders",</span></span>
-<span id="cb2-15"><a></a>           <span class="at">font.title =</span> <span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a></a>           <span class="at">font.title =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-logrank" class="quarto-figure quarto-figure-center quarto-float" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-logrank-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img data-src="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img data-src="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logrank-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
@@ -513,7 +513,7 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 </div>
 </div>
 </div>
-<p>Preliminary findings from survival analysis (see <a href="#/introduction" class="quarto-xref">Figure&nbsp;1</a>) indicate a significant difference in leadership tenures. Leaders who consolidate power through autocoups have a longer average tenure post-autocoup (approximately 10.9 years) compared to coup-entry leaders (approximately 5.3 years). This suggests a potential shortfall of about 5 years in the average tenure of coup-entry leaders.</p>
+<p>Preliminary findings from survival analysis (see <a href="#/introduction" class="quarto-xref">Figure&nbsp;1</a>) indicate a significant difference in leadership tenures. Leaders who consolidate power through autocoups have a longer average tenure post-autocoup (approximately 10.8 years) compared to coup-entry leaders (approximately 5.4 years). This suggests a potential shortfall of about 5 years in the average tenure of coup-entry leaders.</p>
 <p>We argue that the method of accession significantly influences leadership longevity. Coup leaders likely face greater challenges to their legitimacy, resulting in a more precarious initial period in power. They encounter higher levels of uncertainty, instability, and pressure to share power, all of which contribute to a shorter average tenure compared to autocoup leaders.</p>
 <p>Employing the Cox proportional hazards model and the extended Cox model, our results indicate that autocoup leaders generally experience longer post-autocoup tenures compared to coup-entry leaders.</p>
 <p>This study makes two significant contributions. Firstly, it sheds light on a critical factor often overlooked in leadership survival studies: the impact of the method of accession to power. Leaders’ survival is not solely determined by their actions after taking power but also by how they acquired power in the first place. Secondly, utilizing survival models, this research provides empirical evidence of the significant difference in tenure duration between autocoup and coup-entry leaders. This finding may help explain the increasing prevalence of overstaying in power through autocoups since 2000, as more incumbents may be encouraged by precedents, and ruling elites tend to follow and support such actions, benefiting from a relatively longer tenure.</p>
@@ -522,13 +522,13 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 <span class="header-section-number">2</span> Literature review</h2>
 <p>The topic of political survival has been a cornerstone of political science research for decades. This enduring interest arises from the wide-ranging variations observed across regimes, countries, and historical periods. Previous studies have identified two crucial yet interconnected aspects of political survival: regime survival and individual leader survival.</p>
 <p>Regime survival focuses on the longevity of political systems, such as monarchies, political parties, or specific ideological structures. Leader survival, on the other hand, is concerned with the duration of individual leaders’ time in office. These two concepts often exhibit contrasting patterns. For example, in parliamentary democracies like Japan or the UK, specific political parties may hold power for extended periods while individual leaders (Prime Ministers) change frequently. Similarly, communist regimes typically see long-lasting parties in power, with leadership transitions occurring at a slower pace. In contrast, presidential systems like the United States or some military regimes experience more frequent changes in both the ruling party or junta and the leader of the country. This study specifically investigates the dynamics of individual leader survival, focusing on the factors influencing how long leaders remain in power.</p>
-<p>The existing literature on leader survival is vast and multifaceted, offering a wealth of insightful perspectives. Some studies delve into the specific mechanisms that influence leadership longevity within particular regimes, such as democracies or autocracies <span class="citation" data-cites="svolik2014 davenport2021">(<a href="#/research-design" role="doc-biblioref" onclick="">Svolik 2014</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Davenport, RezaeeDaryakenari, and Wood 2021</a>)</span>. Others seek to develop more generalizable theoretical frameworks that can explain leader survival across diverse political systems <span class="citation" data-cites="buenodemesquita2003">(<a href="#/research-design" role="doc-biblioref" onclick="">Bueno de Mesquita et al. 2003</a>)</span>. While the development of a universal theory remains an alluring goal, it is important to acknowledge the inherent challenges in creating a single model that encompasses the complexities of leadership survival across all regime types.</p>
-<p>The mechanisms governing power transitions vary significantly across different regimes, particularly between democracies and autocracies. In many autocratic systems, leadership selection is a closed affair. Potential candidates are often restricted to a narrow pool, such as royal families, military elites, or members of the ruling party. While political competition and elections may exist in some autocracies, there are often significant barriers to entry for legitimate challengers. Potential rivals may face threats such as assassination, imprisonment, or exile. Moreover, selection processes are shrouded in secrecy, with outsiders unable to participate or obtain information on the selections, let alone express dissent or complain about the results. This lack of inclusivity and transparency makes it challenging to gauge true levels of public support compared to democracies. Consequently, calculating selectorates or winning coalitions, as explored by <span class="citation" data-cites="buenodemesquita2003">Bueno de Mesquita et al. (<a href="#/research-design" role="doc-biblioref" onclick="">2003</a>)</span>, becomes a near-impossible task in autocracies.</p>
-<p>Therefore, focusing research on more specific regimes or types of leaders may be more appropriate. While regular and anticipated leadership changes are important as well, they offer less fertile ground for exploring the dynamics of leader longevity, as the vast majority of leaders who assume power through established channels also exit power through established mechanisms <span class="citation" data-cites="goemans2009">(<a href="#/research-design" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>. In contrast, the study of political survival among irregular leaders is particularly captivating due to the intricacies and uncertainties associated with irregular leadership transitions.</p>
+<p>The existing literature on leader survival is vast and multifaceted, offering a wealth of insightful perspectives. Some studies delve into the specific mechanisms that influence leadership longevity within particular regimes, such as democracies or autocracies <span class="citation" data-cites="svolik2014 davenport2021">(<a href="#/conclusion" role="doc-biblioref" onclick="">Svolik 2014</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Davenport, RezaeeDaryakenari, and Wood 2021</a>)</span>. Others seek to develop more generalizable theoretical frameworks that can explain leader survival across diverse political systems <span class="citation" data-cites="buenodemesquita2003">(<a href="#/conclusion" role="doc-biblioref" onclick="">Bueno de Mesquita et al. 2003</a>)</span>. While the development of a universal theory remains an alluring goal, it is important to acknowledge the inherent challenges in creating a single model that encompasses the complexities of leadership survival across all regime types.</p>
+<p>The mechanisms governing power transitions vary significantly across different regimes, particularly between democracies and autocracies. In many autocratic systems, leadership selection is a closed affair. Potential candidates are often restricted to a narrow pool, such as royal families, military elites, or members of the ruling party. While political competition and elections may exist in some autocracies, there are often significant barriers to entry for legitimate challengers. Potential rivals may face threats such as assassination, imprisonment, or exile. Moreover, selection processes are shrouded in secrecy, with outsiders unable to participate or obtain information on the selections, let alone express dissent or complain about the results. This lack of inclusivity and transparency makes it challenging to gauge true levels of public support compared to democracies. Consequently, calculating selectorates or winning coalitions, as explored by <span class="citation" data-cites="buenodemesquita2003">Bueno de Mesquita et al. (<a href="#/conclusion" role="doc-biblioref" onclick="">2003</a>)</span>, becomes a near-impossible task in autocracies.</p>
+<p>Therefore, focusing research on more specific regimes or types of leaders may be more appropriate. While regular and anticipated leadership changes are important as well, they offer less fertile ground for exploring the dynamics of leader longevity, as the vast majority of leaders who assume power through established channels also exit power through established mechanisms <span class="citation" data-cites="goemans2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>. In contrast, the study of political survival among irregular leaders is particularly captivating due to the intricacies and uncertainties associated with irregular leadership transitions.</p>
 <p>The diverse mechanisms influencing political leadership survival, as discussed above, have prompted scholars to delve deeper into more specific determinants. Two primary perspectives have emerged to explain the dynamics of leader survival.</p>
-<p>The first perspective considers objective factors and resources available to leaders. These include elements such as personal competence <span class="citation" data-cites="yu2016">(<a href="#/research-design" role="doc-biblioref" onclick="">Yu and Jong-A-Pin 2016</a>)</span>, societal stability <span class="citation" data-cites="arriola2009">(<a href="#/research-design" role="doc-biblioref" onclick="">Arriola 2009</a>)</span>, economic development <span class="citation" data-cites="palmer1999 williams2011">(<a href="#/research-design" role="doc-biblioref" onclick="">Palmer and Whitten 1999</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Williams 2011</a>)</span>, access to natural resources <span class="citation" data-cites="smith2004 quirozflores2012 wright2013">(<a href="#/research-design" role="doc-biblioref" onclick="">Smith 2004</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Quiroz Flores and Smith 2012</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Wright, Frantz, and Geddes 2013</a>)</span>, or external support networks <span class="citation" data-cites="licht2009 wright2008 thyne2017">(<a href="#/research-design" role="doc-biblioref" onclick="">Licht 2009</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Wright 2008</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Thyne et al. 2017</a>)</span>.</p>
-<p>The second perspective explores subjective factors, focusing on the strategies leaders employ to consolidate their power. This encompasses both the formulation and implementation of political policies and the leaders’ responses to opposition, challenges, or even coups and rebellions <span class="citation" data-cites="gandhi2007 morrison2009 escribà-folch2013 davenport2021">(<a href="#/research-design" role="doc-biblioref" onclick="">Gandhi and Przeworski 2007</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Morrison 2009</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Escribà-Folch 2013</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Davenport, RezaeeDaryakenari, and Wood 2021</a>)</span>.</p>
-<p>Unsurprisingly, coups have garnered significant scholarly attention due to their pivotal role in removing leaders <span class="citation" data-cites="svolik2009 frantz2016">(<a href="#/research-design" role="doc-biblioref" onclick="">Svolik 2009</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Frantz and Stein 2016</a>)</span>. Existing research delves into strategies for thwarting coups <span class="citation" data-cites="powell2017 sudduth2017 debruin2020">(<a href="#/research-design" role="doc-biblioref" onclick="">J. Powell 2017</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Sudduth 2017</a>; <a href="#/research-design" role="doc-biblioref" onclick="">De Bruin 2020</a>)</span>, as well as how leaders extend their tenures after surviving coup attempts <span class="citation" data-cites="easton2018">(<a href="#/research-design" role="doc-biblioref" onclick="">Easton and Siverson 2018</a>)</span>. For instance, <span class="citation" data-cites="sudduth2017">Sudduth (<a href="#/research-design" role="doc-biblioref" onclick="">2017</a>)</span> examines the post-coup actions of dictators, focusing on purge strategies. They argue that coup leaders initially wield more power than elites within the regime, rendering them less susceptible to subsequent coups, challenging the conventional view of new leaders as inherently weak <span class="citation" data-cites="roessler2011">(<a href="#/research-design" role="doc-biblioref" onclick="">Roessler 2011</a>)</span>. Meanwhile, <span class="citation" data-cites="sudduth2018">Sudduth and Bell (<a href="#/research-design" role="doc-biblioref" onclick="">2018</a>)</span> investigates how leaders’ entry methods affect their removal in dictatorships, positing that irregular entry does not necessarily increase the likelihood of removal; in fact, some forms of irregular entry may offer protection.</p>
+<p>The first perspective considers objective factors and resources available to leaders. These include elements such as personal competence <span class="citation" data-cites="yu2016">(<a href="#/conclusion" role="doc-biblioref" onclick="">Yu and Jong-A-Pin 2016</a>)</span>, societal stability <span class="citation" data-cites="arriola2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Arriola 2009</a>)</span>, economic development <span class="citation" data-cites="palmer1999 williams2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Palmer and Whitten 1999</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Williams 2011</a>)</span>, access to natural resources <span class="citation" data-cites="smith2004 quirozflores2012 wright2013">(<a href="#/conclusion" role="doc-biblioref" onclick="">Smith 2004</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Quiroz Flores and Smith 2012</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Wright, Frantz, and Geddes 2013</a>)</span>, or external support networks <span class="citation" data-cites="licht2009 wright2008 thyne2017">(<a href="#/conclusion" role="doc-biblioref" onclick="">Licht 2009</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Wright 2008</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Thyne et al. 2017</a>)</span>.</p>
+<p>The second perspective explores subjective factors, focusing on the strategies leaders employ to consolidate their power. This encompasses both the formulation and implementation of political policies and the leaders’ responses to opposition, challenges, or even coups and rebellions <span class="citation" data-cites="gandhi2007 morrison2009 escribà-folch2013 davenport2021">(<a href="#/conclusion" role="doc-biblioref" onclick="">Gandhi and Przeworski 2007</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Morrison 2009</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Escribà-Folch 2013</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Davenport, RezaeeDaryakenari, and Wood 2021</a>)</span>.</p>
+<p>Unsurprisingly, coups have garnered significant scholarly attention due to their pivotal role in removing leaders <span class="citation" data-cites="svolik2009 frantz2016">(<a href="#/conclusion" role="doc-biblioref" onclick="">Svolik 2009</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Frantz and Stein 2016</a>)</span>. Existing research delves into strategies for thwarting coups <span class="citation" data-cites="powell2017 sudduth2017 debruin2020">(<a href="#/conclusion" role="doc-biblioref" onclick="">J. Powell 2017</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Sudduth 2017</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">De Bruin 2020</a>)</span>, as well as how leaders extend their tenures after surviving coup attempts <span class="citation" data-cites="easton2018">(<a href="#/conclusion" role="doc-biblioref" onclick="">Easton and Siverson 2018</a>)</span>. For instance, <span class="citation" data-cites="sudduth2017">Sudduth (<a href="#/conclusion" role="doc-biblioref" onclick="">2017</a>)</span> examines the post-coup actions of dictators, focusing on purge strategies. They argue that coup leaders initially wield more power than elites within the regime, rendering them less susceptible to subsequent coups, challenging the conventional view of new leaders as inherently weak <span class="citation" data-cites="roessler2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Roessler 2011</a>)</span>. Meanwhile, <span class="citation" data-cites="sudduth2018">Sudduth and Bell (<a href="#/conclusion" role="doc-biblioref" onclick="">2018</a>)</span> investigates how leaders’ entry methods affect their removal in dictatorships, positing that irregular entry does not necessarily increase the likelihood of removal; in fact, some forms of irregular entry may offer protection.</p>
 <p>While scholars have extensively analysed leader survival across various contexts, including universal frameworks, autocratic regimes, and the aftermath of failed challenges, a significant gap persists. There is a lack of research specifically exploring and comparing the survival tenures of leaders who extend their reigns through autocoups compared to coup-entry leaders. This study aims to address this gap by investigating and comparing the duration of leadership survival between these two distinct leader types.</p>
 </section><section id="survival-dynamics-of-autocoup-leaders-and-coup-entry-leaders" class="slide level2 scrollable" data-number="3"><h2>
 <span class="header-section-number">3</span> Survival dynamics of autocoup leaders and coup-entry leaders</h2>
@@ -536,7 +536,7 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 <span class="header-section-number">3.1</span> Autocoup leader and coup-entry leader</h3>
 <p>As emphasized in Chapter 2, delving into leadership survival poses inherent challenges, given factors such as the opacity and diverse mechanisms of power transitions. However, these challenges underscore the significance of this research, as it sheds light on understudied dynamics.</p>
 <p>While the survival of political leaders manifests complexity and variation, it is not devoid of patterns entirely. Leaders of similar types often exhibit significant comparability. Before delving into the comparison, it is necessary to clarify several relative terminologies.</p>
-<p>We define an autocoup as a situation where an incumbent leader utilizes illegitimate or unconstitutional methods to extend their tenure and remain in power. An autocoup is deemed successful if this power extension lasts for at least six months. Coups, on the other hand, are defined as illegal and overt attempts by the military or other powerful groups within the state to unseat the sitting leader <span class="citation" data-cites="powell2011">(<a href="#/research-design" role="doc-biblioref" onclick="">J. M. Powell and Thyne 2011</a>)</span>. Similar to coups, successful autocoups in this study will be measured by a power usurpation lasting at least six months, differing from the seven-day duration coded by Powell and Thyne.</p>
+<p>We define an autocoup as a situation where an incumbent leader utilizes illegitimate or unconstitutional methods to extend their tenure and remain in power. An autocoup is deemed successful if this power extension lasts for at least six months. Coups, on the other hand, are defined as illegal and overt attempts by the military or other powerful groups within the state to unseat the sitting leader <span class="citation" data-cites="powell2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">J. M. Powell and Thyne 2011</a>)</span>. Similar to coups, successful autocoups in this study will be measured by a power usurpation lasting at least six months, differing from the seven-day duration coded by Powell and Thyne.</p>
 <p>It is also crucial to clarify the distinction between an autocoup leader and a coup-entry leader, as the survival of leadership is the main concern of this study.</p>
 <ul>
 <li class="fragment"><p><strong>Autocoup Leader:</strong> This refers to an incumbent leader who successfully uses illegitimate or unconstitutional means to extend their tenure in power. In an autocoup, the leader orchestrates the power grab and continues to rule afterwards.</p></li>
@@ -544,8 +544,8 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 </ul>
 <p>Given that autocoup leaders typically exhibit longer overall tenures compared to coup-entry leaders, this study focuses on a more nuanced comparison. Specifically, we will analyse the <strong>post-autocoup</strong> tenure of autocoup leaders and contrast it with the <strong>post-coup</strong> tenure of coup-entry leaders. The examination of the survival tenures of coup-entry leaders and autocoup leaders is motivated by their relevance and similarity in terms of illegitimacy, uncertainty, and instability.</p>
 <ul>
-<li class="fragment"><p><strong>Illegitimacy:</strong> Both leader types lack legitimacy, though it manifests differently. Coup leaders seize power through force or the threat of force, making their illegitimacy explicit. Autocoups often employ seemingly legal procedures like court rulings or votes, but these processes are frequently manipulated by incumbents leveraging their control <span class="citation" data-cites="zhu2024">(<a href="#/research-design" role="doc-biblioref" onclick="">Zhu 2024</a>)</span>. This perception of illegitimacy can be used to justify the removal of such leaders, even if the means of removal are themselves illegitimate.</p></li>
-<li class="fragment"><p><strong>Uncertainty:</strong> The irregular means by which coup-entry and autocoup leaders take or retain power create significant uncertainty regarding their long-term rule and eventual exit. The established power transition process is undermined, raising questions about whether these leaders will enact constitutional succession protocols, and if so, whether those protocols will be followed. This ambiguity affects not only elites and citizens but also the leaders themselves, who face ongoing uncertainties about when, how, and to whom power might be transferred. Historical data on irregular leaders supports this point. Leader dataset shows that over half of irregular leaders experience irregular exits, and coup-related exits constitute more than two-thirds of all irregular exits <span class="citation" data-cites="goemans2009">(<a href="#/research-design" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>. Furthermore, <span class="citation" data-cites="frantz2016">Frantz and Stein (<a href="#/research-design" role="doc-biblioref" onclick="">2016</a>)</span> show that coup-related exits account for roughly one-third of all exits in autocracies, surpassing any other type, including regular transitions.</p></li>
+<li class="fragment"><p><strong>Illegitimacy:</strong> Both leader types lack legitimacy, though it manifests differently. Coup leaders seize power through force or the threat of force, making their illegitimacy explicit. Autocoups often employ seemingly legal procedures like court rulings or votes, but these processes are frequently manipulated by incumbents leveraging their control <span class="citation" data-cites="zhu2024">(<a href="#/conclusion" role="doc-biblioref" onclick="">Zhu 2024</a>)</span>. This perception of illegitimacy can be used to justify the removal of such leaders, even if the means of removal are themselves illegitimate.</p></li>
+<li class="fragment"><p><strong>Uncertainty:</strong> The irregular means by which coup-entry and autocoup leaders take or retain power create significant uncertainty regarding their long-term rule and eventual exit. The established power transition process is undermined, raising questions about whether these leaders will enact constitutional succession protocols, and if so, whether those protocols will be followed. This ambiguity affects not only elites and citizens but also the leaders themselves, who face ongoing uncertainties about when, how, and to whom power might be transferred. Historical data on irregular leaders supports this point. Leader dataset shows that over half of irregular leaders experience irregular exits, and coup-related exits constitute more than two-thirds of all irregular exits <span class="citation" data-cites="goemans2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>. Furthermore, <span class="citation" data-cites="frantz2016">Frantz and Stein (<a href="#/conclusion" role="doc-biblioref" onclick="">2016</a>)</span> show that coup-related exits account for roughly one-third of all exits in autocracies, surpassing any other type, including regular transitions.</p></li>
 <li class="fragment"><p><strong>Instability:</strong> Coup-entry and autocoup leaders are aware of their own legitimacy and uncertainty challenges, which can fuel insecurity and a sense of crisis. In attempts to consolidate power, they may resort to reshuffling power structures or purging potential challengers. However, these efforts to maintain stability and strengthen their position often backfire, triggering greater instability.</p></li>
 </ul>
 <p>The interplay of illegitimacy, uncertainty, and instability creates a complex environment that significantly influences leader tenure.</p>
@@ -559,12 +559,12 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 <h4 data-number="3.2.2" id="uncertainty">
 <span class="header-section-number">3.2.2</span> Uncertainty</h4>
 <p>Coup-entry and autocoup leaders face different levels of uncertainty immediately following their rise to or overstay power.</p>
-<p>After a coup, at least three major uncertainties arise regarding leadership and its tenure. First, it is unclear who will assume leadership. Although coup leaders often take power, some may return or promise to return power to civilian leaders. Even among coup leaders, determining who will lead can be problematic, as coup plotters are sometimes a group without a clear core leader. For instance, following the 1973 Chilean coup, the initial plan for a rotating presidency among military leaders was abandoned when General Pinochet consolidated control and remained in power until 1990 <span class="citation" data-cites="svolik2014">(<a href="#/research-design" role="doc-biblioref" onclick="">Svolik 2014</a>)</span>. Second, the duration of the coup leader’s rule is uncertain. Leaders like Gamal Abdel Nasser in Egypt (1954 coup), Muammar Gaddafi in Libya (1969 coup), and Idi Amin in Uganda (1971 coup) aimed to retain power for life <span class="citation" data-cites="geddes2018">(<a href="#/research-design" role="doc-biblioref" onclick="">Geddes, Wright, and Frantz 2018</a>)</span>, but their ability to do so was uncertain. Others promise to transfer power to civilian authorities, but the timing and fulfillment of these promises are unclear. For example, Myanmar’s military junta (2021 coup) has repeatedly extended a state of emergency, clinging to power beyond the promised time-frame<sup>1</sup>. Conversely, after the 2010 coup in Niger, the military honoured their promise by restoring civilian rule within the same year <span class="citation" data-cites="ginsburg2019">(<a href="#/research-design" role="doc-biblioref" onclick="">Ginsburg and Elkins 2019</a>)</span>. Third, the successors of coup leaders are uncertain. Some may designate successors from their inner circle, including family members, while others may support general elections, though whether this will be fulfilled as intended remains uncertain.</p>
-<p>In contrast, autocoup leaders present a clearer picture regarding leadership and tenure. There is no ambiguity about who will rule after an autocoup. In the medium term, autocoup leaders typically hold office themselves. Many, like Putin in Russia and Xi Jinping in China, seek to extend their rule indefinitely and are unlikely to relinquish power voluntarily. Others attempt to extend their terms incrementally, such as President Menem of Argentina, who overstayed until 1993 but failed in his bid for another term in 1999 <span class="citation" data-cites="llanos2019">(<a href="#/research-design" role="doc-biblioref" onclick="">Llanos 2019</a>)</span>.</p>
+<p>After a coup, at least three major uncertainties arise regarding leadership and its tenure. First, it is unclear who will assume leadership. Although coup leaders often take power, some may return or promise to return power to civilian leaders. Even among coup leaders, determining who will lead can be problematic, as coup plotters are sometimes a group without a clear core leader. For instance, following the 1973 Chilean coup, the initial plan for a rotating presidency among military leaders was abandoned when General Pinochet consolidated control and remained in power until 1990 <span class="citation" data-cites="svolik2014">(<a href="#/conclusion" role="doc-biblioref" onclick="">Svolik 2014</a>)</span>. Second, the duration of the coup leader’s rule is uncertain. Leaders like Gamal Abdel Nasser in Egypt (1954 coup), Muammar Gaddafi in Libya (1969 coup), and Idi Amin in Uganda (1971 coup) aimed to retain power for life <span class="citation" data-cites="geddes2018">(<a href="#/conclusion" role="doc-biblioref" onclick="">Geddes, Wright, and Frantz 2018</a>)</span>, but their ability to do so was uncertain. Others promise to transfer power to civilian authorities, but the timing and fulfillment of these promises are unclear. For example, Myanmar’s military junta (2021 coup) has repeatedly extended a state of emergency, clinging to power beyond the promised time-frame<sup>1</sup>. Conversely, after the 2010 coup in Niger, the military honoured their promise by restoring civilian rule within the same year <span class="citation" data-cites="ginsburg2019">(<a href="#/conclusion" role="doc-biblioref" onclick="">Ginsburg and Elkins 2019</a>)</span>. Third, the successors of coup leaders are uncertain. Some may designate successors from their inner circle, including family members, while others may support general elections, though whether this will be fulfilled as intended remains uncertain.</p>
+<p>In contrast, autocoup leaders present a clearer picture regarding leadership and tenure. There is no ambiguity about who will rule after an autocoup. In the medium term, autocoup leaders typically hold office themselves. Many, like Putin in Russia and Xi Jinping in China, seek to extend their rule indefinitely and are unlikely to relinquish power voluntarily. Others attempt to extend their terms incrementally, such as President Menem of Argentina, who overstayed until 1993 but failed in his bid for another term in 1999 <span class="citation" data-cites="llanos2019">(<a href="#/conclusion" role="doc-biblioref" onclick="">Llanos 2019</a>)</span>.</p>
 <h4 data-number="3.2.3" id="instability">
 <span class="header-section-number">3.2.3</span> Instability</h4>
-<p>The stability of a regime, particularly in an autocracy, hinges on maintaining a balance of power. Coups, however, inevitably disrupt this balance, even when they are bloodless, necessitating the creation of a new equilibrium. The ousting of previous rulers requires dismantling the established governing structure and reshuffling high-ranking officials, actions that inherently generate instability and create adversaries for the new leadership. This makes restoring order and establishing a balanced power structure notably challenging. Studies show that new leaders often purge rival elite groups to consolidate their power at the outset of their tenure <span class="citation" data-cites="sudduth2017 roessler2011">(<a href="#/research-design" role="doc-biblioref" onclick="">Sudduth 2017</a>; <a href="#/research-design" role="doc-biblioref" onclick="">Roessler 2011</a>)</span>. Such actions can provoke backlash even from close allies. For instance, in Uganda, President Obote’s attempt to undermine the army commander-in-chief, Idi Amin, led to Amin gaining the army’s support and ultimately ousting Obote in a 1971 coup. Similarly, in Pakistan in 1999, shortly after Prime Minister Sharif dismissed powerful army chief General Pervez Musharraf, Sharif himself was ousted in a coup orchestrated by Musharraf and his supporters <span class="citation" data-cites="sudduth2017">(<a href="#/research-design" role="doc-biblioref" onclick="">Sudduth 2017</a>)</span>.</p>
-<p>To consolidate power, coup-entry leaders often have to compromise with internal or external power challengers. However, these compromises are frequently unstable and easily broken. The situation becomes even more complex when there is a risk of civil war. Leaders may attempt to reduce the likelihood of subsequent coups, potentially increasing the chances of societal rebellions and civil wars <span class="citation" data-cites="roessler2011">(<a href="#/research-design" role="doc-biblioref" onclick="">Roessler 2011</a>)</span>.</p>
+<p>The stability of a regime, particularly in an autocracy, hinges on maintaining a balance of power. Coups, however, inevitably disrupt this balance, even when they are bloodless, necessitating the creation of a new equilibrium. The ousting of previous rulers requires dismantling the established governing structure and reshuffling high-ranking officials, actions that inherently generate instability and create adversaries for the new leadership. This makes restoring order and establishing a balanced power structure notably challenging. Studies show that new leaders often purge rival elite groups to consolidate their power at the outset of their tenure <span class="citation" data-cites="sudduth2017 roessler2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Sudduth 2017</a>; <a href="#/conclusion" role="doc-biblioref" onclick="">Roessler 2011</a>)</span>. Such actions can provoke backlash even from close allies. For instance, in Uganda, President Obote’s attempt to undermine the army commander-in-chief, Idi Amin, led to Amin gaining the army’s support and ultimately ousting Obote in a 1971 coup. Similarly, in Pakistan in 1999, shortly after Prime Minister Sharif dismissed powerful army chief General Pervez Musharraf, Sharif himself was ousted in a coup orchestrated by Musharraf and his supporters <span class="citation" data-cites="sudduth2017">(<a href="#/conclusion" role="doc-biblioref" onclick="">Sudduth 2017</a>)</span>.</p>
+<p>To consolidate power, coup-entry leaders often have to compromise with internal or external power challengers. However, these compromises are frequently unstable and easily broken. The situation becomes even more complex when there is a risk of civil war. Leaders may attempt to reduce the likelihood of subsequent coups, potentially increasing the chances of societal rebellions and civil wars <span class="citation" data-cites="roessler2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Roessler 2011</a>)</span>.</p>
 <p>Moreover, instability extends beyond leadership to policies. A new leadership group often brings new policies, and coups are sometimes triggered by disagreements over significant policies. Major policy shifts can instigate dissent or grievances from various ruling factions, communities, regions, ethnicities, or religions.</p>
 <p>In contrast, autocoup leaders encounter far fewer of these issues, as their regimes experience fewer abrupt changes. They face less pressure to dismantle the existing ruling paradigm and establish a new order. Even when adjustments are necessary, they have more time to implement changes gradually.</p>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># library(kableExtra)</span></span>
@@ -584,23 +584,23 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 Table&nbsp;1: Main features of autocoup and coup-entry leaders
 </figcaption><div aria-describedby="tbl-leaders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<div id="owuexxaley" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#owuexxaley table {
+<div id="zyiakawbfs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zyiakawbfs table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#owuexxaley thead, #owuexxaley tbody, #owuexxaley tfoot, #owuexxaley tr, #owuexxaley td, #owuexxaley th {
+#zyiakawbfs thead, #zyiakawbfs tbody, #zyiakawbfs tfoot, #zyiakawbfs tr, #zyiakawbfs td, #zyiakawbfs th {
   border-style: none;
 }
 
-#owuexxaley p {
+#zyiakawbfs p {
   margin: 0;
   padding: 0;
 }
 
-#owuexxaley .gt_table {
+#zyiakawbfs .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -626,12 +626,12 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-left-color: #D3D3D3;
 }
 
-#owuexxaley .gt_caption {
+#zyiakawbfs .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#owuexxaley .gt_title {
+#zyiakawbfs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -643,7 +643,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-bottom-width: 0;
 }
 
-#owuexxaley .gt_subtitle {
+#zyiakawbfs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -655,7 +655,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-top-width: 0;
 }
 
-#owuexxaley .gt_heading {
+#zyiakawbfs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -667,13 +667,13 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-right-color: #D3D3D3;
 }
 
-#owuexxaley .gt_bottom_border {
+#zyiakawbfs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#owuexxaley .gt_col_headings {
+#zyiakawbfs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -688,7 +688,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-right-color: #D3D3D3;
 }
 
-#owuexxaley .gt_col_heading {
+#zyiakawbfs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -708,7 +708,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   overflow-x: hidden;
 }
 
-#owuexxaley .gt_column_spanner_outer {
+#zyiakawbfs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -720,15 +720,15 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   padding-right: 4px;
 }
 
-#owuexxaley .gt_column_spanner_outer:first-child {
+#zyiakawbfs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#owuexxaley .gt_column_spanner_outer:last-child {
+#zyiakawbfs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#owuexxaley .gt_column_spanner {
+#zyiakawbfs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -740,11 +740,11 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   width: 100%;
 }
 
-#owuexxaley .gt_spanner_row {
+#zyiakawbfs .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#owuexxaley .gt_group_heading {
+#zyiakawbfs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -770,7 +770,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   text-align: left;
 }
 
-#owuexxaley .gt_empty_group_heading {
+#zyiakawbfs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -785,15 +785,15 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   vertical-align: middle;
 }
 
-#owuexxaley .gt_from_md > :first-child {
+#zyiakawbfs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#owuexxaley .gt_from_md > :last-child {
+#zyiakawbfs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#owuexxaley .gt_row {
+#zyiakawbfs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -812,7 +812,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   overflow-x: hidden;
 }
 
-#owuexxaley .gt_stub {
+#zyiakawbfs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -825,7 +825,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   padding-right: 5px;
 }
 
-#owuexxaley .gt_stub_row_group {
+#zyiakawbfs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -839,15 +839,15 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   vertical-align: top;
 }
 
-#owuexxaley .gt_row_group_first td {
+#zyiakawbfs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#owuexxaley .gt_row_group_first th {
+#zyiakawbfs .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#owuexxaley .gt_summary_row {
+#zyiakawbfs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -857,16 +857,16 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   padding-right: 5px;
 }
 
-#owuexxaley .gt_first_summary_row {
+#zyiakawbfs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#owuexxaley .gt_first_summary_row.thick {
+#zyiakawbfs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#owuexxaley .gt_last_summary_row {
+#zyiakawbfs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -876,7 +876,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-bottom-color: #D3D3D3;
 }
 
-#owuexxaley .gt_grand_summary_row {
+#zyiakawbfs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -886,7 +886,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   padding-right: 5px;
 }
 
-#owuexxaley .gt_first_grand_summary_row {
+#zyiakawbfs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -896,7 +896,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-top-color: #D3D3D3;
 }
 
-#owuexxaley .gt_last_grand_summary_row_top {
+#zyiakawbfs .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -906,11 +906,11 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-bottom-color: #D3D3D3;
 }
 
-#owuexxaley .gt_striped {
+#zyiakawbfs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#owuexxaley .gt_table_body {
+#zyiakawbfs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -919,7 +919,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-bottom-color: #D3D3D3;
 }
 
-#owuexxaley .gt_footnotes {
+#zyiakawbfs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -933,7 +933,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-right-color: #D3D3D3;
 }
 
-#owuexxaley .gt_footnote {
+#zyiakawbfs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -942,7 +942,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   padding-right: 5px;
 }
 
-#owuexxaley .gt_sourcenotes {
+#zyiakawbfs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -956,7 +956,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   border-right-color: #D3D3D3;
 }
 
-#owuexxaley .gt_sourcenote {
+#zyiakawbfs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -964,72 +964,72 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   padding-right: 5px;
 }
 
-#owuexxaley .gt_left {
+#zyiakawbfs .gt_left {
   text-align: left;
 }
 
-#owuexxaley .gt_center {
+#zyiakawbfs .gt_center {
   text-align: center;
 }
 
-#owuexxaley .gt_right {
+#zyiakawbfs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#owuexxaley .gt_font_normal {
+#zyiakawbfs .gt_font_normal {
   font-weight: normal;
 }
 
-#owuexxaley .gt_font_bold {
+#zyiakawbfs .gt_font_bold {
   font-weight: bold;
 }
 
-#owuexxaley .gt_font_italic {
+#zyiakawbfs .gt_font_italic {
   font-style: italic;
 }
 
-#owuexxaley .gt_super {
+#zyiakawbfs .gt_super {
   font-size: 65%;
 }
 
-#owuexxaley .gt_footnote_marks {
+#zyiakawbfs .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#owuexxaley .gt_asterisk {
+#zyiakawbfs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#owuexxaley .gt_indent_1 {
+#zyiakawbfs .gt_indent_1 {
   text-indent: 5px;
 }
 
-#owuexxaley .gt_indent_2 {
+#zyiakawbfs .gt_indent_2 {
   text-indent: 10px;
 }
 
-#owuexxaley .gt_indent_3 {
+#zyiakawbfs .gt_indent_3 {
   text-indent: 15px;
 }
 
-#owuexxaley .gt_indent_4 {
+#zyiakawbfs .gt_indent_4 {
   text-indent: 20px;
 }
 
-#owuexxaley .gt_indent_5 {
+#zyiakawbfs .gt_indent_5 {
   text-indent: 25px;
 }
 
-#owuexxaley .katex-display {
+#zyiakawbfs .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#owuexxaley div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zyiakawbfs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1111,23 +1111,23 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
 </figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div>
-<div id="uwhjowajbs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#uwhjowajbs table {
+<div id="xupevcmffi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xupevcmffi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#uwhjowajbs thead, #uwhjowajbs tbody, #uwhjowajbs tfoot, #uwhjowajbs tr, #uwhjowajbs td, #uwhjowajbs th {
+#xupevcmffi thead, #xupevcmffi tbody, #xupevcmffi tfoot, #xupevcmffi tr, #xupevcmffi td, #xupevcmffi th {
   border-style: none;
 }
 
-#uwhjowajbs p {
+#xupevcmffi p {
   margin: 0;
   padding: 0;
 }
 
-#uwhjowajbs .gt_table {
+#xupevcmffi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1153,12 +1153,12 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-left-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_caption {
+#xupevcmffi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#uwhjowajbs .gt_title {
+#xupevcmffi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1170,7 +1170,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-bottom-width: 0;
 }
 
-#uwhjowajbs .gt_subtitle {
+#xupevcmffi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1182,7 +1182,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-top-width: 0;
 }
 
-#uwhjowajbs .gt_heading {
+#xupevcmffi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1194,13 +1194,13 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-right-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_bottom_border {
+#xupevcmffi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_col_headings {
+#xupevcmffi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1215,7 +1215,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-right-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_col_heading {
+#xupevcmffi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1235,7 +1235,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   overflow-x: hidden;
 }
 
-#uwhjowajbs .gt_column_spanner_outer {
+#xupevcmffi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1247,15 +1247,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   padding-right: 4px;
 }
 
-#uwhjowajbs .gt_column_spanner_outer:first-child {
+#xupevcmffi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uwhjowajbs .gt_column_spanner_outer:last-child {
+#xupevcmffi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uwhjowajbs .gt_column_spanner {
+#xupevcmffi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1267,11 +1267,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   width: 100%;
 }
 
-#uwhjowajbs .gt_spanner_row {
+#xupevcmffi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#uwhjowajbs .gt_group_heading {
+#xupevcmffi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1297,7 +1297,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   text-align: left;
 }
 
-#uwhjowajbs .gt_empty_group_heading {
+#xupevcmffi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1312,15 +1312,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   vertical-align: middle;
 }
 
-#uwhjowajbs .gt_from_md > :first-child {
+#xupevcmffi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uwhjowajbs .gt_from_md > :last-child {
+#xupevcmffi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uwhjowajbs .gt_row {
+#xupevcmffi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1339,7 +1339,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   overflow-x: hidden;
 }
 
-#uwhjowajbs .gt_stub {
+#xupevcmffi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1352,7 +1352,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   padding-right: 5px;
 }
 
-#uwhjowajbs .gt_stub_row_group {
+#xupevcmffi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1366,15 +1366,15 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   vertical-align: top;
 }
 
-#uwhjowajbs .gt_row_group_first td {
+#xupevcmffi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#uwhjowajbs .gt_row_group_first th {
+#xupevcmffi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#uwhjowajbs .gt_summary_row {
+#xupevcmffi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1384,16 +1384,16 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   padding-right: 5px;
 }
 
-#uwhjowajbs .gt_first_summary_row {
+#xupevcmffi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_first_summary_row.thick {
+#xupevcmffi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#uwhjowajbs .gt_last_summary_row {
+#xupevcmffi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1403,7 +1403,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-bottom-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_grand_summary_row {
+#xupevcmffi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1413,7 +1413,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   padding-right: 5px;
 }
 
-#uwhjowajbs .gt_first_grand_summary_row {
+#xupevcmffi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1423,7 +1423,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-top-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_last_grand_summary_row_top {
+#xupevcmffi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1433,11 +1433,11 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-bottom-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_striped {
+#xupevcmffi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uwhjowajbs .gt_table_body {
+#xupevcmffi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1446,7 +1446,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-bottom-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_footnotes {
+#xupevcmffi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1460,7 +1460,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-right-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_footnote {
+#xupevcmffi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1469,7 +1469,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   padding-right: 5px;
 }
 
-#uwhjowajbs .gt_sourcenotes {
+#xupevcmffi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1483,7 +1483,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   border-right-color: #D3D3D3;
 }
 
-#uwhjowajbs .gt_sourcenote {
+#xupevcmffi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1491,72 +1491,72 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   padding-right: 5px;
 }
 
-#uwhjowajbs .gt_left {
+#xupevcmffi .gt_left {
   text-align: left;
 }
 
-#uwhjowajbs .gt_center {
+#xupevcmffi .gt_center {
   text-align: center;
 }
 
-#uwhjowajbs .gt_right {
+#xupevcmffi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uwhjowajbs .gt_font_normal {
+#xupevcmffi .gt_font_normal {
   font-weight: normal;
 }
 
-#uwhjowajbs .gt_font_bold {
+#xupevcmffi .gt_font_bold {
   font-weight: bold;
 }
 
-#uwhjowajbs .gt_font_italic {
+#xupevcmffi .gt_font_italic {
   font-style: italic;
 }
 
-#uwhjowajbs .gt_super {
+#xupevcmffi .gt_super {
   font-size: 65%;
 }
 
-#uwhjowajbs .gt_footnote_marks {
+#xupevcmffi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#uwhjowajbs .gt_asterisk {
+#xupevcmffi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#uwhjowajbs .gt_indent_1 {
+#xupevcmffi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#uwhjowajbs .gt_indent_2 {
+#xupevcmffi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#uwhjowajbs .gt_indent_3 {
+#xupevcmffi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#uwhjowajbs .gt_indent_4 {
+#xupevcmffi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#uwhjowajbs .gt_indent_5 {
+#xupevcmffi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#uwhjowajbs .katex-display {
+#xupevcmffi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#uwhjowajbs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xupevcmffi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1665,49 +1665,944 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
 </blockquote>
 <p>In the subsequent section, I will outline the research methodology used in this paper. I will introduce several control variables to determine if the hypothesis remains persistent and robust.</p>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>https://thediplomat.com/2023/08/myanmar-junta-extends-state-of-emergency-for-fourth-time/: Myanmar<br>
-Junta Extends State of Emergency for Fourth Time. Accessed on 2024-06-08.</p></li><li id="fn2"><p>https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to remain ‘president for life’ as term limits removed. Accessed on 2024-06-08.</p></li><li id="fn3"><p>https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-<br>
+Junta Extends State of Emergency for Fourth Time. Accessed on 2024-06-09.</p></li><li id="fn2"><p>https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to remain ‘president for life’ as term limits removed. Accessed on 2024-06-09.</p></li><li id="fn3"><p>https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-<br>
 rule-until-2036: Analysis: Vladimir Putin secures constitutional changes allowing him to rule until 2036. Accessed<br>
-on 2024-06-08.</p></li></ol></aside></section><section id="research-design" class="slide level2 smaller scrollable" data-number="4"><h2>
+on 2024-06-09.</p></li></ol></aside></section><section id="research-design" class="slide level2 scrollable" data-number="4"><h2>
 <span class="header-section-number">4</span> Research Design</h2>
 <h3 data-number="4.1" id="methodology-survival-analysis">
 <span class="header-section-number">4.1</span> Methodology: Survival analysis</h3>
-<p>In order to test the hypothesis, I will employ two cox models to analyze the survival tenures of leaders who overstay their terms and those who come to power through coups. The first model will utilize the Cox proportional hazards model (referred to as the Cox PH model), where I only use the variables at the entry year and do not consider the changes of these variables among leaders’ survival times.</p>
-<p>However, except the main concern variable in this research, the leader type, the control variables, such as economic performance, Polity5, political stability, do change over time. The second model will take this into consideration and use the time-dependent Cox model (referred to as the Time-dependent Cox model).</p>
-<p>Unlike the Kaplan-Meier model, the Cox model enables the estimation of the impacts of multiple factors. Although it does not directly estimate the duration of tenure in office, it evaluates the hazard rate associated with being ousted from power, which essentially represents different facets of the same phenomenon. As a leader’s cumulative hazard of being ousted increases, their probability of survival in office decreases.</p>
-<span class="math display">\[\begin{equation}
-\begin{aligned}
-Surv(survival\_time, status) &amp;= group + \\
-&amp;GDP\_growth\_trend + GDP\_pc\_log + \\
-&amp;pop\_log + polity5 + polstab + age
-\end{aligned}
-\end{equation}\]</span>
+<p>To test the hypothesis, I will employ two Cox models to analyse the survival tenures of coup-entry leaders and autocoup leaders. Unlike the Kaplan-Meier model, the Cox model enables the estimation of the impacts of multiple factors. Although it does not directly estimate the duration of tenure in office, it evaluates the hazard rate associated with being ousted from power. Essentially, this represents different facets of the same phenomenon: as a leader’s cumulative hazard of being ousted increases, their probability of survival in office decreases.</p>
+<p>The first model will utilize the Cox proportional hazards model (referred to as the Cox PH model), where I will only use the variables present at the entry year, without considering the changes in these variables over the leaders’ survival times.</p>
+<p>However, apart from the primary variable of interest in this research—the leader type—control variables such as economic performance, Polity5 scores, and political stability do change over time. Therefore, the second model will account for these variations by using the time-dependent Cox model.</p>
 <h3 data-number="4.2" id="data">
 <span class="header-section-number">4.2</span> Data</h3>
 <p>The main variables are as follows.</p>
 <h4 data-number="4.2.1" id="dependent-variables">
 <span class="header-section-number">4.2.1</span> Dependent variables</h4>
 <ul>
-<li class="fragment"><p><strong>Survival time:</strong> the duration of leaders’ tenure in days. For coup-entry leaders, this time span initiates on the day they assume power, while overstaying leaders’ tenure begins on the expiration date of their initial term. For instance, considering Xi Jinping’s case, he assumed power in 2013, successfully removing term limits in 2018. However, his initial two-term tenure was due to end in 2023. Hence, his survival time commences from 2023 rather than 2013, signifying the start of his original tenure. The survival time concludes on the day the leader exits office, applying to both coup-entry and overstaying leaders.</p></li>
-<li class="fragment"><p><strong>End point status:</strong> 0 = censored, 1 = ousted. I categorized ousting by force as 1, even in cases where some leaders “voluntarily” resigned under pressure. Other methods of leaving office are considered censored, which can encompass situations where leaders appoint their successors, opt for democratic means of overturn, face health-related issues, or encounter natural death.</p></li>
-</ul>
-<h4 data-number="4.2.2" id="independent-variable">
-<span class="header-section-number">4.2.2</span> Independent variable</h4>
-<ul>
+<li class="fragment"><p><strong>Survival Time:</strong> The duration of a leader’s tenure, measured in days. For coup-entry leaders, the survival time begins on the day they assume power through a coup. For autocoup leaders, the survival time starts on the expiration date of their original legitimate term. For example, Xi Jinping assumed power in 2013 and removed term limits in 2018. His original legitimate tenure was set to end in 2023, so his survival time begins in 2023, not 2013 or 2018, marking the start of his post-autocoup tenure. The survival time concludes on the day the leader exits office, applicable to both coup-entry and autocoup leaders.</p></li>
 <li class="fragment">
-<strong>Leader type:</strong> Group A = overstaying leader, Group B = coup-entry leader. This variable is the primary independent variable of interest, as it serves as the basis for comparison of survival time between the two types of leaders.</li>
+<p><strong>End point status:</strong> This variable indicates the manner in which the leader’s tenure concluded, categorized as follows:</p>
+<ul>
+<li class="fragment"><p><strong>0 = Censored:</strong> This status is assigned to leaders who leave office through means other than being ousted. This includes leaders who appoint their successors, opt for democratic transitions, or leave office due to health issues or natural death.</p></li>
+<li class="fragment"><p><strong>1 = Ousted:</strong> This status is assigned to leaders who are forced out of office. This includes cases where leaders “voluntarily” resign under pressure, reflecting a de facto ousting by force.</p></li>
 </ul>
-<p>The dependent and independent data are sourced from the author’s incumbent overstay dataset and the leaders dataset by <span class="citation" data-cites="goemans2009">(<a href="#/research-design" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>.</p>
+</li>
+</ul>
+<h4 data-number="4.2.2" id="key-independent-variable-leader-type">
+<span class="header-section-number">4.2.2</span> Key Independent variable: Leader type</h4>
+<p>This variable categorizes leaders into two distinct groups:</p>
+<ul>
+<li class="fragment">Group A = Autocoup Leader: Leaders who extend their tenure through autocoups.</li>
+<li class="fragment">Group B = Coup-Entry Leader: Leaders who assume power through coups.This variable is the primary independent variable of interest, serving as the basis for comparing the survival time between these two types of leaders.</li>
+</ul>
+<p>The data for both dependent and independent variables are sourced from <span class="citation" data-cites="zhu2024">Zhu (<a href="#/conclusion" role="doc-biblioref" onclick="">2024</a>)</span> and <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/conclusion" role="doc-biblioref" onclick="">2009</a>)</span>.</p>
 <h4 data-number="4.2.3" id="control-variables">
 <span class="header-section-number">4.2.3</span> Control variables</h4>
 <ul>
-<li class="fragment"><p><strong>Indicators of Economic Influence:</strong> To evaluate economic influence, I rely on two primary indicators: the trend in GDP growth (<code>GDP_growth_trend</code>) and the logarithm of GDP per capita (<code>GDP_pc_log)</code>. The GDP_growth_trend is determined by contrasting the GDP growth in the year of a coup entry or overstaying with the preceding 3-year moving average of the growth rate. The dataset employed for these metrics is sourced from V-Dem Data.</p></li>
-<li class="fragment"><p><strong>Degree of Democracy:</strong> The level of democracy is gauged using Polity 5 scores (<code>polity</code>) at the entry year for each respective country. This dataset is sourced from the Center for Systemic Peace (CSP)<sup>1</sup>.</p></li>
-<li class="fragment"><p><strong>Population Size:</strong> Accounting for its potential impact on leaders’ tenures, the log population size (<code>pop_log</code>) is considered. This data is obtained from the V-Dem Data and is evaluated in relation to its influence on leadership survival.</p></li>
-<li class="fragment"><p><strong>Political Stability:</strong> The stability of the political landscape is crucial in evaluating the survival tenures of leaders. To quantify this aspect, the Major Episodes of Political Violence Variables dataset from the CSP is utilized to measure political stability (<code>polstab</code>) at the leader’s entry year.</p></li>
-<li class="fragment"><p><strong>Leader’s Age:</strong> The age of the leader at the entry year serves as an additional variable in the analysis, providing insight into potential correlations with leadership survival. This data is sourced from the leaders dataset by <span class="citation" data-cites="goemans2009">(<a href="#/research-design" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>.</p></li>
+<li class="fragment">
+<p><strong>Economic Performance:</strong> This variable is measured using two indicators: economic level and economic growth rate.</p>
+<ul>
+<li class="fragment"><p><strong>Economic Level:</strong> Represented by GDP per capita. This measure provides an indication of the overall economic health and standard of living in a country.</p></li>
+<li class="fragment"><p><strong>Economic Growth Trend:</strong> Assessed using the current-trend (CT) ratio, developed by <span class="citation" data-cites="krishnarajan2019">Krishnarajan (<a href="#/conclusion" role="doc-biblioref" onclick="">2019</a>)</span>. The CT ratio compares a country’s current GDP per capita to the average GDP per capita over the previous five years. A higher CT ratio signifies stronger economic performance.</p></li>
 </ul>
-<h3 data-number="4.3" id="section">
-<span class="header-section-number">4.3</span> </h3>
+</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
+\end{aligned}
+\]</span></p>
+<p>The GDP per capita data, expressed in constant 2017 international dollars (PPP) and measured in units of $10,000, is sourced from the V-Dem dataset by <span class="citation" data-cites="fariss2022">Fariss et al. (<a href="#/conclusion" role="doc-biblioref" onclick="">2022</a>)</span>. To account for the economic impact of the previous year, this data is lagged by one year.</p>
+<ul>
+<li class="fragment"><p><strong>Political Stability:</strong> This variable captures overall regime stability by including a violence index that encompasses all types of internal and interstate wars and violence. The data for this index is sourced from the Major Episodes of Political Violence dataset by Marshall. This index provides a comprehensive measure of the level of violence and conflict within a country, which can significantly impact leadership survival. <span class="citation" data-cites="marshall2005current">(<a href="#/conclusion" role="doc-biblioref" onclick="">Marshall 2005</a>)</span>.</p></li>
+<li class="fragment"><p><strong>Degree of Democracy:</strong> The level of democracy is gauged using Polity 5 scores (polity) at the entry year for each respective country. These scores range from -10 (fully autocratic) to +10 (fully democratic), capturing the extent of democratic versus autocratic governance. This dataset is sourced from the Center for Systemic Peace (CSP)<sup>1</sup> and provides an essential measure of political regime type, which can influence the stability and survival of leaders in power.</p></li>
+<li class="fragment"><p><strong>Population Size:</strong> To account for its potential impact on leaders’ tenures, the log of the population size (<code>pop_log</code>) is considered. This transformation helps in managing the wide range of population sizes across different countries. The data is sourced from the V-Dem dataset and is evaluated to understand its influence on leadership survival. Larger populations may present more governance challenges and potential sources of opposition, thereby affecting the stability and longevity of a leader’s tenure.</p></li>
+<li class="fragment"><p><strong>Leader’s Age:</strong> The age of the leader at the entry year is included as an additional variable in the analysis, offering insights into potential correlations with leadership survival. Older leaders may have different experiences, networks, and health considerations that could influence their ability to maintain power. This data is sourced from the leaders dataset by <span class="citation" data-cites="goemans2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>.</p></li>
+</ul>
+<p>Based on the methods and variables, we have the model as:</p>
+<p><span class="math display">\[
+\begin{aligned}
+Surv(survival\_time, status) &amp;= Group + \\
+&amp;GDP\_growth\_trend + GDP\_per\_capita + \\
+&amp;pop\_log + polity5 + Stability + age
+\end{aligned}
+\]</span></p>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Center for Systemic Peace: <a href="https://www.systemicpeace.org" class="uri">https://www.systemicpeace.org</a>. Accessed on 2024-06-09.</p></li></ol></aside></section><section id="results-and-discussion" class="slide level2" data-number="5"><h2>
+<span class="header-section-number">5</span> Results and discussion</h2>
+<h3 data-number="5.1" id="model-results">
+<span class="header-section-number">5.1</span> Model results</h3>
+<p>Using the <span class="citation" data-cites="survival">Therneau (<a href="#/conclusion" role="doc-biblioref" onclick="">2024</a>)</span> package in R, we present the regression results for both the Cox PH model and the Time-dependent Cox model in Table <a href="#/results-and-discussion" class="quarto-xref">Table&nbsp;3</a>.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>Mydata1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/mydata1.csv"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a></a>   <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">factor</span>(group, </span>
+<span id="cb5-3"><a></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Autocoup leaders"</span>, <span class="st">"Coup-entry leaders"</span>)))</span>
+<span id="cb5-4"><a></a></span>
+<span id="cb5-5"><a></a>model_cox1 <span class="ot">&lt;-</span> Mydata1 <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a></a>  <span class="fu">coxph</span>(</span>
+<span id="cb5-7"><a></a>    <span class="fu">Surv</span>(survival_time, status) <span class="sc">~</span> </span>
+<span id="cb5-8"><a></a>      group <span class="sc">+</span> GDP_trend <span class="sc">+</span> GDP_pc <span class="sc">+</span> pop_log <span class="sc">+</span> </span>
+<span id="cb5-9"><a></a>      polity5 <span class="sc">+</span> polstab <span class="sc">+</span> age,</span>
+<span id="cb5-10"><a></a>    <span class="at">data =</span> _</span>
+<span id="cb5-11"><a></a>  ) </span>
+<span id="cb5-12"><a></a></span>
+<span id="cb5-13"><a></a>tbl1 <span class="ot">&lt;-</span> model_cox1<span class="sc">|&gt;</span> </span>
+<span id="cb5-14"><a></a>   <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> T,</span>
+<span id="cb5-15"><a></a>                 <span class="at">conf.int =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-16"><a></a>                 <span class="at">add_estimate_to_reference_rows =</span> T,</span>
+<span id="cb5-17"><a></a>                 <span class="at">label =</span> <span class="fu">list</span>(group <span class="sc">~</span> <span class="st">"Leader Type"</span>,</span>
+<span id="cb5-18"><a></a>                   GDP_trend <span class="sc">~</span> <span class="st">"GDP Growth Trend"</span>,</span>
+<span id="cb5-19"><a></a>                   GDP_pc <span class="sc">~</span> <span class="st">"GDP per capita"</span>,</span>
+<span id="cb5-20"><a></a>                   pop_log <span class="sc">~</span> <span class="st">"Population: log"</span>,</span>
+<span id="cb5-21"><a></a>                   polity5 <span class="sc">~</span> <span class="st">"Polity 5"</span>,</span>
+<span id="cb5-22"><a></a>                   polstab <span class="sc">~</span> <span class="st">"Political stability"</span>,</span>
+<span id="cb5-23"><a></a>                   age <span class="sc">~</span> <span class="st">"Age"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-24"><a></a>  <span class="fu">add_n</span>(<span class="at">location =</span> <span class="st">"level"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-25"><a></a>  <span class="fu">add_nevent</span>(<span class="at">location =</span> <span class="st">"level"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-26"><a></a>  <span class="fu">add_significance_stars</span>(<span class="at">hide_p =</span> T, <span class="at">hide_se =</span> F, <span class="at">hide_ci =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb5-27"><a></a>  <span class="fu">bold_p</span>(<span class="at">t =</span> <span class="fl">0.05</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-28"><a></a>  <span class="fu">bold_labels</span>() </span>
+<span id="cb5-29"><a></a></span>
+<span id="cb5-30"><a></a>Mydata2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/mydata2.csv"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-31"><a></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">factor</span>(group, </span>
+<span id="cb5-32"><a></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Autocoup leaders"</span>, <span class="st">"Coup-entry leaders"</span>)),</span>
+<span id="cb5-33"><a></a>         <span class="at">survt =</span> (tstop <span class="sc">-</span> tstart) <span class="sc">*</span> <span class="dv">365</span>) </span>
+<span id="cb5-34"><a></a>model_cox2 <span class="ot">&lt;-</span> Mydata2 <span class="sc">|&gt;</span></span>
+<span id="cb5-35"><a></a>  <span class="fu">coxph</span>(</span>
+<span id="cb5-36"><a></a>    <span class="fu">Surv</span>(T1, T2, status) <span class="sc">~</span> </span>
+<span id="cb5-37"><a></a>      group <span class="sc">+</span> GDP_trend <span class="sc">+</span> GDP_pc <span class="sc">+</span> pop_log <span class="sc">+</span> </span>
+<span id="cb5-38"><a></a>      polity5 <span class="sc">+</span> polstab <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">cluster</span>(id),</span>
+<span id="cb5-39"><a></a>    <span class="at">data =</span> _</span>
+<span id="cb5-40"><a></a>  ) </span>
+<span id="cb5-41"><a></a>tbl2 <span class="ot">&lt;-</span> model_cox2<span class="sc">|&gt;</span></span>
+<span id="cb5-42"><a></a>  <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> T,</span>
+<span id="cb5-43"><a></a>                 <span class="at">conf.int =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-44"><a></a>                 <span class="at">add_estimate_to_reference_rows =</span> T,</span>
+<span id="cb5-45"><a></a>                 <span class="at">label =</span> <span class="fu">list</span>(group <span class="sc">~</span> <span class="st">"Leader Type"</span>,</span>
+<span id="cb5-46"><a></a>                   GDP_trend <span class="sc">~</span> <span class="st">"GDP Growth Trend"</span>,</span>
+<span id="cb5-47"><a></a>                   GDP_pc <span class="sc">~</span> <span class="st">"GDP per capita"</span>,</span>
+<span id="cb5-48"><a></a>                   pop_log <span class="sc">~</span> <span class="st">"Population: log"</span>,</span>
+<span id="cb5-49"><a></a>                   polity5 <span class="sc">~</span> <span class="st">"Polity 5"</span>,</span>
+<span id="cb5-50"><a></a>                   polstab <span class="sc">~</span> <span class="st">"Political stability"</span>,</span>
+<span id="cb5-51"><a></a>                   age <span class="sc">~</span> <span class="st">"Age"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-52"><a></a>  <span class="fu">add_n</span>(<span class="at">location =</span> <span class="st">"level"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-53"><a></a>  <span class="fu">add_nevent</span>(<span class="at">location =</span> <span class="st">"level"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-54"><a></a>  <span class="fu">add_significance_stars</span>(<span class="at">hide_p =</span> T, <span class="at">hide_se =</span> F, <span class="at">hide_ci =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb5-55"><a></a>  <span class="fu">bold_p</span>(<span class="at">t =</span> <span class="fl">0.05</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-56"><a></a>  <span class="fu">bold_labels</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell fragment">
+
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">tbl_merge</span>(<span class="fu">list</span>(tbl1, tbl2),</span>
+<span id="cb6-2"><a></a>          <span class="at">tab_spanner =</span> <span class="fu">c</span>(<span class="st">"**Cox PH Model**"</span>, <span class="st">"**Time-dependent Cox Model**"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a></a>  <span class="fu">as_gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell fragment">
+<div id="tbl-cox" class="cell quarto-float">
+<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Cox models for survival time of different types of leaders
+</figcaption><div aria-describedby="tbl-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div>
+<div id="sdewdqdppu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sdewdqdppu table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#sdewdqdppu thead, #sdewdqdppu tbody, #sdewdqdppu tfoot, #sdewdqdppu tr, #sdewdqdppu td, #sdewdqdppu th {
+  border-style: none;
+}
+
+#sdewdqdppu p {
+  margin: 0;
+  padding: 0;
+}
+
+#sdewdqdppu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sdewdqdppu .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sdewdqdppu .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sdewdqdppu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sdewdqdppu .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sdewdqdppu .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sdewdqdppu .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sdewdqdppu .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sdewdqdppu .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#sdewdqdppu .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#sdewdqdppu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sdewdqdppu .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sdewdqdppu .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sdewdqdppu .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sdewdqdppu .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdewdqdppu .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#sdewdqdppu .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#sdewdqdppu .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#sdewdqdppu .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdewdqdppu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#sdewdqdppu .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdewdqdppu .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#sdewdqdppu .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdewdqdppu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sdewdqdppu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdewdqdppu .gt_left {
+  text-align: left;
+}
+
+#sdewdqdppu .gt_center {
+  text-align: center;
+}
+
+#sdewdqdppu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sdewdqdppu .gt_font_normal {
+  font-weight: normal;
+}
+
+#sdewdqdppu .gt_font_bold {
+  font-weight: bold;
+}
+
+#sdewdqdppu .gt_font_italic {
+  font-style: italic;
+}
+
+#sdewdqdppu .gt_super {
+  font-size: 65%;
+}
+
+#sdewdqdppu .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#sdewdqdppu .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#sdewdqdppu .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#sdewdqdppu .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#sdewdqdppu .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sdewdqdppu .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sdewdqdppu .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#sdewdqdppu .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#sdewdqdppu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table do-not-create-environment cell" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header gt_col_headings gt_spanner_row">
+<th rowspan="2" id="<div data-qmd=&quot;**Characteristic**&quot;><div class='gt_from_md'><p><strong>Characteristic</strong></p>
+</div></div>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><p><strong>Characteristic</strong></p></th>
+<th colspan="4" id="<div data-qmd=&quot;**Cox PH Model**&quot;><div class='gt_from_md'><p><strong>Cox PH Model</strong></p>
+</div></div>" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup">
+<span class="gt_column_spanner"></span>
+<p><strong>Cox PH Model</strong></p>
+</th>
+<th colspan="4" id="<div data-qmd=&quot;**Time-dependent Cox Model**&quot;><div class='gt_from_md'><p><strong>Time-dependent Cox Model</strong></p>
+</div></div>" class="gt_center gt_columns_top_border gt_column_spanner_outer" data-quarto-table-cell-role="th" scope="colgroup">
+<span class="gt_column_spanner"></span>
+<p><strong>Time-dependent Cox Model</strong></p>
+</th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="<div data-qmd=&quot;**N**&quot;><div class='gt_from_md'><p><strong>N</strong></p>
+</div></div>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><p><strong>N</strong></p></th>
+<th id="<div data-qmd=&quot;**Event N**&quot;><div class='gt_from_md'><p><strong>Event N</strong></p>
+</div></div>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><p><strong>Event N</strong></p></th>
+<th id="<div data-qmd=&quot;**HR**&quot;><div class='gt_from_md'><p><strong>HR</strong></p>
+</div></div><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;&quot;><sup>1,2</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<p><strong>HR</strong></p>
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>1,2</sup></span>
+</th>
+<th id="<div data-qmd=&quot;**SE**&quot;><div class='gt_from_md'><p><strong>SE</strong></p>
+</div></div><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;&quot;><sup>2</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<p><strong>SE</strong></p>
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>2</sup></span>
+</th>
+<th id="<div data-qmd=&quot;**N**&quot;><div class='gt_from_md'><p><strong>N</strong></p>
+</div></div>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><p><strong>N</strong></p></th>
+<th id="<div data-qmd=&quot;**Event N**&quot;><div class='gt_from_md'><p><strong>Event N</strong></p>
+</div></div>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><p><strong>Event N</strong></p></th>
+<th id="<div data-qmd=&quot;**HR**&quot;><div class='gt_from_md'><p><strong>HR</strong></p>
+</div></div><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;&quot;><sup>1,2</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<p><strong>HR</strong></p>
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>1,2</sup></span>
+</th>
+<th id="<div data-qmd=&quot;**SE**&quot;><div class='gt_from_md'><p><strong>SE</strong></p>
+</div></div><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;&quot;><sup>2</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<p><strong>SE</strong></p>
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>2</sup></span>
+</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Leader Type</td>
+<td class="gt_row gt_center" headers="stat_n_1"><br></td>
+<td class="gt_row gt_center" headers="stat_nevent_1"><br></td>
+<td class="gt_row gt_center" headers="estimate_1"><br></td>
+<td class="gt_row gt_center" headers="std.error_1"><br></td>
+<td class="gt_row gt_center" headers="stat_n_2"><br></td>
+<td class="gt_row gt_center" headers="stat_nevent_2"><br></td>
+<td class="gt_row gt_center" headers="estimate_2"><br></td>
+<td class="gt_row gt_center" headers="std.error_2"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Autocoup leaders</td>
+<td class="gt_row gt_center" headers="stat_n_1">72</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">28</td>
+<td class="gt_row gt_center" headers="estimate_1">1.00</td>
+<td class="gt_row gt_center" headers="std.error_1">—</td>
+<td class="gt_row gt_center" headers="stat_n_2">734</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">27</td>
+<td class="gt_row gt_center" headers="estimate_2">1.00</td>
+<td class="gt_row gt_center" headers="std.error_2">—</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Coup-entry leaders</td>
+<td class="gt_row gt_center" headers="stat_n_1">141</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">70</td>
+<td class="gt_row gt_center" headers="estimate_1">2.61***</td>
+<td class="gt_row gt_center" headers="std.error_1">0.266</td>
+<td class="gt_row gt_center" headers="stat_n_2">794</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">72</td>
+<td class="gt_row gt_center" headers="estimate_2">2.42***</td>
+<td class="gt_row gt_center" headers="std.error_2">0.260</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">GDP Growth Trend</td>
+<td class="gt_row gt_center" headers="stat_n_1">213</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">98</td>
+<td class="gt_row gt_center" headers="estimate_1">0.91</td>
+<td class="gt_row gt_center" headers="std.error_1">0.911</td>
+<td class="gt_row gt_center" headers="stat_n_2">1,528</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">99</td>
+<td class="gt_row gt_center" headers="estimate_2">0.17</td>
+<td class="gt_row gt_center" headers="std.error_2">1.07</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">GDP per capita</td>
+<td class="gt_row gt_center" headers="stat_n_1">213</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">98</td>
+<td class="gt_row gt_center" headers="estimate_1">0.97</td>
+<td class="gt_row gt_center" headers="std.error_1">0.020</td>
+<td class="gt_row gt_center" headers="stat_n_2">1,528</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">99</td>
+<td class="gt_row gt_center" headers="estimate_2">0.94**</td>
+<td class="gt_row gt_center" headers="std.error_2">0.026</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Population: log</td>
+<td class="gt_row gt_center" headers="stat_n_1">213</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">98</td>
+<td class="gt_row gt_center" headers="estimate_1">0.91</td>
+<td class="gt_row gt_center" headers="std.error_1">0.088</td>
+<td class="gt_row gt_center" headers="stat_n_2">1,528</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">99</td>
+<td class="gt_row gt_center" headers="estimate_2">0.86*</td>
+<td class="gt_row gt_center" headers="std.error_2">0.082</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Polity 5</td>
+<td class="gt_row gt_center" headers="stat_n_1">213</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">98</td>
+<td class="gt_row gt_center" headers="estimate_1">1.00</td>
+<td class="gt_row gt_center" headers="std.error_1">0.026</td>
+<td class="gt_row gt_center" headers="stat_n_2">1,528</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">99</td>
+<td class="gt_row gt_center" headers="estimate_2">1.02</td>
+<td class="gt_row gt_center" headers="std.error_2">0.024</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Political stability</td>
+<td class="gt_row gt_center" headers="stat_n_1">213</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">98</td>
+<td class="gt_row gt_center" headers="estimate_1">1.03</td>
+<td class="gt_row gt_center" headers="std.error_1">0.052</td>
+<td class="gt_row gt_center" headers="stat_n_2">1,528</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">99</td>
+<td class="gt_row gt_center" headers="estimate_2">1.09</td>
+<td class="gt_row gt_center" headers="std.error_2">0.050</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Age</td>
+<td class="gt_row gt_center" headers="stat_n_1">213</td>
+<td class="gt_row gt_center" headers="stat_nevent_1">98</td>
+<td class="gt_row gt_center" headers="estimate_1">1.00</td>
+<td class="gt_row gt_center" headers="std.error_1">0.011</td>
+<td class="gt_row gt_center" headers="stat_n_2">1,528</td>
+<td class="gt_row gt_center" headers="stat_nevent_2">99</td>
+<td class="gt_row gt_center" headers="estimate_2">1.00</td>
+<td class="gt_row gt_center" headers="std.error_2">0.011</td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes">
+<tr class="odd">
+<td colspan="9" class="gt_footnote">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>1</sup></span>
+<p><em>p&lt;0.05; <strong>p&lt;0.01; </strong></em>p&lt;0.001</p>
+</td>
+</tr>
+<tr class="even">
+<td colspan="9" class="gt_footnote">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;"><sup>2</sup></span>
+<p>HR = Hazard Ratio, SE = Standard Error</p>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Generally speaking, both the Cox PH model and time-dependent Cox model analyses revealed a statistically significant association between leadership type and the hazard of removal from power. Coup-entry leaders were found to have a hazard ratio of 2.42 (in time-dependent Cox model) compared to autocoup leaders (reference group), assuming all other variables in the model are held constant. The analysis suggests that coup-entry leaders face a significantly greater risk of removal from power compared to autocoup leaders. At any given time during their tenure, coup-entry leaders are 2.42 times more likely to be ousted from power compared to autocoup leaders, all else being equal in the model.</p>
+<p>All other control variables in Cox PH model are not statistically significant. In time-dependent Cox model, however, GDP per capita and the log of population are both statistically significant at 5% level.</p>
+<ul>
+<li class="fragment"><p><strong>GDP per capita:</strong> The hazard ratio of 0.94 indicates that for each unit increase in GDP per capita (measured in constant 2017 international dollars, PPP, in units of $10,000), the hazard (or risk) of being ousted at any given time is reduced by 6%, assuming all other variables in the model are held constant. Similarly, it indicates that for each unit increase in the log of population, the hazard (or risk) of being oustedat any given time is reduced by 14%, assuming all other variables in the model are held constant.</p></li>
+<li class="fragment"><p><strong>Population:</strong> The hazard ratio of 0.86 indicates that for each unit increase in the logarithm of the population (one percent increase of population), the hazard (or risk) of being ousted at any given time decreases by 14%, assuming all other variables in the model are held constant.</p></li>
+</ul>
+<h3 data-number="5.2" id="discussions">
+<span class="header-section-number">5.2</span> Discussions</h3>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>testdata1 <span class="ot">&lt;-</span> Mydata1 <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-3"><a></a>    <span class="at">.by =</span> group,</span>
+<span id="cb7-4"><a></a>    <span class="at">GDP_trend =</span> <span class="fu">mean</span>(GDP_trend),</span>
+<span id="cb7-5"><a></a>    <span class="at">GDP_pc =</span> <span class="fu">mean</span>(GDP_pc),</span>
+<span id="cb7-6"><a></a>    <span class="at">pop_log =</span> <span class="fu">mean</span>(pop_log),</span>
+<span id="cb7-7"><a></a>    <span class="at">polity5 =</span> <span class="fu">mean</span>(polity5),</span>
+<span id="cb7-8"><a></a>    <span class="at">polstab =</span> <span class="fu">mean</span>(polstab),</span>
+<span id="cb7-9"><a></a>    <span class="at">age =</span> <span class="fu">mean</span>(age)</span>
+<span id="cb7-10"><a></a>  )</span>
+<span id="cb7-11"><a></a></span>
+<span id="cb7-12"><a></a>model_cox1 <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a></a>  <span class="fu">survfit</span>(<span class="at">newdata =</span> testdata1) <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a></a>  <span class="fu">ggsurvplot</span>(<span class="at">data =</span> testdata1,</span>
+<span id="cb7-15"><a></a>             <span class="at">xlab =</span> <span class="st">"Days"</span>,</span>
+<span id="cb7-16"><a></a>             <span class="at">surv.median.line =</span> <span class="st">"hv"</span>,</span>
+<span id="cb7-17"><a></a>             <span class="at">legend.title =</span> <span class="st">"Leader Type"</span>,</span>
+<span id="cb7-18"><a></a>             <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"Autocoup leaders"</span>, <span class="st">"Coup-entry leaders"</span>))</span>
+<span id="cb7-19"><a></a></span>
+<span id="cb7-20"><a></a>testdata2 <span class="ot">&lt;-</span> Mydata2 <span class="sc">|&gt;</span> </span>
+<span id="cb7-21"><a></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-22"><a></a>    <span class="at">.by =</span> group,</span>
+<span id="cb7-23"><a></a>    <span class="at">GDP_trend =</span> <span class="fu">mean</span>(GDP_trend),</span>
+<span id="cb7-24"><a></a>    <span class="at">GDP_pc =</span> <span class="fu">mean</span>(GDP_pc),</span>
+<span id="cb7-25"><a></a>    <span class="at">pop_log =</span> <span class="fu">mean</span>(pop_log),</span>
+<span id="cb7-26"><a></a>    <span class="at">polity5 =</span> <span class="fu">mean</span>(polity5),</span>
+<span id="cb7-27"><a></a>    <span class="at">polstab =</span> <span class="fu">mean</span>(polstab),</span>
+<span id="cb7-28"><a></a>    <span class="at">age =</span> <span class="fu">mean</span>(age)</span>
+<span id="cb7-29"><a></a>  )</span>
+<span id="cb7-30"><a></a></span>
+<span id="cb7-31"><a></a>model_cox2 <span class="sc">|&gt;</span> </span>
+<span id="cb7-32"><a></a>  <span class="fu">survfit</span>(<span class="at">newdata =</span> testdata2) <span class="sc">|&gt;</span></span>
+<span id="cb7-33"><a></a>  <span class="fu">ggsurvplot</span>(<span class="at">data =</span> testdata2,</span>
+<span id="cb7-34"><a></a>             <span class="at">xlab =</span> <span class="st">"Days"</span>,</span>
+<span id="cb7-35"><a></a>             <span class="at">surv.median.line =</span> <span class="st">"hv"</span>,</span>
+<span id="cb7-36"><a></a>             <span class="at">legend.title =</span> <span class="st">"Leader Type"</span>,</span>
+<span id="cb7-37"><a></a>             <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"Autocoup leaders"</span>, <span class="st">"Coup-entry leaders"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-coxSurv" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-coxSurv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxSurv" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-coxSurv-1" class="quarto-figure quarto-figure-center quarto-float">
+<figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxSurv-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="fig-coxSurv"><img data-src="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" data-ref-parent="fig-coxSurv" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxSurv-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Cox PH Model
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxSurv" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-coxSurv-2" class="quarto-figure quarto-figure-center quarto-float">
+<figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxSurv-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="fig-coxSurv"><img data-src="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" data-ref-parent="fig-coxSurv" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxSurv-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Time-dependent Cox Model
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coxSurv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Survival curves for Cox Model
+</figcaption></figure>
+</div>
+<p>The survival curves depicted in <a href="#/results-and-discussion" class="quarto-xref">Figure&nbsp;2</a> illustrate the survival rates for leaders of both types. Both the Cox Proportional Hazards (Cox PH) model and the time-dependent model produce similar plots. Notably, the survival curve for coup-entry leaders exhibits a significantly lower trajectory compared to that of autocoup leaders. The steeper drop at the early stage for coup-entry leaders indicates they are more likely to be ousted shortly after assuming power. Additionally, the survival curve for coup-entry leaders crosses the median survival line much earlier than that of autocoup leaders. This disparity suggests that autocoup leaders tend to remain in power for longer durations than their coup-entry counterparts.</p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>coxplottidy <span class="ot">&lt;-</span> <span class="fu">tidy</span>(model_cox1, <span class="at">exponentiate =</span> T, <span class="at">conf.int =</span> T) <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">mutate</span>(<span class="at">term =</span> <span class="fu">c</span>(<span class="st">"Coup-entry leaders"</span>,</span>
+<span id="cb8-3"><a></a>                      <span class="st">"GDP Growth Trend"</span>,</span>
+<span id="cb8-4"><a></a>                      <span class="st">"GDP per capita"</span>,</span>
+<span id="cb8-5"><a></a>                      <span class="st">"Population: log"</span>,</span>
+<span id="cb8-6"><a></a>                      <span class="st">"Polity 5"</span>,</span>
+<span id="cb8-7"><a></a>                      <span class="st">"Political stability"</span>,</span>
+<span id="cb8-8"><a></a>                      <span class="st">"Age"</span>))</span>
+<span id="cb8-9"><a></a></span>
+<span id="cb8-10"><a></a>coxplottidy <span class="sc">|&gt;</span></span>
+<span id="cb8-11"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb8-12"><a></a>    <span class="at">y =</span> term,</span>
+<span id="cb8-13"><a></a>    <span class="at">x =</span> estimate,</span>
+<span id="cb8-14"><a></a>    <span class="at">xmin =</span> conf.low,</span>
+<span id="cb8-15"><a></a>    <span class="at">xmax =</span> conf.high</span>
+<span id="cb8-16"><a></a>  )) <span class="sc">+</span></span>
+<span id="cb8-17"><a></a>  <span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb8-18"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>,</span>
+<span id="cb8-19"><a></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb8-20"><a></a>             <span class="at">color =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb8-21"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Hazard ratios"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb8-22"><a></a>  <span class="fu">theme_bw</span>() </span>
+<span id="cb8-23"><a></a></span>
+<span id="cb8-24"><a></a>coxplottidy <span class="ot">&lt;-</span> <span class="fu">tidy</span>(model_cox2, <span class="at">exponentiate =</span> T, <span class="at">conf.int =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb8-25"><a></a>  <span class="fu">mutate</span>(<span class="at">term =</span> <span class="fu">c</span>(<span class="st">"Coup-entry leaders"</span>,</span>
+<span id="cb8-26"><a></a>                      <span class="st">"GDP Growth Trend"</span>,</span>
+<span id="cb8-27"><a></a>                      <span class="st">"GDP per capita"</span>,</span>
+<span id="cb8-28"><a></a>                      <span class="st">"Population: log"</span>,</span>
+<span id="cb8-29"><a></a>                      <span class="st">"Polity 5"</span>,</span>
+<span id="cb8-30"><a></a>                      <span class="st">"Political stability"</span>,</span>
+<span id="cb8-31"><a></a>                      <span class="st">"Age"</span>))</span>
+<span id="cb8-32"><a></a></span>
+<span id="cb8-33"><a></a>coxplottidy <span class="sc">|&gt;</span></span>
+<span id="cb8-34"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb8-35"><a></a>    <span class="at">y =</span> term,</span>
+<span id="cb8-36"><a></a>    <span class="at">x =</span> estimate,</span>
+<span id="cb8-37"><a></a>    <span class="at">xmin =</span> conf.low,</span>
+<span id="cb8-38"><a></a>    <span class="at">xmax =</span> conf.high</span>
+<span id="cb8-39"><a></a>  )) <span class="sc">+</span></span>
+<span id="cb8-40"><a></a>  <span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb8-41"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>,</span>
+<span id="cb8-42"><a></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb8-43"><a></a>             <span class="at">color =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb8-44"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Hazard ratios"</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">title =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb8-45"><a></a>  <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-coxHR" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-coxHR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxHR" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-coxHR-1" class="quarto-figure quarto-figure-center quarto-float">
+<figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxHR-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="fig-coxHR"><img data-src="coup_leader_survival_files/figure-html/fig-coxHR-1.png" data-ref-parent="fig-coxHR" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxHR-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Cox PH Model
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxHR" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-coxHR-2" class="quarto-figure quarto-figure-center quarto-float">
+<figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxHR-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="lightbox" data-glightbox="description: .lightbox-desc-5" data-gallery="fig-coxHR"><img data-src="coup_leader_survival_files/figure-html/fig-coxHR-2.png" data-ref-parent="fig-coxHR" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxHR-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Time-dependent Cox Model
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coxHR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Hazard ratios and 95% CIs for Leader Ousting
+</figcaption></figure>
+</div>
+<p><a href="#/results-and-discussion" class="quarto-xref">Figure&nbsp;3</a> displays the hazard ratios and corresponding 95% confidence intervals for the variables incorporated in the Cox model. Both the Cox Proportional Hazards (PH) model and the time-dependent model yield nearly identical plots. The hazard ratio for coup-entry leaders compared to autocoup leaders is significantly greater than 1 and statistically significant, indicating that coup-entry leaders are at a higher risk of being ousted. Most other variables have hazard ratios close to 1, suggesting that a one-unit increase in these variables does not significantly affect the risk of being ousted. Although the hazard ratio for GDP growth trend is considerably less than 1, it is not statistically significant at the 5% level. However, it is statistically significant at the 10% level, suggesting that better economic performance may help to consolidate the rule of the incumbents to some extent.</p>
+<p><a href="#/results-and-discussion" class="quarto-xref">Figure&nbsp;3</a> presents the hazard ratios (HRs) and their corresponding 95% confidence intervals (CIs) for the variables included in the Cox proportional hazards model (Cox PH) and the time-dependent model. The HR for coup-entry leaders compared to autocoup leaders is significantly greater than 1, indicating a substantially higher risk of removal from power for coup-entry leaders. Most other variables have HRs close to 1, suggesting that a one-unit increase in those variables has minimal impact on the risk of removal.</p>
+<p>The HR for GDP growth trend is noteworthy. While it is considerably less than 1, it is statistically significant at the 10% level (0.10 &gt; p-value &gt; 0.05). This suggests a possible trend where positive economic performance might reduce the risk of removal from power for the incumbents, although the evidence is not conclusive.</p>
+<h3 data-number="5.3" id="assessing-the-proportional-hazards-assumption">
+<span class="header-section-number">5.3</span> Assessing the Proportional Hazards Assumption</h3>
+<p>The validity of the model assumptions significantly influences our confidence in the results. To assess the proportional hazards assumption of the Cox model, we use the chi-square test based on Schoenfeld residuals to determine whether the covariate effects remain constant (proportional) over time. Although the Cox PH model violates the proportional hazards assumption, our primary analysis relies on the time-dependent Cox model, which does not show strong evidence of violating the proportional hazards assumption for any covariate. The global p-value of 0.382 is much greater than the 5% significance level, indicating that the proportional hazards assumption is reasonably met for the time-dependent Cox model.</p>
+<div class="cell">
+
+</div>
+</section><section id="conclusion" class="slide level2 smaller scrollable" data-number="6"><h2>
+<span class="header-section-number">6</span> Conclusion</h2>
+<p>This study examined the survival durations of political leaders who come to power through irregular means, specifically coups and autocoups. We hypothesized that the mode of accession significantly influences leader tenure. Employing survival analysis techniques, including the Cox proportional hazards model and a time-dependent Cox model, we found strong evidence that autocoup leaders generally enjoy longer tenures than coup-entry leaders.</p>
+<p>Our findings revealed a significant difference in average tenure, with post-autocoup leaders averaging approximately 10.8 years in power compared to 5.4 years for coup-entry leaders. The time-dependent Cox model further indicated that coup-entry leaders are 2.42 times more likely to be ousted from power at any given time compared to autocoup leaders, all else being equal.</p>
+<p>These results highlight the importance of understanding the phenomenon of autocoups, where leaders extend their rule by manipulating legal frameworks. Due to the relative ease and potential benefits of autocoups, this method of power retention might incentivize more leaders to employ it. Consequently, democratic backsliding could become more prevalent as autocoups weaken democratic institutions and constitutional norms, particularly in nascent democracies or those transitioning from autocracy.</p>
+<p>This study contributes to the field of leadership survival by demonstrating that the mode of accession significantly impacts leader tenure, a factor previously under-explored in the literature. By utilizing both Cox models, the research offers robust analytical techniques for studying political leadership survival and provides strong evidence of divergent tenure lengths between these two types of irregular-entry leaders.</p>
+<p>However, limitations exist. The study relies heavily on the autocoup dataset collected and coded by the author. The concept and data itself are relatively novel within academia. Future research should refine and establish wider recognition for the term “autocoup,” leading to more accurate and comprehensive data collection efforts. Expanding the dataset to include more cases and integrating it with data on other irregular leadership transitions could yield a more holistic understanding of political survival in such contexts.</p>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../fig/Candoso2.png" class="slide-logo"></p>
@@ -1717,6 +2612,10 @@ Surv(survival\_time, status) &amp;= group + \\
 </div>
 <div class="hidden" aria-hidden="true">
 <span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2&nbsp;(a): Cox PH Model</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;2&nbsp;(b): Time-dependent Cox Model</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;3&nbsp;(a): Cox PH Model</span>
+<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;3&nbsp;(b): Time-dependent Cox Model</span>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-arriola2009" class="csl-entry" role="listitem">
@@ -1737,6 +2636,9 @@ Easton, Malcolm R, and Randolph M Siverson. 2018. <span>“Leader Survival and P
 <div id="ref-escribà-folch2013" class="csl-entry" role="listitem">
 Escribà-Folch, Abel. 2013. <span>“Repression, Political Threats, and Survival Under Autocracy.”</span> <em>International Political Science Review</em> 34 (5): 543–60. <a href="https://doi.org/10.1177/0192512113488259">https://doi.org/10.1177/0192512113488259</a>.
 </div>
+<div id="ref-fariss2022" class="csl-entry" role="listitem">
+Fariss, Christopher J., Therese Anders, Jonathan N. Markowitz, and Miriam Barnum. 2022. <span>“New Estimates of Over 500 Years of Historic GDP and Population Data.”</span> <em>Journal of Conflict Resolution</em> 66 (3): 553–91. <a href="https://doi.org/10.1177/00220027211054432">https://doi.org/10.1177/00220027211054432</a>.
+</div>
 <div id="ref-frantz2016" class="csl-entry" role="listitem">
 Frantz, Erica, and Elizabeth A. Stein. 2016. <span>“Countering Coups: Leadership Succession Rules in Dictatorships.”</span> <em>Comparative Political Studies</em> 50 (7): 935–62. <a href="https://doi.org/10.1177/0010414016655538">https://doi.org/10.1177/0010414016655538</a>.
 </div>
@@ -1752,11 +2654,17 @@ Ginsburg, Tom, and Zachary Elkins. 2019. <span>“One Size Does Not Fit All.”<
 <div id="ref-goemans2009" class="csl-entry" role="listitem">
 Goemans, Henk E., Kristian Skrede Gleditsch, and Giacomo Chiozza. 2009. <span>“Introducing Archigos: A Dataset of Political Leaders.”</span> <em>Journal of Peace Research</em> 46 (2): 269–83. <a href="https://doi.org/10.1177/0022343308100719">https://doi.org/10.1177/0022343308100719</a>.
 </div>
+<div id="ref-krishnarajan2019" class="csl-entry" role="listitem">
+Krishnarajan, Suthan. 2019. <span>“Economic Crisis, Natural Resources, and Irregular Leader Removal in Autocracies.”</span> <em>International Studies Quarterly</em> 63 (3): 726–41. <a href="https://doi.org/10.1093/isq/sqz006">https://doi.org/10.1093/isq/sqz006</a>.
+</div>
 <div id="ref-licht2009" class="csl-entry" role="listitem">
 Licht, Amanda A. 2009. <span>“Coming into Money: The Impact of Foreign Aid on Leader Survival.”</span> <em>Journal of Conflict Resolution</em> 54 (1): 58–87. <a href="https://doi.org/10.1177/0022002709351104">https://doi.org/10.1177/0022002709351104</a>.
 </div>
 <div id="ref-llanos2019" class="csl-entry" role="listitem">
 Llanos, Mariana. 2019. <span>“The Politics of Presidential Term Limits in Argentina.”</span> In, 473–94. Oxford University Press. <a href="https://doi.org/10.1093/oso/9780198837404.003.0023">https://doi.org/10.1093/oso/9780198837404.003.0023</a>.
+</div>
+<div id="ref-marshall2005current" class="csl-entry" role="listitem">
+Marshall, Monty G. 2005. <span>“Current Status of the World’s Major Episodes of Political Violence.”</span> <em>Report to Political Instability Task Force.(3 February)</em>.
 </div>
 <div id="ref-morrison2009" class="csl-entry" role="listitem">
 Morrison, Kevin M. 2009. <span>“Oil, Nontax Revenue, and the Redistributional Foundations of Regime Stability.”</span> <em>International Organization</em> 63 (1): 107–38. <a href="https://doi.org/10.1017/s0020818309090043">https://doi.org/10.1017/s0020818309090043</a>.
@@ -1791,6 +2699,9 @@ Svolik, Milan W. 2009. <span>“Power Sharing and Leadership Dynamics in Authori
 <div id="ref-svolik2014" class="csl-entry" role="listitem">
 ———. 2014. <span>“Which Democracies Will Last? Coups, Incumbent Takeovers, and the Dynamic of Democratic Consolidation.”</span> <em>British Journal of Political Science</em> 45 (4): 715–38. <a href="https://doi.org/10.1017/s0007123413000550">https://doi.org/10.1017/s0007123413000550</a>.
 </div>
+<div id="ref-survival" class="csl-entry" role="listitem">
+Therneau, Terry M. 2024. <span>“A Package for Survival Analysis in r.”</span> <a href="https://CRAN.R-project.org/package=survival">https://CRAN.R-project.org/package=survival</a>.
+</div>
 <div id="ref-thyne2017" class="csl-entry" role="listitem">
 Thyne, Clayton, Jonathan Powell, Sarah Parrott, and Emily VanMeter. 2017. <span>“Even Generals Need Friends.”</span> <em>Journal of Conflict Resolution</em> 62 (7): 1406–32. <a href="https://doi.org/10.1177/0022002716685611">https://doi.org/10.1177/0022002716685611</a>.
 </div>
@@ -1810,7 +2721,7 @@ Yu, Shu, and Richard Jong-A-Pin. 2016. <span>“Political Leader Survival: Does 
 Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes.”</span> PhD thesis, University of Essex.
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>Center for Systemic Peace: <a href="https://www.systemicpeace.org" class="uri">https://www.systemicpeace.org</a>. Accessed on Dec 24, 2023.</p></li></ol></aside></section>
+</section>
 </div>
   </div>
 
