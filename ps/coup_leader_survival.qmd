@@ -19,7 +19,7 @@ bibliography: references.bib
 abstract: |
   This study explores and compares the survival time of two categories of irregular-entry political leaders: those who ascend to power through coups and those who overstay their legitimate term limits (autocoups). The central hypothesis posits that the mode of accession to power influences the duration of their tenures. Utilizing survival analysis, the results indicate that leaders who overstay their terms through autocoups generally remain in power longer than those who come to power through coups.
 
-keywords: [Coups, Autocoups, Survival, Political Leadership]
+keywords: [Coups, Autocoups, Survival, Political Leadership, Cox Model]
 
 execute:
   warning: false
@@ -35,6 +35,8 @@ library(survival)
 library(survminer)
 library(ggsurvfit)
 library(gt)
+library(gtsummary)
+library(broom)
 library(janitor)
 library(scales)
 library(zoo)
@@ -115,10 +117,10 @@ ggsurvplot(fit,
            surv.median.line = "hv",
            break.x.by = 5, 
            legend.title = "Leader Type",
-           legend.labs = c("entry by autocoup", "entry by coup"),
+           legend.labs = c("Autocoup leaders", "Coup-entry leaders"),
            xlab = "Survival Years",
            #title = "Survival Curves of overstay and coup-entry leaders",
-           font.title = 14)
+           font.title = 12)
 ```
 
 Preliminary findings from survival analysis (see @fig-logrank) indicate a
@@ -525,100 +527,389 @@ remains persistent and robust.
 
 ### Methodology: Survival analysis
 
-In order to test the hypothesis, I will employ two cox models to analyze the
-survival tenures of leaders who overstay their terms and those who come to power
-through coups. The first model will utilize the Cox proportional hazards model
-(referred to as the Cox PH model), where I only use the variables at the entry
-year and do not consider the changes of these variables among leaders' survival
+To test the hypothesis, I will employ two Cox models to analyse the survival
+tenures of coup-entry leaders and autocoup leaders. Unlike the Kaplan-Meier
+model, the Cox model enables the estimation of the impacts of multiple factors.
+Although it does not directly estimate the duration of tenure in office, it
+evaluates the hazard rate associated with being ousted from power. Essentially,
+this represents different facets of the same phenomenon: as a leader's cumulative
+hazard of being ousted increases, their probability of survival in office
+decreases.
+
+The first model will utilize the Cox proportional hazards model (referred to as
+the Cox PH model), where I will only use the variables present at the entry year,
+without considering the changes in these variables over the leaders' survival
 times.
 
-However, except the main concern variable in this research, the leader type, the
-control variables, such as economic performance, Polity5, political stability, do
-change over time. The second model will take this into consideration and use the
-time-dependent Cox model (referred to as the Time-dependent Cox model).
+However, apart from the primary variable of interest in this research—the leader
+type—control variables such as economic performance, Polity5 scores, and
+political stability do change over time. Therefore, the second model will account
+for these variations by using the time-dependent Cox model.
 
-Unlike the Kaplan-Meier model, the Cox model enables the estimation of the
-impacts of multiple factors. Although it does not directly estimate the duration
-of tenure in office, it evaluates the hazard rate associated with being ousted
-from power, which essentially represents different facets of the same phenomenon.
-As a leader's cumulative hazard of being ousted increases, their probability of
-survival in office decreases.
-
-```{=tex}
-\begin{equation}
-\begin{aligned}
-Surv(survival\_time, status) &= group + \\
-&GDP\_growth\_trend + GDP\_pc\_log + \\
-&pop\_log + polity5 + polstab + age
-\end{aligned}
-\end{equation}
-```
 ### Data
 
 The main variables are as follows.
 
 #### Dependent variables
 
--   **Survival time:** the duration of leaders' tenure in days. For coup-entry
-    leaders, this time span initiates on the day they assume power, while
-    overstaying leaders' tenure begins on the expiration date of their initial
-    term. For instance, considering Xi Jinping's case, he assumed power in 2013,
-    successfully removing term limits in 2018. However, his initial two-term
-    tenure was due to end in 2023. Hence, his survival time commences from 2023
-    rather than 2013, signifying the start of his original tenure. The survival
-    time concludes on the day the leader exits office, applying to both
-    coup-entry and overstaying leaders.
+-   **Survival Time:** The duration of a leader's tenure, measured in days. For
+    coup-entry leaders, the survival time begins on the day they assume power
+    through a coup. For autocoup leaders, the survival time starts on the
+    expiration date of their original legitimate term. For example, Xi Jinping
+    assumed power in 2013 and removed term limits in 2018. His original
+    legitimate tenure was set to end in 2023, so his survival time begins in
+    2023, not 2013 or 2018, marking the start of his post-autocoup tenure. The
+    survival time concludes on the day the leader exits office, applicable to
+    both coup-entry and autocoup leaders.
 
--   **End point status:** 0 = censored, 1 = ousted. I categorized ousting by
-    force as 1, even in cases where some leaders "voluntarily" resigned under
-    pressure. Other methods of leaving office are considered censored, which can
-    encompass situations where leaders appoint their successors, opt for
-    democratic means of overturn, face health-related issues, or encounter
-    natural death.
+-   **End point status:** This variable indicates the manner in which the
+    leader's tenure concluded, categorized as follows:
 
-#### Independent variable
+    -   **0 = Censored:** This status is assigned to leaders who leave office
+        through means other than being ousted. This includes leaders who appoint
+        their successors, opt for democratic transitions, or leave office due to
+        health issues or natural death.
 
--   **Leader type:** Group A = overstaying leader, Group B = coup-entry leader.
-    This variable is the primary independent variable of interest, as it serves
-    as the basis for comparison of survival time between the two types of
-    leaders.
+    -   **1 = Ousted:** This status is assigned to leaders who are forced out of
+        office. This includes cases where leaders "voluntarily" resign under
+        pressure, reflecting a de facto ousting by force.
 
-The dependent and independent data are sourced from the author's incumbent
-overstay dataset and the leaders dataset by [@goemans2009].
+#### Key Independent variable: Leader type
+
+This variable categorizes leaders into two distinct groups:
+
+-   Group A = Autocoup Leader: Leaders who extend their tenure through autocoups.
+-   Group B = Coup-Entry Leader: Leaders who assume power through coups.This
+    variable is the primary independent variable of interest, serving as the
+    basis for comparing the survival time between these two types of leaders.
+
+The data for both dependent and independent variables are sourced from @zhu2024
+and @goemans2009.
 
 #### Control variables
 
--   **Indicators of Economic Influence:** To evaluate economic influence, I rely
-    on two primary indicators: the trend in GDP growth (`GDP_growth_trend`) and
-    the logarithm of GDP per capita (`GDP_pc_log)`. The GDP_growth_trend is
-    determined by contrasting the GDP growth in the year of a coup entry or
-    overstaying with the preceding 3-year moving average of the growth rate. The
-    dataset employed for these metrics is sourced from V-Dem Data.
+-   **Economic Performance:** This variable is measured using two indicators:
+    economic level and economic growth rate.
+
+    -   **Economic Level:** Represented by GDP per capita. This measure provides
+        an indication of the overall economic health and standard of living in a
+        country.
+
+    -   **Economic Growth Trend:** Assessed using the current-trend (CT) ratio,
+        developed by @krishnarajan2019. The CT ratio compares a country's current
+        GDP per capita to the average GDP per capita over the previous five
+        years. A higher CT ratio signifies stronger economic performance.
+
+$$
+\begin{aligned}
+CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
+\end{aligned}
+$$
+
+The GDP per capita data (in constant 2017 international dollars, PPP) is sourced
+from the V-Dem dataset by @fariss2022. To capture the prior year's economic
+impact, the data is lagged by one year.
+
+-   **Political Stability:** This variable captures overall regime stability by
+    including a violence index that encompasses all types of internal and
+    interstate wars and violence. The data for this index is sourced from the
+    Major Episodes of Political Violence dataset by Marshall. This index provides
+    a comprehensive measure of the level of violence and conflict within a
+    country, which can significantly impact leadership survival.
+    [@marshall2005current].
 
 -   **Degree of Democracy:** The level of democracy is gauged using Polity 5
-    scores (`polity`) at the entry year for each respective country. This dataset
-    is sourced from the Center for Systemic Peace (CSP)[^4].
+    scores (polity) at the entry year for each respective country. These scores
+    range from -10 (fully autocratic) to +10 (fully democratic), capturing the
+    extent of democratic versus autocratic governance. This dataset is sourced
+    from the Center for Systemic Peace (CSP)[^4] and provides an essential
+    measure of political regime type, which can influence the stability and
+    survival of leaders in power.
 
--   **Population Size:** Accounting for its potential impact on leaders' tenures,
-    the log population size (`pop_log`) is considered. This data is obtained from
-    the V-Dem Data and is evaluated in relation to its influence on leadership
-    survival.
+-   **Population Size:** To account for its potential impact on leaders' tenures,
+    the log of the population size (`pop_log`) is considered. This transformation
+    helps in managing the wide range of population sizes across different
+    countries. The data is sourced from the V-Dem dataset and is evaluated to
+    understand its influence on leadership survival. Larger populations may
+    present more governance challenges and potential sources of opposition,
+    thereby affecting the stability and longevity of a leader's tenure.
 
--   **Political Stability:** The stability of the political landscape is crucial
-    in evaluating the survival tenures of leaders. To quantify this aspect, the
-    Major Episodes of Political Violence Variables dataset from the CSP is
-    utilized to measure political stability (`polstab`) at the leader's entry
-    year.
+-   **Leader's Age:** The age of the leader at the entry year is included as an
+    additional variable in the analysis, offering insights into potential
+    correlations with leadership survival. Older leaders may have different
+    experiences, networks, and health considerations that could influence their
+    ability to maintain power. This data is sourced from the leaders dataset by
+    [@goemans2009].
 
--   **Leader's Age:** The age of the leader at the entry year serves as an
-    additional variable in the analysis, providing insight into potential
-    correlations with leadership survival. This data is sourced from the leaders
-    dataset by [@goemans2009].
+Based on the methods and variables, we have the model as:
 
-### 
+$$
+\begin{aligned}
+Surv(survival\_time, status) &= Group + \\
+&GDP\_growth\_trend + GDP\_per\_capita + \\
+&pop\_log + polity5 + Stability + age
+\end{aligned}
+$$
+
+## Results and discussion
+
+Building on the preceding discussion, I investigated my hypothesis regarding the
+likelihood of prolonged regime survival among leaders who overstay their terms
+compared to those who assume power through coups. The regression results of both
+the Cox PH model and the Time-dependent Cox model are presented in @tbl-cox.
 
 ```{r}
-#| label: end
+#| label: model
+#| echo: !expr format == "html"
+
+Mydata1 <- read.csv(here("data/mydata1.csv")) |> 
+   mutate(group = factor(group, 
+                        labels = c("Autocoup leaders", "Coup-entry leaders")))
+
+model_cox1 <- Mydata1 |> 
+  coxph(
+    Surv(survival_time, status) ~ 
+      group + GDP_trend + GDP_pc + pop_log + 
+      polity5 + polstab + age,
+    data = _
+  ) 
+
+tbl1 <- model_cox1|> 
+   tbl_regression(exponentiate = T,
+                 conf.int = NULL,
+                 add_estimate_to_reference_rows = T,
+                 label = list(group ~ "Leader Type",
+                   GDP_trend ~ "GDP Growth Trend",
+                   GDP_pc ~ "GDP per capita",
+                   pop_log ~ "Population: log",
+                   polity5 ~ "Polity 5",
+                   polstab ~ "Political stability",
+                   age ~ "Age")) |> 
+  add_n(location = "level") |> 
+  add_nevent(location = "level") |> 
+  add_significance_stars(hide_p = T, hide_se = F, hide_ci = T) |> 
+  bold_p(t = 0.05) |> 
+  bold_labels() 
+
+Mydata2 <- read.csv(here("data/mydata2.csv")) |> 
+  mutate(group = factor(group, 
+                        labels = c("Autocoup leaders", "Coup-entry leaders")),
+         survt = (tstop - tstart) * 365) 
+model_cox2 <- Mydata2 |>
+  coxph(
+    Surv(T1, T2, status) ~ 
+      group + GDP_trend + GDP_pc + pop_log + 
+      polity5 + polstab + age + cluster(id),
+    data = _
+  ) 
+tbl2 <- model_cox2|>
+  tbl_regression(exponentiate = T,
+                 conf.int = NULL,
+                 add_estimate_to_reference_rows = T,
+                 label = list(group ~ "Leader Type",
+                   GDP_trend ~ "GDP Growth Trend",
+                   GDP_pc ~ "GDP per capita",
+                   pop_log ~ "Population: log",
+                   polity5 ~ "Polity 5",
+                   polstab ~ "Political stability",
+                   age ~ "Age")) |> 
+  add_n(location = "level") |> 
+  add_nevent(location = "level") |> 
+  add_significance_stars(hide_p = T, hide_se = F, hide_ci = T) |> 
+  bold_p(t = 0.05) |> 
+  bold_labels() 
+  
+```
+
+```{r}
+#| label: tbl-cox
+#| tbl-cap: Cox models for survival time of different types of leaders
+#| echo: !expr format == "html"
+
+tbl_merge(list(tbl1, tbl2),
+          tab_spanner = c("**Cox PH Model**", "**Time-dependent Cox Model**")) |> 
+  as_gt()
+```
+
+It is evident from the table that both models produce comparable outcomes,
+indicating that the type of leader indeed significantly influences the survival
+duration of their regime, even when controlling for other pertinent factors. Here
+I use the Time-dependent Cox model to illustrate the results.
+
+The hazard ratio for coup-entry leaders is 2.41, signifying that coup-entry
+leaders are 1.41 times more likely to face ousting compared to overstaying
+leaders, all else being equal.
+
+Additionally, the hazard ratio associated with the logarithm of GDP per capita is
+0.73, suggesting that a 1% increase in GDP per capita is correlated with a 27%
+reduction in the hazard of being ousted, or 1% decrease in GDP per capita is
+correlated with a 37% reduction in the hazard of being ousted.
+
+It is noteworthy that the remaining variables did not exhibit statistical
+significance in this analysis.
+
+```{r}
+#| label: fig-coxSurv
+#| fig-cap: Survival curves for Cox Model
+#| fig-subcap: 
+#|  - Cox PH Model
+#|  - Time-dependent Cox Model
+#| layout-ncol: 2
+#| echo: !expr format == "html"
+
+testdata1 <- Mydata1 |> 
+  summarise(
+    .by = group,
+    GDP_trend = mean(GDP_trend),
+    GDP_pc = mean(GDP_pc),
+    pop_log = mean(pop_log),
+    polity5 = mean(polity5),
+    polstab = mean(polstab),
+    age = mean(age)
+  )
+Mydata1 |>
+  mutate(group = factor(group),
+         survt = tstop - tstart) |>
+  coxph(
+    Surv(survival_time, status) ~ group + GDP_trend + GDP_pc + pop_log + polity5 + polstab + age,
+    data = _
+  ) |> 
+  survfit(newdata = testdata1) |>
+  ggsurvplot(data = testdata1,
+             surv.median.line = "hv",
+             conf.int = TRUE,
+             legend.title = "Leader Type",
+             legend.labs = c("Autocoup leaders", "Coup-entry leaders"))
+
+testdata2 <- Mydata2 |> 
+  summarise(
+    .by = group,
+    GDP_trend = mean(GDP_trend),
+    GDP_pc = mean(GDP_pc),
+    pop_log = mean(pop_log),
+    polity5 = mean(polity5),
+    polstab = mean(polstab),
+    age = mean(age)
+  )
+Mydata2 |>
+  mutate(group = factor(group),
+         survt = tstop - tstart) |>
+  coxph(
+    Surv(T1, T2, status) ~ group + GDP_trend + GDP_pc + pop_log + polity5 + polstab + age + cluster(id),
+    data = _
+  ) |> 
+  survfit(newdata = testdata2) |>
+  ggsurvplot(data = testdata2,
+             surv.median.line = "hv",
+             conf.int = TRUE,
+             legend.title = "Leader Type",
+             legend.labs = c("Autocoup leaders", "Coup-entry leaders"))
+```
+
+The survival curves depicted in @fig-coxSurv illustrate the respective survival
+rates for leaders of both types. Once more, both the Cox proportional hazards
+(PH) model and the Time-dependent model generate analogous plots. Notably, the
+survival curve for leaders who enter through coups exhibits a significantly lower
+trajectory compared to those who overstay their terms. This disparity suggests
+that overstaying leaders are more inclined to endure for longer durations than
+their coup-entry counterparts.
+
+```{r}
+#| label: fig-coxHR
+#| fig-cap: Hazard ratios and 95% CIs for Leader Ousting
+#| fig-subcap: 
+#|  - Cox PH Model
+#|  - Time-dependent Cox Model
+#| layout-ncol: 2
+#| echo: !expr format == "html"
+
+coxplottidy <- tidy(model_cox1, exponentiate = T, conf.int = T) |>
+  mutate(term = c("Coup-entry leaders",
+                      "GDP Growth Trend",
+                      "GDP per capita",
+                      "Population: log",
+                      "Polity 5",
+                      "Political stability",
+                      "Age"))
+
+coxplottidy |>
+  ggplot(aes(
+    y = term,
+    x = estimate,
+    xmin = conf.low,
+    xmax = conf.high
+  )) +
+  geom_pointrange() +
+  geom_vline(xintercept = 1,
+             linetype = "dashed",
+             color = "skyblue") +
+  labs(x = "Hazard ratios", y = NULL, title = "") +
+  theme_bw() 
+
+coxplottidy <- tidy(model_cox2, exponentiate = T, conf.int = T) |> 
+  mutate(term = c("Coup-entry leaders",
+                      "GDP Growth Trend",
+                      "GDP per capita",
+                      "Population: log",
+                      "Polity 5",
+                      "Political stability",
+                      "Age"))
+
+coxplottidy |>
+  ggplot(aes(
+    y = term,
+    x = estimate,
+    xmin = conf.low,
+    xmax = conf.high
+  )) +
+  geom_pointrange() +
+  geom_vline(xintercept = 1,
+             linetype = "dashed",
+             color = "skyblue") +
+  labs(x = "Hazard ratios", y = "", title = "") +
+  theme_bw() 
+```
+
+@fig-coxHR displays the hazard ratios and corresponding 95% confidence intervals
+for the variables incorporated in the Cox model. Both the Cox proportional
+hazards (PH) model and the Time-dependent model yield nearly identical plots.
+Notably, the hazard ratio for leaders who assume power through coups and the
+logarithm of GDP per capita emerge as statistically significant factors.
+
+## Conclusion
+
+Adipiscing netus morbi facilisis parturient nunc habitant. Mauris penatibus
+taciti penatibus nisi aliquet himenaeos, auctor lobortis tellus. Metus eget
+ornare nullam quisque primis nec ornare bibendum auctor. Nunc tempus natoque
+phasellus senectus pellentesque hendrerit, turpis hac vel odio fames, suscipit
+quisque egestas eros quis.
+
+Adipiscing rutrum, enim est eu, luctus; leo tristique posuere taciti, iaculis
+quisque torquent! Torquent phasellus dis aliquam maecenas aptent himenaeos a duis
+semper fringilla fringilla. Arcu volutpat nam sociis nullam sociosqu tristique eu
+habitant. Pellentesque lobortis taciti sodales, habitant posuere massa nascetur
+velit eleifend.
+
+Ipsum sociis; risus torquent molestie senectus porttitor, pharetra magna ad
+rutrum convallis. Imperdiet eleifend habitant sociis, aliquet mi, dui himenaeos
+dictum fames? Dis sem ut, vel; lacus tortor duis aptent sociosqu litora cras
+nisi? Nam conubia in vivamus porttitor taciti?
+
+Elit vitae leo ante orci, erat vestibulum primis elementum laoreet? Ante massa
+condimentum pellentesque odio ligula velit fringilla. Hac habitant ullamcorper
+interdum phasellus, pulvinar orci mi, convallis gravida odio taciti. Elementum
+ligula per donec fermentum class duis nisi ultrices?
+
+Consectetur maecenas sociosqu, netus ad nisi, class urna aptent convallis
+imperdiet nostra tellus. Hendrerit himenaeos sagittis sapien venenatis, eu
+senectus varius lectus. Condimentum dictum arcu ornare lacinia ornare lectus
+magna! Inceptos tempus tempus imperdiet suspendisse mattis enim accumsan quisque,
+proin ridiculus congue, nulla cursus primis.
+
+\newpage
+
+```{r}
+#| label: references
 #| results: asis
 #| eval: !expr format == "latex"
 #| echo: false
@@ -639,5 +930,5 @@ cat("\\newpage
     allowing him to rule until 2036. Accessed\
     on `r Sys.Date()`.
 
-[^4]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on Dec
-    24, 2023.
+[^4]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on
+    `r Sys.Date()`.

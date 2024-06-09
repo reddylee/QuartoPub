@@ -708,7 +708,7 @@ attempt.
 #| results: asis
 #| echo: false
 
-political_violence <- read_excel("../data/MEPVv2018.xls") |> 
+political_violence <- read_excel(here("data/MEPVv2018.xls")) |> 
   dplyr::select(ccode, year, violence = actotal)
 
 gdp <- vdem |> 
@@ -848,6 +848,7 @@ Future research could explore specific institutional reforms that are most
 effective in improving stability across different regimes.
 
 ```{r}
+#| label: references
 #| results: asis
 #| eval: !expr format == "latex"
 #| echo: false
