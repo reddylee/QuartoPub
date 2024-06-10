@@ -1,5 +1,5 @@
 ---
-title: "Irregular Leadership Transitions and Political Survival: An Analysis of Coup-entry leaders and Autocoup leaders"
+title: "Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders"
 author:
   - name: Zhu Qi
     affiliations: University of Essex
@@ -17,7 +17,7 @@ categories: [Article, Coups]
 bibliography: references.bib
 
 abstract: |
-  This study examines how the method of attaining power impacts the longevity of coup-entry leaders and autocoups leaders. We hypothesize that the accession method significantly affects leader tenure. Utilizing Cox proportional hazards and time-dependent Cox models, we provide compelling evidence of differing survival times between these leader types. The findings indicate a 2.42 times higher risk of removal for coup-entry leaders compared to autocoup leaders. This study highlights the implications of these findings for political stability and democratic processes, suggesting that the relative ease and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. The research also underscores the importance of understanding the nuances of irregular leadership transitions and contributes to the academic literature by providing a new dataset on autocoups, which has not been widely recognized previously.
+  This study examines how the method of power acquisition impacts the longevity of two main types of irregular-entry political leaders: coup-entry leaders and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Utilizing the Cox proportional hazards model and a time-dependent Cox model, we provide compelling evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. Specifically, coup-entry leaders are found to have a much shorter average tenure and a higher probability of being ousted. This study underscores the implications of these findings for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. Furthermore, this research contributes to the academic literature by effectively utilizing a newly developed dataset on autocoups, offering valuable insights into the dynamics of irregular leadership transitions.
   
 keywords: [Coups, Autocoups, Survival, Political Leadership, Cox Model]
 
@@ -48,55 +48,57 @@ library(here)
 
 ## Introduction
 
-The survival of political leaders has been a well-studied topic in political
-science. While the general framework has garnered significant attention, specific
-types of leaders, particularly coup-entry leaders and autocoup leaders (discussed
-in more detail in Chapter 3), have received comparatively less scrutiny. However,
-examining the tenures of these leader types is particularly significant.
+Why do some leaders rule for decades while others stay in power for only years,
+months, or even days? This question has garnered substantial attention, making
+the survival of political leaders a well-explored topic in political science.
+Although the general framework of political survival has been extensively studied
+and numerous theories have been proposed, specific types of leaders—particularly
+coup-entry leaders and autocoup leaders (defined in more detail in Chapter
+3)—have received comparatively less scrutiny. Nonetheless, examining the tenures
+of these specific leader types is particularly significant, as it provides
+insights into the dynamics of irregular leadership transitions and their impact
+on political stability and democratic processes.
 
-Leaders who ascend through irregular means, such as coups or autocoups, attract
-more interest from both academics and journalists. The processes of entry,
-tenure, and exit are more predictable for leaders who come to power through
-regular channels, making their survival easier to anticipate and thus less
-compelling to study. In contrast, the uncertainty surrounding the tenures of
-irregular leaders draws more attention. According to @goemans2009, leaders with
-irregular entries or exits are quite common and therefore worth analysing.
-Between 1945 and 2015, approximately 14.5% (213 out of 1,472) of leaders who
-assumed office through regular channels exited irregularly. The proportion is
-even higher among leaders with irregular entries. During the same period,
-approximately 51.3% (158 out of 308) of those who assumed office through
-irregular means experienced irregular exits.
+The processes of entry, tenure, and exit are more predictable for leaders who
+come to power through regular channels, making their survival easier to
+anticipate and thus less compelling to study. In contrast, leaders who ascend
+through irregular means, such as coups or autocoups, attract more interest from
+both academics and journalists due to the unpredictable and often tumultuous
+nature of their tenures. According to @goemans2009, leaders with irregular
+entries or exits are quite common. Between 1945 and 2015, more than half of the
+leaders who entered power irregularly (158 out of 308) eventually exited
+irregularly as well. This rate is significantly higher than that of leaders who
+assumed office through regular channels, of whom only 14.5% (213 out of 1,472)
+experienced irregular exits. While this percentage is still notable, it is
+considerably lower than that for irregular-entry leaders.
 
-Coup-entry and autocoup leaders constitute the majority of those who ascend to or
-exit from power irregularly. Most leaders who gained power through irregular
-means did so by launching coups or overstaying in office. According to
-@goemans2009, out of 374 leaders who exited irregularly, 246 were ousted through
-coups, accounting for 65.8% of these cases. @frantz2016 show that coup-related
-exits account for roughly one-third of all exits in autocracies, surpassing any
-other type, including regular transitions. Additionally, between 1945 and 2020,
-there were 106 autocoup attempts, with 86 being successful [@zhu2024].
-
-Due to their irregularity and inherent uncertainty, it is challenging to
-precisely measure the tenure of coup-entry and autocoup leaders. Nonetheless,
-comparing the tenures of these two types of leaders is both possible and
-insightful. Conducting a log-rank test in survival analysis on the leaders
-dataset [@goemans2009] and the autocoup dataset [@zhu2024] reveals a distinct
-contrast in the tenures of autocoup leaders and coup-entry leaders.
+Among leaders with irregular entry or exit, coup-entry and autocoup leaders
+constitute the majority. According to @goemans2009, out of 374 leaders who exited
+irregularly, 246 were ousted through coups, accounting for 65.8% of these cases.
+@frantz2016 show that coup-related exits account for roughly one-third of all
+exits in autocracies, surpassing any other type, including regular transitions.
+Additionally, between 1945 and 2020, there were 106 autocoup attempts, with 86
+being successful [@zhu2024].
 
 ```{r}
 #| label: data
-#| echo: !expr format == "html"
-#| include: !expr format == "html"
-
+#| include: false
 Mydata1 <- read.csv(here("data/mydata1.csv")) |> 
   mutate(survival_year = survival_time / 365)
 
 avg <- Mydata1 |>
   summarise(avg=round(mean(survival_year),1),
             .by = group)
-
-avg
 ```
+
+Due to their irregularity and inherent uncertainty, precisely measuring the
+survival tenure of coup-entry and autocoup leaders presents a significant
+challenge. Nonetheless, a comparative analysis of the tenures of these two types
+of leaders is both feasible and valuable. Leaders who consolidate power through
+autocoups have a longer average tenure post-autocoup (approximately
+`r avg$avg[1]` years) compared to coup-entry leaders (approximately
+`r avg$avg[2]` years). This suggests a potential shortfall of about 5 years in
+the average tenure of coup-entry leaders.
 
 ```{r}
 #| label: fig-logrank
@@ -123,33 +125,33 @@ ggsurvplot(fit,
            font.title = 12)
 ```
 
-Preliminary findings from survival analysis (see @fig-logrank) indicate a
-significant difference in leadership tenures. Leaders who consolidate power
-through autocoups have a longer average tenure post-autocoup (approximately
-`r avg$avg[1]` years) compared to coup-entry leaders (approximately
-`r avg$avg[2]` years). This suggests a potential shortfall of about 5 years in
-the average tenure of coup-entry leaders.
+A preliminary analysis using a log-rank test in survival analysis, as shown in
+@fig-logrank, reveals a distinct contrast in the tenures of autocoup leaders
+versus coup-entry leaders. The survival curve for autocoup leaders is
+consistently higher than that for coup-entry leaders, and the difference is
+statistically significant. This indicates that autocoup leaders generally have a
+longer survival tenure and a lower risk of being ousted compared to coup-entry
+leaders.
 
 We argue that the method of accession significantly influences leadership
-longevity. Coup leaders likely face greater challenges to their legitimacy,
-resulting in a more precarious initial period in power. They encounter higher
-levels of uncertainty, instability, and pressure to share power, all of which
-contribute to a shorter average tenure compared to autocoup leaders.
+longevity. Coup-entry leaders are likely to face greater challenges to their
+rule, resulting in a shorter average tenure compared to autocoup leaders.
 
-Employing the Cox proportional hazards model and the extended Cox model, our
-results indicate that autocoup leaders generally experience longer post-autocoup
-tenures compared to coup-entry leaders.
+Using the Cox proportional hazards model and the time-dependent Cox model, our
+results indicate that autocoup leaders generally experience longer tenures
+compared to coup-entry leaders.
 
-This study makes two significant contributions. Firstly, it sheds light on a
-critical factor often overlooked in leadership survival studies: the impact of
-the method of accession to power. Leaders' survival is not solely determined by
-their actions after taking power but also by how they acquired power in the first
-place. Secondly, utilizing survival models, this research provides empirical
-evidence of the significant difference in tenure duration between autocoup and
-coup-entry leaders. This finding may help explain the increasing prevalence of
-overstaying in power through autocoups since 2000, as more incumbents may be
-encouraged by precedents, and ruling elites tend to follow and support such
-actions, benefiting from a relatively longer tenure.
+This study makes two potential contributions. Firstly, it sheds light on an
+understudied factor in leadership survival analysis: the impact of the method of
+accession to power. Leaders' survival is influenced not only by their ruling
+strategies after taking power but also by how they acquired power initially.
+Secondly, by utilizing survival models, this research provides empirical evidence
+of the significant difference in tenure duration between autocoup and coup-entry
+leaders. This finding may help explain the increasing prevalence of overstaying
+in power through autocoups since 2000. As more incumbents observe these
+precedents, they may be encouraged to adopt similar tactics, with ruling elites
+tending to follow and support such actions to benefit from a relatively longer
+tenure.
 
 The remainder of the paper delves deeper into this topic. Chapter 2 provides a
 comprehensive literature review on political survival, establishing the context
@@ -175,17 +177,17 @@ leaders' time in office. These two concepts often exhibit contrasting patterns.
 For example, in parliamentary democracies like Japan or the UK, specific
 political parties may hold power for extended periods while individual leaders
 (Prime Ministers) change frequently. Similarly, communist regimes typically see
-long-lasting parties in power, with leadership transitions occurring at a slower
-pace. In contrast, presidential systems like the United States or some military
-regimes experience more frequent changes in both the ruling party or junta and
-the leader of the country. This study specifically investigates the dynamics of
-individual leader survival, focusing on the factors influencing how long leaders
-remain in power.
+long-lasting parties in power, with leadership transitions occurring at a more
+frequent pace. In contrast, presidential systems like the United States or some
+military regimes experience more frequent changes in both the ruling party or
+junta and the leader of the country. This study specifically investigates the
+dynamics of individual leader survival, focusing on the factors influencing how
+long leaders remain in power.
 
 The existing literature on leader survival is vast and multifaceted, offering a
 wealth of insightful perspectives. Some studies delve into the specific
 mechanisms that influence leadership longevity within particular regimes, such as
-democracies or autocracies [@svolik2014; @davenport2021]. Others seek to develop
+democracies [@svolik2014] or autocracies [@davenport2021]. Others seek to develop
 more generalizable theoretical frameworks that can explain leader survival across
 diverse political systems [@buenodemesquita2003]. While the development of a
 universal theory remains an alluring goal, it is important to acknowledge the
@@ -252,9 +254,9 @@ through autocoups compared to coup-entry leaders. This study aims to address thi
 gap by investigating and comparing the duration of leadership survival between
 these two distinct leader types.
 
-## Survival dynamics of autocoup leaders and coup-entry leaders
+## Survival dynamics of autocoup and coup-entry leaders
 
-### Autocoup leader and coup-entry leader
+### Autocoup leaders versus coup-entry leaders
 
 As emphasized in Chapter 2, delving into leadership survival poses inherent
 challenges, given factors such as the opacity and diverse mechanisms of power
@@ -266,7 +268,7 @@ not devoid of patterns entirely. Leaders of similar types often exhibit
 significant comparability. Before delving into the comparison, it is necessary to
 clarify several relative terminologies.
 
-We define an autocoup as a situation where an incumbent leader utilizes
+Firstly, we define an autocoup as a situation where an incumbent leader utilizes
 illegitimate or unconstitutional methods to extend their tenure and remain in
 power. An autocoup is deemed successful if this power extension lasts for at
 least six months. Coups, on the other hand, are defined as illegal and overt
@@ -275,24 +277,25 @@ sitting leader [@powell2011]. Similar to coups, successful autocoups in this
 study will be measured by a power usurpation lasting at least six months,
 differing from the seven-day duration coded by Powell and Thyne.
 
-It is also crucial to clarify the distinction between an autocoup leader and a
-coup-entry leader, as the survival of leadership is the main concern of this
-study.
+Secondly, it is also crucial to clarify the distinction between an autocoup
+leader and a coup-entry leader, as the survival of leadership is the main concern
+of this study.
 
--   **Autocoup Leader:** This refers to an incumbent leader who successfully uses
+-   **Autocoup leader:** This refers to an incumbent leader who successfully uses
     illegitimate or unconstitutional means to extend their tenure in power. In an
     autocoup, the leader orchestrates the power grab and continues to rule
     afterwards.
 
--   **Coup-Entry Leader:** This term designates the leader who assumes power
-    after a successful coup d'état. Unlike in autocoups, coups often involve
-    multiple coup leaders (individuals or groups) who overthrow the incumbent
-    leader. The coup-entry leader is the individual who ultimately takes the
-    reins of power after the coup succeeds. While coup leaders may play a role in
-    selecting the coup-entry leader, this is not always the case. In some
-    instances, they may support someone outside the coup plot to become the new
-    leader. Regardless of the selection process, the coup-entry leader is the one
-    who assumes formal leadership following a successful coup.
+-   **Coup-entry leader:** This term designates the individual who assumes power
+    after a successful coup. The coup leader and the coup-entry leader may or may
+    not be the same person. Unlike in autocoups, coups often involve multiple
+    leaders (individuals or groups) who overthrow the incumbent leader, but
+    typically only one of them assumes supreme power. In some instances, coup
+    leaders may support someone outside the coup plot to become the new leader.
+    For example, military officers might return power to civilians after a coup
+    or support a new general election. Regardless of the specific scenario, a
+    coup-entry leader in this study refers to the individual who assumes formal
+    leadership following a successful coup.
 
 Given that autocoup leaders typically exhibit longer overall tenures compared to
 coup-entry leaders, this study focuses on a more nuanced comparison.
@@ -302,50 +305,26 @@ examination of the survival tenures of coup-entry leaders and autocoup leaders i
 motivated by their relevance and similarity in terms of illegitimacy,
 uncertainty, and instability.
 
--   **Illegitimacy:** Both leader types lack legitimacy, though it manifests
-    differently. Coup leaders seize power through force or the threat of force,
-    making their illegitimacy explicit. Autocoups often employ seemingly legal
-    procedures like court rulings or votes, but these processes are frequently
-    manipulated by incumbents leveraging their control [@zhu2024]. This
-    perception of illegitimacy can be used to justify the removal of such
-    leaders, even if the means of removal are themselves illegitimate.
-
--   **Uncertainty:** The irregular means by which coup-entry and autocoup leaders
-    take or retain power create significant uncertainty regarding their long-term
-    rule and eventual exit. The established power transition process is
-    undermined, raising questions about whether these leaders will enact
-    constitutional succession protocols, and if so, whether those protocols will
-    be followed. This ambiguity affects not only elites and citizens but also the
-    leaders themselves, who face ongoing uncertainties about when, how, and to
-    whom power might be transferred. Historical data on irregular leaders
-    supports this point. Leader dataset shows that over half of irregular leaders
-    experience irregular exits, and coup-related exits constitute more than
-    two-thirds of all irregular exits [@goemans2009]. Furthermore, @frantz2016
-    show that coup-related exits account for roughly one-third of all exits in
-    autocracies, surpassing any other type, including regular transitions.
-
--   **Instability:** Coup-entry and autocoup leaders are aware of their own
-    legitimacy and uncertainty challenges, which can fuel insecurity and a sense
-    of crisis. In attempts to consolidate power, they may resort to reshuffling
-    power structures or purging potential challengers. However, these efforts to
-    maintain stability and strengthen their position often backfire, triggering
-    greater instability.
-
-The interplay of illegitimacy, uncertainty, and instability creates a complex
-environment that significantly influences leader tenure.
-
 ### Hypothesis
 
-As previous studies have shown, while many factors can affect the survival of
-leaders, the fundamental determinant of tenure longevity is the leader's ability
-to maintain power. As long as they can hold onto power or balance it in their
-favour, they can remain in office. However, as discussed earlier, although both
-coup-entry and autocoup leaders face similar challenges related to illegitimacy,
-uncertainty, and instability, the severity of these challenges differs. This
-difference places the two types of leaders at varying levels of disadvantage in
-terms of power balance.
+Previous research emphasizes that skilful power retention is the ultimate
+determinant of leader longevity. Leaders who can maintain control or manipulate
+the balance of power tend to stay in office longer. However, as discussed
+earlier, although both coup-entry and autocoup leaders face similar challenges,
+the intensity of their challenges related to illegitimacy, uncertainty, and
+instability differs. These discrepancies create an uneven playing field in terms
+of power dynamics, with coup-entry leaders at a significant disadvantage. This
+disparity in power equilibrium shapes a nuanced landscape that profoundly impacts
+the duration of leader tenures.
 
 #### Illegitimacy
+
+Both leader types lack legitimacy, though it manifests differently. Coup leaders
+seize power through force or the threat of force, making their illegitimacy
+explicit. Autocoups often employ seemingly legal procedures, but these processes
+are frequently manipulated by incumbents leveraging their control [@zhu2024].
+This perception of illegitimacy can be used to justify the removal of autocoup
+and coup-entry leaders, even if the means of removal are themselves illegitimate.
 
 While both coup-entry and autocoup leaders lack genuine legitimacy, the nature of
 this illegitimacy differs significantly. Coups represent a more blatant disregard
@@ -363,6 +342,16 @@ Challengers are often constrained to operate within legal frameworks, making it
 difficult to directly confront the incumbent.
 
 #### Uncertainty
+
+The tumultuous paths to power undertaken by coup-initiators and autocratic
+leaders cast a shadow of uncertainty over their reigns and eventual departure.
+Their ascension through irregular means undermines established power transition
+norms, leaving doubts lingering over their commitment to constitutional
+succession protocols. This uncertainty not only unsettles elites and citizens but
+also plagues the leaders themselves, who grapple with the perpetual ambiguity
+surrounding the transfer of power – when, how, and to whom. Historical analyses
+underscore this predicament, with data revealing that more than two-thirds of
+irregular exits from leadership stem from coup-related upheavals [@goemans2009].
 
 Coup-entry and autocoup leaders face different levels of uncertainty immediately
 following their rise to or overstay power.
@@ -397,6 +386,13 @@ incrementally, such as President Menem of Argentina, who overstayed until 1993
 but failed in his bid for another term in 1999 [@llanos2019].
 
 #### Instability
+
+Moreover, the awareness of their shaky legitimacy and the persistent uncertainty
+breeds insecurity and a perpetual sense of crisis among coup-entry leaders and
+autocoup leaders. In a bid to solidify their grip on power, they often resort to
+reshaping power dynamics or purging potential adversaries. Paradoxically, these
+attempts to bolster stability and fortify their rule frequently boomerang,
+unleashing even greater turmoil and instability.
 
 The stability of a regime, particularly in an autocracy, hinges on maintaining a
 balance of power. Coups, however, inevitably disrupt this balance, even when they
@@ -451,14 +447,18 @@ read.csv(here("data/leader_comparison.csv")) |>
    data_color(rows = c(2, 4), colors = "#edede9") 
 ```
 
-In conclusion, coup-entry leaders typically face a greater degree of the
-challenges discussed earlier, placing them at a significant disadvantage in the
-balance of power compared to autocoup leaders. This disadvantage creates a
+In conclusion, coup-entry leaders face a significantly greater degree of the
+challenges discussed earlier, placing them at a substantial disadvantage in the
+power dynamic compared to autocoup leaders. This disadvantage creates a
 self-perpetuating cycle. Weaker leaders struggle to attract and retain strong
-support, making them more vulnerable to challenges. The perception of risk
-discourages potential allies, further eroding their power base. As shown in
-@tbl-coups, the top 10 countries with the most coup attempts between 1950 and
-2023 are predominantly autocracies. This suggests that the more coups occur in a
+support, making them more vulnerable to internal and external challenges. The
+perception of risk discourages potential allies, further eroding their power
+base.
+
+Empirical evidence bolsters this dynamic. Data reveals a correlation between the
+frequency of coup attempts in a country and the likelihood of future coups (e.g.,
+@tbl-coups shows over a third of coups occurring in the top ten countries with
+the most attempts since 1950). This suggests that the more coups occur in a
 country, the more likely additional coups are to happen in the future.
 
 ```{r}
@@ -620,20 +620,20 @@ is lagged by one year.
     [@marshall2005current].
 
 -   **Degree of Democracy:** The level of democracy is gauged using Polity 5
-    scores (polity) at the entry year for each respective country. These scores
-    range from -10 (fully autocratic) to +10 (fully democratic), capturing the
-    extent of democratic versus autocratic governance. This dataset is sourced
-    from the Center for Systemic Peace (CSP)[^4] and provides an essential
-    measure of political regime type, which can influence the stability and
-    survival of leaders in power.
+    scores at the entry year for each respective country. These scores range from
+    -10 (fully autocratic) to +10 (fully democratic), capturing the extent of
+    democratic versus autocratic governance. This dataset is sourced from the
+    Center for Systemic Peace (CSP)[^4] and provides an essential measure of
+    political regime type, which can influence the stability and survival of
+    leaders in power.
 
 -   **Population Size:** To account for its potential impact on leaders' tenures,
-    the log of the population size (`pop_log`) is considered. This transformation
-    helps in managing the wide range of population sizes across different
-    countries. The data is sourced from the V-Dem dataset and is evaluated to
-    understand its influence on leadership survival. Larger populations may
-    present more governance challenges and potential sources of opposition,
-    thereby affecting the stability and longevity of a leader's tenure.
+    the log of the population size is considered. This transformation helps in
+    managing the wide range of population sizes across different countries. The
+    data is sourced from the V-Dem dataset and is evaluated to understand its
+    influence on leadership survival. Larger populations may present more
+    governance challenges and potential sources of opposition, thereby affecting
+    the stability and longevity of a leader's tenure.
 
 -   **Leader's Age:** The age of the leader at the entry year is included as an
     additional variable in the analysis, offering insights into potential
@@ -658,6 +658,8 @@ $$
 
 Using the @survival package in R, we present the regression results for both the
 Cox PH model and the Time-dependent Cox model in Table @tbl-cox.
+
+\clearpage
 
 ```{r}
 #| label: model
@@ -759,7 +761,7 @@ both statistically significant at 5% level.
     population), the hazard (or risk) of being ousted at any given time decreases
     by 14%, assuming all other variables in the model are held constant.
 
-### Discussions
+### Discussion
 
 ```{r}
 #| label: fig-coxSurv
