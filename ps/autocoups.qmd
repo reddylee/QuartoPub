@@ -1,0 +1,194 @@
+---
+title: "Autocoups: Determinants and Outcomes of Irregular Overtays of Political Leadership"
+author:
+  - name: Zhu Qi
+    affiliations: University of Essex
+    email: qz21485@essex.ac.uk
+
+date: 2024-06-14
+date-modified: last-modified
+format:
+  aps-html: default
+  aps-pdf: default
+  docx: default
+  aps-revealjs:
+    output-file: autocoup.html
+
+categories: [Article, Coups, Autocoups]
+bibliography: references.bib
+
+abstract: |
+  This study aims to provide a comprehensive analysis of the factors influencing political leaders' decisions to either voluntarily step down or attempt to overstay in power. By employing a sample selection model, the research explores the effects of economic performance, the post-Cold War era, regime types, and levels of democracy on overstay attempts. Furthermore, it examines the influence of incumbency advantages on the likelihood of successful overstay attempts. Through a quantitative analysis based on a new dataset of overstays, this study contributes to the existing literature by offering valuable insights into the determinants of overstay attempts and their outcomes.
+  
+keywords: [Coups, Autocoups, Political Leadership]
+
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+library(tidyverse)
+library(gt)
+library(janitor)
+library(scales)
+library(zoo)
+library(democracyData)
+library(vdemdata)
+library(sampleSelection)
+library(stargazer)
+library(readxl)
+library(here)
+```
+
+## Introduction
+
+When political leaders assume power, they can exit in three main ways: being
+compelled to leave office before their term expires (ousted or forced to resign),
+successfully completing their full term and stepping down[^1], or overstaying in
+power through illegitimate means.
+
+Unsurprisingly, irregular exits, particularly the first type, have garnered
+significant academic attention. According to @goemans2009, out of 374 leaders who
+exited irregularly, 246 were ousted through coups, accounting for 65.8% of these
+cases. @frantz2016 shows that coup-related exits account for roughly one-third of
+all exits in autocracies, surpassing any other type, including regular
+transitions. Given the prevalence of coups as the primary form of irregular
+exits, much research has focused on this phenomenon.
+
+While previous literature has primarily concentrated on irregular entries and
+exits, there has been comparatively less attention given to **irregular
+overstays**, where leaders overstay their term despite legal requirements such as
+term limits, losing elections, or impeachment. Therefore, it is worth studying
+irregular overstays to analyse why some political leaders exit regularly
+according to their term limits, while others attempt to overstay in office, and
+why some leaders successfully overstay in power, while others fail in their
+attempts. The significance of this topic is based on the following reasons:
+
+Firstly, coups have become less common since 2000. Since 1990, there has been a
+significant decline in cases of incumbent political leaders being ousted before
+their legal term limits. The risk of coups, for example, has been remarkably
+reduced [@bermeo2016; @thyne2019]. As shown in @tbl-coup_year_counts, the top 10
+least frequent years of coups, except for 1950, are all after 1990, while the top
+10 most frequent years of coups, except for 1991, are all before 1990.
+
+However, irregular overstays have become more frequent since 2000. In July 2020,
+Russia overwhelmingly passed a referendum amending the Russian Constitution,
+allowing President Vladimir Putin, who has been in power since 1999, to remain in
+office until 2036[^2]. Similarly, in March 2018, China's National People's
+Congress (NPC) removed the two-term limit on the presidency from China's
+Constitution, effectively enabling Xi Jinping to potentially remain in power
+indefinitely[^3]. Even the United States, often considered a well-established
+democracy, faced a potential risk of self-coup following the 2020 election
+[@antonio2021; @pion-berlin2022]. Previous studies indicate that roughly 20 to 30
+percent of political leaders have extended their terms through various
+means[@ginsburg2010evasion; @baturo2014]. More recent research highlights an even
+more concerning trend, showing that since 2000, approximately half of the rulers
+in non-democratic countries have attempted to overstay in their positions
+[@versteeg2020law]. Alarmingly, a considerable number of these overstay attempts
+have been successful.
+
+```{r}
+#| label: tbl-coup_year_counts
+#| tbl-cap: "Coups frequency by year (1950-2023)"
+#| echo: !expr format == "html"
+
+#load coup data
+coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
+                 sep = "\t")
+
+
+t1 <- coup |> 
+  summarise(least_counts = n(),
+            .by = year) |> 
+  rename(least_frequency_years = year) |>
+  arrange(least_counts) |>
+  #slice(c(head(row_number(), 8), tail(row_number(), 7))) |> 
+  head(10)
+t2 <- coup |> 
+  summarise(most_counts = n(),
+            .by = year) |> 
+  rename(most_frequency_years = year) |>
+  arrange(-most_counts) |>
+  #slice(c(head(row_number(), 8), tail(row_number(), 7))) |> 
+  head(10)
+
+cbind(t1, t2) |>
+  clean_names(case = "title") |> 
+  gt() |> 
+  cols_align(
+    align = "center"
+  ) |>
+  tab_options(
+    table.width = pct(95),
+    column_labels.font.weight = "bold") |>
+  tab_source_note(source_note = md("***Source: GIC dataset***")) 
+```
+
+Secondly, while the negative outcomes of coups, such as societal turmoil and
+democratic decline, have been widely discussed, the negative outcomes of
+irregular overstays have not received enough attention, despite being at least as
+significant. Although coups can sometimes end the worst regimes or chaos and have
+been debated for their potential benefits to democracy [@derpanopoulos2016;
+@miller2016; @derpanopoulos2017; @lumjiak2018], for example, the coup in Niger in
+2010 resolved a constitutional crisis, ended turmoil, and promoted democracy
+[@derpanopoulos2016].
+
+Irregular overstays, however, are typically accompanied by the abuse of power,
+defiance of legitimate authority, violation of the rule of law, destruction of
+political conventions, and damage to checks and balances. Successful overstays
+almost always lead to democratic backsliding or autocratic deterioration. Even
+unsuccessful overstays often spark protests, strikes, riots, insurgencies,
+rebellions, coups, or, even worse, civil wars. As overstays undermine formal
+institutions or violate informal norms of power transition, they significantly
+increase the risk of irregular power transitions in the future. Research
+indicates that since 1945, approximately 62 percent of irregular stayed leaders
+in non-democratic countries were either ousted or assassinated while in office
+[@baturo2019].
+
+Despite its high frequency and severe consequences, irregular overstays has
+received comparatively less attention compared to the extensive research
+conducted on the irregular exits of political leaders since the early 2000s
+[@thyne2019]. The limited existing studies on irregular overstays have primarily
+relied on case studies [@cameron1998; @antonio2021; @pion-berlin2022], and few
+have been focused on quantitative analyses.
+
+This study aims to address these issues and contribute in three areas. Firstly,
+it clarifies and redefines the concept of autocoups in terms of irregular
+overstays, establishing a new dataset of autocoups since 1945. Secondly, it
+highlights the significant academic value of autocoups in the context of
+irregular overstays, similar to the value of coups in irregular entry and exits.
+Thirdly, it enhances the existing body of knowledge by conducting a quantitative
+analysis on the determinants of autocoups.
+
+The subsequent section will provide a comprehensive overview of the definition
+and typology of the dataset on overstays. This will be followed by a presentation
+of relevant theories and hypotheses that examine the factors influencing overstay
+attempts and their outcomes. The research design will be outlined in Part IV,
+detailing the data and methodology employed to test the hypotheses. The results
+of the analysis will be discussed in Part V, providing a thorough examination of
+the findings. Finally, the paper will conclude in Part VI, summarizing the key
+insights gained from the study and suggesting avenues for future research.
+
+```{r}
+#| label: references
+#| results: asis
+#| eval: !expr format == "latex"
+#| echo: false
+cat("\\newpage
+## References")
+```
+
+[^1]: For lifelong rulers, such as those in monarchies or de facto hereditary
+    regimes, leaders typically exit power only upon their death.
+
+[^2]: Referendum In Russia Passes, Allowing Putin To Remain President Until 2036:
+    <https://www.npr.org/2020/07/01/886440694/referendum-in-russia-passes-allowing-putin-to-remain-president-until-2036>,
+    accessed on October 15, 2022.
+
+[^3]: China's Xi allowed to remain 'president for life' as term limits removed:
+    <https://www.bbc.co.uk/news/world-asia-china-43361276>, accessed on Octbor
+    15, 2022.
