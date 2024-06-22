@@ -7,6 +7,7 @@ library(tidyverse)
 library(stargazer)
 library(sampleSelection)
 library(vdemdata)
+library(democracyData)
 ```
 
 ```{r}
@@ -171,4 +172,15 @@ Archigos <- read.csv("http://ksgleditsch.com/data/1March_Archigos_4.1.txt", sep=
 
 ```{r}
 IncumbentTakeovers <- read_excel("data/IncumbentTakeovers.xls")
+```
+
+```{r}
+codebook |> 
+  view()
+
+gwf_all |> 
+  view()
+
+REIGN |> 
+  view()
 ```

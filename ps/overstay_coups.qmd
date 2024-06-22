@@ -382,7 +382,55 @@ current leaders without altering the underlying institutions. For example,
 Lebanon extended President Émile Lahoud's term by three years in 2004 through a
 one-time arrangement.
 
-### Coding procedures
+### Coding
+
+#### Data sources
+
+```{r}
+#| label: tbl-source
+#| tbl-cap: Sources of coding autocoup dataset 
+#| echo: !expr format == "html"
+#| results: asis
+# library(kableExtra)
+
+read.csv(here("data/autocoup_source.csv")) |> 
+  clean_names(case = "title") |> 
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  cols_width(
+    1:4 ~ px(80),
+    5 ~ px(200)
+  ) |>
+   data_color(rows = c(1, 3), colors = "#edede9") 
+```
+
+The autocoup dataset, like most dataset coding procedures, is based on existing
+studies and datasets. @tbl-source outlines the main sources for coding the
+autocoup dataset. The Archigos dataset [@goemans2009] and the REIGN dataset
+[@bell2016reign] provide comprehensive data on all leaders from 1875 to 2021,
+although our coding only includes autocoups since 1945. These datasets help
+identify the actual rulers of countries, saving time in distinguishing real
+leaders from nominal heads of state.
+
+The Incumbent Takeover dataset [@baturo2022], which integrates data from 11
+related datasets, offers a broad spectrum of cases where leaders significantly
+reduce the constraints on their power, encompassing both power expansions and
+extensions. Since some executive takeovers do not qualify as autocoups due to the
+lack of term extensions, I cross-referenced the Archigos dataset, which includes
+detailed trajectories of leaders' entries and exits from power, to verify the
+qualifications for autocoups.
+
+As the Archigos dataset concludes at the end of 2015, I used trusted news reports
+to validate data from the Incumbent Takeover dataset. In total, I coded 113
+observations, with X overlapping with the candidate data from Incumbent Takeover.
+The remaining Y events were newly coded by the author through verification with
+other sources such as Archigos, REIGN, and news reports.The main deviation from
+the Incumbent Takeover dataset arises from excluding power expansions that do not
+involve attempts to extend tenure.
+
+#### Definitions of Variables
 
 ```{r}
 #| label: references
