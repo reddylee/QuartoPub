@@ -259,7 +259,7 @@ Even in contexts where leaders lack clear term limits or the constitution allows
 indefinite terms, identifying autocoups remains possible. We will discuss and
 explain this in the next section.
 
-### **Classifying autocoups**
+### **Classifying autocoups** {#sec-classify}
 
 Autocoups can manifest in various forms. To understand this phenomenon better, we
 can categorize them based on several key factors:
@@ -306,17 +306,13 @@ various means.
     Presidents Dacko (CAR, 1962), Kayibanda (Rwanda, 1973), and Pinochet (Chile,
     1988).
 
--   **Enabling Re-election:** In some countries, constitutions initially bar
-    re-election or immediate re-election. Incumbents can manipulate these
-    restrictions to allow themselves to run again. President Menem of Argentina
-    in 1993 exemplifies this tactic.
-
--   **Constitutional Reset:** This tactic allows incumbents to bypass term limits
-    by amending the constitution to reset their previous terms. This effectively
-    grants them eligibility for one or two additional terms, potentially
-    repeatable, for a near-indefinite hold on power. Russian President Vladimir
-    Putin exemplifies this strategy, having extended his rule beyond two decades
-    through constitutional changes.
+-   **Enabling re-election:** This approach involves incumbents modifying legal
+    or constitutional frameworks to permit themselves to run for leadership
+    again, despite initial restrictions. These restrictions might include
+    prohibitions on re-election, bans on immediate re-election, or term limits
+    that the incumbents have already reached. An illustrative example is
+    President Menem of Argentina in 1993, who leveraged this tactic to extend his
+    tenure.
 
 -   **Removing Term Limits Altogether:** This approach, as seen with President Xi
     Jinping of China in 2018, technically allows the leader to rule for life,
@@ -339,12 +335,12 @@ re-election and then declared himself president for life in 1964.
 Election manipulation or rigging is the second most commonly used tactic to
 extend an incumbent's tenure.
 
--   **Cancelling, Delaying, or Removing Elections:** Cancelling, delaying, or
-    removing scheduled elections without legitimate justification is a frequent
-    method used by incumbents to maintain power. For instance, Chadian President
-    François Tombalbaye delayed general elections until 1969 after assuming power
-    in 1960. Similarly, Angolan President José Eduardo dos Santos suspended
-    elections throughout his rule from 1979 to 2017.
+-   **Delaying or Removing Elections:** Delaying or removing scheduled elections
+    without legitimate justification is a frequent method used by incumbents to
+    maintain power. For instance, Chadian President François Tombalbaye delayed
+    general elections until 1969 after assuming power in 1960. Similarly, Angolan
+    President José Eduardo dos Santos suspended elections throughout his rule
+    from 1979 to 20
 
 -   **Refusing Unfavourable Election Results:** Incumbents may refuse to accept
     unfavourable election results and attempt to overturn them through
@@ -375,6 +371,19 @@ Dmitry Medvedev to run for president. After the election, Medvedev appointed
 Putin as Prime Minister. However, most analysts believe Putin wielded the true
 power throughout this period.
 
+#### **Constitutional power transferring**
+
+This tactic involves an incumbent leader manipulating the constitution or legal
+framework to create a new position of power, or elevate an existing one, before
+stepping down from their current role. They then strategically take on this new
+position, effectively retaining significant control despite appearing to
+relinquish power. For example, in 2017, Recep Tayyip Erdoğan, the Prime Minister
+of Turkey, spearheaded a constitutional referendum that transitioned the country
+from a parliamentary system to a presidential one. This new system concentrated
+significant executive power in the presidency. Following the referendum's
+approval, Erdoğan successfully ran for the newly established presidency,
+effectively retaining control under a different title.
+
 #### One-Time Arrangement for Current Leaders
 
 This strategy involves special arrangements that extend the term or tenure of
@@ -382,7 +391,7 @@ current leaders without altering the underlying institutions. For example,
 Lebanon extended President Émile Lahoud's term by three years in 2004 through a
 one-time arrangement.
 
-### Coding
+### Data Coding
 
 #### Data sources
 
@@ -430,7 +439,86 @@ other sources such as Archigos, REIGN, and news reports.The main deviation from
 the Incumbent Takeover dataset arises from excluding power expansions that do not
 involve attempts to extend tenure.
 
-#### Definitions of Variables
+#### Definitions of main variables
+
+This section describes the variables included in the autocoup dataset.
+
+-   **Country Identification:**
+
+    -   `ccode` and `country`: These variables come from the Correlates of War
+        project [@stinnett2002] and identify the countries included in the
+        dataset, which are widely used in political science datasets, ensuring
+        consistency and compatibility across different studies and datasets.
+
+-   **Leader Information:**
+
+    -   `leader_name`: This variable follows the Archigos dataset's coding and
+        records the name of the de facto leader who wielded power in the country.
+
+-   **Timeline Variables:**
+
+    -   `entry_date`: Captures the date the leader assumed power.
+
+    -   `exit_date`: Records the date the leader left office.
+
+    -   `autocoup_date`: Indicates the date the autocoup is considered to have
+        occurred. Since extensions often happen incrementally, this date reflects
+        a significant event marking the extension, such as a legislative vote or
+        successful referendum.
+
+    -   `extending_date`: Represents the start date of the leader's additional
+        term acquired through the autocoup.
+
+    The `entry_date` and `exit_date` come from the Archigos and REIGN datasets,
+    while the other two dates are coded by the dataset creator.
+
+-   **Power Transition Methods:**
+
+    -   `entry_method` and `exit_method`: These categorical variables record how
+        the leader entered and exited power (e.g., election, coup d'état, death).
+
+    -   `entry_regular` and `exit_regular`: These dummy variables indicate
+        whether the entry and exit methods were regular (e.g., election) or
+        irregular (e.g., coup).
+
+-   **Autocoup Details:**
+
+    -   `autocoup_method`: This key variable captures the various methods leaders
+        use to extend their stay in power (see @sec-classify for details).
+
+    -   `autocoup_outcome`: This variable indicates the outcome of the autocoup
+        attempt: "fail and lose power", "fail but complete original tenure", or
+        "successful". For successful coups, the additional term length can be
+        calculated from the difference between `exit_date` and `extending_date`.
+
+-   **Data Source:**
+
+    -   `source`: This variable identifies the dataset source used for coding,
+        primarily differentiating among "Incumbent Takeovers" or other sources.
+
+-   **Additional Notes:**
+
+    -   `notes`: This variable provides context for exceptional cases. For
+        instance, if a leader undertook multiple autocoup attempts, details are
+        recorded here.
+
+The dataset encompasses a total of 14 variables along with the `notes` field.
+
+### Data descriptions
+
+```{r}
+#| lable: data_descriptions
+#| eval: !expr format == "latex"
+#| echo: false
+autocoup <- read_excel(here("data/autocoup_Reddy.xlsx"))
+country <- autocoup |> 
+  distinct(ccode) |> 
+  summarise(count = n())
+country
+```
+
+According to the primary coding, we have 113 autocoup cases from 1945 to 2021.
+The 113 autocoups involve `r country$count` countries.
 
 ```{r}
 #| label: references

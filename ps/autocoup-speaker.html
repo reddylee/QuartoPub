@@ -32,6 +32,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #383a42;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #383a42; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #50a14f; } /* Annotation */
+    code span.at { color: #a626a4; } /* Attribute */
+    code span.bn { color: #986801; } /* BaseN */
+    code span.bu { color: #a626a4; } /* BuiltIn */
+    code span.cf { color: #a626a4; } /* ControlFlow */
+    code span.ch { color: #50a14f; } /* Char */
+    code span.cn { color: #986801; } /* Constant */
+    code span.co { color: #a0a1a7; font-style: italic; } /* Comment */
+    code span.cv { color: #e45649; font-style: italic; } /* CommentVar */
+    code span.do { color: #e45649; } /* Documentation */
+    code span.dt { color: #a626a4; } /* DataType */
+    code span.dv { color: #986801; } /* DecVal */
+    code span.er { color: #f44747; text-decoration: underline; } /* Error */
+    code span.ex { color: #4078f2; font-weight: bold; } /* Extension */
+    code span.fl { color: #986801; } /* Float */
+    code span.fu { color: #4078f2; } /* Function */
+    code span.im { color: #50a14f; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #a626a4; } /* Keyword */
+    code span.op { color: #a626a4; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #a626a4; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #0184bc; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #50a14f; } /* String */
+    code span.va { color: #e45649; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -392,29 +457,655 @@ Zhu Qi
 </section><section id="introduction" class="slide level2" data-number="1"><h2>
 <span class="header-section-number">1</span> Introduction</h2>
 <p>The study of irregular power transitions, encompassing both irregular entries and exits from office, has long been a central topic in political science. However, one form of irregular power transition - the incumbent leader’s refusal to relinquish power - remains relatively understudied. This scenario, where leaders overstay their mandated term limits for one or more terms, or even indefinitely, lacks a universally accepted term in the existing literature. To address this gap, this study adopts the term “autocoup” to denote this phenomenon.</p>
-<p>Coups, being the primary form of irregular power transitions, have received significant scholarly attention. Research by <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">2009</a>)</span> indicate that coups account for a substantial portion of such transitions, with roughly two-thirds (65.8%) of 374 irregular exits occurring through coups. Additionally, <span class="citation" data-cites="frantz2016">Frantz and Stein (<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">2016</a>)</span> demonstrate that coups are the most common form of exit in autocracies, surpassing regular transitions by a third.</p>
-<p>However, while coups were once frequent, recent decades have witnessed a decline in their occurrence <span class="citation" data-cites="bermeo2016 thyne2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Bermeo 2016</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Thyne and Powell 2019</a>)</span>. Conversely, autocoups appear to be on the rise, particularly since the Cold War’s end <span class="citation" data-cites="ginsburg2010evasion baturo2014 versteeg2020law">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Ginsburg, Melton, and Elkins 2010</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Baturo 2014</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Versteeg et al. 2020</a>)</span>. Despite the significant political impact and rising prevalence of autocoups, their study lags behind that of classical coups, which are extensively documented due to their historical frequency <span class="citation" data-cites="thyne2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Thyne and Powell 2019</a>)</span>.</p>
-<p>This research aims to bridge this gap by focusing on the understudied phenomenon of autocoups as they are at least equally important and warrant comprehensive analysis. Firstly, autocoups are typically accompanied by a disregard for the rule of law, weakened institutions, and potential democratic backsliding or authoritarian personalization. Secondly, like traditional coups, successful autocoups increase the risk of future irregular power transitions. Research indicates that since 1945, approximately 62 percent of leaders who overstayed their term limits through autocoups in non-democratic countries were either ousted or assassinated while in office <span class="citation" data-cites="baturo2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Baturo 2019</a>)</span>. Thirdly, failed autocoups often trigger instability that fuels protests, violence, and even civil wars.</p>
-<p>Despite their significance, autocoups are understudied compared to traditional coups. Although several relevant concepts and terminologies such as self-coups, autocoups, autogolpes, incumbent takeovers, executive aggrandizement, overstay, and continuismo have been proposed and discussed <span class="citation" data-cites="marsteintredet2019 baturo2022">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Marsteintredet and Malamud 2019</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Baturo and Tolstrup 2022</a>)</span>, there is no clear and widely accepted term to describe these events. Different terms are often used interchangeably or inconsistently, leading to confusion. Moreover, due to the lack of clear concepts, the collection of autocoup datasets is still in its early stages compared to the rich datasets of traditional coups. Hence, the limited existing studies on autocoups have primarily relied on case studies <span class="citation" data-cites="cameron1998 antonio2021 pion-berlin2022">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998b</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Antonio 2021</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Pion-Berlin, Bruneau, and Goetze 2022</a>)</span>, with few focusing on quantitative analyses.</p>
+<p>Coups, being the primary form of irregular power transitions, have received significant scholarly attention. Research by <span class="citation" data-cites="goemans2009">Goemans, Gleditsch, and Chiozza (<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">2009</a>)</span> indicate that coups account for a substantial portion of such transitions, with roughly two-thirds (65.8%) of 374 irregular exits occurring through coups. Additionally, <span class="citation" data-cites="frantz2016">Frantz and Stein (<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">2016</a>)</span> demonstrate that coups are the most common form of exit in autocracies, surpassing regular transitions by a third.</p>
+<p>However, while coups were once frequent, recent decades have witnessed a decline in their occurrence <span class="citation" data-cites="bermeo2016 thyne2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Bermeo 2016</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Thyne and Powell 2019</a>)</span>. Conversely, autocoups appear to be on the rise, particularly since the Cold War’s end <span class="citation" data-cites="ginsburg2010evasion baturo2014 versteeg2020law">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Ginsburg, Melton, and Elkins 2010</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Baturo 2014</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Versteeg et al. 2020</a>)</span>. Despite the significant political impact and rising prevalence of autocoups, their study lags behind that of classical coups, which are extensively documented due to their historical frequency <span class="citation" data-cites="thyne2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Thyne and Powell 2019</a>)</span>.</p>
+<p>This research aims to bridge this gap by focusing on the understudied phenomenon of autocoups as they are at least equally important and warrant comprehensive analysis. Firstly, autocoups are typically accompanied by a disregard for the rule of law, weakened institutions, and potential democratic backsliding or authoritarian personalization. Secondly, like traditional coups, successful autocoups increase the risk of future irregular power transitions. Research indicates that since 1945, approximately 62 percent of leaders who overstayed their term limits through autocoups in non-democratic countries were either ousted or assassinated while in office <span class="citation" data-cites="baturo2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Baturo 2019</a>)</span>. Thirdly, failed autocoups often trigger instability that fuels protests, violence, and even civil wars.</p>
+<p>Despite their significance, autocoups are understudied compared to traditional coups. Although several relevant concepts and terminologies such as self-coups, autocoups, autogolpes, incumbent takeovers, executive aggrandizement, overstay, and continuismo have been proposed and discussed <span class="citation" data-cites="marsteintredet2019 baturo2022">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Marsteintredet and Malamud 2019</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Baturo and Tolstrup 2022</a>)</span>, there is no clear and widely accepted term to describe these events. Different terms are often used interchangeably or inconsistently, leading to confusion. Moreover, due to the lack of clear concepts, the collection of autocoup datasets is still in its early stages compared to the rich datasets of traditional coups. Hence, the limited existing studies on autocoups have primarily relied on case studies <span class="citation" data-cites="cameron1998 antonio2021 pion-berlin2022">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998b</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Antonio 2021</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Pion-Berlin, Bruneau, and Goetze 2022</a>)</span>, with few focusing on quantitative analyses.</p>
 <p>To fully understand irregular political leadership transitions and survival, we need to redefine and clarify the term “autocoup” first. Based on a clear definition, we can introduce an autocoup dataset that can be used for further empirical analysis. This study aims to address these knowledge gap surrounding autocoups and contribute in three areas. First, it clarifies the terminology by defining autocoups based mainly on power extension. Second, it introduces a new dataset of autocoups since 1945 based on this refined definition. Finally, the research utilizes this dataset for a quantitative analysis of the factors that influence leaders’ decisions to attempt autocoups.</p>
 <p>The subsequent section, based on a comprehensive review of the definitions of power expansions and power extensions, proposes a precise definition of autocoups. This will be followed by an introduction to the new autocoup dataset in Part III. In Parts IV and V, I will explain the determinants of autocoup attempts through two case studies and demonstrate how the novel autocoup dataset collected in this study can be used in empirical analysis. Finally, I will conclude in Part VI, summarizing the key insights gained from the study and suggesting avenues for future research.</p>
-</section><section id="autocoups-a-literature-review-and-clarification-of-definitions" class="slide level2 smaller scrollable" data-number="2"><h2>
+</section><section id="autocoups-a-literature-review-and-clarification-of-definitions" class="slide level2" data-number="2"><h2>
 <span class="header-section-number">2</span> Autocoups: A literature review and clarification of definitions</h2>
-<p>Compared to coups, which are clearly defined and widely accepted as illegal attempts by elites within the ruling group to overthrow the leadership <span class="citation" data-cites="powell2011">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, the concept of autocoups (also known as self-coups or autogolpes) suffers from a lack of consistency and clarity. This ambiguity hinders our understanding and study of a critical phenomenon in irregular power transitions. To address this gap, we need to tackle two key issues: terminology and definition.</p>
+<p>Compared to coups, which are clearly defined and widely accepted as illegal attempts by elites within the ruling group to overthrow the leadership <span class="citation" data-cites="powell2011">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, the concept of autocoups (also known as self-coups or autogolpes) suffers from a lack of consistency and clarity. This ambiguity hinders our understanding and study of a critical phenomenon in irregular power transitions. To address this gap, we need to tackle two key issues: terminology and definition.</p>
 <h3 data-number="2.1" id="terminology">
 <span class="header-section-number">2.1</span> Terminology</h3>
-<p>The most common term in autocoup literature is self-coup, or autogolpe in Spanish <span class="citation" data-cites="przeworski2000 cameron1998a bermeo2016 helmke2017 marsteintredet2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Przeworski et al. 2000</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998a</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Bermeo 2016</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Helmke 2017</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Marsteintredet and Malamud 2019</a>)</span>. This term gained academic prominence after Peruvian President Alberto Fujimori dissolved Congress, temporarily suspended the constitution, and ruled by decree in 1992 <span class="citation" data-cites="mauceri1995 cameron1998">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Mauceri 1995</a>; <a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998b</a>)</span>. However, as <span class="citation" data-cites="marsteintredet2019">Marsteintredet and Malamud (<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">2019</a>)</span> point out, the term “self-coup” can be misleading, as it implies a coup against oneself, which is inaccurate since it is not self-directed but targets other state institutions or apparatus.</p>
-<p>Another approach to describe coups staged by incumbents is to use terms with adjectives or modifiers, such as presidential coup, executive coup, constitutional coup, electoral coup, judicial coup, slow-motion coup, soft coup, and parliamentary coup <span class="citation" data-cites="marsteintredet2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Marsteintredet and Malamud 2019</a>)</span>. While these terms can be helpful in specific contexts, their proliferation often adds to the overall confusion rather than providing clarification. Most of these terms focus on the specific methods used by coup perpetrators but fail to clearly identify the perpetrator, necessitating further explanation. In fact, many of these methods could be employed either by or against executive leaders.</p>
-<p>A third alternative involves terms like “incumbent takeover” or “executive takeover,” referring to “an event perpetuated by a ruling executive that significantly reduces the formal and/or informal constraints on his/her power” <span class="citation" data-cites="baturo2022">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Baturo and Tolstrup 2022, 374</a>)</span>, based on earlier research <span class="citation" data-cites="svolik2014">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Svolik 2014</a>)</span>. These terms identify the perpetrator (the incumbent) and the nature of the event (a power grab). However, “incumbent takeover” does not highlight the illegality or illegitimacy of these actions. Therefore, it cannot serve as a direct counterpart to “coup,” which clearly denotes the illegality of leadership ousters, while “takeover” diminishes the severity.</p>
+<p>The most common term in autocoup literature is self-coup, or autogolpe in Spanish <span class="citation" data-cites="przeworski2000 cameron1998a bermeo2016 helmke2017 marsteintredet2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Przeworski et al. 2000</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998a</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Bermeo 2016</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Helmke 2017</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Marsteintredet and Malamud 2019</a>)</span>. This term gained academic prominence after Peruvian President Alberto Fujimori dissolved Congress, temporarily suspended the constitution, and ruled by decree in 1992 <span class="citation" data-cites="mauceri1995 cameron1998">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Mauceri 1995</a>; <a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998b</a>)</span>. However, as <span class="citation" data-cites="marsteintredet2019">Marsteintredet and Malamud (<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">2019</a>)</span> point out, the term “self-coup” can be misleading, as it implies a coup against oneself, which is inaccurate since it is not self-directed but targets other state institutions or apparatus.</p>
+<p>Another approach to describe coups staged by incumbents is to use terms with adjectives or modifiers, such as presidential coup, executive coup, constitutional coup, electoral coup, judicial coup, slow-motion coup, soft coup, and parliamentary coup <span class="citation" data-cites="marsteintredet2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Marsteintredet and Malamud 2019</a>)</span>. While these terms can be helpful in specific contexts, their proliferation often adds to the overall confusion rather than providing clarification. Most of these terms focus on the specific methods used by coup perpetrators but fail to clearly identify the perpetrator, necessitating further explanation. In fact, many of these methods could be employed either by or against executive leaders.</p>
+<p>A third alternative involves terms like “incumbent takeover” or “overstay”. Incumbent takeover referrs to “an event perpetuated by a ruling executive that significantly reduces the formal and/or informal constraints on his/her power” <span class="citation" data-cites="baturo2022">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Baturo and Tolstrup 2022, 374</a>)</span>, based on earlier research <span class="citation" data-cites="svolik2014">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Svolik 2014</a>)</span>. While overstay is defined as “staying longer than the maximum term as it stood when the candidate originally came in office” <span class="citation" data-cites="ginsburg2011evasion">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Ginsburg, Melton, and Elkins 2011, 1844</a>)</span>. These terms identify the perpetrator (the incumbent) and/or the nature of the event (overstaying/extending power). However, they do not highlight the illegality or illegitimacy of these actions. Therefore, they cannot serve as a direct counterpart to “coup,” which clearly denotes the illegality of leadership ousters, while “takeover” or “overstay” diminish the severity.</p>
 <p>Therefore, this study strongly advocates for “autocoup” as the most accurate and appropriate term. It avoids the pitfalls of other terms by clearly conveying the essence of the phenomenon as a coup-like power grab and effectively distinguishing autocoups from classical coups by highlighting the perpetrator.</p>
 <h3 data-number="2.2" id="definition">
 <span class="header-section-number">2.2</span> Definition</h3>
 <p>While terminology is important, another issue arises with the previous definition of autocoups: should we emphasize power expansion or power extension? Power Expansion refers to situations where an executive branch expands its power beyond its original boundaries, often by encroaching on the authority of other branches like the legislature or judiciary. Power Extension, on the other hand, refers to situations where a leader extends their tenure in office beyond the originally mandated term limits. Existing definitions of self-coup or autocoup sometimes touch upon power extensions, but they primarily focus on power expansions, which has several drawbacks.</p>
 <p>Firstly, defining autocoups primarily in terms of power expansion does not align well with the definition of a coup. When we define a classical coup, the focus is clearly on the ouster of the current leader, not merely a limitation or restriction on their power. Using the same logic, a more appropriate definition of an autocoup should prioritize the extension of executive leadership. We would not classify an event as a coup if a vice president seizes some power from the president, as long as the president remains in office. Similarly, an executive leader acquiring more power from other branches should not automatically qualify as an autocoup if their term limits remain unchanged.</p>
-<p>Secondly, emphasizing power expansion raises issues regarding the purpose of launching an autocoup. As <span class="citation" data-cites="cameron1998a">Maxwell A. Cameron (<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">1998a</a>)</span> defined, a self-coup is “a temporary suspension of the constitution and dissolution of congress by the executive, who rules by decree until new legislative elections and a referendum can be held to ratify a political system with broader executive power” <span class="citation" data-cites="cameron1998a">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998a, 220</a>)</span>. However, without extending their time in office, the leader faces significant risks once their term expires, as they could face legal or political repercussions for the autocoup itself, leaving behind an overly powerful executive branch for the successor. Although the term “self-coup” gained prominence from the 1992 Fujimori case in Peru, which initially involved seizing power from other institutions, it is important to note that Fujimori ultimately extended his term limits through constitutional amendments. The 1993 Constitution allowed Fujimori to run for a second term, which he won with popularity in April 1995. Shortly after Fujimori began his second term, his supporters in Congress passed a law of “authentic interpretation” which effectively allowed him to run for another term in 2000, which he won amid suspicions and rumors. However, he did not survive the third term. In 2000, facing charges of corruption and human rights abuses, Fujimori fled Peru and took refuge in Japan <span class="citation" data-cites="ezrow2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Ezrow 2019</a>)</span>.</p>
-<p>Thirdly, measuring the extent of power expansion to qualify as an autocoup can be challenging. Power expansion might occur as a sudden, significant event, as seen with Fujimori in 1992, or it could be gradual and incremental, as in the case of Putin since assuming power in 1999 <span class="citation" data-cites="chaisty2019">(<a href="#/autocoups-a-literature-review-and-clarification-of-definitions" role="doc-biblioref" onclick="">Chaisty 2019</a>)</span>. In the latter case, it is unclear whether each step should be considered an autocoup or if the entire process together should be labelled as such. If the latter, determining the point at which it becomes an autocoup is again problematic.</p>
+<p>Secondly, emphasizing power expansion raises issues regarding the purpose of launching an autocoup. As <span class="citation" data-cites="cameron1998a">Maxwell A. Cameron (<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">1998a</a>)</span> defined, a self-coup is “a temporary suspension of the constitution and dissolution of congress by the executive, who rules by decree until new legislative elections and a referendum can be held to ratify a political system with broader executive power” <span class="citation" data-cites="cameron1998a">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Maxwell A. Cameron 1998a, 220</a>)</span>. However, without extending their time in office, the leader faces significant risks once their term expires, as they could face legal or political repercussions for the autocoup itself, leaving behind an overly powerful executive branch for the successor. Although the term “self-coup” gained prominence from the 1992 Fujimori case in Peru, which initially involved seizing power from other institutions, it is important to note that Fujimori ultimately extended his term limits through constitutional amendments. The 1993 Constitution allowed Fujimori to run for a second term, which he won with popularity in April 1995. Shortly after Fujimori began his second term, his supporters in Congress passed a law of “authentic interpretation” which effectively allowed him to run for another term in 2000, which he won amid suspicions and rumors. However, he did not survive the third term. In 2000, facing charges of corruption and human rights abuses, Fujimori fled Peru and took refuge in Japan <span class="citation" data-cites="ezrow2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Ezrow 2019</a>)</span>.</p>
+<p>Thirdly, measuring the extent of power expansion to qualify as an autocoup can be challenging. Power expansion might occur as a sudden, significant event, as seen with Fujimori in 1992, or it could be gradual and incremental, as in the case of Putin since assuming power in 1999 <span class="citation" data-cites="chaisty2019">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Chaisty 2019</a>)</span>. In the latter case, it is unclear whether each step should be considered an autocoup or if the entire process together should be labelled as such. If the latter, determining the point at which it becomes an autocoup is again problematic.</p>
 <p>Therefore, this study argues that a more accurate definition of autocoups should prioritize power extension as the core characteristic.</p>
-<p>In light of this discussion, we formally define an autocoup as <em>the practice of current political leaders extending their time in office beyond their originally mandated term limits</em>. Two key points need to be highlighted. Firstly, this definition does not exclude power expansion, but its primary characteristic is extending the term in office. Secondly, the essence of an autocoup is illegitimate, although it often employs seemingly legal mechanisms, which will be discussed in more detail in Chapter III.</p>
+<p>In light of this discussion, we formally define an autocoup as <em>the practice of current political leaders extending their time in office beyond their originally mandated term limits</em>. Three key points need to be highlighted for this definition. Firstly, this definition refers to the actual leaders of the country, regardless of their official titles. Typically, this would be the president; however, in some cases, such as in Germany, the primary leader is the premier, as the president is a nominal head of state. Secondly, while the primary characteristic of an autocoup is extending the term in office, this definition does not exclude instances of power expansion. Both aspects can coexist, but the extension of the term is the central element. Thirdly, autocoups, by their nature, subvert legal norms and established power transfer mechanisms. While they may employ seemingly legal tactics, their essence is illegitimacy. This critical aspect will be explored further in Chapter III.</p>
+</section><section id="autocoup-dataset" class="slide level2 smaller scrollable" data-number="3"><h2>
+<span class="header-section-number">3</span> Autocoup dataset</h2>
+<h3 data-number="3.1" id="defining-the-scope">
+<span class="header-section-number">3.1</span> Defining the scope</h3>
+<p>Defining any concept or term inevitably involves borderline cases that are difficult to categorize. In the context of autocoups, it is particularly challenging to determine whether a specific instance of overstaying should be coded as an autocoup. To avoid ambiguity and dilemmas, we will code all instances of incumbents extending their original mandated term in office as autocoups, regardless of whether the extension is patently illegal or superficially legal.</p>
+<p>This approach is taken because a truly legitimate amendment to power transition institutions should only apply to subsequent leaders, not the incumbent. If the incumbent changes the rules to their own benefit, the legitimacy of such changes is questionable, even if the amendment procedures appear legal. We have valid reasons to question their motivations since they are the beneficiaries of these reforms.</p>
+<p>Even so, some cases remain unclear. For example, consider a two-term limit presidency where the leader wins a second term. Allegations of election rigging might surface, raising suspicions about the fairness of the election results. If such suspicions can be verified with evidence or judicial verdict, the case would undoubtedly be coded as an autocoup. However, proving election rigging in countries with powerful executives can be difficult. In such instances, we will not classify it as an autocoup unless a formal judicial verdict confirms the rigging.</p>
+<p>Even in contexts where leaders lack clear term limits or the constitution allows indefinite terms, identifying autocoups remains possible. We will discuss and explain this in the next section.</p>
+<h3 data-number="3.2" id="sec-classify">
+<span class="header-section-number">3.2</span> <strong>Classifying autocoups</strong>
+</h3>
+<p>Autocoups can manifest in various forms. To understand this phenomenon better, we can categorize them based on several key factors:</p>
+<ul>
+<li class="fragment"><p><strong>Methods Employed:</strong> This refers to the specific strategies incumbents use to extend their hold on power. Examples include constitution amending or reinterpreting, election cancelling, delaying or rigging.</p></li>
+<li class="fragment"><p><strong>Degree of Legality:</strong> This dimension captures the extent to which an autocoup deviates from established legal norms. It can range from minor rule-bending to outright constitutional violations.</p></li>
+<li class="fragment"><p><strong>Duration of Extension:</strong> This category focuses on the length of time the incumbent leader remains in office beyond their designated term limits. It could be a single additional term, multiple terms, or even a lifetime hold on power.</p></li>
+<li class="fragment"><p><strong>Outcomes:</strong> This factor examines whether the autocoup attempt is successful or ultimately fails.</p></li>
+</ul>
+<p>This study will primarily focus on the <strong>methods</strong> employed by incumbents to stage autocoups. However, we will also code for other relevant aspects like the degree of legality, duration of extension, and outcomes whenever information is available. This multifaceted approach allows for a more nuanced understanding of the variations within autocoups.</p>
+<h4 data-number="3.2.1" id="evasion-of-term-limits">
+<span class="header-section-number">3.2.1</span> Evasion of term limits</h4>
+<p>Evasion of term limits is a common tactic employed in autocoups. Incumbents often resort to seemingly legal maneuvers to extend their hold on power. These maneuvers primarily involve manipulating constitutional provisions through various means. The incumbents may pressure legislative bodies (congress) or judicial institutions (Supreme Court) to reinterpret existing term limits, amend the constitution to extend terms, or even replace the constitution altogether. This might also involve popular vote through referendums, or a combination of these approaches. The extension can range from a single term to indefinite rule.</p>
+<p>These manoeuvres primarily involve manipulating constitutional provisions through various means.</p>
+<ul>
+<li class="fragment"><p><strong>Changing Term Length:</strong> Incumbents might lengthen the official term duration (e.g., from 4 to 6 years) to stay in office longer, even if the number of allowed terms remains unchanged. Examples, in the dataset, include Presidents Dacko (CAR, 1962), Kayibanda (Rwanda, 1973), and Pinochet (Chile, 1988).</p></li>
+<li class="fragment"><p><strong>Enabling re-election:</strong> This approach involves incumbents modifying legal or constitutional frameworks to permit themselves to run for leadership again, despite initial restrictions. These restrictions might include prohibitions on re-election, bans on immediate re-election, or term limits that the incumbents have already reached. An illustrative example is President Menem of Argentina in 1993, who leveraged this tactic to extend his tenure.</p></li>
+<li class="fragment"><p><strong>Removing Term Limits Altogether:</strong> This approach, as seen with President Xi Jinping of China in 2018, technically allows the leader to rule for life, although they may still need to participate in elections (a formality in such cases).</p></li>
+<li class="fragment"><p><strong>Leader for Life:</strong> This differs from removing term limits as the leader still faces elections (although potentially rigged or uncontested). An example is Indonesia’s President Sukarno, who attempted to declare himself president for life in 1963 (ultimately unsuccessful).</p></li>
+</ul>
+<p>These methods are often used in combination. Initially, the duration of a term is extended, followed by amendments to allow re-election, then the removal of term limits, and finally, the declaration of the leader for life. For example, Haitian President François Duvalier amended the constitution in 1961 to permit immediate re-election and then declared himself president for life in 1964.</p>
+<h4 data-number="3.2.2" id="election-manipulation-or-rigging">
+<span class="header-section-number">3.2.2</span> Election Manipulation or Rigging</h4>
+<p>Election manipulation or rigging is the second most commonly used tactic to extend an incumbent’s tenure.</p>
+<ul>
+<li class="fragment"><p><strong>Delaying or Removing Elections:</strong> Delaying or removing scheduled elections without legitimate justification is a frequent method used by incumbents to maintain power. For instance, Chadian President François Tombalbaye delayed general elections until 1969 after assuming power in 1960. Similarly, Angolan President José Eduardo dos Santos suspended elections throughout his rule from 1979 to 20</p></li>
+<li class="fragment"><p><strong>Refusing Unfavourable Election Results:</strong> Incumbents may refuse to accept unfavourable election results and attempt to overturn them through illegitimate means. For example, President Donald Trump of the United States refused to accept the results of the 2020 election and tried to overturn them.</p></li>
+<li class="fragment"><p><strong>Rigging Elections:</strong> Winning elections with an extraordinarily high percentage of votes is highly questionable. This study will code elections where the incumbent wins more than 90% of the vote as autocoups. For instance, President Teodoro Obiang of Equatorial Guinea has consistently won elections with over 95% of the vote in multi-party elections since 1996, indicating election rigging.</p></li>
+<li class="fragment"><p><strong>Excluding Opposition in Elections:</strong> Manipulating the electoral process by excluding opposition parties or candidates from participation, effectively creating a one-candidate race, clearly signifies an autocoup.</p></li>
+</ul>
+<h4 data-number="3.2.3" id="figurehead">
+<span class="header-section-number">3.2.3</span> <strong>Figurehead</strong>
+</h4>
+<p>To circumvent term limits, some incumbents might choose a close associate to act as a figurehead, taking the office publicly while the incumbent retains real power behind the scenes. This can be achieved through seemingly subordinate positions.</p>
+<p>One example is Russia in 2008. Facing term limits, President Putin selected Dmitry Medvedev to run for president. After the election, Medvedev appointed Putin as Prime Minister. However, most analysts believe Putin wielded the true power throughout this period.</p>
+<h4 data-number="3.2.4" id="constitutional-power-transferring">
+<span class="header-section-number">3.2.4</span> <strong>Constitutional power transferring</strong>
+</h4>
+<p>This tactic involves an incumbent leader manipulating the constitution or legal framework to create a new position of power, or elevate an existing one, before stepping down from their current role. They then strategically take on this new position, effectively retaining significant control despite appearing to relinquish power. For example, in 2017, Recep Tayyip Erdoğan, the Prime Minister of Turkey, spearheaded a constitutional referendum that transitioned the country from a parliamentary system to a presidential one. This new system concentrated significant executive power in the presidency. Following the referendum’s approval, Erdoğan successfully ran for the newly established presidency, effectively retaining control under a different title.</p>
+<h4 data-number="3.2.5" id="one-time-arrangement-for-current-leaders">
+<span class="header-section-number">3.2.5</span> One-Time Arrangement for Current Leaders</h4>
+<p>This strategy involves special arrangements that extend the term or tenure of current leaders without altering the underlying institutions. For example, Lebanon extended President Émile Lahoud’s term by three years in 2004 through a one-time arrangement.</p>
+<h3 data-number="3.3" id="data-coding">
+<span class="header-section-number">3.3</span> Data Coding</h3>
+<h4 data-number="3.3.1" id="data-sources">
+<span class="header-section-number">3.3.1</span> Data sources</h4>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># library(kableExtra)</span></span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a><span class="fu">read.csv</span>(<span class="fu">here</span>(<span class="st">"data/autocoup_source.csv"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-4"><a></a>  <span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"title"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-5"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a></a>  <span class="fu">tab_options</span>(<span class="at">column_labels.font.weight =</span> <span class="st">"bold"</span>,</span>
+<span id="cb1-7"><a></a>              <span class="at">table.width =</span> <span class="fu">pct</span>(<span class="dv">100</span>),</span>
+<span id="cb1-8"><a></a>              <span class="at">table.align =</span> <span class="st">"center"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a></a>  <span class="fu">cols_width</span>(</span>
+<span id="cb1-10"><a></a>    <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span> <span class="sc">~</span> <span class="fu">px</span>(<span class="dv">80</span>),</span>
+<span id="cb1-11"><a></a>    <span class="dv">5</span> <span class="sc">~</span> <span class="fu">px</span>(<span class="dv">200</span>)</span>
+<span id="cb1-12"><a></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a></a>   <span class="fu">data_color</span>(<span class="at">rows =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">colors =</span> <span class="st">"#edede9"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="tbl-source" class="cell quarto-float">
+<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-source-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Sources of coding autocoup dataset
+</figcaption><div aria-describedby="tbl-source-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<div id="wygjbenqnl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wygjbenqnl table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#wygjbenqnl thead, #wygjbenqnl tbody, #wygjbenqnl tfoot, #wygjbenqnl tr, #wygjbenqnl td, #wygjbenqnl th {
+  border-style: none;
+}
+
+#wygjbenqnl p {
+  margin: 0;
+  padding: 0;
+}
+
+#wygjbenqnl .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 100%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#wygjbenqnl .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wygjbenqnl .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wygjbenqnl .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wygjbenqnl .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wygjbenqnl .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wygjbenqnl .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wygjbenqnl .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wygjbenqnl .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#wygjbenqnl .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#wygjbenqnl .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wygjbenqnl .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wygjbenqnl .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wygjbenqnl .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wygjbenqnl .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wygjbenqnl .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#wygjbenqnl .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#wygjbenqnl .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#wygjbenqnl .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wygjbenqnl .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#wygjbenqnl .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wygjbenqnl .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wygjbenqnl .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wygjbenqnl .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wygjbenqnl .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wygjbenqnl .gt_left {
+  text-align: left;
+}
+
+#wygjbenqnl .gt_center {
+  text-align: center;
+}
+
+#wygjbenqnl .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wygjbenqnl .gt_font_normal {
+  font-weight: normal;
+}
+
+#wygjbenqnl .gt_font_bold {
+  font-weight: bold;
+}
+
+#wygjbenqnl .gt_font_italic {
+  font-style: italic;
+}
+
+#wygjbenqnl .gt_super {
+  font-size: 65%;
+}
+
+#wygjbenqnl .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#wygjbenqnl .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#wygjbenqnl .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#wygjbenqnl .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#wygjbenqnl .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#wygjbenqnl .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#wygjbenqnl .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#wygjbenqnl .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#wygjbenqnl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table cell" data-quarto-postprocess="true" style="table-layout: fixed;; width: 100%" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="header gt_col_headings">
+<th id="Source" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Source</th>
+<th id="Years" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Years</th>
+<th id="Unit of Research" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Unit of Research</th>
+<th id="Obervations" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Obervations</th>
+<th id="Authors" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Authors</th>
+</tr></thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Source" style="background-color: #EDEDE9; color: #000000">Archigos</td>
+<td class="gt_row gt_right" headers="Years" style="background-color: #EDEDE9; color: #000000">1875-2015</td>
+<td class="gt_row gt_left" headers="Unit of Research" style="background-color: #EDEDE9; color: #000000">Leaders</td>
+<td class="gt_row gt_right" headers="Obervations" style="background-color: #EDEDE9; color: #000000">3409</td>
+<td class="gt_row gt_left" headers="Authors" style="background-color: #EDEDE9; color: #000000">Hein Goemans, Kristian Skrede Gleditsch, Giacomo Chiozza</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Source">REIGN</td>
+<td class="gt_row gt_right" headers="Years">1921-2021</td>
+<td class="gt_row gt_left" headers="Unit of Research">Leaders</td>
+<td class="gt_row gt_right" headers="Obervations">2544</td>
+<td class="gt_row gt_left" headers="Authors">Curtis Bell, Clayton Besaw, Matthew Frank</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Source" style="background-color: #EDEDE9; color: #000000">Incumbent Takeover</td>
+<td class="gt_row gt_right" headers="Years" style="background-color: #EDEDE9; color: #000000">1913-2019</td>
+<td class="gt_row gt_left" headers="Unit of Research" style="background-color: #EDEDE9; color: #000000">Incumbent takeovers</td>
+<td class="gt_row gt_right" headers="Obervations" style="background-color: #EDEDE9; color: #000000">279</td>
+<td class="gt_row gt_left" headers="Authors" style="background-color: #EDEDE9; color: #000000">Alexander Baturo, Jakob Tolstrup</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>The autocoup dataset, like most dataset coding procedures, is based on existing studies and datasets. <a href="#/autocoup-dataset" class="quarto-xref">Table&nbsp;1</a> outlines the main sources for coding the autocoup dataset. The Archigos dataset <span class="citation" data-cites="goemans2009">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span> and the REIGN dataset <span class="citation" data-cites="bell2016reign">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Bell 2016</a>)</span> provide comprehensive data on all leaders from 1875 to 2021, although our coding only includes autocoups since 1945. These datasets help identify the actual rulers of countries, saving time in distinguishing real leaders from nominal heads of state.</p>
+<p>The Incumbent Takeover dataset <span class="citation" data-cites="baturo2022">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Baturo and Tolstrup 2022</a>)</span>, which integrates data from 11 related datasets, offers a broad spectrum of cases where leaders significantly reduce the constraints on their power, encompassing both power expansions and extensions. Since some executive takeovers do not qualify as autocoups due to the lack of term extensions, I cross-referenced the Archigos dataset, which includes detailed trajectories of leaders’ entries and exits from power, to verify the qualifications for autocoups.</p>
+<p>As the Archigos dataset concludes at the end of 2015, I used trusted news reports to validate data from the Incumbent Takeover dataset. In total, I coded 113 observations, with X overlapping with the candidate data from Incumbent Takeover. The remaining Y events were newly coded by the author through verification with other sources such as Archigos, REIGN, and news reports.The main deviation from the Incumbent Takeover dataset arises from excluding power expansions that do not involve attempts to extend tenure.</p>
+<h4 data-number="3.3.2" id="definitions-of-main-variables">
+<span class="header-section-number">3.3.2</span> Definitions of main variables</h4>
+<p>This section describes the variables included in the autocoup dataset.</p>
+<ul>
+<li class="fragment">
+<p><strong>Country Identification:</strong></p>
+<ul>
+<li class="fragment">
+<code>ccode</code> and <code>country</code>: These variables come from the Correlates of War project <span class="citation" data-cites="stinnett2002">(<a href="#/autocoup-dataset" role="doc-biblioref" onclick="">Stinnett et al. 2002</a>)</span> and identify the countries included in the dataset, which are widely used in political science datasets, ensuring consistency and compatibility across different studies and datasets.</li>
+</ul>
+</li>
+<li class="fragment">
+<p><strong>Leader Information:</strong></p>
+<ul>
+<li class="fragment">
+<code>leader_name</code>: This variable follows the Archigos dataset’s coding and records the name of the de facto leader who wielded power in the country.</li>
+</ul>
+</li>
+<li class="fragment">
+<p><strong>Timeline Variables:</strong></p>
+<ul>
+<li class="fragment"><p><code>entry_date</code>: Captures the date the leader assumed power.</p></li>
+<li class="fragment"><p><code>exit_date</code>: Records the date the leader left office.</p></li>
+<li class="fragment"><p><code>autocoup_date</code>: Indicates the date the autocoup is considered to have occurred. Since extensions often happen incrementally, this date reflects a significant event marking the extension, such as a legislative vote or successful referendum.</p></li>
+<li class="fragment"><p><code>extending_date</code>: Represents the start date of the leader’s additional term acquired through the autocoup.</p></li>
+</ul>
+<p>The <code>entry_date</code> and <code>exit_date</code> come from the Archigos and REIGN datasets, while the other two dates are coded by the dataset creator.</p>
+</li>
+<li class="fragment">
+<p><strong>Power Transition Methods:</strong></p>
+<ul>
+<li class="fragment"><p><code>entry_method</code> and <code>exit_method</code>: These categorical variables record how the leader entered and exited power (e.g., election, coup d’état, death).</p></li>
+<li class="fragment"><p><code>entry_regular</code> and <code>exit_regular</code>: These dummy variables indicate whether the entry and exit methods were regular (e.g., election) or irregular (e.g., coup).</p></li>
+</ul>
+</li>
+<li class="fragment">
+<p><strong>Autocoup Details:</strong></p>
+<ul>
+<li class="fragment"><p><code>autocoup_method</code>: This key variable captures the various methods leaders use to extend their stay in power (see <a href="#/autocoup-dataset" class="quarto-xref">Section&nbsp;3.2</a> for details).</p></li>
+<li class="fragment"><p><code>autocoup_outcome</code>: This variable indicates the outcome of the autocoup attempt: “fail and lose power”, “fail but complete original tenure”, or “successful”. For successful coups, the additional term length can be calculated from the difference between <code>exit_date</code> and <code>extending_date</code>.</p></li>
+</ul>
+</li>
+<li class="fragment">
+<p><strong>Data Source:</strong></p>
+<ul>
+<li class="fragment">
+<code>source</code>: This variable identifies the dataset source used for coding, primarily differentiating among “Incumbent Takeovers” or other sources.</li>
+</ul>
+</li>
+<li class="fragment">
+<p><strong>Additional Notes:</strong></p>
+<ul>
+<li class="fragment">
+<code>notes</code>: This variable provides context for exceptional cases. For instance, if a leader undertook multiple autocoup attempts, details are recorded here.</li>
+</ul>
+</li>
+</ul>
+<p>The dataset encompasses a total of 14 variables along with the <code>notes</code> field.</p>
+<h3 data-number="3.4" id="data-descriptions">
+<span class="header-section-number">3.4</span> Data descriptions</h3>
+<div class="cell" data-lable="data_descriptions">
+
+</div>
+<p>According to the primary coding, we have 113 autocoup cases from 1945 to 2021. The 113 autocoups involve <code>country$count</code> countries.</p>
 
 <div class="quarto-auto-generated-content">
 <p><img src="../fig/Candoso2.png" class="slide-logo"></p>
@@ -434,6 +1125,9 @@ Baturo, Alexander. 2014. <span>“Democracy, Dictatorship, and Term Limits.”</
 </div>
 <div id="ref-baturo2022" class="csl-entry" role="listitem">
 Baturo, Alexander, and Jakob Tolstrup. 2022. <span>“Incumbent Takeovers.”</span> <em>Journal of Peace Research</em> 60 (2): 373–86. <a href="https://doi.org/10.1177/00223433221075183">https://doi.org/10.1177/00223433221075183</a>.
+</div>
+<div id="ref-bell2016reign" class="csl-entry" role="listitem">
+Bell, Curtis. 2016. <span>“The Rulers, Elections, and Irregular Governance (REIGN) Dataset.”</span> Broomfield, CO: OEF Research. <a href="https://oneearthfuture.org/en/one-earth-future/reign-dataset-international-elections-and-leaders">https://oneearthfuture.org/en/one-earth-future/reign-dataset-international-elections-and-leaders</a>.
 </div>
 <div id="ref-bermeo2016" class="csl-entry" role="listitem">
 Bermeo, Nancy. 2016. <span>“On Democratic Backsliding.”</span> <em>Journal of Democracy</em> 27 (1): 5–19. <a href="https://doi.org/10.1353/jod.2016.0012">https://doi.org/10.1353/jod.2016.0012</a>.
@@ -456,6 +1150,9 @@ Frantz, Erica, and Elizabeth A. Stein. 2016. <span>“Countering Coups: Leadersh
 <div id="ref-ginsburg2010evasion" class="csl-entry" role="listitem">
 Ginsburg, Tom, James Melton, and Zachary Elkins. 2010. <span>“On the Evasion of Executive Term Limits.”</span> <em>Wm. &amp; Mary L. Rev.</em> 52: 1807.
 </div>
+<div id="ref-ginsburg2011evasion" class="csl-entry" role="listitem">
+———. 2011. <span>“On the Evasion of Executive Term Limits.”</span> <em>William and Mary Law Review</em> 52: 1807.
+</div>
 <div id="ref-goemans2009" class="csl-entry" role="listitem">
 Goemans, Henk E., Kristian Skrede Gleditsch, and Giacomo Chiozza. 2009. <span>“Introducing Archigos: A Dataset of Political Leaders.”</span> <em>Journal of Peace Research</em> 46 (2): 269–83. <a href="https://doi.org/10.1177/0022343308100719">https://doi.org/10.1177/0022343308100719</a>.
 </div>
@@ -476,6 +1173,9 @@ Powell, Jonathan M, and Clayton L Thyne. 2011. <span>“Global Instances of Coup
 </div>
 <div id="ref-przeworski2000" class="csl-entry" role="listitem">
 Przeworski, Adam, Michael E. Alvarez, Jose Antonio Cheibub, and Fernando Limongi. 2000. <span>“Democracy and Development,”</span> August. <a href="https://doi.org/10.1017/cbo9780511804946">https://doi.org/10.1017/cbo9780511804946</a>.
+</div>
+<div id="ref-stinnett2002" class="csl-entry" role="listitem">
+Stinnett, Douglas M., Jaroslav Tir, Paul F. Diehl, Philip Schafer, and Charles Gochman. 2002. <span>“The Correlates of War (Cow) Project Direct Contiguity Data, Version 3.0.”</span> <em>Conflict Management and Peace Science</em> 19 (2): 59–67. <a href="https://doi.org/10.1177/073889420201900203">https://doi.org/10.1177/073889420201900203</a>.
 </div>
 <div id="ref-svolik2014" class="csl-entry" role="listitem">
 Svolik, Milan W. 2014. <span>“Which Democracies Will Last? Coups, Incumbent Takeovers, and the Dynamic of Democratic Consolidation.”</span> <em>British Journal of Political Science</em> 45 (4): 715–38. <a href="https://doi.org/10.1017/s0007123413000550">https://doi.org/10.1017/s0007123413000550</a>.
