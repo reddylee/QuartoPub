@@ -433,11 +433,11 @@ qualifications for autocoups.
 
 As the Archigos dataset concludes at the end of 2015, I used trusted news reports
 to validate data from the Incumbent Takeover dataset. In total, I coded 113
-observations, with X overlapping with the candidate data from Incumbent Takeover.
-The remaining Y events were newly coded by the author through verification with
-other sources such as Archigos, REIGN, and news reports.The main deviation from
-the Incumbent Takeover dataset arises from excluding power expansions that do not
-involve attempts to extend tenure.
+observations, with 75 overlapping with the candidate data from Incumbent
+Takeover. The remaining 38 events were newly coded by the author through
+verification with other sources such as Archigos, REIGN, and news reports.The
+main deviation from the Incumbent Takeover dataset arises from excluding power
+expansions that do not involve attempts to extend tenure.
 
 #### Definitions of main variables
 
@@ -507,18 +507,58 @@ The dataset encompasses a total of 14 variables along with the `notes` field.
 ### Data descriptions
 
 ```{r}
-#| lable: data_descriptions
-#| eval: !expr format == "latex"
+#| label: data_descriptions
 #| echo: false
-autocoup <- read_excel(here("data/autocoup_Reddy.xlsx"))
+autocoup <- read_excel(here("data/autocoup.xlsx")) |> 
+  mutate(exit_date = ifelse(exit_date != "Incumbent", exit_date, NA)) |> 
+  mutate(exit_date = case_when(is.na(exit_date) ~ Sys.Date(), 
+                               .default = convert_to_date(exit_date)),
+         extending_date = make_date(year = extending_date, month(entry_date), day(entry_date)))
 country <- autocoup |> 
   distinct(ccode) |> 
   summarise(count = n())
-country
 ```
 
-According to the primary coding, we have 113 autocoup cases from 1945 to 2021.
-The 113 autocoups involve `r country$count` countries.
+```{r}
+#| label: tbl-autocoup_method
+#| tbl-cap: Autocoup methods and success rates (1945-2021)
+#| eval: !expr format == "latex"
+#| echo: false
+
+autocoup |> 
+  summarise(autocoup_attempted = n(),
+            autocoup_succeeded = sum(autocoup_outcome == "Yes"),
+            Success_rate = percent (autocoup_succeeded/autocoup_attempted),
+    .by = autocoup_method) |> 
+  arrange(-autocoup_attempted) |> 
+  clean_names(case = "title") |> 
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  cols_width(
+    1 ~ px(180),
+    2:3 ~ px(140),
+    4 ~ px(100)
+  )
+```
+
+According to our primary coding, we have identified 113 autocoup cases from 1945
+to 2021, involving `r country$count` countries. As shown in @tbl-autocoup_method,
+the most common autocoup method is enabling re-election, accounting for 49
+events. This is followed by removing term limits altogether, with 14 cases, and
+then delaying elections and declaring the leader for life, each with 9 cases.
+
+Examining the success rates of various autocoup methods, we find that removing
+term limits, delaying elections, declaring the leader for life, and canceling
+elections are all 100% successful. These four types of autocoups are notably more
+blatantly illegitimate compared to other methods, indicating that the leaders who
+employ these tactics may hold more substantial power. In contrast, there are only
+4 cases of refusing election results, with just one succeeding. Although this
+sample is small, it suggests that in regimes where general elections are held and
+incumbents lose, the system is relatively more democratic. In such cases,
+incumbents must run for office without the ability to rig elections, making it
+less likely for them to overturn election results.
 
 ```{r}
 #| label: references
