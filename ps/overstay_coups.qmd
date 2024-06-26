@@ -42,8 +42,6 @@ library(scales)
 library(zoo)
 library(democracyData)
 library(vdemdata)
-library(sampleSelection)
-library(stargazer)
 library(readxl)
 library(here)
 ```
@@ -620,6 +618,76 @@ Nazarbayev [@nurumov2019]. Unlike Lukashenko, who is still the incumbent of
 Belarus, Nazarbayev passed the presidency to Kassym-Jomart Tokayev, a specially
 designated successor, in 2019. However, he retained significant influence as the
 Chairman of the Security Council of Kazakhstan until 2022.
+
+#### Autocoups for immediate re-election: Cases of Latin American countries
+
+```{r}
+#| label: tbl-region
+#| echo: false
+library(countrycode)
+latin <- codelist |> 
+  filter(region == "Latin America & Caribbean") |> 
+  select(region, cown) |>
+  drop_na() |> 
+  pull(cown)
+africa <- codelist |> 
+  filter(continent == "Africa") |> 
+  select(continent, cown) |>
+  drop_na() |> 
+  pull(cown)
+
+autocoup |> 
+  filter(ccode %in% latin) |> 
+  summarise(count = n(),
+            .by = country) |> 
+  adorn_totals() 
+autocoup |> 
+  filter(ccode %in% latin) |> 
+  summarise(count = n(),
+            .by = autocoup_method) |> 
+  adorn_totals()
+
+
+autocoup |> 
+  filter(ccode %in% africa) |> 
+  summarise(count = n(),
+            .by = country) |> 
+  adorn_totals() 
+```
+
+As our statistical analysis indicates, the most common autocoup method is to
+enable re-elections or immediate re-elections, particularly prevalent in Latin
+American countries. Latin American leaders have historically been explicit about
+term limits. Simon Bolivar, the founding father of Bolivia, was a strong advocate
+for term limits, stating in 1819, “Nothing is as dangerous as allowing the same
+citizen to remain in power for a long time... That’s the origin of usurpation and
+tyranny” [@ginsburg2019]. Although Bolivar eventually changed his stance, arguing
+in his 1826 Constitution Assembly speech that “a president for life with the
+right to choose the successor, is the most sublime inspiration for the republican
+order,” term limits became a convention in Latin America. Approximately 81% of
+Latin American constitutions between independence and 1985 imposed some form of
+term limits on the presidency [@marsteintredet2019a].In addition to term limits,
+another characteristic of Latin American presidencies is the restriction on
+re-election or immediate re-election. According to @marsteintredet2019a,
+non-consecutive re-election was mandated in about 64.9% of all constitutions
+between independence and 1985, while 5.9% banned re-election entirely.However,
+adherence to these conventions has varied across the region. Since Mexico
+introduced non-re-election institutions in 1911 at the start of the Mexican
+Revolution, they have never been violated since then. Panama, along with Uruguay,
+has never changed the rules of re-election, and since Costa Rica prohibited
+immediate presidential re-election in 1859, the country has only experienced a
+brief period between 1897 and 1913 in which the incumbent president could be
+re-elected [@marsteintredet2019a]. In many other countries, however,
+constitutions have been frequently amended or violated. The pursuit of
+re-election or consecutive re-election has been a significant trigger for
+autocoups aimed at power extension in Latin American countries. There are 32
+documented autocoup cases, with over 50% (17 cases) attempting to enable
+re-election.Unlike those who attempt to overstay in office indefinitely, many
+Latin American leaders choose to step down after their second term expires.
+Examples include President Menem of Argentina (1988-1999), President Fernando
+Cardoso of Brazil (1995-2003), President Danilo Medina of the Dominican Republic
+(2012-2020), and President Juan Orlando Hernández of Honduras (2014-2022)
+[@ginsburg2019; @marsteintredet2019a; @landau2019; @baturo2019; @neto2019].
 
 ```{r}
 #| label: references
