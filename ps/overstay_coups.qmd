@@ -574,21 +574,19 @@ those that were communist regimes before the collapse of the Soviet Union, while
 most of them developed into 'hybrid regimes' [@nurumov2019] and only a few remain
 communist regimes after the collapse. In these countries, there are 12 documented
 cases of autocoups aimed at prolonging incumbency, with only 2 of these attempts
-failing.
+failing. Examining the cases in post-communist countries, several characteristics
+stand out:
 
-Examining the cases in post-communist countries, several characteristics stand
-out:
-
-1.  **Inherited Authoritarian Systems**: Although most of these countries
+-   **Inherited Authoritarian Systems**: Although most of these countries
     transitioned from communist regimes to non-communist governments (with the
     exception of China), they inherited the authoritarian systems of their
     communist past.
 
-2.  **Continuity of Former Elites**: The transitions did not result in the
+-   **Continuity of Former Elites**: The transitions did not result in the
     removal or overthrow of the previous ruling groups. Instead, the former
     communist elites remained in power.
 
-3.  **Subverted Democratic Processes**: Despite the introduction of general
+-   **Subverted Democratic Processes**: Despite the introduction of general
     elections and term limits in most of these countries, the legacy of the
     former communist regimes often led to term limits being ignored and elections
     being rigged [@nurumov2019].
@@ -619,11 +617,10 @@ Belarus, Nazarbayev passed the presidency to Kassym-Jomart Tokayev, a specially
 designated successor, in 2019. However, he retained significant influence as the
 Chairman of the Security Council of Kazakhstan until 2022.
 
-#### Autocoups for immediate re-election: Cases of Latin American countries
-
 ```{r}
 #| label: tbl-region
-#| echo: false
+#| eval: FALSE
+#| include: FALSE
 library(countrycode)
 latin <- codelist |> 
   filter(region == "Latin America & Caribbean") |> 
@@ -646,48 +643,156 @@ autocoup |>
   summarise(count = n(),
             .by = autocoup_method) |> 
   adorn_totals()
+autocoup |> 
+  filter(ccode %in% latin) |> 
+  summarise(count = n(),
+            .by = autocoup_outcome) |> 
+  adorn_totals() 
+```
 
+### Autocoups for immediate re-election: Cases of Latin American countries
+
+Latin America has a long history of maintaining term limit conventions. Simón
+Bolívar, the founding father of Bolivia, was a strong advocate for term limits,
+stating in 1819, “Nothing is as dangerous as allowing the same citizen to remain
+in power for a long time... That’s the origin of usurpation and tyranny”
+[@ginsburg2019]. Although Bolívar eventually changed his stance, arguing in his
+1826 Constitution Assembly speech that “a president for life with the right to
+choose the successor is the most sublime inspiration for the republican order,”
+term limits became a convention in Latin America. Approximately 81% of Latin
+American constitutions between independence and 1985 imposed some form of term
+limits on the presidency \[@marsteintredet2019a\].
+
+Reviewing the cases in Latin American countries, we notice that:
+
+-   **Striving for Re-election:** Non-re-election or non-immediate re-election
+    has been common in Latin America, unlike other presidential countries where
+    two terms are more popular. Autocoup leaders in Latin America often attempt
+    to overstay a consecutive term.
+
+-   **Resisting long extensions:** Autocoups for one more term are often
+    successful, while attempts to overstay beyond this are frequently
+    unsuccessful.
+
+According to @marsteintredet2019a, non-consecutive re-election was mandated in
+about 64.9% of all constitutions between independence and 1985, while 5.9% banned
+re-election entirely. However, adherence to these conventions has varied across
+the region. Since Mexico introduced non-re-election institutions in 1911 at the
+start of the Mexican Revolution, they have never been violated since then
+[@klesner2019]. Panama, along with Uruguay, has never changed the rules of
+re-election, and since Costa Rica prohibited immediate presidential re-election
+in 1859, the country has only experienced a brief period between 1897 and 1913 in
+which the incumbent president could be re-elected \[@marsteintredet2019a\]. In
+many other countries, however, constitutions have been frequently amended or
+violated. The pursuit of re-election or consecutive re-election has been a
+significant trigger for autocoups aimed at power extension in Latin American
+countries. There are 32 documented autocoup cases, with over 50% (17 cases)
+attempting to enable re-election.
+
+Unlike those who attempt to overstay in office indefinitely, many Latin American
+leaders exit after their second term expires. Examples include President Menem of
+Argentina (1988-1999), President Fernando Cardoso of Brazil (1995-2003),
+President Danilo Medina of the Dominican Republic (2012-2020), and President Juan
+Orlando Hernández of Honduras (2014-2022) [@ginsburg2019; @marsteintredet2019a;
+@landau2019; @baturo2019; @neto2019]. This does not mean none of them tried to
+extend even longer, but most did not manipulate the process by abusing their
+power and accepted their unsuccessful outcomes soon.
+
+For instance, President Menem of Argentina successfully extended one term by
+amending the constitution in 1994 to allow one executive re-election and was
+re-elected in 1995. However, when he attempted to reset his term, arguing that
+his first term from 1988 to 1995 did not count since it was under previous
+constitutions, his appeal was unanimously ruled out by the Supreme Court in March
+1999 [@llanos2019]. A similar scenario occurred with President Álvaro Uribe of
+Colombia (2002-2010) [@baturo2019]. In contrast, Daniel Ortega, the incumbent
+president of Nicaragua, successfully extended his presidency. In 2009, the
+Supreme Court of Justice of Nicaragua allowed his re-running in 2011. In 2014,
+the National Assembly of Nicaragua approved constitutional amendments that
+abolished term limits for the presidency, allowing Ortega to run for an unlimited
+number of five-year terms, making him president since 2007 [@close2019].
+
+```{r}
+#| label: africa
+#| eval: FALSE
+#| include: FALSE
+autocoup |> 
+  filter(ccode %in% africa) |> 
+  summarise(count = n(),
+            Post_Cold_War = sum(autocoup_date > 1990),
+            Pre_Cold_War = sum(autocoup_date < 1991),
+            .by = autocoup_outcome) |> 
+  adorn_totals() 
 
 autocoup |> 
   filter(ccode %in% africa) |> 
   summarise(count = n(),
             .by = country) |> 
+  adorn_totals()
+autocoup |> 
+  filter(ccode %in% africa) |> 
+  summarise(count = n(),
+            .by = autocoup_outcome) |> 
   adorn_totals() 
+autocoup |> 
+  filter(ccode %in% africa) |> 
+  summarise(count = n(),
+            .by = autocoup_method) |> 
+  adorn_totals() 
+coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
+                 sep = "\t")
+coup |> 
+  filter(ccode  %in% africa) |> 
+  summarise(count = n(),
+            Success = sum(coup == 2),
+            Cold_War = sum(year > 2000),
+            .by = country) |> 
+  adorn_totals()
 ```
 
-As our statistical analysis indicates, the most common autocoup method is to
-enable re-elections or immediate re-elections, particularly prevalent in Latin
-American countries. Latin American leaders have historically been explicit about
-term limits. Simon Bolivar, the founding father of Bolivia, was a strong advocate
-for term limits, stating in 1819, “Nothing is as dangerous as allowing the same
-citizen to remain in power for a long time... That’s the origin of usurpation and
-tyranny” [@ginsburg2019]. Although Bolivar eventually changed his stance, arguing
-in his 1826 Constitution Assembly speech that “a president for life with the
-right to choose the successor, is the most sublime inspiration for the republican
-order,” term limits became a convention in Latin America. Approximately 81% of
-Latin American constitutions between independence and 1985 imposed some form of
-term limits on the presidency [@marsteintredet2019a].In addition to term limits,
-another characteristic of Latin American presidencies is the restriction on
-re-election or immediate re-election. According to @marsteintredet2019a,
-non-consecutive re-election was mandated in about 64.9% of all constitutions
-between independence and 1985, while 5.9% banned re-election entirely.However,
-adherence to these conventions has varied across the region. Since Mexico
-introduced non-re-election institutions in 1911 at the start of the Mexican
-Revolution, they have never been violated since then. Panama, along with Uruguay,
-has never changed the rules of re-election, and since Costa Rica prohibited
-immediate presidential re-election in 1859, the country has only experienced a
-brief period between 1897 and 1913 in which the incumbent president could be
-re-elected [@marsteintredet2019a]. In many other countries, however,
-constitutions have been frequently amended or violated. The pursuit of
-re-election or consecutive re-election has been a significant trigger for
-autocoups aimed at power extension in Latin American countries. There are 32
-documented autocoup cases, with over 50% (17 cases) attempting to enable
-re-election.Unlike those who attempt to overstay in office indefinitely, many
-Latin American leaders choose to step down after their second term expires.
-Examples include President Menem of Argentina (1988-1999), President Fernando
-Cardoso of Brazil (1995-2003), President Danilo Medina of the Dominican Republic
-(2012-2020), and President Juan Orlando Hernández of Honduras (2014-2022)
-[@ginsburg2019; @marsteintredet2019a; @landau2019; @baturo2019; @neto2019].
+### As common as classical coups: Cases of African countries
+
+Classical coups have been very common in Africa, accounting for about 45% of all
+coups (219 out of 491) globally since 1950, involving 45 out of 54 African
+countries \[@powell2011\]. Autocoups, although less common compared to coups,
+still have a significant presence in Africa. Among 113 documented autocoup cases,
+46% (52 cases) occurred in Africa, involving 36 countries. The success rate of
+coups in Africa is roughly 50%, while the success rate of autocoups is about 83%,
+which is higher than both the success rate of coups and the average global
+success rate of autocoups, approximately 78%.
+
+Identifying a clear pattern of autocoups in Africa is challenging, similar to the
+case with coups. Various factors have been proposed:
+
+-   **Natural Resources**: Countries rich in natural resources, particularly oil
+    or diamonds, may see leaders more likely to attempt and succeed in extending
+    their terms [@posner; @cheeseman2015; @cheeseman2019a].
+
+-   **Quality of Democracy**: The quality of democracy is a critical factor
+    influencing respect for term limits \[@reyntjens2016\].
+
+-   **International Influence**: International aid or donor influence can play a
+    significant role in discouraging attempts at power extension [@brown2001;
+    @tangri2010].
+
+-   **Organized Opposition and Party Unity**: The extent of organized opposition
+    and the president's ability to enforce unity within the ruling party are
+    crucial factors \[@cheeseman2019\].
+
+Using the Africa Executive Term Limits (AETL) dataset, @cassani2020 highlights
+human rights abuses and the desire for impunity as main drivers for incumbents to
+cling to power. The more authoritarian a leader, the more likely they are to
+attempt to break term limits and overstay in office. Additionally, a leader's
+ability to secure the loyalty of the armed forces through public investment
+increases the chances of success in overstaying.
+
+Despite both coups and autocoups being prevalent, there has been a noticeable
+shift since the end of the Cold War in 1991. Coups have decreased, while
+autocoups have increased. This trend is partly due to the introduction of
+multi-party elections in Africa in the 1990s, which also brought in term limits
+for executives [@cassani2020; @cheeseman2019]. Before 1991, personal or military
+rule was more common, and term limits were less frequent. Post-1991, with more
+term limits introduced, challenges to these limits have increased. However, this
+does not imply that violations are more common than adherence to term limits.
 
 ```{r}
 #| label: references
