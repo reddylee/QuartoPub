@@ -46,6 +46,8 @@ library(readxl)
 library(here)
 ```
 
+
+
 ## Introduction
 
 The study of irregular power transitions, encompassing both irregular entries and
@@ -393,6 +395,8 @@ one-time arrangement.
 
 #### Data sources
 
+
+
 ```{r}
 #| label: tbl-source
 #| tbl-cap: Sources of coding autocoup dataset 
@@ -412,6 +416,8 @@ read.csv(here("data/autocoup_source.csv")) |>
   ) |>
    data_color(rows = c(1, 3), colors = "#edede9") 
 ```
+
+
 
 The autocoup dataset, like most dataset coding procedures, is based on existing
 studies and datasets. @tbl-source outlines the main sources for coding the
@@ -504,6 +510,8 @@ The dataset encompasses a total of 14 variables along with the `notes` field.
 
 ### Data descriptions
 
+
+
 ```{r}
 #| label: data_descriptions
 #| echo: false
@@ -541,6 +549,8 @@ autocoup |>
     4 ~ px(100)
   )
 ```
+
+
 
 According to our primary coding, we have identified 113 autocoup cases from 1945
 to 2021, involving `r country$count` countries. As shown in @tbl-autocoup_method,
@@ -617,6 +627,8 @@ Belarus, Nazarbayev passed the presidency to Kassym-Jomart Tokayev, a specially
 designated successor, in 2019. However, he retained significant influence as the
 Chairman of the Security Council of Kazakhstan until 2022.
 
+
+
 ```{r}
 #| label: tbl-region
 #| eval: FALSE
@@ -649,6 +661,8 @@ autocoup |>
             .by = autocoup_outcome) |> 
   adorn_totals() 
 ```
+
+
 
 ### Autocoups for immediate re-election: Cases of Latin American countries
 
@@ -711,6 +725,8 @@ the National Assembly of Nicaragua approved constitutional amendments that
 abolished term limits for the presidency, allowing Ortega to run for an unlimited
 number of five-year terms, making him president since 2007 [@close2019].
 
+
+
 ```{r}
 #| label: africa
 #| eval: FALSE
@@ -748,6 +764,8 @@ coup |>
             .by = country) |> 
   adorn_totals()
 ```
+
+
 
 ### As common as classical coups: Cases of African countries
 
@@ -799,7 +817,7 @@ does not imply that violations are more common than adherence to term limits.
 With the availablility of autocoup dataset, we could employ more quantity
 analyses other than case studies on autocoups. In this chapter, I will offer an
 simple example on factors determining the attempts of autocoups as an
-demonstration of utilization of the dataset. I will use the `probit` model to
+demonstration of utilization of the dataset. I will use the probit model to
 analyse what factors might increase or decrease the probability of autocoup
 attempts.
 
@@ -841,81 +859,24 @@ attempts.
     the leader does not attempt to overstay their tenure, the entire duration of
     their time in power is coded. The rationale behind including the years in
     power variable is rooted in the assumption that the longer incumbents stay in
-    office, the more powerful they become. It is believed that powerful leaders
+    office, the more powerful they become. It is be‐ lieved that powerful leaders
     are more likely to succeed in their attempts to overstay in office, as their
     influence and control over the political system grow over time, which in turn
     encourages them to make such attempts.
 
 -   **Post‐Cold War:** 1 if the event occurs after 1990, 0 otherwise.
 
--   **Entry mode:** In this study, the entry mode is categorized as regular if a
-    leader comes to power through a constitutional process such as an election.
-    Conversely, the entry mode is classified as irregular if a leader assumes
-    power through an unconstitutional means, such as a coup. The inclusion of the
-    entry mode variable as a control variable in this study is based on the
-    assumption that leaders who come to power in a regular manner are more likely
-    to adhere to the original norms and established governance practices. The
-    data regarding the entry mode is obtained from the Archigos dataset.
+-   Entry mode (entry): In this study, the entry mode is categorized as regu‐ lar
+    if a leader comes to power through a constitutional process such as an
+    election. Conversely, the entry mode is classified as irregular if a leader
+    assumes power through an unconstitutional means, such as a coup. The
+    inclusion of the entry mode variable as a control variable in this study is
+    based on the assumption that leaders who come to power in a regular man‐ ner
+    are more likely to adhere to the original norms and established gover‐ nance
+    practices. The data regarding the entry mode is obtained from the Archigos
+    Dataset(Goemans, Gleditsch, and Chiozza 2009).
 
-## Empirical Analysis: A Simple Example of Utilizing the Autocoup Dataset
 
-With the availability of the autocoup dataset, we can conduct quantitative
-analyses beyond traditional case studies. This chapter provides a simple example
-of demonstrating how to utilize the dataset. To analyse the determinants of
-autocoup attempts, we employ a `probit` regression model. This model is
-appropriate for binary dependent variables, allowing us to estimate the
-probability of an autocoup attempt given the independent variables.
-
-### Data and Variables
-
-#### **Dependent Variable**
-
--   **Autocoup Attempts**: This dummy variable indicates whether an autocoup is
-    attempted in a given country-year, based on the data introduced in this
-    study.
-
-#### **Independent Variables**
-
--   **Regime Type**: The core variable of interest, categorized following the
-    classification system of Geddes, Wright, and Frantz (GWF) [@geddes2014]. We
-    focus on military, personalist, and dominant-party regimes, with democracies
-    and monarchies included for comparison.
-
--   **Economic Performance**: Measured using the current-trend (CT) ratio
-    developed by Krishnarajan [@krishnarajan2019]. This ratio compares a
-    country's current GDP per capita to the average GDP per capita over the
-    previous five years. A higher CT ratio indicates stronger economic
-    performance. GDP per capita data (in constant 2017 international dollars,
-    PPP) is sourced from the V-Dem dataset by Fariss [@fariss2022], lagged by one
-    year to reflect the prior year's economic impact. The CT ratio for a country
-    ( i ) at year ( t ) is calculated as follows:
-
-$$
-\begin{aligned}
-CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
-\end{aligned}
-$$
-
--   **Political Violence**: Captures overall regime stability by including a
-    violence index that encompasses all types of internal and interstate wars and
-    violence. This data comes from the Major Episodes of Political Violence
-    dataset by Marshall [@marshall2005current].
-
--   **Time in Power**: Measures the duration incumbents have served in office up
-    to the year of the event. The longer incumbents stay in office, the more
-    powerful they become, increasing the likelihood of attempting to overstay in
-    office.
-
--   **Post-Cold War**: A binary variable, coded as 1 if the event occurs after
-    1990, and 0 otherwise.
-
--   **Entry Mode**: Categorized as regular if a leader comes to power through a
-    constitutional process, such as an election, and irregular if through
-    unconstitutional means, such as a coup. Leaders who come to power regularly
-    are more likely to adhere to original norms and governance practices. Data on
-    entry mode is obtained from the Archigos dataset.
-
-### Results and discussions
 
 ```{r}
 #| label: references
@@ -925,3 +886,4 @@ $$
 cat("\\newpage
 ## References")
 ```
+
