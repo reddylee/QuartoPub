@@ -44,6 +44,7 @@ library(democracyData)
 library(vdemdata)
 library(readxl)
 library(here)
+library(stargazer)
 ```
 
 ## Introduction
@@ -794,69 +795,6 @@ rule was more common, and term limits were less frequent. Post-1991, with more
 term limits introduced, challenges to these limits have increased. However, this
 does not imply that violations are more common than adherence to term limits.
 
-## Empirical analysis: An simple example of utilizing autocoup dataset
-
-With the availablility of autocoup dataset, we could employ more quantity
-analyses other than case studies on autocoups. In this chapter, I will offer an
-simple example on factors determining the attempts of autocoups as an
-demonstration of utilization of the dataset. I will use the `probit` model to
-analyse what factors might increase or decrease the probability of autocoup
-attempts.
-
-### Data and variables
-
-#### Dependent variable
-
--   **Autocoup attempts:** The dummy variable autocoup captures whether or not an
-    autocoup is attempted in a country year, which based on the data introduced
-    by this study.
-
-#### Independent Variable
-
--   **Regime Type:** The core variable of interest is regime type, categorized
-    following the classification system of @geddes2014 (GWF). We focus on
-    military, personalist, and dominant-party regimes, with democracies and
-    monarchies included for comparison.
-
--   **Economic Performance:** We measure economic performance using the
-    current-trend ($CT$) ratio developed by @krishnarajan2019. This ratio
-    compares a country's current GDP per capita to the average GDP per capita
-    over the previous five years. A higher $CT$ ratio indicates stronger economic
-    performance. We use GDP per capita data (in constant 2017 international
-    dollars, PPP) from the V-Dem dataset by @fariss2022, lagged by one year to
-    reflect the prior year's economic impact. For a country $i$ at year $t$, the
-    $CT$ ratio is calculated as follows: $$
-    \begin{aligned}
-    CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
-    \end{aligned}
-    $$
-
--   **Political Violence:** We capture overall regime stability by including a
-    violence index that encompasses all types of internal and interstate wars and
-    violence. This data comes from the Major Episodes of Political Violence
-    dataset by Marshall [@marshall2005current].
-
--   **Time in power:** The variable `time in power` captures the duration that
-    incumbents have served in office up to the year of the event. In cases where
-    the leader does not attempt to overstay their tenure, the entire duration of
-    their time in power is coded. The rationale behind including the years in
-    power variable is rooted in the assumption that the longer incumbents stay in
-    office, the more powerful they become. It is believed that powerful leaders
-    are more likely to succeed in their attempts to overstay in office, as their
-    influence and control over the political system grow over time, which in turn
-    encourages them to make such attempts.
-
--   **Post‐Cold War:** 1 if the event occurs after 1990, 0 otherwise.
-
--   **Entry mode:** In this study, the entry mode is categorized as regular if a
-    leader comes to power through a constitutional process such as an election.
-    Conversely, the entry mode is classified as irregular if a leader assumes
-    power through an unconstitutional means, such as a coup. The inclusion of the
-    entry mode variable as a control variable in this study is based on the
-    assumption that leaders who come to power in a regular manner are more likely
-    to adhere to the original norms and established governance practices. The
-    data regarding the entry mode is obtained from the Archigos dataset.
-
 ## Empirical Analysis: A Simple Example of Utilizing the Autocoup Dataset
 
 With the availability of the autocoup dataset, we can conduct quantitative
@@ -870,25 +808,27 @@ probability of an autocoup attempt given the independent variables.
 
 #### **Dependent Variable**
 
--   **Autocoup Attempts**: This dummy variable indicates whether an autocoup is
-    attempted in a given country-year, based on the data introduced in this
-    study.
+-   **Autocoup Attempts**: This binary variable indicates whether an autocoup was
+    attempted during the tenure of an incumbent leader, based on the data
+    introduced in this study.
+
+-   **Autocoup Success:** This binary variable indicates whether an attempted
+    autocoup of the incumbent leader succeeded, based on the data introduced in
+    this study.
 
 #### **Independent Variables**
 
--   **Regime Type**: The core variable of interest, categorized following the
-    classification system of Geddes, Wright, and Frantz (GWF) [@geddes2014]. We
-    focus on military, personalist, and dominant-party regimes, with democracies
-    and monarchies included for comparison.
+-   **Economic Performance:** This variable is measured using two indicators:
+    economic level and economic growth trend.
 
--   **Economic Performance**: Measured using the current-trend (CT) ratio
-    developed by Krishnarajan [@krishnarajan2019]. This ratio compares a
-    country's current GDP per capita to the average GDP per capita over the
-    previous five years. A higher CT ratio indicates stronger economic
-    performance. GDP per capita data (in constant 2017 international dollars,
-    PPP) is sourced from the V-Dem dataset by Fariss [@fariss2022], lagged by one
-    year to reflect the prior year's economic impact. The CT ratio for a country
-    ( i ) at year ( t ) is calculated as follows:
+    **Economic Level:** Represented by GDP per capita. This measure provides an
+    indication of the overall economic health and standard of living in a
+    country.
+
+    **Economic Growth Trend:** Assessed using the current-trend (CT) ratio,
+    developed by @krishnarajan2019. The CT ratio compares a country's current GDP
+    per capita to the average GDP per capita over the previous five years. A
+    higher CT ratio signifies stronger economic performance.
 
 $$
 \begin{aligned}
@@ -896,26 +836,115 @@ CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
 \end{aligned}
 $$
 
--   **Political Violence**: Captures overall regime stability by including a
-    violence index that encompasses all types of internal and interstate wars and
-    violence. This data comes from the Major Episodes of Political Violence
-    dataset by Marshall [@marshall2005current].
+The GDP per capita data, expressed in constant 2017 international dollars (PPP)
+and measured in units of \$10,000, is sourced from the V-Dem dataset by
+@fariss2022. To account for the economic impact of the previous year, this data
+is lagged by one year.
 
--   **Time in Power**: Measures the duration incumbents have served in office up
-    to the year of the event. The longer incumbents stay in office, the more
-    powerful they become, increasing the likelihood of attempting to overstay in
-    office.
+-   **Political Stability:** This variable captures overall regime stability by
+    including a violence index that encompasses all types of internal and
+    interstate wars and violence. The data for this index is sourced from the
+    Major Episodes of Political Violence dataset by Marshall. This index provides
+    a comprehensive measure of the level of violence and conflict within a
+    country, which can significantly impact power transitions.
+    [@marshall2005current].
 
--   **Post-Cold War**: A binary variable, coded as 1 if the event occurs after
-    1990, and 0 otherwise.
+-   **Degree of Democracy:** The level of democracy is gauged using Polity 5
+    scores at the entry year for each respective country. These scores range from
+    -10 (fully autocratic) to +10 (fully democratic), capturing the extent of
+    democratic versus autocratic governance. This dataset is sourced from the
+    Centre for Systemic Peace (CSP)[^1] and provides an essential measure of
+    political regime type, which might influence the political stability and
+    power transitions.
 
--   **Entry Mode**: Categorized as regular if a leader comes to power through a
-    constitutional process, such as an election, and irregular if through
-    unconstitutional means, such as a coup. Leaders who come to power regularly
-    are more likely to adhere to original norms and governance practices. Data on
-    entry mode is obtained from the Archigos dataset.
+-   **Population Size:** To account for its potential impact on leaders' tenures,
+    the log of the population size is considered. This transformation helps in
+    managing the wide range of population sizes across different countries. The
+    data is sourced from the V-Dem dataset and is evaluated to understand its
+    influence on power transitions. Larger populations may present more
+    governance challenges and potential sources of opposition, thereby affecting
+    the stability and longevity of a leader's tenure.
+
+-   **Leader's Age:** The age of the leader is included as an additional variable
+    in the analysis, offering insights into potential correlations with
+    leadership strength. Older leaders may have different experiences, networks,
+    and health considerations that could influence their ability to maintain
+    power. This data is sourced from the leaders dataset by [@goemans2009].
+
+Different from analysing the determinants of coups, which theoretically could
+happen in each year, we assume that autocoup happens only once during the tenure
+of the incumbent. Because once the incumbent succeeds an autocoup, there is no
+necessary to stage another one. Of course, this is not the case in real time. A
+leader who successfully overstayed one term could try to overstay additional
+term, or even strive for leadership for life. A leader who failed in the first
+attempt might make another try if they are not removed due the first failure. To
+simplify the analysis, we overlook those possibilities.
+
+Therefore, in the `probit` model, the unit of analysis in autocoups is the whole
+tenure of the leader, not country-year. So, we need to settle a base-year for the
+variables. For leaders who staged an autocoup, we take the year of their first
+attempts as the base-year, while for leaders who did not attempt to overstay, we
+take the middle year of their tenure as the base-year.
+
+Unlike the analysis of coup determinants, which could theoretically occur in any
+given year, we assume that an autocoup happens only once during an incumbent
+leader's tenure. Once an incumbent succeeds in staging an autocoup, there is no
+need for another attempt. However, this assumption does not always reflect
+reality. A leader who successfully extends their term might attempt further
+extensions, striving for lifelong leadership. Conversely, a leader who fails in
+their first attempt may try again if they are not removed from power after the
+initial failure. For simplicity, we overlook these possibilities in our analysis.
+
+Therefore, in our `probit` model, the unit of analysis for autocoups is the
+entire tenure of a leader, rather than a country-year. We establish a base year
+for the variables: for leaders who staged an autocoup, we use the year of their
+first attempt as the base year; for leaders who did not attempt to overstay, we
+use the middle year of their tenure as the base year.
 
 ### Results and discussions
+
+```{r}
+#| label: model
+#| results: asis
+#| echo: false
+
+autocoup_final_data <- read_csv(here("data/Autocoup_model_data.csv"))
+
+model_attempt <- autocoup_final_data |> 
+  mutate(regime = fct_relevel(regime, "presidential")) |>
+  glm(autocoup_attempt ~ regime + GDP_pc + GDP_trend + polity5 + violence + age + pop_log, 
+      family = binomial(link = "probit"),
+      data = _)
+
+model_success <- autocoup_final_data |> 
+  mutate(regime = fct_relevel(regime, "presidential")) |>
+  filter(autocoup_attempt == 1) |> 
+  glm(autocoup_success ~ regime + GDP_pc + GDP_trend + polity5 + violence + age + pop_log, 
+      family = binomial(link = "probit"),
+      data = _)
+
+stargazer(model_attempt, model_success, 
+          header = F,
+          column.labels = c("Coup Attempts", "Coup Outcome"),
+          intercept.bottom = F,
+          title = "Determinants of autocoup attempts and success (1945-2018)",
+          label = "results",
+          covariate.labels = c("Constant",
+                               "Regime: Dominant-party",
+                               "\\hspace{1.6cm}Military",
+                               "\\hspace{1.6cm}Personalist",
+                               " GDP per capita",
+                               "Economic trend",
+                               "Political 5",
+                               "Political violence",
+                               "Age",
+                               "Population(log)"),
+          dep.var.caption = "",
+          dep.var.labels.include = F,
+          summary.logical = T,
+          column.sep.width = "50pt"
+          )
+```
 
 ```{r}
 #| label: references
@@ -925,3 +954,6 @@ $$
 cat("\\newpage
 ## References")
 ```
+
+[^1]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on
+    `r Sys.Date()`.
