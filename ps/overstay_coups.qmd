@@ -18,11 +18,11 @@ categories: [Article, Coups, Autocoups]
 bibliography: references.bib
 
 abstract: |
-  This study aims to clarify the concept of overstay coups, focusing on power extensions by incumbent leaders. By distinguishing overstay coups from the broader, more ambiguous concepts of self-coups or autocoups, which encompass both executive power aggrandizement and power extension, this research introduces a refined understanding of these specific political events.
+  This study aims to clarify the concept of autocoups, specifically focusing on power extensions by incumbent leaders. By distinguishing autocoups from the broader and more ambiguous concepts of self-coups or executive takeover, which encompass both executive power aggrandizement and power extension, this research redefines the concept of autocoups. Based on this refined definition, we introduce a novel dataset of autocoup events from 1945 to 2022.
 
-  The research involves coding overstay coup events and compiling a comprehensive dataset covering the period from 1945 to the present. Using this dataset, two detailed case studies provide qualitative insights into the dynamics and outcomes of overstay coups. Additionally, a regression analysis identifies the determinants of overstay coup attempts, shedding light on the factors that influence incumbents' decisions to extend their power illegitimately.
+  Using the newly compiled dataset, the research includes three types of case studies that provide qualitative insights into the dynamics of autocoups. Additionally, an empirical analysis on the determinants of autocoup attempts and success is offered to demonstrate how the autocoup dataset can be employed for more quantitative research.
 
-  The findings contribute to the existing literature by providing a clearer conceptual framework and empirical evidence on overstay coups. This research enhances our understanding of the mechanisms and motivations behind power extensions by incumbent leaders, and it examines the implications for democratic resilience, democratic backsliding, democratic breakdown, personalization of power, and autocratic deterioration. The insights gained from this study inform policy and theoretical discussions on political stability and the challenges facing contemporary democracies.
+  This study contributes to the existing literature by providing a clearer conceptual framework and a novel dataset of autocoups. It enhances our understanding of the mechanisms and motivations behind power extensions by incumbent leaders and examines the implications for democratic backsliding, democratic breakdown, personalization, and autocratic deterioration. The insights gained from this study could draw more attention to the effects of autocoups on power transitions, political stability, and democratic resilience.
   
 keywords: [Coups, Autocoups, Political Leadership]
 
@@ -416,11 +416,12 @@ read.csv(here("data/autocoup_source.csv")) |>
 
 The autocoup dataset, like most dataset coding procedures, is based on existing
 studies and datasets. @tbl-source outlines the main sources for coding the
-autocoup dataset. The Archigos dataset [@goemans2009] and the REIGN dataset
-[@bell2016reign] provide comprehensive data on all leaders from 1875 to 2021,
-although our coding only includes autocoups since 1945. These datasets help
-identify the actual rulers of countries, saving time in distinguishing real
-leaders from nominal heads of state.
+autocoup dataset. The Archigos dataset [@goemans2009] and the Political Leaders’
+Affiliation Database (PLAD) dataset [@bomprezzi2024wedded] provide comprehensive
+data on all leaders from 1875 to 2023, although our coding only includes
+autocoups since 1945. These datasets help identify the actual rulers of
+countries, saving time in distinguishing real leaders from nominal heads of
+state.
 
 The Incumbent Takeover dataset [@baturo2022], which integrates data from 11
 related datasets, offers a broad spectrum of cases where leaders significantly
@@ -430,13 +431,22 @@ lack of term extensions, I cross-referenced the Archigos dataset, which includes
 detailed trajectories of leaders' entries and exits from power, to verify the
 qualifications for autocoups.
 
-As the Archigos dataset concludes at the end of 2015, I used trusted news reports
-to validate data from the Incumbent Takeover dataset. In total, I coded 113
-observations, with 75 overlapping with the candidate data from Incumbent
-Takeover. The remaining 38 events were newly coded by the author through
-verification with other sources such as Archigos, REIGN, and news reports.The
-main deviation from the Incumbent Takeover dataset arises from excluding power
-expansions that do not involve attempts to extend tenure.
+```{r}
+#| label: data-autocoups
+#| echo: false
+
+Autocoup <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup.csv")
+# nrow(Autocoup)
+# nrow(Autocoup |> filter(!is.na(baturo)))
+```
+
+In total, I coded `r nrow(Autocoup)` observations, with
+`r nrow(Autocoup |> filter(!is.na(baturo)))` overlapping with the candidate data
+from Incumbent Takeover. The remaining
+`r nrow(Autocoup) - nrow(Autocoup |> filter(!is.na(baturo)))` events were newly
+coded by the author through verification with other sources such as Archigos, and
+news reports.The main deviation from the Incumbent Takeover dataset arises from
+excluding power expansions that do not involve attempts to extend tenure.
 
 #### Definitions of main variables
 
@@ -508,11 +518,12 @@ The dataset encompasses a total of 14 variables along with the `notes` field.
 ```{r}
 #| label: data_descriptions
 #| echo: false
-autocoup <- read_excel(here("data/autocoup.xlsx")) |> 
+autocoup <- Autocoup |> 
   mutate(exit_date = ifelse(exit_date != "Incumbent", exit_date, NA)) |> 
   mutate(exit_date = case_when(is.na(exit_date) ~ Sys.Date(), 
                                .default = convert_to_date(exit_date)),
-         extending_date = make_date(year = extending_date, month(entry_date), day(entry_date)))
+         extending_date = make_date(year = extending_date, month(entry_date), day(entry_date))) |> 
+  select(1:14)
 country <- autocoup |> 
   distinct(ccode) |> 
   summarise(count = n())
@@ -524,11 +535,12 @@ country <- autocoup |>
 #| eval: !expr format == "latex"
 #| echo: false
 
-autocoup |> 
+autocoup_desc <- autocoup |> 
   summarise(autocoup_attempted = n(),
             autocoup_succeeded = sum(autocoup_outcome == "Yes"),
     .by = autocoup_method) |> 
-  arrange(-autocoup_attempted) |> 
+  arrange(-autocoup_attempted)
+autocoup_desc |> 
   adorn_totals() |> 
   mutate(Success_rate = percent (autocoup_succeeded/autocoup_attempted)) |> 
   clean_names(case = "title") |> 
@@ -541,15 +553,19 @@ autocoup |>
     2:3 ~ px(140),
     4 ~ px(100)
   )
+
+#autocoup_desc$autocoup_attempted[1]
 ```
 
-According to our primary coding, we have identified 113 autocoup cases from 1945
-to 2021, involving `r country$count` countries. As shown in @tbl-autocoup_method,
-the most common autocoup method is enabling re-election, accounting for 49
-events. This is followed by removing term limits altogether, with 14 cases, and
-then delaying elections and declaring the leader for life, each with 9 cases.
+According to our primary coding, we have identified `r nrow(Autocoup)` autocoup
+cases from 1945 to 2022, involving `r country$count` countries. As shown in
+@tbl-autocoup_method, the most common autocoup method is enabling re-election,
+accounting for `r autocoup_desc$autocoup_attempted[1]` events. This is followed
+by removing term limits altogether, with `r autocoup_desc$autocoup_attempted[2]`
+cases, and then delaying elections and declaring the leader for life, each with
+`r autocoup_desc$autocoup_attempted[3]` cases.
 
-Examining the success rates of autocoups, the total success rate is 78%, which is
+Examining the success rates of autocoups, the total success rate is 79%, which is
 significantly higher than the roughly 50% success rate of classical coups. This
 suggests that incumbents are in an advantageous position to expand or extend
 their powers as executive leaders. They can do so openly and gradually, whereas
@@ -557,7 +573,7 @@ coup plotters must operate in secrecy and face numerous challenges such as
 promissory issues and the risk of betrayal or exposure.
 
 However, the success rates vary significantly across different methods. Removing
-term limits, delaying elections, declaring the leader for life, and canceling
+term limits, delaying elections, declaring the leader for life, and cancelling
 elections are all 100% successful. In contrast, there are only 4 cases of
 refusing election results, with just one succeeding. Although this sample is
 small, it suggests that in regimes where general elections are held and
@@ -945,6 +961,94 @@ stargazer(model_attempt, model_success,
           column.sep.width = "50pt"
           )
 ```
+
+Table \ref{results} summarizes the findings from the `probit` regression models
+based on our analysis of the determinants of autocoup attempts and their success.
+
+Model 1, which examines autocoup attempts, reveals only one significant predictor
+besides the constant term. Among the regime types, personalist regimes
+significantly increase the likelihood of autocoup attempts, all else being equal.
+This suggests that leaders in personalist regimes are more prone to attempt to
+extend their power through autocoups compared to leaders in democratic regimes.
+Leaders in dominant-party and military regimes, however, show no significant
+difference in the likelihood of attempting an autocoup compared to democratic
+leaders.
+
+The model for autocoup success (Model 2) shows similar dynamics. Personalist
+regimes again have a strong positive and significant effect on the success of
+autocoups compared to democratic leaders. Dominant-party regimes also show a
+positive and marginally significant effect. However, a detailed examination
+reveals that about half of the successful autocoups in dominant-party regimes (9
+out of 20) exhibit a personalist style, such as "party-personal-military"
+regimes.
+
+This is logical since personalist leaders are typically much more powerful than
+other types of leaders, making them more inclined and capable of overstaying in
+power.
+
+Other factors play an insignificant role in determining the attempts and outcomes
+of autocoups. This aligns with our conclusions on the determinants of classic
+coups. Both coups and autocoups are significantly affected by power dynamics. As
+power transitions involve the struggle between seizing and maintaining power, the
+balance of power status quo inevitably matters in both coups and autocoups. This
+also explains the high success rate of autocoups. Compared to power challengers,
+incumbents are in an obviously advantageous position. Incumbent leaders can use
+state power to their benefit, which is difficult to counteract. Even the abuse of
+power is often unchecked under a powerful leader's rule.
+
+The threshold for removing or impeaching an incumbent leader is very high.
+Without more than a majority or even greater support, it is very difficult to
+succeed. Using illegal means such as a coup is even more challenging, as the
+costs are high, the consequences are severe, and the likelihood of success is
+very low.
+
+## Conclusion
+
+In conclusion, this study provides a comprehensive analysis of autocoups,
+specifically focusing on political events where incumbent leaders illegitimately
+extend their tenure in power. By refining the concept and distinguishing it from
+broader definitions of self-coups, we introduce a novel dataset of autocoups.
+Through this more precise definition and dataset, we enhance the understanding
+and methods of analyzing the dynamics of irregular power transitions and the
+survival of political leaders.
+
+Our primary findings, derived from using the novel dataset and probit model,
+indicate that personalist regimes are significantly more likely to experience
+both attempts and successes of overstay coups compared to democratic regimes.
+Dominant-party regimes also show a marginally significant effect on the success
+of autocoups, often characterized by personalist traits.
+
+The regression analysis reveals that while the type of regime plays a crucial
+role in the likelihood of autocoup attempts and successes, other factors appear
+to be insignificant. This aligns with patterns observed in classic coup attempts,
+where power dynamics and the balance of power are central. The high success rate
+of autocoups can be attributed to the inherent advantages incumbents possess,
+such as control over state power and the challenges associated with removing or
+impeaching them through legal or illegal means.
+
+However, there are several drawbacks that future research could address. Firstly,
+the definition of an autocoup needs further commentary and discussion to gain
+wider acceptance. Consequently, the dataset of autocoups requires further
+case-by-case verification to improve accuracy, although debates on some ambiguous
+cases will likely persist. Secondly, due to the nature of autocoups, which are
+less frequent than classic coups (491 coups versus 110 autocoups during the same
+period), the quantitative analysis cannot be conducted as a country-year variable
+as in coups. This raises the issue of choosing a base year. For example, when
+analyzing how GDP level or growth rate, the democratic index (such as Polity 5),
+or the age of the leader affects autocoup attempts, which year's value should be
+used? In this study, we chose the middle year of a leader's tenure or the year
+they staged the autocoup, but determining the most appropriate year requires
+further discussion.
+
+Overall, this research enhances our understanding of the mechanisms and
+motivations behind autocoups, contributing to the literature on political
+stability and democratic resilience. Future studies could build on this work by
+employing the dataset to explore more power dynamics or examine the long-term
+impacts of these events on political systems, particularly on democratic
+backsliding, democratic breakdown, and personalization of power. The insights
+gained here are crucial for policy-makers and scholars concerned with the
+preservation and promotion of democratic governance in the face of autocratic
+threats.
 
 ```{r}
 #| label: references
