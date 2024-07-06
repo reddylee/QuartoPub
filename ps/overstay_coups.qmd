@@ -433,7 +433,7 @@ qualifications for autocoups.
 
 ```{r}
 #| label: data-autocoups
-#| echo: false
+#| echo: !expr format == "html"
 
 Autocoup <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup.csv")
 # nrow(Autocoup)
@@ -517,23 +517,25 @@ The dataset encompasses a total of 14 variables along with the `notes` field.
 
 ```{r}
 #| label: data_descriptions
-#| echo: false
+#| echo: !expr format == "html"
 autocoup <- Autocoup |> 
   mutate(exit_date = ifelse(exit_date != "Incumbent", exit_date, NA)) |> 
   mutate(exit_date = case_when(is.na(exit_date) ~ Sys.Date(), 
                                .default = convert_to_date(exit_date)),
          extending_date = make_date(year = extending_date, month(entry_date), day(entry_date))) |> 
   select(1:14)
+
 country <- autocoup |> 
   distinct(ccode) |> 
   summarise(count = n())
 ```
 
+\clearpage
+
 ```{r}
 #| label: tbl-autocoup_method
 #| tbl-cap: Autocoup methods and success rates (1945-2021)
-#| eval: !expr format == "latex"
-#| echo: false
+#| echo: !expr format == "html"
 
 autocoup_desc <- autocoup |> 
   summarise(autocoup_attempted = n(),
@@ -635,9 +637,9 @@ designated successor, in 2019. However, he retained significant influence as the
 Chairman of the Security Council of Kazakhstan until 2022.
 
 ```{r}
-#| label: tbl-region
-#| eval: FALSE
-#| include: FALSE
+#| label: region
+#| echo: !expr format == "html"
+
 library(countrycode)
 latin <- codelist |> 
   filter(region == "Latin America & Caribbean") |> 
@@ -650,21 +652,21 @@ africa <- codelist |>
   drop_na() |> 
   pull(cown)
 
-autocoup |> 
-  filter(ccode %in% latin) |> 
-  summarise(count = n(),
-            .by = country) |> 
-  adorn_totals() 
-autocoup |> 
-  filter(ccode %in% latin) |> 
-  summarise(count = n(),
-            .by = autocoup_method) |> 
-  adorn_totals()
-autocoup |> 
-  filter(ccode %in% latin) |> 
-  summarise(count = n(),
-            .by = autocoup_outcome) |> 
-  adorn_totals() 
+# autocoup |> 
+#   filter(ccode %in% latin) |> 
+#   summarise(count = n(),
+#             .by = country) |> 
+#   adorn_totals() 
+# autocoup |> 
+#   filter(ccode %in% latin) |> 
+#   summarise(count = n(),
+#             .by = autocoup_method) |> 
+#   adorn_totals()
+# autocoup |> 
+#   filter(ccode %in% latin) |> 
+#   summarise(count = n(),
+#             .by = autocoup_outcome) |> 
+#   adorn_totals() 
 ```
 
 ### Autocoups for immediate re-election: Cases of Latin American countries
@@ -732,38 +734,38 @@ number of five-year terms, making him president since 2007 [@close2019].
 #| label: africa
 #| eval: FALSE
 #| include: FALSE
-autocoup |> 
-  filter(ccode %in% africa) |> 
-  summarise(count = n(),
-            Post_Cold_War = sum(autocoup_date > 1990),
-            Pre_Cold_War = sum(autocoup_date < 1991),
-            .by = autocoup_outcome) |> 
-  adorn_totals() 
-
-autocoup |> 
-  filter(ccode %in% africa) |> 
-  summarise(count = n(),
-            .by = country) |> 
-  adorn_totals()
-autocoup |> 
-  filter(ccode %in% africa) |> 
-  summarise(count = n(),
-            .by = autocoup_outcome) |> 
-  adorn_totals() 
-autocoup |> 
-  filter(ccode %in% africa) |> 
-  summarise(count = n(),
-            .by = autocoup_method) |> 
-  adorn_totals() 
-coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
-                 sep = "\t")
-coup |> 
-  filter(ccode  %in% africa) |> 
-  summarise(count = n(),
-            Success = sum(coup == 2),
-            Cold_War = sum(year > 2000),
-            .by = country) |> 
-  adorn_totals()
+# autocoup |> 
+#   filter(ccode %in% africa) |> 
+#   summarise(count = n(),
+#             Post_Cold_War = sum(autocoup_date > 1990),
+#             Pre_Cold_War = sum(autocoup_date < 1991),
+#             .by = autocoup_outcome) |> 
+#   adorn_totals() 
+# 
+# autocoup |> 
+#   filter(ccode %in% africa) |> 
+#   summarise(count = n(),
+#             .by = country) |> 
+#   adorn_totals()
+# autocoup |> 
+#   filter(ccode %in% africa) |> 
+#   summarise(count = n(),
+#             .by = autocoup_outcome) |> 
+#   adorn_totals() 
+# autocoup |> 
+#   filter(ccode %in% africa) |> 
+#   summarise(count = n(),
+#             .by = autocoup_method) |> 
+#   adorn_totals() 
+# coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
+#                  sep = "\t")
+# coup |> 
+#   filter(ccode  %in% africa) |> 
+#   summarise(count = n(),
+#             Success = sum(coup == 2),
+#             Cold_War = sum(year > 2000),
+#             .by = country) |> 
+#   adorn_totals()
 ```
 
 ### As common as classical coups: Cases of African countries
@@ -922,7 +924,8 @@ use the middle year of their tenure as the base year.
 ```{r}
 #| label: model
 #| results: asis
-#| echo: false
+#| echo: !expr format == "html"
+
 
 autocoup_final_data <- read_csv(here("data/Autocoup_model_data.csv"))
 
@@ -1004,51 +1007,44 @@ very low.
 
 ## Conclusion
 
-In conclusion, this study provides a comprehensive analysis of autocoups,
-specifically focusing on political events where incumbent leaders illegitimately
-extend their tenure in power. By refining the concept and distinguishing it from
-broader definitions of self-coups, we introduce a novel dataset of autocoups.
-Through this more precise definition and dataset, we enhance the understanding
-and methods of analyzing the dynamics of irregular power transitions and the
-survival of political leaders.
+This study provides a comprehensive analysis of autocoups, specifically focusing
+on political events where incumbent leaders illegitimately extend their tenure in
+power. By refining the concept and distinguishing it from broader definitions,
+such as 'self-coups', 'autogolpes', 'executive takeover', we introduce a novel
+dataset of autocoups (1945-2022). Through this more precise definition and
+dataset, we enhance the understanding and methods of analyzing the dynamics of
+irregular power transitions and the survival of political leaders.
 
-Our primary findings, derived from using the novel dataset and probit model,
-indicate that personalist regimes are significantly more likely to experience
-both attempts and successes of overstay coups compared to democratic regimes.
-Dominant-party regimes also show a marginally significant effect on the success
-of autocoups, often characterized by personalist traits.
+Our findings reveal that personalist regimes are far more likely to experience
+autocoup attempts and are more likely to succeed compared to democracies.
+Dominant-party systems, often exhibiting personalist characteristics, also show
+an association with successful autocoups. While regime type significantly
+influences autocoups, other factors appear less impactful, mirroring classic
+coups where the balance of power is a more essential determinant. The high
+success rate of autocoups can be attributed to the inherent advantages incumbents
+possess, such as control over or abuse of state power and the difficulty of
+removing or impeaching them through legal or illegal means.
 
-The regression analysis reveals that while the type of regime plays a crucial
-role in the likelihood of autocoup attempts and successes, other factors appear
-to be insignificant. This aligns with patterns observed in classic coup attempts,
-where power dynamics and the balance of power are central. The high success rate
-of autocoups can be attributed to the inherent advantages incumbents possess,
-such as control over state power and the challenges associated with removing or
-impeaching them through legal or illegal means.
-
-However, there are several drawbacks that future research could address. Firstly,
-the definition of an autocoup needs further commentary and discussion to gain
-wider acceptance. Consequently, the dataset of autocoups requires further
+However, there are several limitations that future research could address.
+Firstly, the definition of an autocoup requires further commentary and discussion
+to gain wider acceptance. Accordingly, the dataset of autocoups requires further
 case-by-case verification to improve accuracy, although debates on some ambiguous
 cases will likely persist. Secondly, due to the nature of autocoups, which are
 less frequent than classic coups (491 coups versus 110 autocoups during the same
 period), the quantitative analysis cannot be conducted as a country-year variable
 as in coups. This raises the issue of choosing a base year. For example, when
 analyzing how GDP level or growth rate, the democratic index (such as Polity 5),
-or the age of the leader affects autocoup attempts, which year's value should be
-used? In this study, we chose the middle year of a leader's tenure or the year
-they staged the autocoup, but determining the most appropriate year requires
-further discussion.
+or the age of the leader affect autocoup attempts, we need to decide which year's
+value should be used. In this study, we chose the middle year of a leader's
+tenure or the year they staged the autocoup, but determining the most appropriate
+year requires further discussion.
 
-Overall, this research enhances our understanding of the mechanisms and
-motivations behind autocoups, contributing to the literature on political
-stability and democratic resilience. Future studies could build on this work by
-employing the dataset to explore more power dynamics or examine the long-term
-impacts of these events on political systems, particularly on democratic
-backsliding, democratic breakdown, and personalization of power. The insights
-gained here are crucial for policy-makers and scholars concerned with the
-preservation and promotion of democratic governance in the face of autocratic
-threats.
+Despite these limitations, this research enhances our understanding of the
+mechanisms and motivations behind autocoups, contributing to the literature on
+political stability and democratic resilience. Future studies could build on this
+work by employing the dataset to explore more power dynamics or examine the
+long-term impacts of these events on political systems, particularly on
+democratic backsliding, democratic breakdown, and personalization of power.
 
 ```{r}
 #| label: references

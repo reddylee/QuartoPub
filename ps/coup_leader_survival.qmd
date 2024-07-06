@@ -721,10 +721,6 @@ tbl2 <- model_cox2|>
   add_significance_stars(hide_p = T, hide_se = F, hide_ci = T) |> 
   bold_p(t = 0.05) |> 
   bold_labels() 
-  
-autocoup_final_data |> 
-  filter(autocoup_attempt == 1) |> 
-  tabyl(regime)
 ```
 
 ```{r}
