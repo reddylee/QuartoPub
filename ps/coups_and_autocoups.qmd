@@ -1,0 +1,116 @@
+---
+title: "Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics"
+author:
+  - name: Zhu Qi
+    affiliations: University of Essex
+    email: qz21485@essex.ac.uk
+
+date: 2024-07-07
+date-modified: last-modified
+format:
+  aps-html: default
+  aps-pdf: default
+  docx: default
+  aps-revealjs:
+    output-file: coup_autocoup.html
+
+categories: [Article, Political Science]
+bibliography: references.bib
+
+abstract: |
+  This thesis aims to provide a comprehensive framework for understanding the most common irregular power transitions—coups and autocoups—and the survival of political leadership in their aftermath. 
+  Coups have been a central topic in political science literature, but the significant attention of this study is given to how power dynamics and the expected chances of success determine coup attempts. Employing Heck’s two-stage sample selection model, we find that the expected chances of coup success play a crucial role in motivating coup attempts. These chances are significantly influenced by the power dynamics between the incumbent and potential coup plotters, which are, in turn, affected by regime types.
+  In contrast, autocoups have received less scholarly attention. This neglect stems partly from the underestimation of autocoups' impact on democratization and democratic resilience, and partly from the lack of a widely accepted definition and dataset. This study addresses these gaps by providing a refined definition of autocoups, reviewing existing terms and definitions such as self-coup, autogolpe, and executive takeover. Based on this new definition, we introduce a novel dataset of autocoups that can facilitate more quantitative studies. Additionally, this study includes several case studies and an empirical analysis to demonstrate the utility of the new dataset in future research.
+  
+  Beyond power transitions, political leadership survival is another critical topic in political science. This study offers a comparative analysis of leadership survival following coups and autocoups. Using the Cox proportional hazards model and a time-dependent Cox model, we present compelling evidence of differing survival times between leaders who enter through coups and those who extend power via autocoups. The findings indicate that coup-entry leaders have a much shorter average tenure and a higher probability of being ousted compared to autocoup leaders. These results suggest that the relatively low cost and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding.
+  
+  This research makes several contributions to the academic literature. First, it provides a general and comparative framework for the most common irregular power transitions: coups and autocoups. Second, it introduces a refined definition and a dataset of autocoups, enabling comparative studies on the dynamics of irregular power transitions alongside coups. Finally, it highlights the significant influence of power transitions and leadership survival on democratic backsliding, democratic breakdown, and personalization of power.
+  
+keywords: [Coups, Autocoups, Power transitions, Leadership Survival]
+
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+library(tidyverse)
+library(gt)
+library(janitor)
+library(scales)
+library(zoo)
+library(democracyData)
+library(vdemdata)
+library(readxl)
+library(here)
+library(stargazer)
+```
+
+```{r}
+#| include: false
+Plad <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/PLAD.csv")
+Archigos <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/archigos.csv")
+
+Plad |>
+  filter(startdate > 1945) |> 
+  tabyl(exit)
+Archigos |>
+  filter(startdate > 1945,
+         !exitcode  %in% c("Regular", "Still in Office")) |> 
+  tabyl(exitcode) |> 
+  adorn_totals()
+```
+
+## Introduction
+
+Power transition is a central topic in political science, particularly irregular
+power transitions. Among various types of irregular power transitions, coups
+account for a majority share. According to the Archigos dataset [@goemans2009],
+from 1945 to 2015, there were approximately 145 irregular leader exits, with more
+than half (79 leaders) removed by coups[^1]. The oft-cited coup dataset
+[@powell2011] reports an even higher number, with 245 leaders removed by coups
+from 1950 to 2023.
+
+Due to their frequency and significant impact on political life and political
+science, coups have been extensively studied, especially since 2000 [@thyne2019].
+Consequently, the concept and definition of a coup are relatively clear. Many
+scholars follow the definition conceptualized by @powell2011: coups are “illegal
+and overt attempts by the military or other elites within the state apparatus to
+unseat the sitting executive . . . \[a coup is successful\] if the perpetrators
+seize and hold power for at least seven days” (p. 252). While debates persist to
+some extent, two elements are clear: First, the perpetrators of coups are elites
+within the ruling groups, targeting incumbent executive leaders. Second, the
+strategy involves completely removing the incumbents, rather than merely seizing
+partial power.
+
+Moreover, the proliferation of coup studies has led to the development of
+numerous coup datasets, such as the Global Instances of Coups [@powell2011], the
+Cline Center Coup d’État Project Dataset [@peyton2024], and the Colpus Dataset
+[@chin2021]. These datasets are well-developed and frequently used in research on
+coups and related political science topics.
+
+In contrast, autocoups are understudied in both conceptual and empirical aspects.
+There is no widely accepted definition, and even the terminology is debated, with
+terms like self-coup, autogolpe, and executive takeover used by different
+scholars. Consequently, a comprehensive dataset on autocoups is lacking. While
+some alternative options exist, they fall short of being widely accepted and/or
+used in academic research.
+
+## Conclusion
+
+```{r}
+#| label: references
+#| results: asis
+#| eval: !expr format == "latex"
+#| echo: false
+
+cat("\\newpage
+## References")
+```
+
+[^1]: According to the Archigos dataset, "Removed by Military, without Foreign
+    Support" and "Removed by Other Government Actors, without Foreign Support" in
+    the variable `exitcode` are classified as coups.
