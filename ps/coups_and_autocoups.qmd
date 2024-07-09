@@ -62,42 +62,180 @@ Archigos |>
          !exitcode  %in% c("Regular", "Still in Office")) |> 
   tabyl(exitcode) |> 
   adorn_totals()
+
+REIGN |>
+  filter(year > 1945 & year <2021) |> 
+  mutate(democracy = case_when(
+    gwf_regimetype %in% c("parliamentary", "presidential") ~ "Democracy",
+    .default = "Non-democracy")) |> 
+  summarise(Count = n(), 
+            .by = c(year, democracy)) |> 
+  #view()
+  ggplot(aes(year, Count, color = democracy)) +
+  geom_point()
 ```
 
 ## Introduction
 
-Power transition is a central topic in political science, particularly irregular
-power transitions. Among various types of irregular power transitions, coups
-account for a majority share. According to the Archigos dataset [@goemans2009],
-from 1945 to 2015, there were approximately 145 irregular leader exits, with more
-than half (79 leaders) removed by coups[^1]. The oft-cited coup dataset
-[@powell2011] reports an even higher number, with 245 leaders removed by coups
-from 1950 to 2023.
+### Research question
 
-Due to their frequency and significant impact on political life and political
-science, coups have been extensively studied, especially since 2000 [@thyne2019].
-Consequently, the concept and definition of a coup are relatively clear. Many
-scholars follow the definition conceptualized by @powell2011: coups are “illegal
-and overt attempts by the military or other elites within the state apparatus to
-unseat the sitting executive . . . \[a coup is successful\] if the perpetrators
-seize and hold power for at least seven days” (p. 252). While debates persist to
-some extent, two elements are clear: First, the perpetrators of coups are elites
-within the ruling groups, targeting incumbent executive leaders. Second, the
-strategy involves completely removing the incumbents, rather than merely seizing
-partial power.
+Democratic process in the world has experienced different types of challenges
+since World War II. As the beginning of the “third wave” of democratization
+[@huntington1991democratization], we witnessed the grate transitions to democracy
+in the last 20 years of 20th century. As the twentieth century ends, elected
+officials govern more countries than at any previous time in human history
+[@geddes1999]. However, the global democracy is under threat in post-cold war
+era. @diamond2008 warned of a democratic recession at the end of the first decade
+of 21st century. According to @freedomhouse2024freedom, global freedom declined
+for the 18th consecutive year
+in 2023. Although the data show relatively few countries backsliding from
+democracy all the way to full-blown autocracy, the average level of democracy in
+the world has slipped back to where it was before the year 2000, and most
+democratic recessions have occurred within regime categories–with democracies
+becoming less liberal and autocracies less competitive and more repressive
+[@mechkova2017].
 
-Moreover, the proliferation of coup studies has led to the development of
-numerous coup datasets, such as the Global Instances of Coups [@powell2011], the
-Cline Center Coup d’État Project Dataset [@peyton2024], and the Colpus Dataset
-[@chin2021]. These datasets are well-developed and frequently used in research on
-coups and related political science topics.
+The factors cause backsliding vary and debating on which is the 'prime culprit'
+is in the processing. This dissertation is not aiming to draw a conclusion on
+this question. Instead, we aim to analyse one important factor which greatly
+affects democratic backsliding–irregular power transition. Irregular power
+transition not only itself break the constitutional rule, it often breaks the
+positive process direct to democracy. Even worse, the irregular entry leaders, in
+order to strengthen their illegitimate role in power, make more efforts to
+repress oppositions or potential power challengers.
 
-In contrast, autocoups are understudied in both conceptual and empirical aspects.
-There is no widely accepted definition, and even the terminology is debated, with
-terms like self-coup, autogolpe, and executive takeover used by different
-scholars. Consequently, a comprehensive dataset on autocoups is lacking. While
-some alternative options exist, they fall short of being widely accepted and/or
-used in academic research.
+Although irregular power transition is so important and has always been a central
+topic in political science, a long asked question still intrigued political
+scientists: Why some leaders were ousted before their term expires, some can
+accomplish their term, while some can even overstay in office beyond their
+original mandated term limits. Or put it another way, why do some leaders rule
+for decades while others stay in power for only years, months, or even days?
+
+### Coups and autocoups
+
+However, when referring to irregular power transition, first idea bump into our
+mind is irregular entry or irregular exit, such as coups, assignations,
+rebellions, protests, foreign interventions. Among these irregular means, coups
+hold a outstanding position due to their majority occurrence. According to the
+Archigos dataset [@goemans2009], from 1945 to 2015, there were approximately 145
+instances of irregular leader exits, with coups[^1] accounting for more than half
+(79 leaders). The often-cited coup dataset [@powell2011] records even more
+leaders (245 cases) removed by coups from 1950 to 2023.
+
+Given their prevalence and substantial influence on political systems, coups have
+been extensively studied in previous research, especially since 2000
+[@thyne2019]. Consequently, the concept of coup is comparatively clear and has
+gained a consensus in academics. Scholars often follow the definition by
+@powell2011, which describes coups as "illegal and overt attempts by the military
+or other elites within the state apparatus to unseat the sitting executive... \[a
+coup is successful\] if the perpetrators seize and hold power for at least seven
+days" (p. 252). Although debates persist, two elements are clear: First, the
+perpetrators are elites within the ruling group and the victim of coup is
+incumbent executive leaders. Second, the strategy, or the aim of coup, involves
+completely removing the incumbents, not merely seizing part of their power, or
+forcing the incumbent to give in at some special policy or proposal.
+
+Except the definition of coup, coup datasets have also been highly explored for
+quantitative analyses, such as the Global Instances of Coups [@powell2011], the
+Cline Centre Coup d’État Project Dataset [@peyton2024], and the Colpus Dataset
+[@chin2021]. These datasets are well-developed and frequently used in political
+science research.
+
+However, when analysing in a comprehensive view on irregular power transition,
+irregular entry and exit are not the whole story. It is just the half side of a
+ball. Using illegal means to overthrow an incumbent leader before their term
+expires is undoubtedly an irregular power transition. Similarly, an incumbent
+using illegal or illegitimate means to forcibly remain in power after their term
+has expired is also an irregular power transition. The former is irregular
+because it happens unexpectedly, while the latter is irregular because it does
+not happen as we expected.
+
+Although academic attentions on irregular remaining in office are increasing
+since 1990s, especially after the self-coup of Peru’s President Alberto Fujimori
+in 1992, they are still comparatively less studied compared to irregular entry or
+exit. Firstly, there is not even a terminology to name this "overstaying in
+power" type of irregular power transition, which as clear as classic coup.
+Consequently, various terms, such as self-coup, autogolpe, and executive
+takeover, are used by different scholars. This dissertation will use 'autocoup'
+to refer to this kind of irregular power transition, which will be discussed
+throughly in Chapter 3. Secondly, no consensus has been made on the definition of
+autocoup. Existent definitions remain vague between power expansions and power
+extensions[^2]. For example, @cameron1998a defines an autogolpe as a temporary
+suspension of the constitution and dissolution of Congress by the executive, who
+then rules by decree. This definition focuses on the power expansion instead of
+power extension, leading to conceptual confusion and the mis-alignment with the
+definition of classic coup. Thirdly, a consensus autocoup dataset is lacking as
+well and needs to identify and collect. Although several related datasets exits,
+as discussed by @baturo2022 in coding their Incumbent Takeover dataset, the
+terminologies, definitions and coverage years vary from one dataset to another,
+not to mention the wide acknowledgement from scholars and extensive explore in
+academics.
+
+This issue is not as problematic when analysing coups and autocoups separately.
+However, from a general framework point of view on irregular power transitions
+and leader survival, coups and autocoups should be, and could be analysed in the
+same framework. Both coup and autocoup are significant for their influence in
+democratic backsliding. Both are the most frequent irregular power transition
+means. Furthermore, to some extent, coup and autocoup are very similar. Coup is
+to replace the current leader, while autocoup is to replace the future leader.
+
+Extant literature on irregular power transition and leadership survival is mostly
+discussed separately, by different scholars, using different concepts and
+definitions, employing different methods and datasets. A general and comparative
+analysis on coups and autocoups, and coup-entry leaders autocoup leaders, both in
+theory and empirical analysis framework, therefore, are both important and
+imperative.
+
+This study addresses this gap by creating a comprehensive framework for analysing
+coups and autocoups, particularly their determinants and the survival of leaders
+who emerge from these events. We contribute to the political science literature
+in three main aspects. First, we emphasize the role of power dynamics, primarily
+determined by regime types, in determining coup success and, consequently, coup
+attempts. Second, we introduce a refined definition of autocoup and a novel
+dataset, allowing for comparative analysis with classic coups. Third, using the
+existing coup dataset and the new autocoup dataset, we employ survival analysis
+to demonstrate how different entry modes significantly affect leadership
+survival, providing a starting point for analysing democratic resilience.
+
+By doing so, we gain clearer insights into the factors that determine irregular
+power transition attempts and their success or failure, and why leaders entering
+power through different methods may have varying survival rates.
+
+### Overview of the thesis
+
+This study includes three main chapters beyond the introduction.
+
+**Chapter 2 d**iscusses the determinants of classic coup attempts. Although coup
+research is extensive, most studies focus on the influence of observable factors
+like economic performance, political stability, previous coups, or coup-proofing
+strategies. This study, however, focuses on the more essential but less
+observable factor-expected coup success rates, which is often overlooked by
+previous studies. Using Heckman's two-staged sample selection model, we find
+evidence that success rates significantly influence coup attempts. The success
+rates are primarily influenced by the balance of power between incumbents and
+challengers, which is greately determined by regime types. The results indicate
+that military regimes face a much higher risk of coups compared to dominant-party
+regimes.
+
+**Chapter 3** clarifies the concept of autocoups, focusing on power extensions by
+incumbent leaders. By distinguishing autocoups from broader concepts like
+self-coups or executive takeovers, we redefine autocoups as instances where
+incumbent leaders refuse to transition power as mandated, thereby overstaying in
+office. Based on this refined definition, we introduce a novel dataset of
+autocoup events from 1945 to 2022, including 110 attempts and 87 successes. Using
+this dataset, we present case studies and empirical analysis to demonstrate its
+utility for quantitative research.
+
+**Chapter 4** examines how the method of power acquisition impacts the longevity
+of coup-entry and autocoup leaders. We hypothesize that the method of accession
+significantly affects leader tenure. Using the Cox proportional hazards model and
+a time-dependent Cox model, we provide evidence of differing survival times
+between these two leader types. The findings indicate that coup-entry leaders
+face a significantly higher risk of removal compared to autocoup leaders. This
+underscores the implications for political stability and democratic processes,
+suggesting that the relatively low cost and high returns of autocoups could
+trigger incumbents to seize power in this manner, potentially leading to
+democratic backsliding and personalization of power.
 
 ## Conclusion
 
@@ -114,3 +252,9 @@ cat("\\newpage
 [^1]: According to the Archigos dataset, "Removed by Military, without Foreign
     Support" and "Removed by Other Government Actors, without Foreign Support" in
     the variable `exitcode` are classified as coups.
+
+[^2]: Power expansion and power extension are somewhat ambiguous terms. In this
+    study, we define power expansion as acquiring additional powers beyond those
+    originally associated with the leader's role or position. Conversely, we
+    define power extension as lengthening a leader’s tenure beyond the originally
+    mandated term.
