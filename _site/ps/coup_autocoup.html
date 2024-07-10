@@ -8,7 +8,10 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.554">
 <meta name="author" content="Zhu Qi">
@@ -32,6 +35,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #383a42;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #383a42; } /* Normal */
+    code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } /* Alert */
+    code span.an { color: #50a14f; } /* Annotation */
+    code span.at { color: #a626a4; } /* Attribute */
+    code span.bn { color: #986801; } /* BaseN */
+    code span.bu { color: #a626a4; } /* BuiltIn */
+    code span.cf { color: #a626a4; } /* ControlFlow */
+    code span.ch { color: #50a14f; } /* Char */
+    code span.cn { color: #986801; } /* Constant */
+    code span.co { color: #a0a1a7; font-style: italic; } /* Comment */
+    code span.cv { color: #e45649; font-style: italic; } /* CommentVar */
+    code span.do { color: #e45649; } /* Documentation */
+    code span.dt { color: #a626a4; } /* DataType */
+    code span.dv { color: #986801; } /* DecVal */
+    code span.er { color: #f44747; text-decoration: underline; } /* Error */
+    code span.ex { color: #4078f2; font-weight: bold; } /* Extension */
+    code span.fl { color: #986801; } /* Float */
+    code span.fu { color: #4078f2; } /* Function */
+    code span.im { color: #50a14f; } /* Import */
+    code span.in { color: #c45b00; } /* Information */
+    code span.kw { color: #a626a4; } /* Keyword */
+    code span.op { color: #a626a4; } /* Operator */
+    code span.ot { color: #27ae60; } /* Other */
+    code span.pp { color: #a626a4; } /* Preprocessor */
+    code span.re { color: #2980b9; background-color: #153042; } /* RegionMarker */
+    code span.sc { color: #0184bc; } /* SpecialChar */
+    code span.ss { color: #da4453; } /* SpecialString */
+    code span.st { color: #50a14f; } /* String */
+    code span.va { color: #e45649; } /* Variable */
+    code span.vs { color: #da4453; } /* VerbatimString */
+    code span.wa { color: #da4453; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -355,13 +423,13 @@
 <link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <meta property="og:title" content="Can.Do.So - Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics">
-<meta property="og:description" content="This thesis aims to provide a comprehensive framework for understanding the most common irregular power transitions—coups and autocoups—and the survival of political leadership in their aftermath.">
+<meta property="og:description" content="This thesis provides an in-depth analysis of irregular power transitions, focusing on coups and autocoups, and their impact on political leadership survival.">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
 <meta name="twitter:title" content="Can.Do.So - Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics">
-<meta name="twitter:description" content="This thesis aims to provide a comprehensive framework for understanding the most common irregular power transitions—coups and autocoups—and the survival of political leadership in their aftermath.">
+<meta name="twitter:description" content="This thesis provides an in-depth analysis of irregular power transitions, focusing on coups and autocoups, and their impact on political leadership survival.">
 <meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
 <meta name="twitter:card" content="summary_large_image">
@@ -389,24 +457,67 @@ Zhu Qi
 </div>
 
   <p class="date">2024-07-07</p>
-</section><section id="introduction" class="slide level2 scrollable" data-number="1"><h2>
+</section><section id="introduction" class="slide level2" data-number="1"><h2>
 <span class="header-section-number">1</span> Introduction</h2>
-<h3 data-number="1.1" id="motivation-of-research">
-<span class="header-section-number">1.1</span> Motivation of research</h3>
-<p>Irregular power transitions are a central topic in political science, with coups being a significant focus due to their frequency and impact. According to the Archigos dataset <span class="citation" data-cites="goemans2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>, from 1945 to 2015, there were approximately 145 instances of irregular leader exits, with coups<sup>1</sup> accounting for more than half (79 leaders). The often-cited coup dataset <span class="citation" data-cites="powell2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span> records even more leaders (245 cases) removed by coups from 1950 to 2023.</p>
-<p>Given their prevalence and substantial influence on political systems, coups have been extensively studied, especially since 2000 <span class="citation" data-cites="thyne2019">(<a href="#/conclusion" role="doc-biblioref" onclick="">Thyne and Powell 2019</a>)</span>. Consequently, the concept of a coup is comparatively clear. Scholars often follow the definition by <span class="citation" data-cites="powell2011">Powell and Thyne (<a href="#/conclusion" role="doc-biblioref" onclick="">2011</a>)</span>, which describes coups as “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive… [a coup is successful] if the perpetrators seize and hold power for at least seven days” (p.&nbsp;252). Although debates persist, two elements are clear: First, the perpetrators are elites within the ruling group targeting incumbent executive leaders. Second, the strategy involves completely removing the incumbents, not merely seizing part of their power.</p>
-<p>Numerous datasets have been developed for studying coups, such as the Global Instances of Coups <span class="citation" data-cites="powell2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, the Cline Center Coup d’État Project Dataset <span class="citation" data-cites="peyton2024">(<a href="#/conclusion" role="doc-biblioref" onclick="">Peyton et al. 2024</a>)</span>, and the Colpus Dataset <span class="citation" data-cites="chin2021">(<a href="#/conclusion" role="doc-biblioref" onclick="">Chin, Carter, and Wright 2021</a>)</span>. These datasets are well-developed and frequently used in political science research.</p>
-<p>In contrast, autocoups are less studied. There is no widely accepted conceptual definition, and various terms, such as self-coup, autogolpe, and executive takeover, are used by different scholars. Consequently, a comprehensive dataset for autocoups is lacking. Existing definitions often focus on the mode of power grab, as seen in the case of Peru’s President Alberto Fujimori in 1992. For example, <span class="citation" data-cites="cameron1998a">Cameron (<a href="#/conclusion" role="doc-biblioref" onclick="">1998</a>)</span> defines an autogolpe as a temporary suspension of the constitution and dissolution of Congress by the executive, who then rules by decree. This definition, and similar ones, do not clearly distinguish between power expansions and power extensions<sup>2</sup>, leading to conceptual confusion.</p>
-<p>This issue is not as problematic when analyzing coups and autocoups separately. However, since both share the root concept of “coup”, they should be defined in more equivalent and related manner. If we aim to establish a general framework for irregular power transitions and leader survival, defining autocoups in a manner equivalent to coups is essential. While coups are significant for their role in irregular power transitions, autocoups are important as well because they prevent the expected transition of power. A comparative analysis of the survival of leaders who come to power through coups versus autocoups is both interesting and important.</p>
-<p>This study addresses this gap by creating a comprehensive framework for analyzing coups and autocoups, particularly their determinants and the survival of leaders who emerge from these events. We contribute to the political science literature in three main aspects. First, we emphasize the role of power dynamics, primarily determined by regime types, in determining coup success and, consequently, coup attempts. Second, we introduce a refined definition of autocoup and a novel dataset, allowing for comparative analysis with classic coups. Third, using the existing coup dataset and the new autocoup dataset, we employ survival analysis to demonstrate how different entry modes significantly affect leadership survival, providing a starting point for analyzing democratic resilience.</p>
-<p>By doing so, we gain clearer insights into the factors that determine irregular power transition attempts and their success or failure, and why leaders entering power through different methods may have varying survival rates.</p>
-<h3 data-number="1.2" id="overview-of-chapters">
-<span class="header-section-number">1.2</span> Overview of Chapters</h3>
+<h3 data-number="1.1" id="research-question">
+<span class="header-section-number">1.1</span> Research question</h3>
+<p>Global democracy has experienced various stages, marked by both challenges and progress since World War II, showing a general trend toward improvement. Notably, the beginning of the “third wave” of democratization <span class="citation" data-cites="huntington1991democratization">(<a href="#/conclusion" role="doc-biblioref" onclick="">Huntington 1991</a>)</span> saw significant transitions to democracy in the last two decades of the 20th century. Since the end of the Cold War in the early 1990s, as illustrated in <a href="#/introduction" class="quarto-xref">Figure&nbsp;1</a>, democratic countries have outnumbered non-democratic ones, with the gap widening ever since.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>REIGN <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">1945</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a></a>  <span class="fu">mutate</span>(<span class="at">democracy =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-4"><a></a>    gwf_regimetype <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"parliamentary"</span>, <span class="st">"presidential"</span>) <span class="sc">~</span> <span class="st">"Democracy"</span>,</span>
+<span id="cb1-5"><a></a>    <span class="at">.default =</span> <span class="st">"Non-democracy"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>(), </span>
+<span id="cb1-7"><a></a>            <span class="at">.by =</span> <span class="fu">c</span>(year, democracy)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a></a>  <span class="co">#view()</span></span>
+<span id="cb1-9"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, Count, <span class="at">color =</span> democracy)) <span class="sc">+</span></span>
+<span id="cb1-10"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-11"><a></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">'Regime type'</span>,</span>
+<span id="cb1-12"><a></a>       <span class="at">x =</span> <span class="st">"Years: 1945 ~ 2020"</span>,</span>
+<span id="cb1-13"><a></a>       <span class="at">y =</span> <span class="st">"No. of Countries"</span>) <span class="sc">+</span></span>
+<span id="cb1-14"><a></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb1-15"><a></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb1-16"><a></a>    <span class="at">label =</span> <span class="st">"Data source: REIGN (Regime data)"</span>,</span>
+<span id="cb1-17"><a></a>    <span class="at">x =</span> <span class="dv">2010</span>,</span>
+<span id="cb1-18"><a></a>    <span class="at">y =</span> <span class="dv">30</span>,</span>
+<span id="cb1-19"><a></a>    <span class="at">fontface =</span> <span class="st">"italic"</span>,</span>
+<span id="cb1-20"><a></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb1-21"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-democracy" class="quarto-figure quarto-figure-center quarto-float" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-democracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="coups_and_autocoups_files/figure-html/fig-democracy-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img data-src="coups_and_autocoups_files/figure-html/fig-democracy-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-democracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Comparison of the number of democratic and non-democratic countries (1945-2020)
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>However, global democracy has faced increasing threats in the post-Cold War era. <span class="citation" data-cites="diamond2008">Diamond (<a href="#/conclusion" role="doc-biblioref" onclick="">2008</a>)</span> warned of a democratic recession at the end of the first decade of the 21st century. According to <span class="citation" data-cites="freedomhouse2024freedom">House (<a href="#/conclusion" role="doc-biblioref" onclick="">2024</a>)</span>, global freedom declined for the 18th consecutive year in 2023. While relatively few countries have regressed from democracy to full-blown autocracy, the average level of democracy worldwide has reverted to pre-2000 levels. Most democratic recessions have occurred within regime categories, with democracies becoming less liberal and autocracies becoming less competitive and more repressive <span class="citation" data-cites="mechkova2017">(<a href="#/conclusion" role="doc-biblioref" onclick="">Mechkova, Lührmann, and Lindberg 2017</a>)</span>.</p>
+<p>Democratic backsliding is a complex phenomenon with numerous contributing factors. While the “prime culprit” remains a subject of debate, this dissertation will focus on one critical factor: irregular power transitions. Irregular power transitions, the acquisition of power outside established constitutional frameworks, play a significant role in democratic decline. They not only represent a violation of democratic norms but also disrupt the positive trajectory towards a stable democracy. Furthermore, leaders who rise to power through irregular means often resort to undemocratic tactics. They may suppress opposition and stifle dissent to solidify their illegitimate hold on power. This creates a vicious cycle, where democratic backsliding is used to maintain power, further eroding democratic institutions.</p>
+<p>Although irregular power transition is so important and has always been a central topic in political science, a long asked question still intrigued political scientists: Why some leaders were ousted before their term expires, some can accomplish their term, while some can even overstay in office beyond their original mandated term limits. Or put it another way, why do some leaders rule for decades while others stay in power for only years, months, or even days?</p>
+<p>Despite their central role in political science and the extensive research conducted on irregular power transitions, a long-standing question continues to intrigue political scientists: <strong><em>Why are some leaders ousted before their terms expire, while others complete their full terms or even overstay beyond their originally mandated limits?</em></strong> In other words, why do some leaders survive for decades while others last for only years, months, or even days? This dissertation focuses on this question and seeks to provide a comprehensive analysis, dedicated to understanding how leaders lose power unexpectedly and what factors determine the duration of a leader’s rule following an irregular ascent.</p>
+<h3 data-number="1.2" id="analyses-on-coups-and-autocoups-in-a-general-framework">
+<span class="header-section-number">1.2</span> Analyses on coups and autocoups in a general framework</h3>
+<p>When discussing irregular power transitions, the concepts that often come to mind are irregular entries or exits, such as coups, assassinations, rebellions, protests, and foreign interventions. Among these methods, coups hold a prominent position due to their frequent occurrence. According to the Archigos dataset <span class="citation" data-cites="goemans2009">(<a href="#/conclusion" role="doc-biblioref" onclick="">Goemans, Gleditsch, and Chiozza 2009</a>)</span>, from 1945 to 2015, there were approximately 145 instances of irregular leader exits, with coups accounting for more than half (79 leaders). The often-cited coup dataset <span class="citation" data-cites="powell2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span> records even more leaders (245 cases) removed by coups from 1950 to 2023.</p>
+<p>Given their prevalence and substantial influence on political systems, coups have been extensively studied, particularly since 2000 <span class="citation" data-cites="thyne2019">(<a href="#/conclusion" role="doc-biblioref" onclick="">Thyne and Powell 2019</a>)</span>. Consequently, the concept of a coup is comparatively clear and widely accepted in academic circles. Many scholars, including this study, follow the definition by <span class="citation" data-cites="powell2011">Powell and Thyne (<a href="#/conclusion" role="doc-biblioref" onclick="">2011</a>)</span>, which describes coups as “illegal and overt attempts by the military or other elites within the state apparatus to unseat the sitting executive… [a coup is successful] if the perpetrators seize and hold power for at least seven days” (p.&nbsp;252). Although debates persist, two elements are clear: first, the perpetrators are elites within the ruling group, and the victims of coups are incumbent executive leaders. Second, the strategy or aim of a coup involves completely removing the incumbents, not merely seizing part of their power or forcing them to concede on specific policies. Beyond defining coups, several datasets have been developed for quantitative analyses, such as the Global Instances of Coups <span class="citation" data-cites="powell2011">(<a href="#/conclusion" role="doc-biblioref" onclick="">Powell and Thyne 2011</a>)</span>, the Cline Centre Coup d’État Project Dataset <span class="citation" data-cites="peyton2024">(<a href="#/conclusion" role="doc-biblioref" onclick="">Peyton et al. 2024</a>)</span>, and the Colpus Dataset <span class="citation" data-cites="chin2021">(<a href="#/conclusion" role="doc-biblioref" onclick="">Chin, Carter, and Wright 2021</a>)</span>. These datasets are well-developed and frequently used in political science research.</p>
+<p>However, irregular power transitions are not limited to irregular entries and exits but should also include irregular “overstays.” Using illegal means to overthrow an incumbent leader before their term expires is undoubtedly an irregular power transition. Similarly, an incumbent using illegitimate means to extend their term beyond term limits is also an irregular power transition.</p>
+<p>Although academic attention to irregular retention of power has increased since the 1990s, especially after Peru’s President Alberto Fujimori’s self-coup in 1992, it remains comparatively understudied and has several shortcomings. First, there is no universally accepted terminology for this “overstaying in power” type of irregular power transition, unlike the clear term “coup.” Consequently, various terms such as self-coup, autogolpe, and executive coup are used by different scholars. This dissertation will use ‘autocoup’ to refer to this type of irregular power transition, which will be thoroughly discussed in Chapter 3. Second, there is no consensus on the definition of an autocoup. Existing definitions remain vague, often conflating power expansions and power extensions. For example, <span class="citation" data-cites="cameron1998a">Cameron (<a href="#/conclusion" role="doc-biblioref" onclick="">1998</a>)</span> defines an autogolpe as a temporary suspension of the constitution and dissolution of Congress by the executive, who then rules by decree. This definition focuses on power expansion instead of power extension, leading to conceptual confusion and misalignment with the definition of a classic coup. Third, a consensus autocoup dataset is lacking. While several related datasets exist, as discussed by <span class="citation" data-cites="baturo2022">Baturo and Tolstrup (<a href="#/conclusion" role="doc-biblioref" onclick="">2022</a>)</span> in coding their Incumbent Takeover dataset, the terminologies, definitions, and coverage years vary, lacking wide acknowledgment and extensive academic exploration. In summary, autocoup has not been analysed in a comparative manner connected with coups.</p>
+<p>Analysing coups and autocoups separately is less problematic. However, from a comprehensive framework perspective on irregular power transitions and leader survival, coups and autocoups should be, and can be, analysed within the same framework. Both coup and autocoup significantly influence democratic backsliding and are the most frequent means of irregular power transition. Furthermore, as both are called “coups,” classic coups and autocoups are very similar since a coup is launched to replace the current leader, while an autocoup is staged to replace the future leader.</p>
+<p>Extant literature on irregular power transitions and leadership survival is mostly discussed separately by different scholars, using different concepts and definitions, and employing different methods and datasets. This study addresses this gap by creating a comprehensive framework to analyze both coups and autocoups, focusing on their determinants and the survival of leaders who emerge from these events.</p>
+<p>We contribute to the political science literature in three key ways. First, we emphasize the role of power dynamics, primarily determined by regime types, in determining coup success and, accordingly, coup attempts. Second, we introduce a refined definition of autocoup and a novel dataset, allowing for comparative analysis with classic coups. Third, using the existing coup dataset and the new autocoup dataset, we employ survival analysis to demonstrate how different entry modes significantly affect leadership survival, providing a starting point for analysing democratic resilience.</p>
+<h3 data-number="1.3" id="overview-of-the-thesis">
+<span class="header-section-number">1.3</span> Overview of the thesis</h3>
 <p>This study includes three main chapters beyond the introduction.</p>
-<p><strong>Chapter 2:</strong> Discusses the determinants of classic coup attempts. Although coup research is extensive, most studies focus on the influecne of observable factors like economic performance, political stability, previous coups, or coup-proofing strategies. This study, however, focuses on the more essential but less observable factor-expected coup success rates, which is often overlooked by previous studies. Using Heckman’s two-staged sample selection model, we find evidence that success rates significantly influence coup attempts. The success rates are primarily influenced by the balance of power between incumbents and challengers, which is greately determined by regime types. The results indicate that military regimes face a much higher risk of coups compared to dominant-party regimes.</p>
-<p><strong>Chapter 3:</strong> Clarifies the concept of autocoups, focusing on power extensions by incumbent leaders. By distinguishing autocoups from broader concepts like self-coups or executive takeovers, we redefine autocoups as instances where incumbent leaders refuse to transition power as mandated, thereby overstaying in office. Based on this refined definition, we introduce a novel dataset of autocoup events from 1945 to 2022, including 110 attempts and 87 successes. Using this dataset, we present case studies and empirical analysis to demonstrate its utility for quantitative research.</p>
-<p><strong>Chapter 4:</strong> Examines how the method of power acquisition impacts the longevity of coup-entry and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Using the Cox proportional hazards model and a time-dependent Cox model, we provide evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. This underscores the implications for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize incumbents to seize power in this manner, potentially leading to democratic backsliding and personalization of power.</p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>According to the Archigos dataset, “Removed by Military, without Foreign Support” and “Removed by Other Government Actors, without Foreign Support” in the variable <code>exitcode</code> are classified as coups.</p></li><li id="fn2"><p>Power expansion and power extension are somewhat ambiguous terms. In this study, we define power expansion as acquiring additional powers beyond those originally associated with the leader’s role or position. Conversely, we define power extension as lengthening a leader’s tenure beyond the originally mandated term.</p></li></ol></aside></section><section id="conclusion" class="slide level2 smaller scrollable" data-number="2"><h2>
+<p><strong>Chapter 2</strong> disscusses the determinants of classic coup attempts. Although coup research is extensive, most studies focus on the influence of observable factors like economic performance, political stability, previous coups, or coup-proofing strategies. This study, however, focuses on the more essential but less observable factor-expected coup success rates, which is often overlooked by previous studies. Using Heckman’s two-staged sample selection model, we find evidence that success rates significantly influence coup attempts. The success rates are primarily influenced by the balance of power between incumbents and challengers, which is greately determined by regime types. The results indicate that military regimes face a much higher risk of coups compared to dominant-party regimes.</p>
+<p><strong>Chapter 3</strong> clarifies the concept of autocoups, focusing on power extensions by incumbent leaders. By distinguishing autocoups from broader concepts like self-coups or executive takeovers, we redefine autocoups as instances where incumbent leaders refuse to transition power as mandated, thereby overstaying in office. Based on this refined definition, we introduce a novel dataset of autocoup events from 1945 to 2022, including 110 attempts and 87 successes. Using this dataset, we present case studies and empirical analysis to demonstrate its utility for quantitative research.</p>
+<p><strong>Chapter 4</strong> examines how the method of power acquisition impacts the longevity of coup-entry and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Using the Cox proportional hazards model and a time-dependent Cox model, we provide evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. This underscores the implications for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could trigger incumbents to seize power in this manner, potentially leading to democratic backsliding and personalization of power.</p>
+</section><section id="conclusion" class="slide level2 smaller scrollable" data-number="2"><h2>
 <span class="header-section-number">2</span> Conclusion</h2>
 
 <div class="quarto-auto-generated-content">
@@ -415,15 +526,33 @@ Zhu Qi
 <p><a href="https://www.candoso.org">Can.Do.So</a></p>
 </div>
 </div>
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Comparison of the number of democratic and non-democratic countries (1945-2020)</span>
+</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-baturo2022" class="csl-entry" role="listitem">
+Baturo, Alexander, and Jakob Tolstrup. 2022. <span>“Incumbent Takeovers.”</span> <em>Journal of Peace Research</em> 60 (2): 373–86. <a href="https://doi.org/10.1177/00223433221075183">https://doi.org/10.1177/00223433221075183</a>.
+</div>
 <div id="ref-cameron1998a" class="csl-entry" role="listitem">
 Cameron, Maxwell A. 1998. <span>“Latin American Autogolpes : Dangerous Undertows in the Third Wave of Democratisation.”</span> <em>Third World Quarterly</em> 19 (2): 219–39. <a href="https://doi.org/10.1080/01436599814433">https://doi.org/10.1080/01436599814433</a>.
 </div>
 <div id="ref-chin2021" class="csl-entry" role="listitem">
 Chin, John J, David B Carter, and Joseph G Wright. 2021. <span>“The Varieties of Coups D<span>’</span>état: Introducing the Colpus Dataset.”</span> <em>International Studies Quarterly</em> 65 (4): 1040–51. <a href="https://doi.org/10.1093/isq/sqab058">https://doi.org/10.1093/isq/sqab058</a>.
 </div>
+<div id="ref-diamond2008" class="csl-entry" role="listitem">
+Diamond, Larry. 2008. <em>The Spirit of Democracy: The Struggle to Build Free Societies Throughout the World</em>. Macmillan.
+</div>
 <div id="ref-goemans2009" class="csl-entry" role="listitem">
 Goemans, Henk E., Kristian Skrede Gleditsch, and Giacomo Chiozza. 2009. <span>“Introducing Archigos: A Dataset of Political Leaders.”</span> <em>Journal of Peace Research</em> 46 (2): 269–83. <a href="https://doi.org/10.1177/0022343308100719">https://doi.org/10.1177/0022343308100719</a>.
+</div>
+<div id="ref-freedomhouse2024freedom" class="csl-entry" role="listitem">
+House, Freedom. 2024. <span>“Freedom in the World, 2024.”</span> <a href="https://freedomhouse.org/sites/default/files/2024-02/FIW_2024_DigitalBooklet.pdf">https://freedomhouse.org/sites/default/files/2024-02/FIW_2024_DigitalBooklet.pdf</a>.
+</div>
+<div id="ref-huntington1991democratization" class="csl-entry" role="listitem">
+Huntington, Samuel P. 1991. <span>“The Third Wave: Democratization in the Late Twentieth Century.”</span> <em>Norman, OK: University of Oklahoma</em>.
+</div>
+<div id="ref-mechkova2017" class="csl-entry" role="listitem">
+Mechkova, Valeriya, Anna Lührmann, and Staffan I. Lindberg. 2017. <span>“How Much Democratic Backsliding?”</span> <em>Journal of Democracy</em> 28 (4): 162–69. <a href="https://doi.org/10.1353/jod.2017.0075">https://doi.org/10.1353/jod.2017.0075</a>.
 </div>
 <div id="ref-peyton2024" class="csl-entry" role="listitem">
 Peyton, Buddy, Joseph Bajjalieh, Dan Shalmon, Michael Martin, and Emilio Soto. 2024. <span>“Cline Center Coup d<span>’</span>état Project Dataset.”</span> University of Illinois at Urbana-Champaign. <a href="https://doi.org/10.13012/B2IDB-9651987_V7">https://doi.org/10.13012/B2IDB-9651987_V7</a>.
@@ -806,7 +935,31 @@ Thyne, Clayton L., and Jonathan Powell. 2019. <span>“Coup Research,”</span> 
         }
       }
     });
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":true,"selector":".lightbox","openEffect":"fade"});
+    window.onload = () => {
+      lightboxQuarto.on('slide_before_load', (data) => {
+        const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+        const href = trigger.getAttribute('href');
+        if (href !== null) {
+          const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+          if (imgEl !== null) {
+            const srcAttr = imgEl.getAttribute("src");
+            if (srcAttr && srcAttr.startsWith("data:")) {
+              slideConfig.href = srcAttr;
+            }
+          }
+        } 
+      });
+
+      lightboxQuarto.on('slide_after_load', (data) => {
+        const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(slideNode);
+        }
+      });
+
+    };
+              </script>
 
 
 </body></html>
