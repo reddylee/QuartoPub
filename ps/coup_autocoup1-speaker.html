@@ -14,9 +14,7 @@
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.554">
-<meta name="author" content="Zhu Qi">
-<meta name="dcterms.date" content="2024-07-07">
-<title>Can.Do.So - Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics</title>
+<title>Can.Do.So</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -421,39 +419,59 @@
   </style>
 <link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<meta property="og:title" content="Can.Do.So - Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics">
-<meta property="og:image" content="https://www.candoso.org/fig/candoso2.png">
+<meta property="og:title" content="Can.Do.So">
+<meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
-<meta name="twitter:title" content="Can.Do.So - Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics">
-<meta name="twitter:image" content="https://www.candoso.org/fig/candoso.png">
+<meta name="twitter:title" content="Can.Do.So">
+<meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image-height" content="1286">
 <meta name="twitter:image-width" content="1380">
 </head>
 <body class="quarto-light">
+\begin{titlepage}
+  \begin{center}
+    \vspace*{2cm}
+    
+    \Huge{\textbf{Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics}}
+    
+    \vspace{1.5cm}
+    
+    \Large{Zhu Qi}
+    
+    \vspace{5cm}
+    
+    \large{A thesis submitted for the degree of \\ Doctor of Philosophy in Political Science}
+    
+    \vspace{0.8cm}
+    
+    \large{Department of Government}
+    \vspace{0.5cm}
+    
+    \large{University of Essex}
+    
+    \vspace{1.5cm}
+    
+    \large{September 2024}
+    \vspace{2cm}
+    
+    \large{(Word count: 40,000 words)}
+    
+  \end{center}
+\end{titlepage}
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center"><h1 class="title">Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics</h1>
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Zhu Qi 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:qz21485@essex.ac.uk">qz21485@essex.ac.uk</a>
-</div>
-        <p class="quarto-title-affiliation">
-            University of Essex
-          </p>
-    </div>
-</div>
-
-  <p class="date">2024-07-07</p>
+<section id="acknowledgements" class="slide level2 unnumbered"><h2>Acknowledgements</h2>
+<p>The completion of this thesis has been a significant journey, filled with hard work, learning, and moments of joy. Throughout this time, I have received support and encouragement from many individuals, without whom this dissertation would not have been possible.</p>
+<p>First and foremost, I would like to express my deepest gratitude to my great supervisor, Professor Kristian Skrede Gleditsch, for his invaluable guidance, unwavering support, and insightful feedback throughout this journey. His expertise and encouragement have been instrumental in shaping this dissertation. I would also like to extend my heartfelt thanks to the chair of my board panel, Professor Han Dorussen, for his continuous support and constructive criticism, which have significantly enhanced the quality of my research.</p>
+<p>I am profoundly grateful for the comments, advice, and suggestions from several esteemed scholars who have contributed to this work. Dr.&nbsp;Brian J Phillips, Dr. Prabin Khadka, and Dr.&nbsp;Winnie Xia, their expertise and thoughtful input have been greatly appreciated and have enriched this dissertation.</p>
+<p>Finally, I want to thank my family for their unwavering support and love. To my beloved wife, Ji Zhi, who has been my rock throughout this journey, and to my dear daughter, Siyan, and son, Sisheng, who have been my source of joy and motivation. I am deeply thankful to my father for his enduring support, and to the memory of my late mother, whose love and guidance continue to inspire me.</p>
+<p>All errors and faults are my own.</p>
 </section><section id="abstract" class="slide level2 unnumbered"><h2>Abstract</h2>
 <p>This dissertation examines the dynamics of irregular power transitions, particularly coups and autocoups, and their influence on leader survival. It highlights the critical role of power dynamics, shaped by regime types, in determining coup success rates and attempt frequency. Utilizing Heckman’s two-stage selection model, the study reveals that expected coup success significantly influences attempts, with military regimes facing a heightened vulnerability due to their power structure.</p>
 <p>While often understudied, autocoups are shown to have a substantial impact on democratic trends. This research introduces a refined definition of autocoups alongside a novel dataset encompassing events from 1945 to 2022, enabling a more robust quantitative analysis.</p>
@@ -495,16 +513,22 @@ Zhu Qi
 <p><strong>Chapter 3</strong> focuses on the concept of autocoups, specifically on power extensions by incumbent leaders. It distinguishes autocoups from broader concepts like self-coups or executive coups by redefining them as instances where incumbent leaders refuse to transition power as mandated, thereby overstaying in office. Based on this refined definition, a novel dataset of autocoup events from 1945 to 2022 is introduced, encompassing 110 attempts and 87 successes. The chapter includes case studies and empirical analyses that demonstrate the utility of this dataset for quantitative research, providing a basis for empirical analysis on autocoups.</p>
 <p><strong>Chapter 4</strong> investigates how the method of power acquisition impacts the longevity of leaders who come to power through coups versus those who extend their rule through autocoups. The hypothesis is that the method of accession significantly affects leader tenure. Using the Cox proportional hazards model and a time-dependent Cox model, the chapter provides evidence of differing survival times between these two types of leaders. The results indicate that leaders who come to power through coups face a significantly higher risk of removal compared to those who extend their rule through autocoups. This finding highlights the implications for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize incumbents to seize power in this manner, potentially leading to democratic backsliding and the personalization of power.</p>
 <p>In <strong>Chapter 5</strong>, the study concludes by summarizing the main findings, discussing policy implications, and acknowledging the limitations of the research. It also outlines directions for future research, emphasizing the need for further exploration of irregular power transitions, particularly coups and autocoups.</p>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>According to the Archigos dataset, “Removed by Military, without Foreign Support” and “Removed by Other Government Actors, without Foreign Support” in the variable <code>exitcode</code> are classified as coups.</p></li><li id="fn2"><p>The definitions and concepts of power expansion and power extension can be vague. In this study, we define power expansion as an incumbent acquiring additional authority from other state apparatuses, whereas power extension refers to an incumbent prolonging their tenure beyond the designated term in office.</p></li></ol></aside></section><section id="conclusion" class="slide level2 smaller scrollable" data-number="2"><h2>
-<span class="header-section-number">2</span> Conclusion</h2>
-<h3 data-number="2.1" id="main-findings">
-<span class="header-section-number">2.1</span> Main Findings</h3>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>According to the Archigos dataset, “Removed by Military, without Foreign Support” and “Removed by Other Government Actors, without Foreign Support” in the variable <code>exitcode</code> are classified as coups.</p></li><li id="fn2"><p>The definitions and concepts of power expansion and power extension can be vague. In this study, we define power expansion as an incumbent acquiring additional authority from other state apparatuses, whereas power extension refers to an incumbent prolonging their tenure beyond the designated term in office.</p></li></ol></aside></section><section id="power-dynamics-and-coup-attempts-a-selection-mechanism-analysis" class="slide level2" data-number="2"><h2>
+<span class="header-section-number">2</span> Power Dynamics and Coup Attempts: A Selection Mechanism Analysis</h2>
+</section><section id="autocoups-conceptual-clarification-and-analysis-of-power-extensions-by-incumbent-leaders" class="slide level2" data-number="3"><h2>
+<span class="header-section-number">3</span> Autocoups: Conceptual Clarification and Analysis of Power Extensions by Incumbent Leaders</h2>
+</section><section id="power-acquisition-and-leadership-survival-a-comparative-analysis-of-coup-entry-and-autocoup-leaders" class="slide level2" data-number="4"><h2>
+<span class="header-section-number">4</span> Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders</h2>
+</section><section id="conclusion" class="slide level2 smaller scrollable" data-number="5"><h2>
+<span class="header-section-number">5</span> Conclusion</h2>
+<h3 data-number="5.1" id="main-findings">
+<span class="header-section-number">5.1</span> Main Findings</h3>
 <p>This study delves into the dynamics and implications of irregular power transitions, focusing on coups and autocoups. The findings illuminate the complex interplay between incumbents and challengers fighting for power.</p>
 <p>Firstly, our analysis reveals that the expected success rate of a coup attempt significantly influences its likelihood. This success rate is heavily influenced by the balance of power between the incumbent regime and challengers, which is largely determined by regime type. We find that military regimes, although with more control over their own military forces, face a higher risk of coups compared to dominant-party regimes.</p>
 <p>Secondly, the study introduces a redefined concept: the autocoup. Defined as an incumbent leader’s refusal to relinquish power as mandated, this research distinguishes autocoups from broader terms like self-coups. Based on this definition, we present the first publicly available dataset of autocoup events from 1945 to 2022, encompassing 110 attempts and 87 successful autocoups. Case studies and empirical analyses demonstrate the dataset’s utility for quantitative research, providing a robust foundation for further analysis on autocoups.</p>
 <p>Thirdly, employing survival analysis techniques, the study finds clear differences in leader longevity between those who come to power through coups and those who extend their rule through autocoups. The results indicate that coup-installed leaders face a significantly higher risk of removal compared to autocoup leaders who manipulate the system to extend their rule.</p>
-<h3 data-number="2.2" id="policy-implications">
-<span class="header-section-number">2.2</span> Policy Implications</h3>
+<h3 data-number="5.2" id="policy-implications">
+<span class="header-section-number">5.2</span> Policy Implications</h3>
 <p>The findings of this study offer valuable insights for policy-makers concerned with promoting and protecting global democracy, which has faced increasing challenges despite a general post-WWII trend towards democratization. Notably, the “third wave” of democratization <span class="citation" data-cites="huntington1991democratization">(<a href="#/conclusion" role="doc-biblioref" onclick="">Huntington 1991</a>)</span> witnessed a surge in democratic transitions in the late 20th century. Since the Cold War’s end, democratic nations have outnumbered non-democratic ones (<a href="#/conclusion" class="quarto-xref">Figure&nbsp;1</a>) with the gap widening.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>REIGN <span class="sc">|&gt;</span></span>
@@ -534,7 +558,7 @@ Zhu Qi
 <div class="cell-output-display">
 <div id="fig-democracy" class="quarto-figure quarto-figure-center quarto-float" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-democracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coups_and_autocoups_files/figure-html/fig-democracy-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img data-src="coups_and_autocoups_files/figure-html/fig-democracy-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
+<a href="coups_and_autocoups_files/figure-html/fig-democracy-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img data-src="coups_and_autocoups_files/figure-html/fig-democracy-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-democracy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Comparison of the number of democratic and non-democratic countries (1945-2020)
@@ -545,8 +569,8 @@ Figure&nbsp;1: Comparison of the number of democratic and non-democratic countri
 <p>However, a “democratic recession” has emerged in recent years <span class="citation" data-cites="diamond2008">(<a href="#/conclusion" role="doc-biblioref" onclick="">Diamond 2008</a>)</span>. Freedom House reports an 18th consecutive year of global freedom decline in 2023 <span class="citation" data-cites="freedomhouse2024freedom">(<a href="#/conclusion" role="doc-biblioref" onclick="">Freedom House 2024</a>)</span>. While few countries have completely regressed to autocracy, the average global democracy level has fallen back to pre-2000 levels. Notably, democratic backsliding often occurs within regimes, with democracies becoming less liberal and autocracies becoming less competitive <span class="citation" data-cites="mechkova2017">(<a href="#/conclusion" role="doc-biblioref" onclick="">Mechkova, Lührmann, and Lindberg 2017</a>)</span>.</p>
 <p>This research highlights irregular power transitions as a significant factor in democratic backsliding within regimes. These transitions, often coups or autocoups, violate democratic norms and disrupt the path towards stable democracies. Leaders who gain power through irregular means often resort to undemocratic tactics to maintain control, creating a vicious cycle of eroding democratic institutions.</p>
 <p>Our findings suggest that the shorter lifespans and potentially severe consequences associated with coups may deter potential coup leaders. Conversely, autocoups appear to be a more tempting option for power-hungry leaders due to their higher success rates, seemingly moderate consequences, and extended leader tenure after the autocoup. This trend may explain the decline in classic coups since the 1990s alongside the rise of autocoups <span class="citation" data-cites="bermeo2016">(<a href="#/conclusion" role="doc-biblioref" onclick="">Bermeo 2016</a>)</span>.</p>
-<h3 data-number="2.3" id="limitations-and-directions-for-future-research">
-<span class="header-section-number">2.3</span> Limitations and directions for future research</h3>
+<h3 data-number="5.3" id="limitations-and-directions-for-future-research">
+<span class="header-section-number">5.3</span> Limitations and directions for future research</h3>
 <p>This study offers a novel framework for analysing irregular power transitions, but some limitations require further exploration:</p>
 <ul>
 <li class="fragment"><p><strong>Data refinement:</strong> Defining and classifying autocoups is a new approach. Future research should validate this classification system through additional studies and expert evaluations.</p></li>
@@ -625,7 +649,7 @@ Thyne, Clayton L., and Jonathan Powell. 2019. <span>“Coup Research,”</span> 
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"17203530898379015978","id":"ff74db532eae8757","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"17208202979009192760","id":"f82043c8b374bf7b","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -882,7 +906,7 @@ Thyne, Clayton L., and Jonathan Powell. 2019. <span>“Coup Research,”</span> 
       });
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp("https:\/\/www\.candoso\.org");
+          var filterRegex = new RegExp("https:\/\/reddylee\.quarto\.pub\/candoso");
         var isInternal = (href) => {
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
@@ -979,7 +1003,7 @@ Thyne, Clayton L., and Jonathan Powell. 2019. <span>“Coup Research,”</span> 
         }
       }
     });
-    </script><script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"fade","descPosition":"bottom","closeEffect":"fade","loop":true});
+    </script><script>var lightboxQuarto = GLightbox({"openEffect":"fade","loop":true,"descPosition":"bottom","closeEffect":"fade","selector":".lightbox"});
     window.onload = () => {
       lightboxQuarto.on('slide_before_load', (data) => {
         const { slideIndex, slideNode, slideConfig, player, trigger } = data;

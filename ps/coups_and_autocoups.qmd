@@ -1,39 +1,56 @@
 ---
-title: "Leadership Transitions and Survival: Coups, Autocoups, and Power Dynamics"
-author:
-  - name: Zhu Qi
-    affiliations: University of Essex
-    email: qz21485@essex.ac.uk
-
-date: 2024-07-07
-date-modified: last-modified
+# title: "Leadership Transitions and Survival:\n Coups, Autocoups, and Power Dynamics"
+# 
+# author:
+#   - name: Zhu Qi
+#     
 format:
   aps-html: default
-  aps-pdf: default
+  pdf: 
+    documentclass: report
+    colorlinks: true
+    urlcolor: blue
+    link-citations: true
+    linkcolor: blue
+    fig-asp: 0.618
+    number-sections: true
+    shift-heading-level-by: -1
+    chapter-name: Chapter
+    toc: true
+    toc-title: Contents
+    lof: true
+    lot: true
+    crossref: 
+      lof-title: Figures
+      lot-title: Tables
+    linestretch: 1.618
+    indent: true
+    fontsize: 12pt
+    mainfont: "Times New Roman"
+    sansfont: "Arial"
+    monofont: "Courier New"
+    #latex-engine: pdflatex
+    pdf-engine: xelatex
+    geometry:
+      # - showframe
+      - top = 3cm
+      - bottom = 3cm
+      - left = 3cm
+      - right = 2.7cm
+    header-includes:
+      - \usepackage{sectsty}
+      - \chapterfont{\centering}
+    #   - \usepackage{float}
+    #   - \floatplacement{table}{H}
+
+      
   docx: default
   aps-revealjs:
-    output-file: coup_autocoup.html
-
-categories: [Article, Political Science]
+    output-file: coup_autocoup1.html
+    
+categories: [Article, Coups, Autocoups, Leadership Survival]
 bibliography: references.bib
-
-abstract: |
-  This dissertation examines the dynamics of irregular power transitions, particularly coups and autocoups, and their influence on leader survival. It highlights the critical role of power dynamics, shaped by regime types, in determining coup success rates and attempt frequency. Utilizing Heckman's two-stage selection model, the study reveals that expected coup success significantly influences attempts, with military regimes facing a heightened vulnerability due to their power structure.
-
-  While often understudied, autocoups are shown to have a substantial impact on democratic trends. This research introduces a refined definition of autocoups alongside a novel dataset encompassing events from 1945 to 2022, enabling a more robust quantitative analysis.
-  
-  Employing survival analysis, the study compares the longevity of leaders who rise to power through coups versus autocoups. The findings demonstrate that coup-installed leaders face a significantly shorter tenure and higher risk of removal. This contrasts with autocoup leaders who manipulate the system to extend their rule, suggesting the potential for autocoups to incentivize power grabs and contribute to democratic backsliding.
-
-  This work contributes significantly to the political science literature by:
-   
-   - Defining key concepts: It establishes a clear definition of autocoups, a previously understudied phenomenon.
-   
-   - Introducing a novel dataset: This dataset enables researchers to conduct more comprehensive quantitative analyses of autocoups.
-   
-   - Establishing a general framework: The framework provides a comparative approach to studying the dynamics of irregular power transitions and their impact on democratic stability.
-  
-keywords: [Coups, Autocoups, Power transitions, Leadership Survival]
-
+include-before-body: before-body.tex
 execute:
   warning: false
   message: false
@@ -72,6 +89,70 @@ Archigos |>
 
 ```
 
+## Acknowledgements {.unnumbered}
+
+The completion of this thesis has been a significant journey, filled with hard
+work, learning, and moments of joy. Throughout this time, I have received support
+and encouragement from many individuals, without whom this dissertation would not
+have been possible.
+
+First and foremost, I would like to express my deepest gratitude to my great
+supervisor, Professor Kristian Skrede Gleditsch, for his invaluable guidance,
+unwavering support, and insightful feedback throughout this journey. His
+expertise and encouragement have been instrumental in shaping this dissertation.
+I would also like to extend my heartfelt thanks to the chair of my board panel,
+Professor Han Dorussen, for his continuous support and constructive criticism,
+which have significantly enhanced the quality of my research.
+
+I am profoundly grateful for the comments, advice, and suggestions from several
+esteemed scholars who have contributed to this work. Dr. Brian J Phillips, Dr.
+Prabin Khadka, and Dr. Winnie Xia, their expertise and thoughtful input have been
+greatly appreciated and have enriched this dissertation.
+
+Finally, I want to thank my family for their unwavering support and love. To my
+beloved wife, Ji Zhi, who has been my rock throughout this journey, and to my
+dear daughter, Siyan, and son, Sisheng, who have been my source of joy and
+motivation. I am deeply thankful to my father for his enduring support, and to
+the memory of my late mother, whose love and guidance continue to inspire me.
+
+All errors and faults are my own.
+
+## Abstract {.unnumbered}
+
+This dissertation examines the dynamics of irregular power transitions,
+particularly coups and autocoups, and their influence on leader survival. It
+highlights the critical role of power dynamics, shaped by regime types, in
+determining coup success rates and attempt frequency. Utilizing Heckman's
+two-stage selection model, the study reveals that expected coup success
+significantly influences attempts, with military regimes facing a heightened
+vulnerability due to their power structure.
+
+While often understudied, autocoups are shown to have a substantial impact on
+democratic trends. This research introduces a refined definition of autocoups
+alongside a novel dataset encompassing events from 1945 to 2022, enabling a more
+robust quantitative analysis.
+
+Employing survival analysis, the study compares the longevity of leaders who rise
+to power through coups versus autocoups. The findings demonstrate that
+coup-installed leaders face a significantly shorter tenure and higher risk of
+removal. This contrasts with autocoup leaders who manipulate the system to extend
+their rule, suggesting the potential for autocoups to incentivize power grabs and
+contribute to democratic backsliding.
+
+This work contributes significantly to the political science literature by:
+
+-   Defining key concepts: It establishes a clear definition of autocoups, a
+    previously understudied phenomenon.
+
+-   Introducing a novel dataset: This dataset enables researchers to conduct more
+    comprehensive quantitative analyses of autocoups.
+
+-   Establishing a general framework: The framework provides a comparative
+    approach to studying the dynamics of irregular power transitions and their
+    impact on democratic stability.
+
+**keywords:** *Coups, Autocoups, Power transitions, Leadership Survival*
+
 ## Introduction
 
 ### Research question
@@ -100,9 +181,9 @@ are irregular entries or exits, such as coups, assassinations, rebellions,
 protests, and foreign interventions. Among these methods, coups hold a prominent
 position due to their frequent occurrence. According to the Archigos dataset
 [@goemans2009], from 1945 to 2015, there were approximately 145 instances of
-irregular leader exits, with coups accounting for more than half (79 leaders).
-The often-cited coup dataset [@powell2011] records even more leaders (245 cases)
-removed by coups from 1950 to 2023.
+irregular leader exits, with coups[^1] accounting for more than half (79
+leaders). The often-cited coup dataset [@powell2011] records even more leaders
+(245 cases) removed by coups from 1950 to 2023.
 
 Given their prevalence and substantial influence on political systems, coups have
 been extensively studied, particularly since 2000 [@thyne2019]. Consequently, the
@@ -136,16 +217,16 @@ various terms such as self-coup, autogolpe, and executive coup are used by
 different scholars. This dissertation will use 'autocoup' to refer to this type
 of irregular power transition, which will be thoroughly discussed in Chapter 3.
 Second, there is no consensus on the definition of an autocoup. Existing
-definitions remain vague, often conflating power expansions and power extensions.
-For example, @cameron1998a defines an autogolpe as a temporary suspension of the
-constitution and dissolution of Congress by the executive, who then rules by
-decree. This definition focuses on power expansion instead of power extension,
-leading to conceptual confusion and misalignment with the definition of a classic
-coup. Third, a consensus autocoup dataset is lacking. While several related
-datasets exist, as discussed by @baturo2022 in coding their Incumbent Takeover
-dataset, the terminologies, definitions, and coverage years vary, lacking wide
-acknowledgment and extensive academic exploration. In summary, autocoup has not
-been analysed in a comparative manner connected with coups.
+definitions remain vague, often conflating power expansions and power
+extensions[^2]. For example, @cameron1998a defines an autogolpe as a temporary
+suspension of the constitution and dissolution of Congress by the executive, who
+then rules by decree. This definition focuses on power expansion instead of power
+extension, leading to conceptual confusion and misalignment with the definition
+of a classic coup. Third, a consensus autocoup dataset is lacking. While several
+related datasets exist, as discussed by @baturo2022 in coding their Incumbent
+Takeover dataset, the terminologies, definitions, and coverage years vary,
+lacking wide acknowledgement and extensive academic exploration. In summary,
+autocoup has not been analysed in a comparative manner connected with coups.
 
 Analysing coups and autocoups separately is less problematic. However, from a
 comprehensive framework perspective on irregular power transitions and leader
@@ -239,6 +320,12 @@ discussing policy implications, and acknowledging the limitations of the
 research. It also outlines directions for future research, emphasizing the need
 for further exploration of irregular power transitions, particularly coups and
 autocoups.
+
+## Power Dynamics and Coup Attempts: A Selection Mechanism Analysis
+
+## Autocoups: Conceptual Clarification and Analysis of Power Extensions by Incumbent Leaders
+
+## Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders
 
 ## Conclusion
 
@@ -382,3 +469,13 @@ dataset and continuing to refine the framework.
 cat("\\newpage
 ## References")
 ```
+
+[^1]: According to the Archigos dataset, "Removed by Military, without Foreign
+    Support" and "Removed by Other Government Actors, without Foreign Support" in
+    the variable `exitcode` are classified as coups.
+
+[^2]: The definitions and concepts of power expansion and power extension can be
+    vague. In this study, we define power expansion as an incumbent acquiring
+    additional authority from other state apparatuses, whereas power extension
+    refers to an incumbent prolonging their tenure beyond the designated term in
+    office.
