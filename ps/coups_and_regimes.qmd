@@ -41,6 +41,7 @@ library(sampleSelection)
 library(stargazer)
 library(readxl)
 library(here)
+library(data.table)
 ```
 
 ```{r}
@@ -53,8 +54,7 @@ library(here)
 #| echo: !expr format == "html"
 #| include: !expr format == "html"
 #load coup data
-coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
-                 sep = "\t")
+coup <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt")
 
 coups <- coup |>
   summarise(
@@ -708,23 +708,34 @@ attempt.
 #| results: asis
 #| echo: false
 
-political_violence <- read_excel(here("data/MEPVv2018.xls")) |> 
+political_violence <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/political_violence.csv") |> 
   dplyr::select(ccode, year, violence = actotal)
 
 gdp <- vdem |> 
   dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
-  filter(year > 1944) |> 
+  filter(year > 1940) |> 
   mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
                                align = 'right', fill = NA)),
          .by = c(ccode)) 
 
-coup_all <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", sep = "\t") |> 
+coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt") |> 
   mutate(coup = case_when(
     coup1 == 0 ~ 0,
     coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
     TRUE ~ 1
   )) |>
-  mutate(pre_coups = cumsum(lag(coup)  %in% c(1,2))) |> 
+  # group_by(ccode) |> 
+  # arrange(year) |> 
+  # mutate(
+  #   first_year = min(year),
+  #   last_coup_year = if_else(coup == 1 | coup == 2, year, NA_integer_),
+  #   last_coup_year = zoo::na.locf(last_coup_year, na.rm = FALSE),
+  #   pre_coups = if_else(is.na(last_coup_year), year - first_year, year - last_coup_year)
+  # ) |>
+  # ungroup() |>
+  mutate(pre_coups = cumsum(lag(coup) %in% c(1,2)),
+         .by = ccode
+         ) |> 
   dplyr::select(ccode, year, coup, pre_coups)
 
 reg_data <- regimes |> 
@@ -738,7 +749,7 @@ reg_data <- regimes |>
 
 model_2step <- reg_data |>
   filter(regime_type != "other") |>
-  mutate(regime = relevel(factor(regime_type), "dominant-party")) |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party")) |>
   selection(coup > 0 ~ regime + ct + gdppc + violence + pre_coups,
             coup > 1 ~ regime + ct + gdppc + violence,
             data = _) 
@@ -748,6 +759,7 @@ model_selection$param$index$betaO <- model_2step$param$index$betaS
 model_selection$param$index$betaS <- model_2step$param$index$betaO
 
 stargazer(model_selection, model_2step,
+          # type = "text",
           header = F,
           column.labels = c("Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,

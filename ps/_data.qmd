@@ -184,3 +184,53 @@ gwf_all |>
 REIGN |> 
   view()
 ```
+
+## Since last coup
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(zoo)  # For na.locf
+
+# Sample data (replace this with your actual data)
+data <- tibble::tribble(
+  ~ccode, ~year, ~coup,
+  1, 2000, 0,
+  1, 2001, 1,
+  1, 2002, 0,
+  1, 2003, 2,
+  1, 2004, 0,
+  1, 2005, 0,
+  1, 2006, 1,
+  2, 2000, 0,
+  2, 2001, 0,
+  2, 2002, 2,
+  2, 2003, 0,
+  2, 2004, 0,
+  2, 2005, 1,
+  2, 2006, 0,
+  3, 2000, 0,
+  3, 2001, 0,
+  3, 2002, 0,
+  3, 2003, 0,
+  3, 2004, 0,
+  3, 2005, 0,
+  3, 2006, 0
+)
+
+# Calculate years since last coup or from the first year if no coups
+data <- data %>%
+  group_by(ccode) %>%
+  arrange(year) %>%
+  mutate(
+    first_year = min(year),
+    last_coup_year = if_else(coup == 1 | coup == 2, year, NA_integer_),
+    last_coup_year = zoo::na.locf(last_coup_year, na.rm = FALSE),
+    years_since_last_coup = if_else(is.na(last_coup_year), year - first_year, year - last_coup_year)
+  ) %>%
+  ungroup()
+
+# View the result
+print(data)
+
+```
