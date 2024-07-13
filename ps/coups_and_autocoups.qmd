@@ -5,7 +5,6 @@
 #   - name: Zhu Qi
 #     
 format:
-  aps-html: default
   pdf: 
     documentclass: report
     keep-tex: true
@@ -43,8 +42,6 @@ format:
       - \chapterfont{\centering}
       
   docx: default
-  aps-revealjs:
-    output-file: coup_autocoup1.html
     
 categories: [Article, Coups, Autocoups, Leadership Survival]
 bibliography: references.bib
@@ -377,57 +374,77 @@ coup |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 ```
 
-Coups occur with varying frequency across different countries, with some
-experiencing them more frequently than others. According to GIC dataset, Latin
-American countries such as Bolivia witnessed
-`r coups |> filter(country == "Bolivia") |> pull(2)` coups between $1950$ and
-$1984$, while Argentina experienced
+Coups, defined as "illegal and overt attempts by the military or other elites
+within the state apparatus to unseat the sitting executive" [@powell2011, P.252],
+occur with varying frequency across countries, with some experiencing them more
+often than others. According to GIC dataset, Latin American countries such as
+Bolivia witnessed `r coups |> filter(country == "Bolivia") |> pull(2)` coups
+between 1950 and 1984, while Argentina experienced
 `r coups |> filter(country == "Argentina") |> pull(2)` during a similar time
-frame. However, Mexico's authoritarian period from $1917$ to $2000$ saw no coups
-at all. In Africa, Sudan endured
-`r coups |> filter(country == "Sudan") |> pull(2)` coups between $1955$ and
-$2023$, whereas South Africa has not experienced any coup since $1950$. Similar
-patterns are observed in the Middle East and South Asia.
+frame. However, Mexico's authoritarian period from 1917 to 2000 saw no coups at
+all. In Africa, Sudan endured `r coups |> filter(country == "Sudan") |> pull(2)`
+coups between 1955 and 2023, whereas South Africa has not experienced any coup
+since 1950. Similar patterns are observed in the Middle East and South Asia.
 
 The varying frequency of coup attempts has captivated political scientists for
 decades, leading to extensive research on the subject. As highlighted by
 @gassebner2016, despite approximately one hundred potential determinants of coups
 being suggested, no consensus has been reached. In an effort to address this
-issue, @gassebner2016 tested 66 factors proposed in previous literature using
-three million model permutations in an extreme bounds analysis.
+issue, they have tested 66 factors proposed in previous literature using three
+million model permutations in an extreme bounds analysis (ibid.).
 
 Examining previous research, which has tested around 100 variables as potential
 determinants of coups, raises an important question beyond simply understanding
 why coups are more frequent in some countries than others. The critical question
-is: Can we establish a method to help scholars focus on the most relevant factors
-of coups, rather than sifting through over 100 variables without reaching a
-consensus?
+is: Can we establish a framework to help scholars focus on the most relevant
+factors of coups, rather than sifting through over 100 variables without reaching
+a consensus?
 
 Reviewing previously proposed variables of coups, it is evident that all focus on
-pre-coup conditions, with no consideration given to post-coup factors. However,
-coups are high-stakes gambles with an all-or-nothing nature. As defined by
-@powell2011, coups are "illegal and overt attempts by the military or other
-elites within the state apparatus to unseat the sitting executive" [@powell2011,
-P.252]. Due to their illegality, the consequences of a failed coup can be severe,
-with perpetrators risking imprisonment, exile, or even death. In some instances,
-repercussions extend to the families of the coup perpetrators. Therefore, no coup
-plotters would stage a coup without some assurance of success.
+pre-coup conditions, with no consideration given to post-coup factors. This means
+more attention is paid to factors observable before a coup, such as military
+force or spending, economic performance, political stability, and previous coups.
 
-Historical coup attempts and their success rates provide valuable insights.
-Despite the significant risks associated with coups since 1950, as shown in
-@tbl-coups, there have been `r attempts` coups worldwide. Importantly, about half
-of these coups have been successful. At first glance, coups appear to be a
-high-success-rate political venture. However, compared to over 12,000
-country-years since 1950, the occurrence of `r attempts` coups is relatively
-rare, accounting for about 4% [@powell2011].
+However, coups are high-stakes gambles with an all-or-nothing nature. Due to its
+illegality, the consequences of a failed coup can be severe, with perpetrators
+risking imprisonment, exile, or even death. In some instances, repercussions
+extend to their families, which means coup plotters would not take the risk
+without some assurance of success.
+
+Historical coup attempts and their success rates provide valuable hints about
+coup plotters' decision-making processes. Despite the significant risks
+associated with coups, as shown in @tbl-coups, there have been `r attempts` coups
+worldwide since 1950. Importantly, about half of these coups have been
+successful. At first glance, coups appear to be a high-success-rate political
+venture. However, compared to over 12,000 country-years since 1950, the
+occurrence of `r attempts` coups is relatively rare, accounting for only about 4%
+(GIC).
 
 The low occurrence rate and high success rate clearly indicate that the
 initiation of coups is highly selective. In other words, the likelihood of a coup
-occurring depends greatly on its potential success rate. Since coup plotters
-meticulously assess potential outcomes, we should also analyze what factors most
-affect these outcomes when discussing the key determinants of coups. This
-approach allows us to focus on the most relevant factors and disregard those less
-related.
+occurring depends greatly on its probability of success. However, the probability
+of success is not a factor that can be observed before a coup, at least not to
+outsiders and researchers, but coup plotters surely have more information on the
+possible outcome of coups.
+
+Since coup plotters meticulously assess potential outcomes before staging a coup,
+coup researchers should also analyse what factors might affect the outcome of
+coups. Otherwise, we ran the risk of selection bias. When considering the factors
+that most affect the outcomes of coups, the current literature predominantly
+identifies military power as the decisive factor in the success of coups.
+Ultimately, military power is determined by the power structure within the
+regime.
+
+Unlike coup plotters, who have a clearer understanding of power structures and
+dynamics, including their supporters, followers, bystanders, and opponents,
+researchers are not able to accurately observe this information. However, we can
+analyse the most relevant factors which determine the balance of power and are
+observable to us. This leads us to **regime type**, which reflects the
+distribution of power within a government, encompassing who controls the
+military, sets policy, and appoints officials. Since coup plotters consider the
+balance of power within the regime before acting, this study argues that regime
+type plays a crucial role in shaping coup attempts. Analysing which regime types
+are more susceptible to coups can offer valuable insights.
 
 ```{r}
 #| label: tbl-coups
@@ -463,30 +480,23 @@ coups |>
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
 
-When considering the factors that most affect the outcomes of coups, the current
-literature predominantly identifies military power as the decisive factor in the
-success of coups. This necessitates an analysis of power dynamics within regimes,
-as military power is ultimately shaped by power dynamics.
+We employ a **double probit model with sample selection** to address the
+selection bias. This model allows us to analyze both the factors influencing coup
+success and the factors related to the decision to initiate a coup attempt in the
+first place.
 
-Because coup attempts are self-selective rather than random, this study employs a
-double `probit` model with sample selection to examine factors influencing coup
-success rates and, consequently, the likelihood of coup attempts. I posit that
-regime type, by shaping internal power dynamics among coup plotters, incumbents,
-and other ruling elites, is a crucial determinant of coup likelihood.
+This study contributes to the literature in two key ways. First, it emphasizes
+the importance of focusing on expected success rates as a driver of coup
+attempts, offering a more targeted approach compared to past studies. Second, it
+highlights the significance of regime type as a factor influencing coup
+likelihood, even when researchers lack perfect knowledge of a regime's internal
+power dynamics.
 
-This study makes two key contributions to the existing literature. First, it
-underscores the importance of regime type as a crucial determinant of coup
-attempts. Previous studies often treat regime type as a control variable,
-overlooking that variations in many other variables are fundamentally rooted in
-different regime types. More importantly, this study establishes a systematic
-approach for identifying the most relevant factors, thereby avoiding sifting
-through over 100 variables.
-
-The subsequent section explores the dynamics of coup attempts and their outcomes.
-In section 3, I detail the research design, outlining the methodology and
-variables used in the analysis. Section 4 presents and discusses the empirical
-findings. Section 5 concludes this chapter, summarizing the key insights and
-their implications.
+The subsequent section (Section 2) explores the dynamics of coup attempts and
+their outcomes. Section 3 delves into the research design, outlining the
+methodology and variables used in the analysis. Section 4 presents and discusses
+the empirical findings. Finally, Section 5 concludes the chapter by summarizing
+the key insights and their implications.
 
 ### Dynamics of coup attempts and outcomes
 
