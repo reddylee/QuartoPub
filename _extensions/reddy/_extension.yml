@@ -1,0 +1,85 @@
+title: A political science paper template
+author: Reddy Lee
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    common:
+      filters:
+        - aps.lua
+    pdf:
+      documentclass: report
+      colorlinks: true
+      urlcolor: blue
+      link-citations: true
+      linkcolor: blue
+      fig-asp: 0.618
+      number-sections: true
+      shift-heading-level-by: -1
+      toc: true
+      toc-title: Contents
+      lof: true
+      lot: true
+      crossref: 
+        lof-title: Figures
+        lot-title: Tables
+        linestretch: 1.618
+        indent: true
+        fontsize: 12pt
+        mainfont: Times New Roman
+        latex_engine: pdflatex
+        geometry:
+          - top=3mm
+          - left=1in
+          - right=1in
+          - bottom=3mm
+        template-partials:
+          - before-body.tex
+
+    revealjs:
+      theme: sky
+      transition: fade
+      slide-level: 2
+      slide-number: c/t
+      code-fold: true
+      code-tools: true
+      code-link: true
+      code-line-numbers: true
+      code-overflow: wrap
+      code-block-bg: #f8f9fa
+      highlight-style: atom-one
+      chalkboard: true
+      logo: /fig/Candoso2.png
+      header: Quarto Presentations
+      number-sections: true
+      footer: "[Can.Do.So](https://www.candoso.org)"
+      scrollable: true
+      output-location: fragment
+      incremental: true
+      preview-links: auto
+      controls: auto
+      multiplex: true
+      touch: true
+      
+    html:
+      theme: cosmo
+      #css: styles.css
+      toc: true
+      toc-title: "Jump To"
+      code-link: true
+      code-overflow: scroll
+      code-fold: true
+      code-tools: true
+      code-block-bg: true
+      highlight-style: atom-one
+      code-line-numbers: true 
+      fontsize: 1rem
+      df-print: paged
+      number-sections: true
+      grid:
+        sidebar-width: 210px
+        body-width: 1200px
+        margin-width: 210px
+        gutter-width: 2rem
+      
+        

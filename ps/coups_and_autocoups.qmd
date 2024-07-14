@@ -1,11 +1,14 @@
 ---
-# title: "Leadership Transitions and Survival:\n Coups, Autocoups, and Power Dynamics"
-# 
-# author:
-#   - name: Zhu Qi
-#     
+title: "Leadership Transitions and Survival:\n Coups, Autocoups, and Power Dynamics"
+
+author:
+  - name: Zhu Qi
+    affiliations: University of Essex
+    email: qz21485@essex.ac.uk
+  
 format:
-  pdf: 
+  aps-html: default
+  aps-pdf: 
     documentclass: report
     keep-tex: true
     colorlinks: true
@@ -15,7 +18,6 @@ format:
     fig-asp: 0.618
     number-sections: true
     shift-heading-level-by: -1
-    chapter-name: Chapter
     toc: true
     toc-title: Contents
     lof: true
@@ -40,12 +42,15 @@ format:
     header-includes:
       - \usepackage{sectsty}
       - \chapterfont{\centering}
+      - \usepackage{lscape}
+      - \newcommand{\blandscape}{\begin{landscape}}
+      - \newcommand{\elandscape}{\end{landscape}}
       
   docx: default
     
 categories: [Article, Coups, Autocoups, Leadership Survival]
 bibliography: references.bib
-include-before-body: before-body.tex
+#include-before-body: title.tex
 execute:
   warning: false
   message: false
@@ -102,9 +107,9 @@ All errors and faults are my own.
 
 This dissertation examines the dynamics of irregular power transitions,
 particularly coups and autocoups, and their influence on leader survival. It
-highlights the critical role of power dynamics, shaped by regime types, in
-determining coup success rates and attempt frequency. Utilizing Heckman's
-two-stage selection model, the study reveals that expected coup success
+highlights the critical role of power dynamics, shaped by **regime type**, in
+determining coup success rates and attempt frequency. Utilizing a **double probit
+model with sample selection**, the study reveals that expected coup success
 significantly influences attempts, with military regimes facing a heightened
 vulnerability due to their power structure.
 
@@ -190,7 +195,7 @@ Many scholars, including this study, follow the definition by @powell2011, which
 describes coups as "illegal and overt attempts by the military or other elites
 within the state apparatus to unseat the sitting executive... \[a coup is
 successful\] if the perpetrators seize and hold power for at least seven days"
-(p. 252). Although debates persist, two elements are clear: first, the
+(P. 252). Although debates persist, two elements are clear: first, the
 perpetrators are elites within the ruling group, and the victims of coups are
 incumbent executive leaders. Second, the strategy or aim of a coup involves
 completely removing the incumbents, not merely seizing part of their power or
@@ -280,15 +285,16 @@ addressing key aspects of irregular power transitions and their implications for
 political stability and democratic processes.
 
 **Chapter 2** examines the determinants of classic coup attempts. While extensive
-research exists on coups, most studies focus on observable factors such as
-economic performance, political stability, previous coups, and coup-proofing
-strategies. This chapter, however, emphasizes the less observable but crucial
-factor of expected coup success chances, which has been often overlooked.
-Utilizing Heckman's two-staged sample selection model, the analysis reveals that
-expected success rates significantly influence coup attempts. These success rates
-are primarily shaped by the balance of power between incumbents and challengers,
-which is largely determined by regime types. The findings indicate that military
-regimes face a much higher risk of coups compared to dominant-party regimes.
+research exists on coups, most studies focus on observable factors before coups,
+such as economic performance, political stability, previous coups, and
+coup-proofing strategies. This chapter, however, emphasizes the less observable
+but crucial factor of expected chances of coup success, which have been often
+overlooked. Utilizing the double probit model with sample selection, the analysis
+reveals that expected success rates significantly influence coup attempts. These
+success rates are primarily shaped by the balance of power between incumbents and
+challengers, which is largely determined by regime type. The findings indicate
+that military regimes face a much higher risk of coups compared to dominant-party
+regimes.
 
 **Chapter 3** focuses on the concept of autocoups, specifically on power
 extensions by incumbent leaders. It distinguishes autocoups from broader concepts
@@ -500,95 +506,92 @@ the key insights and their implications.
 
 ### Dynamics of coup attempts and outcomes
 
-Coup attempts are driven by a complex interplay of factors, with two key elements
-attracting significant scholarly attention: **disposition** (the motivations
-behind the attempt) and **capability** (the resources and opportunities to
-succeed).
+Coup attempts are driven by a complex interplay of factors, including motivations
+(**disposition**) and the resources and opportunities available to succeed
+(**capability**).
 
 #### Motivations for coups
 
-This section focuses on disposition, exploring the primary motivations that
-compel individuals to undertake the significant risks associated with a coup. We
-can categorize coup motivations into three main types:
+This section focuses on the motivations that compel challengers to undertake
+coups. We can categorize coup motivations into three main types:
 
-**Personal Ambition:** The allure of absolute power, prestige, and wealth is a
-significant motivator for some coup plotters. For example, @wintrobe2019
-distinguishes between totalitarian and tinpot dictators based on their use of
-power. While both prioritize personal gain, totalitarian leaders seek complete
-control over every aspect of society, whereas tinpot leaders focus on enriching
-themselves through extravagant lifestyles.
+**Personal Ambition:** Personal ambition is a significant motivator for the
+majority of coup plotters, driven by the allure of absolute power, prestige, and
+wealth. The prospect of seizing absolute power provides an unparalleled
+opportunity to shape national policies, control resources, and make significant
+decisions without constraints. The pursuit of prestige and recognition, along
+with the potential for immense economic gain and wealth, further incentivizes
+individuals. Additionally, the desire to leave a lasting legacy and make a
+historical impact can compel individuals to undertake the risky venture of
+staging a coup.
 
-**Purported National Interest:** Coups are sometimes justified as necessary
-interventions to save a nation from crisis, uphold the constitution, or
-facilitate a transition to democracy. While scepticism is warranted due to the
-potential for self-serving justifications, legitimate cases do exist. For
-instance, the 2010 coup in Niger ousted President Tandja, who attempted an
-unconstitutional third term by dissolving the opposing court and calling a
-self-serving referendum [@ginsburg2019].
+**Purported National Interest:** Sometimes coups are justified as necessary
+interventions to address national crises, uphold the constitution, or facilitate
+a transition to democracy. While the motivations behind such claims require
+scrutiny, genuine examples do exist. For instance, the 2010 coup in Niger ousted
+President Tandja, who attempted an unconstitutional third term by dissolving the
+opposing court and calling a self-serving referendum [@ginsburg2019].
 
-**Self-Preservation:** In some instances, coups are pre-emptive strikes against
-imminent political persecution or repression. Coup leaders might not be motivated
-by a desire for power, but rather a fear of elimination by the incumbent regime.
-A notable example is Idi Amin's 1971 coup against Ugandan President Obote, who
-was attempting to remove Amin from his military command position [@sudduth2017].
+**Self-Preservation:** In some cases, coups serve as pre-emptive strikes against
+perceived threats. Coup leaders might not necessarily seek power, but rather fear
+elimination or political persecution by the incumbent regime. An example is Idi
+Amin's 1971 coup against Ugandan President Obote, who was attempting to remove
+Amin from his military command position [@sudduth2017].
 
-These motivations can arise in any regime, but autocracies are particularly
-susceptible, especially for coups framed under the guise of national interest or
-self-preservation. Stable democracies, on the other hand, rarely face the same
-level of constitutional crises or political persecution that might necessitate a
-coup. However, new democracies can be vulnerable to instability, economic
+These motivations are often most prevalent in autocratic regimes, where
+justifications under the guise of national interest or self-preservation can be
+used to mask personal agendas. Stable democracies rarely face the same level of
+constitutional crises or political persecution that might necessitate a coup.
+However, new established democracies can be vulnerable to instability, economic
 downturns, and democratic backsliding, creating opportunities for coup plotters
 to exploit these weaknesses and justify their actions.
 
 Despite the potential motivations outlined above, coups remain relatively
-uncommon events, occurring in only about 4% of country-years since 1950. This low
-frequency highlights the importance of the second key element – capability. Even
-the most motivated plotters require the resources and opportunities to succeed.
-No rational actor attempts a guaranteed failure; the next section will explore
-the concept of capability in greater detail.
+uncommon, occurring in only about 4% of country-years since 1950. The main reason
+is that coup perpetrators face inherent disadvantages compared to incumbent
+leaders, highlighting the importance of capability. Even the most motivated
+plotters need the resources and opportunities to succeed. The next section will
+explore the concept of capability in greater detail.
 
 #### Capability for coups
 
-While many ambitious individuals may covet supreme power, only a select few
-possess the capability to orchestrate a successful coup. This capability hinges
-not just on their desire, but on overcoming inherent disadvantages compared to
-the incumbent leaders.
+For coup plotters, the decision to act hinges not only on their motivations but
+also on a calculated assessment of their chances of success. Several factors can
+influence this threshold:
 
-Firstly, coups are inherently clandestine operations due to their illegality.
-Plotters require a tight-knit group to minimize leaks and maximize the element of
-surprise. This secrecy restricts their ability to openly recruit supporters, a
-privilege enjoyed by incumbents who can implement "coup-proofing" measures.
+-   **Military Strength**: A clear advantage in military capabilities compared to
+    the incumbent regime significantly increases the odds of a successful coup.
 
-Secondly, coup plotters face uncertainty about the reactions of other powerful
-factions within the regime, those who could tip the scales of power. Incumbents,
-however, have a deeper understanding of these dynamics and proactively work to
-solidify their own position. While they may not know who exactly might attempt a
-coup, they are attuned to potential threats and adapt their strategies
-accordingly.
+-   **Internal Divisions within the Regime**: Existing fractures within the
+    government's power structure can present opportunities for coup plotters to
+    exploit weaknesses and gain support from disgruntled factions.
 
-Thirdly, coup plotters face a significant challenge in securing unwavering
-loyalty from potential co-conspirators. The risks associated with a coup are
-substantial, with uncertain rewards even in the event of success. Promises made
-by coup leaders might not be kept, and post-coup purges are a common tactic to
-eliminate future coup threats. Defecting to the incumbent leader can often be a
-safer option, offering predictable rewards and less risk.
+-   **Public Support**: Widespread discontent with the incumbent regime,
+    especially within the military or key sectors of society, can create an
+    environment ripe for a successful coup.
 
-Given these inherent obstacles, rational coup plotters are unlikely to gamble on
-a low-probability attempt. They may choose to abandon their plans altogether or
-bide their time for a more opportune timing. Therefore, when coup plotters do
-take action, it is because they have meticulously assessed their chances of
-success and believe the risks are outweighed by the potential gains.
+-   **Foreign Backing**: External support from powerful nations can provide
+    resources, legitimacy, and even direct military intervention to tip the
+    scales in favour of the coup plotters.
 
-But what is the threshold for a "good enough" chance of success? Before diving
-into a theoretical framework, let's examine historical data to gain some
-perspective. Surprisingly, coups since 1950 boast a rather high success rate,
-with nearly half ending in victory (as shown in @tbl-coups).
+The high success rate of coups since 1950, as shown in @tbl-coups, might suggest
+that coups are not particularly difficult to succeed. However, it is important to
+consider selection bias. We only observe attempted coups, not the numerous
+dispositions and conspiracies that never came to light. Analysing launched coup
+data alone can be misleading.
+
+To gain a more comprehensive understanding of coup attempts and their likelihood,
+we need to move beyond historical data and employ a theoretical framework that
+accounts for selection bias. This framework will allow us to analyze the factors
+influencing both the success of coups and the decision to attempt a coup in the
+first place. The next section will delve into such a framework and its
+implications for our understanding of coup attempts.
 
 #### Framework of coup success
 
 An oft-cited framework [@gassebner2016; @aidt2019] provides a structured approach
 to assess the disposition and capability of coup attempts by evaluating the
-anticipated benefits for coup plotters. The expected payoff of coups can be
+anticipated benefits for coup plotters. The expected pay-off of coups can be
 represented by the equation:
 
 $$
@@ -647,20 +650,23 @@ propose our first hypothesis:
 > ***H1: The fundamental determinant of a coup attempt is the perceived chance of
 > success. Coup plotters likely require a success threshold of at least 50%.***
 
-This leads us to the next crucial question: what factors determine a coup's
-success, influencing the very decision to attempt one? While specifics may vary,
-the core element hinges on the power dynamic between coup plotters and the
-incumbent leaders. Logically, the more powerful entity holds a greater advantage
-in this high-stakes struggle for control.
+This leads us to the next crucial question: What factors determine coup success,
+influencing the very decision to attempt one? We will discuss it in the next
+section.
 
-#### Regime types and power dynamics
+#### Regime types and power dynamics 
+
+The high success rate in historical data is merely a post-event statistical
+description, not indicative of the probability of any specific coup. Importantly,
+coup plotters do not rely on past success rates as their guide; instead, they
+assess their chances based on their unique context.
 
 Military strength undeniably plays a critical role in coup attempts. Control of
 the armed forces offers a significant advantage, explaining why military coups
 dominate discussions on the topic. Much of the literature treats "coup" and
-"military coup" interchangeably, with scholars like @powell2011 finding half of
-14 studies attribute coups solely to the military. Consequently, significant
-focus, from both researchers and policymakers, centers on the balance of power
+"military coup" interchangeably, with scholars like @powell2011 finding that half
+of 14 studies attribute coups solely to the military. Consequently, significant
+focus, from both researchers and policy-makers, centres on the balance of power
 between civilian and military authorities, or among military factions themselves.
 Strategies like "keeping the military content" [@aidt2019] or "providing them
 with resources" [@huntington1991democratization] aim to reduce military
@@ -668,76 +674,95 @@ intervention. Empirical research informs coup-proofing strategies that either
 decrease the military's desire for coups or raise barriers to success
 [@leon2013a; @powell2018].
 
-However, while military power is decisive, previous literature often
-oversimplifies its nature. As @tbl-regimes will demonstrate, military regimes,
-despite concentrated military control, exhibit surprising instability. Military
-regimes experience most frequent coup attempts. This highlights a crucial
-oversight: the intra-military component. Treating the military as a monolithic
-entity ignores the complex internal dynamics [@singh2016]. Regardless of size,
-any military comprises diverse groups with their own hierarchies, fostering
-suspicion, competition, and vigilance rather than unity. The clandestine nature
-of coups necessitates small, secretive groups. Plotters are unsure of other
-factions' stances and fear their opposition or intervention, as exemplified by
-the swiftly thwarted 2021 Niger coup[^5]. The success of a coup hinges heavily on
-other military factions' reactions [@geddes1999].
+However, while military power is decisive, it complicates the analysis. As
+@tbl-regimes demonstrates, military regimes, despite concentrated military
+control, exhibit surprising instability, experiencing the most frequent coup
+attempts. This highlights a crucial issue: the intra-military component. Treating
+the military as a monolithic entity ignores its complex internal dynamics
+[@singh2016]. Any military comprises diverse groups with their own hierarchies,
+fostering suspicion, competition, and vigilance rather than unity. The
+clandestine nature of coups necessitates small, secretive groups. Plotters are
+unsure of other factions' stances and fear their opposition or intervention, as
+exemplified by the swiftly thwarted 2021 Niger coup[^5]. The success of a coup
+hinges heavily on other military factions' reactions [@geddes1999].
 
-Furthermore, the relationship between government and military varies across
-regimes. In democracies, civilian authority reigns supreme. The military is a
-national institution bound by the constitution, not individual leaders, ensuring
-political neutrality (e.g., the U.S. Armed Forces). Conversely, non-democracies
-display a less clear power structure. Identifying the true leader of the military
-depends on the regime type. We will leverage framework of @geddes2014 to
-categorize autocracies based on leadership origin and decision-making. This
-framework classifies regimes into three main categories: military, personalist,
-and dominant-party.
+Moreover, military force is not the only factor shaping the balance of power.
+Internal divisions within the ruling elites, public support, and foreign backing
+also play important roles. Since the balance of power is not a clearly observable
+variable, especially difficult to measure for outsiders and academic scholars, we
+can shift our focus from who controls power in a specific context to what factors
+shape the balance of power. This leads us to regime type, as the classification
+of regime type is based mainly on the power structure. For example,
+"...definition of regimes emphasizes the rules that identify the group from which
+leaders can come and determine who influences leadership choice and policy"
+[@geddes2014, P. 314]. We will leverage this framework to categorize autocracies
+based on leadership origin and decision-making, classifying regimes into three
+main categories: military, personalist, and dominant-party.
 
-**Military regimes** are characterized by the dominance of a junta – a group of
-military officers who control the regime's power structure, including leadership
-selection and policy formulation. Examples include the Brazilian regime
-(1964-1985), the Argentine regime (1976-1983), and the Salvadoran regime
-(1948-1984) [@geddes1999]. In **personalist regimes**, power resides with a
-single, charismatic leader who controls policy, the military, and succession.
-Regimes like Rafael Trujillo's in the Dominican Republic (1930-1961), Idi Amin's
-in Uganda (1971-1979), and Jean-Bédel Bokassa's in the Central African Republic
-(1966-1979) exemplify personalist rule [@geddes1999]. In **dominant-party
-regimes,** power rests within a well-organized ruling party, with leaders acting
-as its representatives. The party structure and ideology foster internal cohesion
-and a long-term vision. Examples include the Partido Revolucionario Institucional
-(PRI) in Mexico, the Revolutionary Party of Tanzania (CCM), and Leninist parties
-in various Eastern European countries [@geddes1999].
+-   **Military Regimes:** Characterized by the dominance of a junta—a group of
+    military officers who control the regime's power structure, including
+    leadership selection and policy formulation. Examples include the Brazilian
+    regime (1964-1985), the Argentine regime (1976-1983), and the Salvadoran
+    regime (1948-1984) [@geddes1999].
+
+-   **Personalist Regimes:** Power resides with a single, charismatic leader who
+    controls policy, the military, and succession. Regimes like Rafael Trujillo's
+    in the Dominican Republic (1930-1961), Idi Amin's in Uganda (1971-1979), and
+    Jean-Bédel Bokassa's in the Central African Republic (1966-1979) exemplify
+    personalist rule (ibid.).
+
+-   **Dominant-Party Regimes:** Power rests within a well-organized ruling party,
+    with leaders acting as its representatives. The party structure and ideology
+    foster internal cohesion and a long-term vision. Examples include the Partido
+    Revolucionario Institucional (PRI) in Mexico, the Revolutionary Party of
+    Tanzania (CCM), and Leninist parties in various Eastern European countries
+    (ibid.).
 
 The critical distinction between regime types lies in the unique power balance
-established during the initial power seizure. The most competent group, be it a
-military junta, a political party, or a strongman, typically prevails due to the
-challenges of seizing control. This power grab is often accompanied by purges of
-potential rivals, solidifying the newly established regime [@sudduth2017;
-@roessler2011].
+established during their seizure of power, often through irregular and violent
+means, frequently involving military confrontations. This power struggle
+typically results in the emergence of the most competent group—be it a military
+junta, a political party, or a strongman—as the core leadership. Furthermore, the
+early stages of new regimes are often marked by internal purges to consolidate
+power and eliminate potential rivals [@sudduth2017; @roessler2011].
 
-Following these internal purges and external challenges, a new power dynamic
-emerges, typically solidifying into one of three main structures: military
-regimes, personalist regimes, or dominant-party regimes.
+Following these external challenges and internal purges, new power dynamics
+emerge in three primary forms: dominant-party regimes, personalist regimes, and
+military regimes. These contrasting power dynamics significantly influence a
+regime's susceptibility to coups. Dominant-party regimes, characterized by a
+well-organized party with clear ideology, hierarchy, and discipline, exhibit the
+greatest resilience against coups due to their institutionalized structures and
+unified leadership. Personalist regimes, where power centers around a single
+strong leader, are relatively stable during the leader's tenure. However, they
+face a higher risk of coups, particularly due to the lack of clear succession
+plans and vulnerabilities associated with the leader's personal weaknesses,
+health issues, and finite lifespan. Military regimes, characterized by power
+struggles within a junta, are the most vulnerable to coups. The absence of a
+clear final authority in military regimes often leads to internal conflicts, and
+the presence of multiple military factions increases the likelihood of resolving
+disputes through force, making these regimes the least stable. @tbl-regimes1
+summarises the key characteristics of the three main regime types.
 
--   **Dominant-Party Regimes:** These regimes boast the greatest stability due to
-    their institutionalized structure. A dominant party, with its shared ideology
-    and goals, fosters internal cohesion and a long-term vision. Power resides
-    within the party, not with any single individual, and the military aligns
-    with the party itself, contributing to greater stability. Formalized
-    succession rules further bolster stability by ensuring a smooth transfer of
-    power [@frantz2016].
+These contrasting power dynamics significantly influence a regime's
+susceptibility to coups. As @tbl-regimes confirms, military regimes, despite
+representing only 5.6% of country-years, experience a disproportionate share of
+coups, accounting for over 22% of all occurrences. Personalist regimes face a
+similarly high coup risk, constituting 23% of coups while representing only 13%
+of country-years. Conversely, dominant-party regimes, with their
+institutionalized structures and unified leadership, exhibit the greatest
+resilience. They represent 22.6% of country-years but account for only 16.7% of
+coups. The column "Coup Likelihood" clearly illustrates the varying risks:
+military regimes have the highest likelihood at 17.2%, followed by personalist
+regimes at 7.7%, and dominant-party regimes at 3.2% (excluding *Other* regime
+types).
 
--   **Personalist Regimes:** These regimes exhibit a degree of initial stability
-    as dictators, having emerged from intense competition, are typically tough
-    and competent. The purging of rivals creates a temporary status quo within
-    the dictator's inner circle. However, the lack of a clear succession plan
-    creates a vulnerability. The dictator's sudden death can plunge the regime
-    into chaos, as potential successors scramble for power, creating a prime
-    opportunity for coups.
+> ***H2: Due to their balance of power dynamics, military regimes are more prone
+> to coups, followed by personalist regimes, while dominant-party regimes are the
+> least likely to experience coups among the three.***
 
--   **Military Regimes:** These regimes are often the least stable. Power is
-    typically shared among a junta, leading to mistrust and internal conflicts
-    over benefits and policies. The absence of a single authority figure hinders
-    decisive action, as exemplified by the power struggles within the Chilean
-    junta after the 1973 coup [@arriagadaherrera1988].
+\newpage
+
+\blandscape
 
 ```{r}
 #| label: tbl-regimes1
@@ -745,28 +770,20 @@ regimes, personalist regimes, or dominant-party regimes.
 #| echo: !expr format == "html"
 
 read.csv(here("data/regimes_comparison.csv")) |> 
-  mutate(institutionalized_leadership_succession = percent(institutionalized_leadership_succession)) |> 
   clean_names(case = "title") |> 
   gt() |> 
   tab_options(column_labels.font.weight = "bold",
               table.width = pct(100),
-              table.align = "center") |>
+              table.align = "center",
+              page.orientation = "landscape"
+              ) |>
   cols_width(
-    4 ~ px(180),
-    3 ~ px(80),
-    1:2 ~ px(30)
-  ) |> 
+    1:6 ~ px(100)
+  ) |>
   tab_source_note(source_note = md("*Source: GWF & Author*"))
 ```
 
-These contrasting power dynamics significantly influence a regime's
-susceptibility to coups. As @tbl-regimes confirms, military regimes, despite
-representing only 5.6% of country-years, experience a disproportionate share of
-coups (over 22%). Personalist regimes follow a similar pattern, facing a higher
-coup risk (23% of coups) despite constituting only 13% of country-years.
-Conversely, dominant-party regimes, with their institutionalized structures and
-unified leadership, exhibit the greatest resilience. They represent 22.6% of
-country-years but experience a lower incidence of coups (only 16.7%).
+\newpage
 
 ```{r}
 #| label: tbl-regimes
@@ -832,7 +849,8 @@ coup_regimes <-  coup_by_regime |>
 
 regime_total |>
   left_join(coup_regimes, join_by(regime_type == regime)) |>
-  mutate(regime_type = str_to_title(regime_type)) |>
+  mutate(regime_type = str_to_title(regime_type),
+         coup_likelihood = percent(num_of_coups / country_year, accuracy = 0.1)) |>
   select(-succeeded_coup) |> 
   clean_names(case = "title") |>
   gt() |>
@@ -842,9 +860,7 @@ regime_total |>
   tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
 ```
 
-> ***H2: Due to their balance of power dynamics, military regimes are more prone
-> to coups, followed by personalist regimes, while dominant-party regimes are the
-> least likely to experience coups among the three.***
+\elandscape
 
 ### Research Design
 

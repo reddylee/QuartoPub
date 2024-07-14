@@ -1,0 +1,31 @@
+% TODO: Add custom LaTeX header directives here
+% \addtolength{\oddsidemargin}{-.5in}%
+% \addtolength{\evensidemargin}{-1in}%
+% \addtolength{\textwidth}{1in}%
+% \addtolength{\textheight}{1.7in}%
+% \addtolength{\topmargin}{-1in}%
+% 
+% header.tex
+
+% Abstract
+\begin{abstract}
+$abstract$
+\end{abstract}
+
+% Keywords
+$if(keywords)$
+\noindent%
+{\it Keywords:} $for(keywords)$$it$$sep$, $endfor$
+\vfill
+$endif$
+
+% Authors
+\author{
+$for(by-author)$
+$it.name.literal$$if(it.acknowledgements)$\thanks{$it.acknowledgements$}$endif$\\
+$for(it.affiliations)$$if(it.department)$$it.department$$if(it.name)$, $endif$$endif$$if(it.name)$$it.name$$endif$$if(it.department)$\\
+$elseif(it.name)$\\$endif$
+$if(it.email)$\href{mailto:$it.email$}{$it.email$}$endif$
+$sep$ \and
+$endfor$
+}
