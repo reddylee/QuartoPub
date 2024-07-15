@@ -34,3 +34,93 @@ norms and institutions. - **Authoritarianism**: Concentration of power in the
 hands of a single leader. - **Political Instability**: Potential for increased
 unrest and conflict as opposition groups resist power extensions. - **Loss of
 Public Trust**: Diminished faith in democratic processes and institutions.
+
+## Interpreting the regression output
+
+The regression results from the sample selection model provide insights into the
+factors influencing coup attempts and their outcomes between 1950 and 2019. The
+model uses a double probit approach with sample selection to address potential
+biases in analyzing coup attempts and outcomes.
+
+### Interpretation of Regression Results
+
+#### Coup Attempts (Column 1)
+
+-   **Constant**: The negative constant (-0.549) suggests a lower baseline
+    likelihood of coup attempts when all other variables are at their reference
+    points.
+-   **Regime Types**:
+    -   **Democracy**: The coefficient (0.041) is not statistically significant,
+        indicating that being a democracy does not have a significant impact on
+        the likelihood of a coup attempt compared to the reference regime type.
+    -   **Military**: The positive and significant coefficient (0.370) indicates
+        that military regimes are more likely to experience coup attempts.
+    -   **Monarchy**: The positive and significant coefficient (0.288) suggests
+        that monarchies are also more prone to coup attempts.
+    -   **Personalist**: The coefficient (0.160) is positive and significant,
+        showing that personalist regimes have a higher likelihood of coup
+        attempts.
+-   **Economic Trend**: The significant negative coefficient (-1.383) suggests
+    that a positive economic trend decreases the likelihood of coup attempts.
+-   **GDP per Capita**: The negative and significant coefficient (-0.021)
+    indicates that higher GDP per capita reduces the probability of coup
+    attempts.
+-   **Political Violence**: The positive and significant coefficient (0.033)
+    suggests that higher levels of political violence increase the likelihood of
+    coup attempts.
+-   **Coup Experience**: The large and significant positive coefficient (0.722)
+    implies that countries with previous coup experience are much more likely to
+    have another coup attempt.
+-   **Years Since Last Coup**: The negative and significant coefficient (-0.030)
+    indicates that as more time passes since the last coup, the likelihood of
+    another coup attempt decreases.
+
+#### Coup Outcomes (Column 2)
+
+-   **Constant**: The negative constant (-1.522) suggests a lower baseline
+    likelihood of successful coup outcomes when all other variables are at their
+    reference points.
+-   **Regime Types**:
+    -   **Democracy, Military, Monarchy, Personalist**: None of these regime
+        types have significant coefficients, implying that these variables do not
+        significantly affect the success of coups.
+-   **Economic Trend**: The positive coefficient (0.763) is not statistically
+    significant, suggesting no significant impact on coup success.
+-   **GDP per Capita**: The negative coefficient (-0.019) is weakly significant
+    (p\<0.1), indicating a marginal decrease in coup success with higher GDP per
+    capita.
+-   **Political Violence**: The positive coefficient (0.024) is not statistically
+    significant, indicating no significant impact on coup success.
+-   **𝜌 (Rho)**: The significant coefficient (0.436) indicates the correlation
+    between the error terms of the selection and outcome equations, suggesting
+    that the double probit model with sample selection is appropriate.
+
+### Analysis of Double Probit Model with Sample Selection
+
+The use of a double probit model with sample selection is appropriate for the
+following reasons:
+
+1.  **Addressing Selection Bias**: Coup data is prone to selection bias because
+    we only observe successful coups and attempted coups, not potential coups
+    that were never attempted. The sample selection model accounts for this bias
+    by modeling both the selection process (coup attempts) and the outcome (coup
+    success).
+2.  **Significant Correlation (𝜌)**: The significant correlation between the
+    error terms of the selection and outcome equations indicates that unobserved
+    factors affecting coup attempts also influence coup outcomes, justifying the
+    use of the sample selection model.
+3.  **Different Influences on Attempts and Outcomes**: The results show that
+    factors influencing coup attempts (e.g., regime type, economic conditions,
+    political violence) differ from those influencing coup outcomes. This
+    differentiation supports the need for a model that separately analyzes the
+    decision to attempt a coup and the likelihood of its success.
+
+### Conclusion
+
+The double probit model with sample selection effectively addresses selection
+bias and provides a nuanced understanding of the factors influencing both coup
+attempts and their outcomes. The results highlight the importance of regime type,
+economic conditions, and political violence in the likelihood of coup attempts,
+while showing that these factors do not significantly affect the success of
+coups. This approach allows for a more accurate analysis of the dynamics
+surrounding coups and their determinants.

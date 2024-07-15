@@ -654,7 +654,7 @@ This leads us to the next crucial question: What factors determine coup success,
 influencing the very decision to attempt one? We will discuss it in the next
 section.
 
-#### Regime types and power dynamics 
+#### Regime types and power dynamics
 
 The high success rate in historical data is merely a post-event statistical
 description, not indicative of the probability of any specific coup. Importantly,
@@ -1041,7 +1041,7 @@ coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_yea
   mutate(pre_coups = cumsum(lag(coup) %in% c(1,2)),
          .by = ccode
          ) |> 
-  dplyr::select(ccode, year, coup, pre_coups)
+  dplyr::select(ccode, country, year, coup, pre_coups)
 
 reg_data <- regimes |> 
   dplyr::select(country = extended_country_name,

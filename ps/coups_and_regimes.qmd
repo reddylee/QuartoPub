@@ -454,16 +454,13 @@ regimes, personalist regimes, or dominant-party regimes.
 #| echo: !expr format == "html"
 
 read.csv(here("data/regimes_comparison.csv")) |> 
-  mutate(institutionalized_leadership_succession = percent(institutionalized_leadership_succession)) |> 
   clean_names(case = "title") |> 
   gt() |> 
   tab_options(column_labels.font.weight = "bold",
               table.width = pct(100),
               table.align = "center") |>
   cols_width(
-    4 ~ px(180),
-    3 ~ px(80),
-    1:2 ~ px(30)
+    1:6 ~ px(100)
   ) |> 
   tab_source_note(source_note = md("*Source: GWF & Author*"))
 ```
@@ -724,19 +721,19 @@ coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_yea
     coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
     TRUE ~ 1
   )) |>
-  # group_by(ccode) |> 
-  # arrange(year) |> 
-  # mutate(
-  #   first_year = min(year),
-  #   last_coup_year = if_else(coup == 1 | coup == 2, year, NA_integer_),
-  #   last_coup_year = zoo::na.locf(last_coup_year, na.rm = FALSE),
-  #   pre_coups = if_else(is.na(last_coup_year), year - first_year, year - last_coup_year)
-  # ) |>
-  # ungroup() |>
-  mutate(pre_coups = cumsum(lag(coup) %in% c(1,2)),
-         .by = ccode
-         ) |> 
-  dplyr::select(ccode, year, coup, pre_coups)
+  group_by(ccode) %>%
+  arrange(year) %>%
+  mutate(pre_coups = lag(cumsum(coup %in% c(1, 2)), default = 0),
+         last_coup_year = lag(case_when(coup %in% c(1, 2)  ~ year,
+                                        TRUE ~ NA_integer_)),
+         last_coup_year = case_when(year == min(year) ~ year,
+                                    TRUE ~ last_coup_year)) |> 
+  fill(last_coup_year, .direction = "down") |>
+  mutate(time_since_last_coup = year - last_coup_year,
+         coup_dummy = case_when(pre_coups == 0 ~ 0,
+                                TRUE ~ 1)) |>
+  
+  dplyr::select(ccode, year, coup, pre_coups, time_since_last_coup, coup_dummy) 
 
 reg_data <- regimes |> 
   dplyr::select(country = extended_country_name,
@@ -750,7 +747,7 @@ reg_data <- regimes |>
 model_2step <- reg_data |>
   filter(regime_type != "other") |>
   mutate(regime = fct_relevel(regime_type, "dominant-party")) |>
-  selection(coup > 0 ~ regime + ct + gdppc + violence + pre_coups,
+  selection(coup > 0 ~ regime + ct + gdppc + violence + coup_dummy + coup_dummy:time_since_last_coup,
             coup > 1 ~ regime + ct + gdppc + violence,
             data = _) 
 
@@ -765,7 +762,7 @@ stargazer(model_selection, model_2step,
           intercept.bottom = F,
           title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
           label = "results",
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
+          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence", "Coup experience (yes)",  "Years since last coup"),
           dep.var.caption = "",
           dep.var.labels.include = F,
           summary.logical = T,
