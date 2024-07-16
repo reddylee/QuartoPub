@@ -1029,19 +1029,18 @@ coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_yea
     coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
     TRUE ~ 1
   )) |>
-  # group_by(ccode) |> 
-  # arrange(year) |> 
-  # mutate(
-  #   first_year = min(year),
-  #   last_coup_year = if_else(coup == 1 | coup == 2, year, NA_integer_),
-  #   last_coup_year = zoo::na.locf(last_coup_year, na.rm = FALSE),
-  #   pre_coups = if_else(is.na(last_coup_year), year - first_year, year - last_coup_year)
-  # ) |>
-  # ungroup() |>
-  mutate(pre_coups = cumsum(lag(coup) %in% c(1,2)),
-         .by = ccode
-         ) |> 
-  dplyr::select(ccode, country, year, coup, pre_coups)
+  group_by(ccode) %>%
+  arrange(year) %>%
+  mutate(pre_coups = lag(cumsum(coup %in% c(1, 2)), default = 0),
+         last_coup_year = lag(case_when(coup %in% c(1, 2)  ~ year,
+                                        TRUE ~ NA_integer_)),
+         last_coup_year = case_when(year == min(year) ~ year,
+                                    TRUE ~ last_coup_year)) |> 
+  fill(last_coup_year, .direction = "down") |>
+  mutate(time_since_last_coup = year - last_coup_year,
+         coup_dummy = case_when(pre_coups == 0 ~ 0,
+                                TRUE ~ 1)) |>
+  dplyr::select(ccode, year, coup, pre_coups, time_since_last_coup, coup_dummy) 
 
 reg_data <- regimes |> 
   dplyr::select(country = extended_country_name,
@@ -1052,29 +1051,43 @@ reg_data <- regimes |>
   filter(!is.na(gdppc)) |> 
   mutate(violence = na.locf(violence, .by = ccode)) 
 
-model_2step <- reg_data |>
+model_1 <- reg_data |>
   filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party")) |>
-  selection(coup > 0 ~ regime + ct + gdppc + violence + pre_coups,
-            coup > 1 ~ regime + ct + gdppc + violence,
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct-1)*100) |>
+  selection(coup > 0 ~ regime + ect + gdppc + violence + coup_dummy*time_since_last_coup,
+            coup > 1 ~ regime + ect + gdppc + violence,
             data = _) 
 
-model_selection <- model_2step
-model_selection$param$index$betaO <- model_2step$param$index$betaS
-model_selection$param$index$betaS <- model_2step$param$index$betaO
+model_1_selection <- model_1
+model_1_selection$param$index$betaO <- model_1$param$index$betaS
+model_1_selection$param$index$betaS <- model_1$param$index$betaO
 
-stargazer(model_selection, model_2step,
+model_2 <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct-1)*100) |>
+  selection(coup > 0 ~ regime + ect + gdppc + violence + pre_coups,
+            coup > 1 ~ regime + ect + gdppc + violence,
+            data = _) 
+
+model_2_selection <- model_2
+model_2_selection$param$index$betaO <- model_2$param$index$betaS
+model_2_selection$param$index$betaS <- model_2$param$index$betaO
+
+stargazer(model_2_selection, model_2, model_1_selection, model_1,
           # type = "text",
           header = F,
-          column.labels = c("Coup Attempts", "Coup Outcome"),
+          column.labels = c("Coup Attempts", "Coup Outcome","Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,
           title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
           label = "results",
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence",  "Previous coups"),
+          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "No. of Previous coups","Coup experience","Years since last coup", "Interactive"),
           dep.var.caption = "",
           dep.var.labels.include = F,
           summary.logical = T,
-          column.sep.width = "50pt"
+          column.sep.width = "10pt",
+          font.size = "small"
           )
 ```
 
@@ -1085,28 +1098,29 @@ influencing coup attempts and their outcomes across different regime types from
 
 #### The Selection Model: Coup Attempts
 
-In the selection model (Model 1), military and personalist regimes show
-significant positive coefficients at the 1% level, indicating they are more
-likely to experience coup attempts compared to dominant-party regimes, holding
-other factors constant. Military regimes have a stronger positive effect on coup
-attempts than personalist regimes. Monarch regimes also display a similar effect
-to personalist regimes, as monarchies are a subset of personalist regimes with
-royal titles. This finding aligns with theoretical expectations regarding the
-internal power struggles within military juntas and the succession
-vulnerabilities in personalist regimes, highlighting the importance of regime
-structure in understanding coup likelihood.
+In the selection model (Model 1), military and personalist regimes exhibit
+significant positive coefficients at the 1% level, indicating a higher likelihood
+of experiencing coup attempts compared to dominant-party regimes. Specifically,
+military regimes are, on average, 7% more likely to encounter coups than
+dominant-party regimes, while personalist regimes are 2% more likely, holding
+other factors constant. Monarch regimes also display a positive effect similar to
+personalist regimes, reflecting the fact that monarchies are a subset of
+personalist regimes with royal titles. This finding aligns with theoretical
+expectations regarding the internal power struggles within military juntas and
+the succession vulnerabilities in personalist regimes, underscoring the
+importance of regime structure in understanding coup likelihood.
 
-Control variables also exhibit expected effects. Stronger economic performance,
-indicated by higher economic growth rates and GDP per capita levels, correlates
-with a lower risk of coup attempts, suggesting that economic stability reduces
-coup incentives. Among these, the economic trend has a more pronounced negative
-effect on coup attempts than GDP per capita.
-
-Political violence has a positive and significant effect on coup attempts,
-indicating that higher levels of instability increase the likelihood of coups.
-The positive coefficient for previous coups suggests an copycat effect from
-earlier examples. However, the significance of political violence and previous
-coups is less substantial.
+Control variables also show effects in the expected directions. Stronger economic
+performance, as indicated by higher economic growth trends and GDP per capita
+levels, correlates with a lower risk of coup attempts. This suggests that better
+economic performance and relatively higher living standards diminish the
+incentives for coups. Political violence has a positive and significant effect on
+coup attempts, indicating that higher levels of instability increase the
+likelihood of coups. The positive coefficient for the number of previous coups
+suggests a "copycat" effect from earlier examples. However, the control variables
+are less substantial in predicting coup attempts, as a one-unit increase in these
+factors' value results in less than a 1% increase in coup probability, ceteris
+paribus.
 
 #### The Outcome Model: Coup Success
 

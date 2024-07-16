@@ -42,6 +42,9 @@ library(stargazer)
 library(readxl)
 library(here)
 library(data.table)
+library(broom)
+library(margins)
+library(jtools)
 ```
 
 ```{r}
@@ -732,7 +735,6 @@ coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_yea
   mutate(time_since_last_coup = year - last_coup_year,
          coup_dummy = case_when(pre_coups == 0 ~ 0,
                                 TRUE ~ 1)) |>
-  
   dplyr::select(ccode, year, coup, pre_coups, time_since_last_coup, coup_dummy) 
 
 reg_data <- regimes |> 
@@ -746,17 +748,18 @@ reg_data <- regimes |>
 
 model_2step <- reg_data |>
   filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party")) |>
-  selection(coup > 0 ~ regime + ct + gdppc + violence + coup_dummy + coup_dummy:time_since_last_coup,
-            coup > 1 ~ regime + ct + gdppc + violence,
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct -1)*100) |>
+  selection(coup > 0 ~ regime + ect + gdppc + violence + coup_dummy + coup_dummy:time_since_last_coup,
+            coup > 1 ~ regime + ect + gdppc + violence,
             data = _) 
-
+summary(model_2step)
 model_selection <- model_2step
 model_selection$param$index$betaO <- model_2step$param$index$betaS
 model_selection$param$index$betaS <- model_2step$param$index$betaO
 
 stargazer(model_selection, model_2step,
-          # type = "text",
+          type = "text",
           header = F,
           column.labels = c("Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,
@@ -768,6 +771,36 @@ stargazer(model_selection, model_2step,
           summary.logical = T,
           column.sep.width = "50pt"
           )
+
+
+probit <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct -1)*100) |>
+  glm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
+      family = binomial(link = "probit"), data = _)
+
+probit_margin <- margins(probit)
+logit <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct -1)*100) |>
+  glm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
+      family = binomial(link = "logit"), data = _)
+logit_margin <- margins(logit)
+lpm <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct -1)*100) |>
+  lm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
+     data = _)
+
+
+export_summs(
+  lpm,
+  probit_margin,
+  logit_margin
+)
 ```
 
 The double `probit` model with sample selection, estimated using the

@@ -1191,46 +1191,56 @@ directly impact the outcome of a specific coup attempt.
 \begin{table}[!htbp] \centering 
   \caption{Sample Selection Model of Regime Types and Coups, 1950-2019} 
   \label{results} 
-\begin{tabular}{@{\extracolsep{50pt}}lcc} 
+\small 
+\begin{tabular}{@{\extracolsep{10pt}}lcccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
- & Coup Attempts & Coup Outcome \\ 
-\\[-1.8ex] & (1) & (2)\\ 
+ & Coup Attempts & Coup Outcome & Coup Attempts & Coup Outcome \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
 \hline \\[-1.8ex] 
- Constant & $-$0.303 & $-$1.397$^{***}$ \\ 
-  & (0.236) & (0.513) \\ 
-  & & \\ 
- Regime: Democracy & 0.056 & 0.068 \\ 
-  & (0.072) & (0.121) \\ 
-  & & \\ 
- \hspace{1.6cm}Military & 0.687$^{***}$ & 0.596$^{***}$ \\ 
-  & (0.084) & (0.170) \\ 
-  & & \\ 
- \hspace{1.6cm}Monarchy & 0.282$^{**}$ & 0.178 \\ 
-  & (0.118) & (0.201) \\ 
-  & & \\ 
- \hspace{1.6cm}Personalist & 0.319$^{***}$ & 0.128 \\ 
-  & (0.075) & (0.170) \\ 
-  & & \\ 
- Economic trend & $-$1.471$^{***}$ & $-$0.406 \\ 
-  & (0.222) & (0.714) \\ 
-  & & \\ 
-  GDP per capita & $-$0.028$^{***}$ & $-$0.028$^{***}$ \\ 
-  & (0.003) & (0.006) \\ 
-  & & \\ 
- Political violence & 0.033$^{**}$ & 0.033$^{*}$ \\ 
-  & (0.013) & (0.020) \\ 
-  & & \\ 
- Previous coups & 0.030$^{***}$ &  \\ 
-  & (0.010) &  \\ 
-  & & \\ 
+ Constant & $-$1.774$^{***}$ & $-$1.803$^{***}$ & $-$1.663$^{***}$ & $-$0.653 \\ 
+  & (0.058) & (0.360) & (0.088) & (0.518) \\ 
+  & & & & \\ 
+ Regime: Democracy & 0.056 & 0.068 & 0.043 & 0.042 \\ 
+  & (0.072) & (0.121) & (0.075) & (0.192) \\ 
+  & & & & \\ 
+ \hspace{1.6cm}Military & 0.687$^{***}$ & 0.596$^{***}$ & 0.345$^{***}$ & 0.247 \\ 
+  & (0.084) & (0.170) & (0.091) & (0.229) \\ 
+  & & & & \\ 
+ \hspace{1.6cm}Monarchy & 0.282$^{**}$ & 0.178 & 0.234$^{*}$ & 0.088 \\ 
+  & (0.118) & (0.201) & (0.123) & (0.310) \\ 
+  & & & & \\ 
+ \hspace{1.6cm}Personalist & 0.319$^{***}$ & 0.128 & 0.134$^{*}$ & $-$0.145 \\ 
+  & (0.075) & (0.170) & (0.080) & (0.205) \\ 
+  & & & & \\ 
+ Economic trend & $-$0.015$^{***}$ & $-$0.004 & $-$0.014$^{***}$ & 0.009 \\ 
+  & (0.002) & (0.007) & (0.002) & (0.008) \\ 
+  & & & & \\ 
+ GDP per capita & $-$0.028$^{***}$ & $-$0.028$^{***}$ & $-$0.016$^{***}$ & $-$0.016 \\ 
+  & (0.003) & (0.006) & (0.003) & (0.010) \\ 
+  & & & & \\ 
+ Political violence & 0.033$^{**}$ & 0.033$^{*}$ & 0.038$^{***}$ & 0.025 \\ 
+  & (0.013) & (0.020) & (0.013) & (0.031) \\ 
+  & & & & \\ 
+ No. of Previous coups & 0.030$^{***}$ &  &  &  \\ 
+  & (0.010) &  &  &  \\ 
+  & & & & \\ 
+ Coup experience &  &  & 0.447$^{***}$ &  \\ 
+  &  &  & (0.086) &  \\ 
+  & & & & \\ 
+ Years since last coup &  &  & $-$0.018$^{***}$ &  \\ 
+  &  &  & (0.004) &  \\ 
+  & & & & \\ 
+ Interactive &  &  & $-$0.013$^{***}$ &  \\ 
+  &  &  & (0.005) &  \\ 
+  & & & & \\ 
 \hline \\[-1.8ex] 
-Observations & 9,606 & 9,606 \\ 
-Log Likelihood & $-$1,663.646 & $-$1,663.646 \\ 
-$\rho$ & 0.898$^{***}$  (0.158) & 0.898$^{***}$  (0.158) \\ 
+Observations & 9,606 & 9,606 & 9,606 & 9,606 \\ 
+Log Likelihood & $-$1,663.646 & $-$1,663.646 & $-$1,598.603 & $-$1,598.603 \\ 
+$\rho$ & 0.898$^{***}$  (0.158) & 0.898$^{***}$  (0.158) & 0.386$^{*}$  (0.234) & 0.386$^{*}$  (0.234) \\ 
 \hline 
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
 \end{tabular} 
 \end{table}
 
@@ -1242,31 +1252,32 @@ different regime types from 1950 to 2019 (Table \ref{results}).
 \subsection{The Selection Model: Coup
 Attempts}\label{the-selection-model-coup-attempts}
 
-In the selection model (Model 1), military and personalist regimes show
-significant positive coefficients at the 1\% level, indicating they are
-more likely to experience coup attempts compared to dominant-party
-regimes, holding other factors constant. Military regimes have a
-stronger positive effect on coup attempts than personalist regimes.
-Monarch regimes also display a similar effect to personalist regimes, as
-monarchies are a subset of personalist regimes with royal titles. This
-finding aligns with theoretical expectations regarding the internal
-power struggles within military juntas and the succession
-vulnerabilities in personalist regimes, highlighting the importance of
-regime structure in understanding coup likelihood.
+In the selection model (Model 1), military and personalist regimes
+exhibit significant positive coefficients at the 1\% level, indicating a
+higher likelihood of experiencing coup attempts compared to
+dominant-party regimes. Specifically, military regimes are, on average,
+7\% more likely to encounter coups than dominant-party regimes, while
+personalist regimes are 2\% more likely, holding other factors constant.
+Monarch regimes also display a positive effect similar to personalist
+regimes, reflecting the fact that monarchies are a subset of personalist
+regimes with royal titles. This finding aligns with theoretical
+expectations regarding the internal power struggles within military
+juntas and the succession vulnerabilities in personalist regimes,
+underscoring the importance of regime structure in understanding coup
+likelihood.
 
-Control variables also exhibit expected effects. Stronger economic
-performance, indicated by higher economic growth rates and GDP per
-capita levels, correlates with a lower risk of coup attempts, suggesting
-that economic stability reduces coup incentives. Among these, the
-economic trend has a more pronounced negative effect on coup attempts
-than GDP per capita.
-
-Political violence has a positive and significant effect on coup
-attempts, indicating that higher levels of instability increase the
-likelihood of coups. The positive coefficient for previous coups
-suggests an copycat effect from earlier examples. However, the
-significance of political violence and previous coups is less
-substantial.
+Control variables also show effects in the expected directions. Stronger
+economic performance, as indicated by higher economic growth trends and
+GDP per capita levels, correlates with a lower risk of coup attempts.
+This suggests that better economic performance and relatively higher
+living standards diminish the incentives for coups. Political violence
+has a positive and significant effect on coup attempts, indicating that
+higher levels of instability increase the likelihood of coups. The
+positive coefficient for the number of previous coups suggests a
+``copycat'' effect from earlier examples. However, the control variables
+are less substantial in predicting coup attempts, as a one-unit increase
+in these factors' value results in less than a 1\% increase in coup
+probability, ceteris paribus.
 
 \subsection{The Outcome Model: Coup
 Success}\label{the-outcome-model-coup-success}
