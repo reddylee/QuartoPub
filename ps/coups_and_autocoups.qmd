@@ -73,6 +73,7 @@ library(here)
 library(stargazer)
 library(survival)
 library(sampleSelection)
+library(marginaleffects)
 ```
 
 ## Acknowledgements {.unnumbered}
@@ -146,8 +147,11 @@ This work contributes significantly to the political science literature by:
 ```{r}
 #| label: leader_data
 #| include: false
-Plad <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/PLAD.csv")
-Archigos <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/archigos.csv")
+
+download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/PLAD.csv","data/Plad.csv")
+Plad <- fread(here("data/Plad.csv"))
+download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/archigos.csv", "data/Archigos.csv")
+Archigos <- fread(here("data/Archigos.csv"))
 
 Plad |>
   filter(startdate > 1945) |> 
@@ -339,19 +343,21 @@ autocoups.
 #| echo: !expr format == "html"
 #| include: !expr format == "html"
 #load coup data
-coup <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt")
 
-coups <- coup |>
+download.file("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt", "data/Coup.txt")
+Coup <- fread(here("data/Coup.txt"))
+
+coups <- Coup |>
   summarise(
     `Coup attempted` = n(),
     `Coup succeeded` = sum(coup == 2),
     .by = country
   )
 
-attempts <- length(coup$country)
-succeeded <- length(coup$country[coup$coup == 2])
+attempts <- length(Coup$country)
+succeeded <- length(Coup$country[Coup$coup == 2])
 
-coup |> 
+Coup |> 
   summarise(counts = n(),
             .by = year) |> 
   arrange(desc(counts)) |> 
@@ -363,7 +369,7 @@ coup |>
     column_labels.font.weight = "bold") |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 
-coup |> 
+Coup |> 
   summarise(counts = n(),
             .by = country) |> 
   arrange(desc(counts)) |> 
@@ -455,7 +461,7 @@ are more susceptible to coups can offer valuable insights.
 ```{r}
 #| label: tbl-coups
 #| tbl-cap: Top 10 countries with the most coup attempts
-#| echo: !expr format == "html"
+#| include: !expr format == "html"
 
 coups |>
   # add one row which adds up the total
@@ -819,7 +825,7 @@ regime_total <- regimes |>
          .keep = "unused") 
   
 
-coup1 <- coup |>
+coup1 <- Coup |>
   select(country, ccode, year, coup)
 
 coup_by_regime <- regimes |>
@@ -986,7 +992,7 @@ variables.
 ($CT$) ratio developed by @krishnarajan2019. This ratio compares a country's
 current GDP per capita to the average GDP per capita over the previous five
 years. A higher $CT$ ratio indicates stronger economic performance. We use GDP
-per capita data (in constant 2017 international dollars, PPP) from the V-Dem
+per capita data (in constant 2017 international 1000 dollars, PPP) from the V-Dem
 dataset by @fariss2022, lagged by one year to reflect the prior year's economic
 impact. For a country $i$ at year $t$, the $CT$ ratio is calculated as follows:
 $$
@@ -1004,16 +1010,21 @@ by Marshall [@marshall2005current].
 first-stage (selection) model to assess its influence on the likelihood of a coup
 attempt. However, it is excluded from the second-stage model (outcome) because
 the number of past coups may not directly impact the outcome of a specific coup
-attempt.
+attempt. Recognizing that previous coups from a long time ago might not
+significantly affect the current situation, I ran another regression using the
+time distance since the last coup instead of the number of previous coups for
+comparison. This approach accounts for the diminishing impact of past events over
+time, providing a potentially more accurate assessment of how historical coup
+activity influences the likelihood of current coup attempts.
 
 ### Results and Discussion
 
 ```{r}
 #| label: regression
 #| results: asis
-#| echo: false
-
-political_violence <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/political_violence.csv") |> 
+#| echo: !expr format == "html"
+download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/political_violence.csv", "data/political_violence.csv")
+political_violence <- fread(here("data/political_violence.csv")) |> 
   dplyr::select(ccode, year, violence = actotal)
 
 gdp <- vdem |> 
@@ -1023,10 +1034,11 @@ gdp <- vdem |>
                                align = 'right', fill = NA)),
          .by = c(ccode)) 
 
-coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt") |> 
+download.file("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", "data/coup_all.csv")
+coup_all <- fread(here("data/coup_all.csv")) |> 
   mutate(coup = case_when(
     coup1 == 0 ~ 0,
-    coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
+    coup1 == 2 | coup2 == 2 | coup3 == 2 | coup4 == 2 ~ 2,
     TRUE ~ 1
   )) |>
   group_by(ccode) %>%
@@ -1066,9 +1078,12 @@ model_1_selection$param$index$betaS <- model_1$param$index$betaO
 model_2 <- reg_data |>
   filter(regime_type != "other") |>
   mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct-1)*100) |>
-  selection(coup > 0 ~ regime + ect + gdppc + violence + pre_coups,
-            coup > 1 ~ regime + ect + gdppc + violence,
+         ect = (ct-1)*100,
+         Coup = coup) |>
+  select(Coup, regime, ect, gdppc, violence, coup_dummy = pre_coups) |> 
+  selection(Coup > 0 ~ regime + ect + gdppc + violence + coup_dummy,
+            Coup > 1 ~ regime + ect + gdppc + violence,
+            #method = "2step",
             data = _) 
 
 model_2_selection <- model_2
@@ -1078,37 +1093,83 @@ model_2_selection$param$index$betaS <- model_2$param$index$betaO
 stargazer(model_2_selection, model_2, model_1_selection, model_1,
           # type = "text",
           header = F,
+          dep.var.caption = "",
+          dep.var.labels = c("Model 1", "Model 2"),
+          #dep.var.labels.include = T,
+          #multicolumn = T,
+          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
           column.labels = c("Coup Attempts", "Coup Outcome","Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,
-          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
           label = "results",
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "No. of Previous coups","Coup experience","Years since last coup", "Interactive"),
-          dep.var.caption = "",
-          dep.var.labels.include = F,
-          summary.logical = T,
-          column.sep.width = "10pt",
+          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "Previous coups (P)", "Years since last coup (Y)", "Interactive term: P * Y"),
+          summary.logical = F,
+          column.sep.width = "7pt",
           font.size = "small"
           )
 ```
 
 The double `probit` model with sample selection, estimated using the
-`sampleSelection` package in R, offers valuable insights into the factors
-influencing coup attempts and their outcomes across different regime types from
-1950 to 2019 (Table \ref{results}).
+`sampleSelection` package [@sampleSelection-2] in R, offers valuable insights
+into the factors influencing coup attempts and their outcomes across different
+regime types from 1950 to 2019 (Table \ref{results}). Models 1 and 2 use the
+numbers of previous coups
+
+\newpage
 
 #### The Selection Model: Coup Attempts
 
-In the selection model (Model 1), military and personalist regimes exhibit
+```{r}
+#| label: tbl-mfx
+#| tbl-cap: Average marginal effects of coup attempts
+#| echo: !expr format == "html"
+avg_slopes(model_2) |> 
+  select(1:4, 6) |>
+  clean_names(case = "title") |>
+  gt() |> 
+  tab_options(
+    table.width = pct(95),
+    column_labels.font.weight = "bold") |> 
+  fmt_number(
+    decimals = 3          # specify the number of decimal places
+  )
+
+#avg_predictions(model_2, variables = "regime")
+```
+
+In the selection model (Column 1), military and personalist regimes exhibit
 significant positive coefficients at the 1% level, indicating a higher likelihood
-of experiencing coup attempts compared to dominant-party regimes. Specifically,
-military regimes are, on average, 7% more likely to encounter coups than
-dominant-party regimes, while personalist regimes are 2% more likely, holding
-other factors constant. Monarch regimes also display a positive effect similar to
-personalist regimes, reflecting the fact that monarchies are a subset of
-personalist regimes with royal titles. This finding aligns with theoretical
-expectations regarding the internal power struggles within military juntas and
-the succession vulnerabilities in personalist regimes, underscoring the
-importance of regime structure in understanding coup likelihood.
+of experiencing coup attempts compared to dominant-party regimes. Using a
+marginal effect package [@marginaleffects], as shown in @tbl-mfx, the probability
+of coup attempts in military regimes is, on average, 7 percentage points (pp)
+higher than in dominant-party regimes, while personalist regimes are 2 pp higher,
+holding other factors constant. Monarch regimes also display a positive effect
+similar to personalist regimes, reflecting the fact that monarchies are a subset
+of personalist regimes with royal titles.
+
+While a 7 pp increase might initially seem modest, it is substantial in context.
+The average probability of a coup attempt in dominant-party regimes is only about
+2.53%. A 7 pp increase means that military regimes are approximately 2.8 times
+more likely to encounter coups than dominant-party regimes, which represents a
+significant change.
+
+```{r}
+#| label: fig-margins
+#| fig-cap: "Probability of Coup Attempts + Coup Success"
+#| echo: !expr format == "html"
+plot_predictions(model_2, by = "regime")+
+  labs(
+    x = "Regimes",
+    y = "Total probability")
+
+# plot_comparisons(model_2, 
+#                  variables = "ect",
+#                  by = "regime")
+```
+
+This finding aligns with theoretical expectations regarding the internal power
+struggles within military juntas and the succession vulnerabilities in
+personalist regimes, underscoring the importance of regime structure in
+understanding coup likelihood.
 
 Control variables also show effects in the expected directions. Stronger economic
 performance, as indicated by higher economic growth trends and GDP per capita

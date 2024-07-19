@@ -546,7 +546,7 @@ plotters would not take the risk without some assurance of success.
 
 Historical coup attempts and their success rates provide valuable hints
 about coup plotters' decision-making processes. Despite the significant
-risks associated with coups, as shown in Table~\ref{tbl-coups}, there
+risks associated with coups, as shown in \textbf{?@tbl-coups}, there
 have been 491 coups worldwide since 1950. Importantly, about half of
 these coups have been successful. At first glance, coups appear to be a
 high-success-rate political venture. However, compared to over 12,000
@@ -580,41 +580,6 @@ balance of power within the regime before acting, this study argues that
 regime type plays a crucial role in shaping coup attempts. Analysing
 which regime types are more susceptible to coups can offer valuable
 insights.
-
-\begingroup
-\setlength\LTleft{0.05\linewidth}
-\setlength\LTright{0.05\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{@{\extracolsep{\fill}}lccr}
-
-\caption{\label{tbl-coups}Top 10 countries with the most coup attempts}
-
-\tabularnewline
-
-\toprule
-Country & Coup Attempted & Coup Succeeded & Success Rate \\ 
-\midrule\addlinespace[2.5pt]
-Bolivia & 23 & 11 & 47.8\% \\ 
-Argentina & 20 & 7 & 35.0\% \\ 
-Sudan & 17 & 6 & 35.3\% \\ 
-Haiti & 13 & 9 & 69.2\% \\ 
-Venezuela & 13 & 0 & 0.0\% \\ 
-Iraq & 12 & 4 & 33.3\% \\ 
-Syria & 12 & 8 & 66.7\% \\ 
-Thailand & 12 & 8 & 66.7\% \\ 
-Ecuador & 11 & 5 & 45.5\% \\ 
-Burundi & 11 & 5 & 45.5\% \\ 
-Guatemala & 10 & 5 & 50.0\% \\ 
-Total & 491 & 245 & 49.9\% \\ 
-\bottomrule
-
-\end{longtable}
-
-\begin{minipage}{\linewidth}
-\emph{Source: GIC dataset}\\
-\end{minipage}
-\endgroup
 
 We employ a \textbf{double probit model with sample selection} to
 address the selection bias. This model allows us to analyze both the
@@ -719,7 +684,7 @@ success. Several factors can influence this threshold:
 \end{itemize}
 
 The high success rate of coups since 1950, as shown in
-Table~\ref{tbl-coups}, might suggest that coups are not particularly
+\textbf{?@tbl-coups}, might suggest that coups are not particularly
 difficult to succeed. However, it is important to consider selection
 bias. We only observe attempted coups, not the numerous dispositions and
 conspiracies that never came to light. Analysing launched coup data
@@ -795,7 +760,7 @@ p > (1-p)
 Equation~\ref{eq-eq3} suggests that, to hold Equation~\ref{eq-eq2} true,
 a success probability greater than \(50\%\) is necessary. Interestingly,
 empirical data on coups since 1950 somewhat supports this notion. As
-shown in Table~\ref{tbl-coups}, the overall success rate is \(49.9\%\).
+shown in \textbf{?@tbl-coups}, the overall success rate is \(49.9\%\).
 While this falls short of the \(50\%\) threshold, it's important to
 consider two factors. Firstly, this is an average rate, not necessarily
 reflective of the probabilities assessed by coup plotters beforehand.
@@ -1130,7 +1095,7 @@ defined as one where the incumbent leader is removed from power for more
 than seven days. The dataset covers the period from 1950 to 2023 and
 includes information on 491 coup attempts, with roughly half (245) being
 successful. Descriptive statistics for these coup attempts and regime
-types can be found in Table~\ref{tbl-coups} and Table~\ref{tbl-regimes}.
+types can be found in \textbf{?@tbl-coups} and Table~\ref{tbl-regimes}.
 
 \begin{itemize}
 \tightlist
@@ -1165,7 +1130,7 @@ current-trend (\(CT\)) ratio developed by Krishnarajan
 current GDP per capita to the average GDP per capita over the previous
 five years. A higher \(CT\) ratio indicates stronger economic
 performance. We use GDP per capita data (in constant 2017 international
-dollars, PPP) from the V-Dem dataset by Fariss et al.
+1000 dollars, PPP) from the V-Dem dataset by Fariss et al.
 (\citeproc{ref-fariss2022}{2022}), lagged by one year to reflect the
 prior year's economic impact. For a country \(i\) at year \(t\), the
 \(CT\) ratio is calculated as follows: \[
@@ -1184,7 +1149,14 @@ Political Violence dataset by Marshall
 included in the first-stage (selection) model to assess its influence on
 the likelihood of a coup attempt. However, it is excluded from the
 second-stage model (outcome) because the number of past coups may not
-directly impact the outcome of a specific coup attempt.
+directly impact the outcome of a specific coup attempt. Recognizing that
+previous coups from a long time ago might not significantly affect the
+current situation, I ran another regression using the time distance
+since the last coup instead of the number of previous coups for
+comparison. This approach accounts for the diminishing impact of past
+events over time, providing a potentially more accurate assessment of
+how historical coup activity influences the likelihood of current coup
+attempts.
 
 \section{Results and Discussion}\label{results-and-discussion}
 
@@ -1192,9 +1164,10 @@ directly impact the outcome of a specific coup attempt.
   \caption{Sample Selection Model of Regime Types and Coups, 1950-2019} 
   \label{results} 
 \small 
-\begin{tabular}{@{\extracolsep{10pt}}lcccc} 
+\begin{tabular}{@{\extracolsep{7pt}}lcccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{2}{c}{Model 1} & \multicolumn{2}{c}{Model 2} \\ 
  & Coup Attempts & Coup Outcome & Coup Attempts & Coup Outcome \\ 
 \\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
 \hline \\[-1.8ex] 
@@ -1222,16 +1195,13 @@ directly impact the outcome of a specific coup attempt.
  Political violence & 0.033$^{**}$ & 0.033$^{*}$ & 0.038$^{***}$ & 0.025 \\ 
   & (0.013) & (0.020) & (0.013) & (0.031) \\ 
   & & & & \\ 
- No. of Previous coups & 0.030$^{***}$ &  &  &  \\ 
-  & (0.010) &  &  &  \\ 
+ Previous coups (P) & 0.030$^{***}$ &  & 0.447$^{***}$ &  \\ 
+  & (0.010) &  & (0.086) &  \\ 
   & & & & \\ 
- Coup experience &  &  & 0.447$^{***}$ &  \\ 
-  &  &  & (0.086) &  \\ 
-  & & & & \\ 
- Years since last coup &  &  & $-$0.018$^{***}$ &  \\ 
+ Years since last coup (Y) &  &  & $-$0.018$^{***}$ &  \\ 
   &  &  & (0.004) &  \\ 
   & & & & \\ 
- Interactive &  &  & $-$0.013$^{***}$ &  \\ 
+ Interactive term: P * Y &  &  & $-$0.013$^{***}$ &  \\ 
   &  &  & (0.005) &  \\ 
   & & & & \\ 
 \hline \\[-1.8ex] 
@@ -1245,26 +1215,78 @@ $\rho$ & 0.898$^{***}$  (0.158) & 0.898$^{***}$  (0.158) & 0.386$^{*}$  (0.234) 
 \end{table}
 
 The double \texttt{probit} model with sample selection, estimated using
-the \texttt{sampleSelection} package in R, offers valuable insights into
-the factors influencing coup attempts and their outcomes across
-different regime types from 1950 to 2019 (Table \ref{results}).
+the \texttt{sampleSelection} package
+(\citeproc{ref-sampleSelection-2}{Toomet and Henningsen 2008}) in R,
+offers valuable insights into the factors influencing coup attempts and
+their outcomes across different regime types from 1950 to 2019 (Table
+\ref{results}). Models 1 and 2 use the numbers of previous coups
+
+\newpage
 
 \subsection{The Selection Model: Coup
 Attempts}\label{the-selection-model-coup-attempts}
 
-In the selection model (Model 1), military and personalist regimes
+\begingroup
+\setlength\LTleft{0.025\linewidth}
+\setlength\LTright{0.025\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
+
+\begin{longtable}{@{\extracolsep{\fill}}llrrr}
+
+\caption{\label{tbl-mfx}Average marginal effects of coup attempts}
+
+\tabularnewline
+
+\toprule
+Term & Contrast & Estimate & Std Error & P Value \\ 
+\midrule\addlinespace[2.5pt]
+coup\_dummy & mean(dY/dX) & 0.002 & 0.001 & 0.002 \\ 
+ect & mean(dY/dX) & -0.001 & 0.000 & 0.000 \\ 
+gdppc & mean(dY/dX) & -0.002 & 0.000 & 0.000 \\ 
+regime & mean(democracy) - mean(dominant-party) & 0.003 & 0.004 & 0.435 \\ 
+regime & mean(military) - mean(dominant-party) & 0.070 & 0.011 & 0.000 \\ 
+regime & mean(monarchy) - mean(dominant-party) & 0.020 & 0.010 & 0.037 \\ 
+regime & mean(personal) - mean(dominant-party) & 0.024 & 0.006 & 0.000 \\ 
+violence & mean(dY/dX) & 0.002 & 0.001 & 0.010 \\ 
+\bottomrule
+
+\end{longtable}
+
+\endgroup
+
+In the selection model (Column 1), military and personalist regimes
 exhibit significant positive coefficients at the 1\% level, indicating a
 higher likelihood of experiencing coup attempts compared to
-dominant-party regimes. Specifically, military regimes are, on average,
-7\% more likely to encounter coups than dominant-party regimes, while
-personalist regimes are 2\% more likely, holding other factors constant.
-Monarch regimes also display a positive effect similar to personalist
-regimes, reflecting the fact that monarchies are a subset of personalist
-regimes with royal titles. This finding aligns with theoretical
-expectations regarding the internal power struggles within military
-juntas and the succession vulnerabilities in personalist regimes,
-underscoring the importance of regime structure in understanding coup
-likelihood.
+dominant-party regimes. Using a marginal effect package
+(\citeproc{ref-marginaleffects}{Arel-Bundock, Greifer, and Heiss NaN}),
+as shown in Table~\ref{tbl-mfx}, the probability of coup attempts in
+military regimes is, on average, 7 percentage points (pp) higher than in
+dominant-party regimes, while personalist regimes are 2 pp higher,
+holding other factors constant. Monarch regimes also display a positive
+effect similar to personalist regimes, reflecting the fact that
+monarchies are a subset of personalist regimes with royal titles.
+
+While a 7 pp increase might initially seem modest, it is substantial in
+context. The average probability of a coup attempt in dominant-party
+regimes is only about 2.53\%. A 7 pp increase means that military
+regimes are approximately 2.8 times more likely to encounter coups than
+dominant-party regimes, which represents a significant change.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics{coups_and_autocoups_files/figure-pdf/fig-margins-1.pdf}
+
+}
+
+\caption{\label{fig-margins}Probability of Coup Attempts + Coup Success}
+
+\end{figure}%
+
+This finding aligns with theoretical expectations regarding the internal
+power struggles within military juntas and the succession
+vulnerabilities in personalist regimes, underscoring the importance of
+regime structure in understanding coup likelihood.
 
 Control variables also show effects in the expected directions. Stronger
 economic performance, as indicated by higher economic growth trends and
@@ -1527,6 +1549,13 @@ Aidt, Toke, and Gabriel Leon. 2019. {``The Coup.''} Edited by Roger D.
 Congleton, Bernard Grofman, and Stefan Voigt, February.
 \url{https://doi.org/10.1093/oxfordhb/9780190469771.013.15}.
 
+\bibitem[\citeproctext]{ref-marginaleffects}
+Arel-Bundock, Vincent, Noah Greifer, and Andrew Heiss. NaN. {``How to
+Interpret Statistical Models Using
+{\textbraceleft}Marginaleffects{\textbraceright} in
+{\textbraceleft}r{\textbraceright} and
+{\textbraceleft}Python{\textbraceright},''} NaN.
+
 \bibitem[\citeproctext]{ref-baturo2022}
 Baturo, Alexander, and Jakob Tolstrup. 2022. {``Incumbent Takeovers.''}
 \emph{Journal of Peace Research} 60 (2): 373--86.
@@ -1654,6 +1683,12 @@ Dictatorships.''} \emph{Comparative Political Studies} 50 (13):
 \bibitem[\citeproctext]{ref-thyne2019}
 Thyne, Clayton L., and Jonathan Powell. 2019. {``Coup Research,''}
 October. \url{https://doi.org/10.1093/acrefore/9780190846626.013.369}.
+
+\bibitem[\citeproctext]{ref-sampleSelection-2}
+Toomet, Ott, and Arne Henningsen. 2008. {``Sample Selection Models in
+{\textbraceleft}r{\textbraceright}: Package
+{\textbraceleft}sampleSelection{\textbraceright}''} 27.
+\url{https://www.jstatsoft.org/v27/i07/}.
 
 \end{CSLReferences}
 

@@ -272,3 +272,67 @@ model <- lm(y ~ ns(x, df = 4), data = data)
 plot(x, y)
 lines(x, predict(model, newdata = data), col = "blue")
 ```
+
+## MFX
+
+```{r}
+probit_selection <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct -1)*100) |>
+  glm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
+      family = binomial(link = "probit"), data = _)
+
+selection_margin <- margins(probit_selection)
+
+probit_outcome <- reg_data |>
+  filter(regime_type != "other",
+         coup != 0) |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct -1)*100) |>
+  glm(coup > 1 ~ regime + ect + gdppc + violence, 
+      family = binomial(link = "probit"), data = _)
+
+outcome_margin <- margins(probit_outcome)
+marginal_means(probit_selection, type = "response")
+export_summs(
+  probit_selection,
+  probit_outcome,
+  selection_margin,
+  outcome_margin
+)
+stargazer(type = "text",
+  probit_selection,
+  probit_outcome,
+  selection_margin,
+  outcome_margin
+)
+export_summs(
+  lpm,
+  selection_margin,
+  outcome_margin
+)
+library(marginaleffects)
+library(insight)
+marginal_effects(probit_selection, type = "response") |> 
+  summary() 
+marginal_effects(probit_outcome) |> 
+  summary() 
+
+avg_slopes(model_2step)
+```
+
+### clarify pacakge
+
+```{r}
+library(clarify)
+
+
+s <- sim(model_2step1, n = 1000)
+s
+```
+
+```{r}
+sim_ame(s, var = "ect", verbose = F) |> 
+  summary()
+```

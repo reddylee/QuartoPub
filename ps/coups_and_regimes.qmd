@@ -750,7 +750,7 @@ model_2step <- reg_data |>
   filter(regime_type != "other") |>
   mutate(regime = fct_relevel(regime_type, "dominant-party"),
          ect = (ct -1)*100) |>
-  selection(coup > 0 ~ regime + ect + gdppc + violence + coup_dummy + coup_dummy:time_since_last_coup,
+  selection(coup > 0 ~ regime + ect + gdppc + violence + pre_coups,
             coup > 1 ~ regime + ect + gdppc + violence,
             data = _) 
 summary(model_2step)
@@ -771,36 +771,6 @@ stargazer(model_selection, model_2step,
           summary.logical = T,
           column.sep.width = "50pt"
           )
-
-
-probit <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct -1)*100) |>
-  glm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
-      family = binomial(link = "probit"), data = _)
-
-probit_margin <- margins(probit)
-logit <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct -1)*100) |>
-  glm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
-      family = binomial(link = "logit"), data = _)
-logit_margin <- margins(logit)
-lpm <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct -1)*100) |>
-  lm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
-     data = _)
-
-
-export_summs(
-  lpm,
-  probit_margin,
-  logit_margin
-)
 ```
 
 The double `probit` model with sample selection, estimated using the
