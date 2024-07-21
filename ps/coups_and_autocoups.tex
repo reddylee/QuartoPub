@@ -1198,7 +1198,7 @@ attempts.
  Previous coups (P) & 0.030$^{***}$ &  & 0.447$^{***}$ &  \\ 
   & (0.010) &  & (0.086) &  \\ 
   & & & & \\ 
- Years since last coup (Y) &  &  & $-$0.018$^{***}$ &  \\ 
+ Yrs since coup (Y) &  &  & $-$0.018$^{***}$ &  \\ 
   &  &  & (0.004) &  \\ 
   & & & & \\ 
  Interactive term: P * Y &  &  & $-$0.013$^{***}$ &  \\ 
@@ -1219,7 +1219,8 @@ the \texttt{sampleSelection} package
 (\citeproc{ref-sampleSelection-2}{Toomet and Henningsen 2008}) in R,
 offers valuable insights into the factors influencing coup attempts and
 their outcomes across different regime types from 1950 to 2019 (Table
-\ref{results}). Models 1 and 2 use the numbers of previous coups
+\ref{results}). Models 1 uses the numbers of previous coups, while model
+2 uses the time since the last coup.
 
 \newpage
 
@@ -1234,7 +1235,7 @@ Attempts}\label{the-selection-model-coup-attempts}
 \begin{longtable}{@{\extracolsep{\fill}}llrr}
 
 \caption{\label{tbl-mfx1}Average marginal effects of coup attempts
-(Selection Model)}
+(Selection of Model 1)}
 
 \tabularnewline
 
@@ -1261,58 +1262,91 @@ Previous coups & mean(+1) & 0.002 & 5.930 \\
 In the selection model (Column 1), military and personalist regimes
 exhibit significant positive coefficients at the 1\% level, indicating a
 higher likelihood of experiencing coup attempts compared to
-dominant-party regimes. Using a marginal effect package
-(\citeproc{ref-marginaleffects}{Arel-Bundock, Greifer, and Heiss NaN}),
-as shown in Table~\ref{tbl-mfx1}, the probability of coup attempts in
-military regimes is, on average, 7 percentage points (pp) higher than in
-dominant-party regimes, while personalist regimes are 2.4 pp higher,
-holding other factors constant. Monarch regimes also display a positive
-effect similar to personalist regimes, reflecting the fact that
-monarchies are a subset of personalist regimes with royal titles.
+dominant-party regimes. Control variables also exhibit effects in
+expected directions. Stronger economic performance, indicated by higher
+economic growth trends and GDP per capita levels, correlates with a
+lower risk of coup attempts. This suggests that better economic
+conditions and relatively higher living standards reduce incentives for
+coups. Political violence shows a positive and significant effect on
+coup attempts, indicating that higher levels of instability increase the
+likelihood of coups. The positive coefficient for the number of previous
+coups suggests a ``copycat'' effect from earlier incidents.
 
-While a 7 pp increase might initially seem modest, it is substantial in
-context. The average probability of a coup attempt in dominant-party
-regimes is only about 2.53\%. A 7 pp increase means that military
-regimes are approximately 2.8 times more likely to encounter coups than
-dominant-party regimes, which represents a significant change.
+While it is not intuitive to interpret the results of probit model,
+Table~\ref{tbl-mfx1}, using a marginal effect package
+(\citeproc{ref-marginaleffects}{Arel-Bundock, Greifer, and Heiss NaN}),
+helps us to understand the regime effect more clearly. Column AME shows
+the marginal effect in terms of changes in probability, which means how
+much probability increase when the variable increases 1 unit( numeric
+variables) or compared to reference (categorical variables). For
+example, military's marginal effect is 0.07, means probability of coup
+attempts in military regimes is 7 percentage points (pp) higher than in
+dominant-party regimes, holding other factors constant. GDP per capita's
+marginal effect is -0.002, means the probability of coup attempts in
+average condition will decrease by 0.2 pp when GDP per capita increase 1
+unit, i.e., 1000 dollars in this case.
+
+Ratio column shows the change ratio in percent. It tells the relative
+increase or decrease. While a 7 pp increase might initially seem modest,
+it is substantial in context. The average probability of a coup attempt
+in dominant-party regimes is only about 2.53\%. Therefore, a 7 pp
+increase means that military regimes are approximately 277.7\% more
+likely to encounter coups than dominant-party regimes, which represents
+a significant and substantial change. Similarly, personalist regimes are
+2.4 pp higher, about 94\% more likely compared to dominant-party, which
+is substantial as well. Monarch regimes also display a positive effect
+similar to personalist regimes, reflecting the fact that monarchies are
+a subset of personalist regimes with royal titles.
+
+However, effects from control variables are weak in predicting coup
+attempts. None of their marginal effect of probability reach 1 pp, and
+less than 7\% in ratio. Given the actually probability is only 2\% to
+3\%, less than 7\% increase or decrease can be ignored.
 
 The results aligns with theoretical expectations regarding the internal
 power struggles within military juntas and the succession
 vulnerabilities in personalist regimes, underscoring the importance of
 regime structure in understanding coup likelihood.
 
-Control variables also show effects in the expected directions. Stronger
-economic performance, as indicated by higher economic growth trends and
-GDP per capita levels, correlates with a lower risk of coup attempts.
-This suggests that better economic performance and relatively higher
-living standards diminish the incentives for coups. Political violence
-has a positive and significant effect on coup attempts, indicating that
-higher levels of instability increase the likelihood of coups. The
-positive coefficient for the number of previous coups suggests a
-``copycat'' effect from earlier examples. However, the control variables
-are less substantial in predicting coup attempts, as the average
-marginal effect shown, a one-unit increase in these factors' value
-results in only 0.2 pp change in coup probability, ceteris paribus. As
-the average probability of coup attempt is about 2\%, 0.2 pp change
-means the average marginal effects is only 10\% change, which is not
-substantial.
+Model 2 uses the years since last coup instead of number of previous
+coups. Since most countries did not experience coups, I use an
+interactive term of previous coups (Notice: in Model 2, previous coups
+is a dummy variable of with coup or without coup) and years since last
+coup. Generally speaking, model 2 shows the same direction results, with
+relatively lower coefficients than model 1.
 
-Control variables exhibit effects in expected directions. Stronger
-economic performance, indicated by higher economic growth trends and GDP
-per capita levels, correlates with a lower risk of coup attempts. This
-suggests that better economic conditions and relatively higher living
-standards reduce incentives for coups. Political violence shows a
-positive and significant effect on coup attempts, indicating that higher
-levels of instability increase the likelihood of coups. The positive
-coefficient for the number of previous coups suggests a ``copycat''
-effect from earlier incidents.
+\begingroup
+\setlength\LTleft{0.025\linewidth}
+\setlength\LTright{0.025\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
+\setlength{\LTpost}{0mm}
 
-However, these control variables have less substantial impacts in
-predicting coup attempts. As shown by the average marginal effects
-(AME), a one-unit increase in these factors' values results in only a
-0.2 pp change in coup probability, ceteris paribus. Given that the
-average probability of a coup attempt is approximately 2\%, a 0.2 pp
-change represents only a 10\% relative change, which is not substantial.
+\begin{longtable}{@{\extracolsep{\fill}}llrr}
+
+\caption{\label{tbl-mfx2}Average marginal effects of coup attempts
+(Selection of Model 2)}
+
+\tabularnewline
+
+\toprule
+Term & Contrast & AME\textsuperscript{\textit{1}} & Ratio Percent \\ 
+\midrule\addlinespace[2.5pt]
+Regime: Democracy & mean(democracy - dominant-party) & 0.003 & 8.930 \\ 
+{\hspace{47.25pt}Military} & mean(military - dominant-party) & 0.028 & 91.650 \\ 
+{\hspace{47.25pt}Monarchy} & mean(monarchy - dominant-party) & 0.018 & 57.040 \\ 
+{\hspace{47.25pt}Personal} & mean(personal - dominant-party) & 0.009 & 30.090 \\ 
+Economic trend & mean(+1) & -0.001 & -2.530 \\ 
+GDP per capita & mean(+1) & -0.001 & -2.890 \\ 
+Political violence & mean(+1) & 0.003 & 7.330 \\ 
+Previous coups (P) & mean(1 - 0) & 0.023 & 91.990 \\ 
+NA & mean(+1) & -0.002 & -5.050 \\ 
+\bottomrule
+
+\end{longtable}
+
+\begin{minipage}{\linewidth}
+\textsuperscript{\textit{1}}AME: Average Marginal Effect\\
+\end{minipage}
+\endgroup
 
 \subsection{The Outcome Model: Coup
 Success}\label{the-outcome-model-coup-success}

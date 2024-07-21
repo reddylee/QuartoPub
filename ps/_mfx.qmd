@@ -1,0 +1,137 @@
+## Two steps sample selection model
+
+### Prepare the data
+
+```{r}
+coup_data <- reg_data |>
+  filter(regime_type != "other") |>
+  mutate(regime = fct_relevel(regime_type, "dominant-party"),
+         ect = (ct-1)*100,
+         Coup = coup) |>
+  select(Coup, regime, ect, gdppc, violence, coup_dummy = pre_coups) |> 
+  drop_na()
+```
+
+### Step 1: Run the selection equation (probit model)
+
+```{r}
+# Fit the probit model for the selection equation
+probit_model <- glm(I(Coup > 0) ~ regime + ect + gdppc + violence + coup_dummy, 
+                    family = binomial(link = "probit"), 
+                    data = coup_data)
+
+# View summary of the probit model
+summary(probit_model)
+```
+
+```{r}
+# Calculate predicted probabilities
+coup_data$pred_prob <- predict(selection_model, type = "response")
+
+# Calculate the inverse Mills ratio
+coup_data$mills <- dnorm(qnorm(coup_data$pred_prob)) / coup_data$pred_prob
+
+# For non-selected cases, set Mills ratio to 0 (or you might want to exclude them)
+coup_data$mills[coup_data$Coup <= 0] <- 0
+```
+
+### Step 2: Run the outcome equation
+
+```{r}
+# Step 2: Run the outcome equation
+# Step 2: Run the outcome equation
+# Note: We're using a probit model on the subset where Coup > 0
+outcome_model <- glm(I(Coup > 1) ~ regime + ect + gdppc + violence + mills, 
+                     family = binomial(link = "probit"), 
+                     data = subset(coup_data, Coup > 0))
+
+summary(outcome_model)
+```
+
+```{r}
+# Calculate the Inverse Mills Ratio (IMR)
+coup_data$IMR <- dnorm(predict(probit_model)) / pnorm(predict(probit_model))
+
+# Fit the outcome equation using the IMR to correct for selection bias
+outcome_model <- lm(I(Coup > 1) ~ regime + ect + gdppc + violence + IMR, data = coup_data)
+
+# View summary of the outcome model
+summary(outcome_model)
+```
+
+```{r}
+# Calculate the linear predictor (z) from the probit model
+z <- predict(probit_model, type = "link")
+
+# Calculate the IMR
+library(mvtnorm)  # Ensure dnorm and pnorm functions are available
+IMR <- dnorm(z) / pnorm(z)
+
+# Handle edge cases where IMR might be NaN or Inf
+IMR[is.nan(IMR) | is.infinite(IMR)] <- 0
+
+# Add IMR to the dataset
+coup_data$IMR <- IMR
+
+```
+
+```{r}
+# Fit the outcome equation using a probit model
+outcome_model <- glm(I(Coup > 1) ~ regime + ect + gdppc + violence + IMR, 
+                     family = binomial(link = "probit"), 
+                     data = coup_data)
+
+# View summary of the outcome model
+summary(outcome_model)
+
+
+```
+
+```{r}
+stargazer(model_2, outcome_model, type = "text", out = "outcome.htm")
+```
+
+```{r}
+# Load necessary libraries
+library(sampleSelection)
+library(mvtnorm)  # For dnorm and pnorm functions
+
+# Step 1: Fit the selection model (probit)
+probit_model <- glm(I(Coup > 0) ~ regime + ect + gdppc + violence + coup_dummy, 
+                    family = binomial(link = "probit"), 
+                    data = coup_data)
+
+# Step 2: Calculate the Inverse Mills Ratio (IMR)
+z <- predict(probit_model, type = "link")
+IMR <- dnorm(z) / pnorm(z)
+IMR[is.nan(IMR) | is.infinite(IMR)] <- 0  # Handle potential NaNs or infinite values
+
+# Add IMR to the dataset
+coup_data$IMR <- IMR
+
+# Step 3: Fit the outcome model (probit)
+outcome_model <- glm(I(Coup > 1) ~ regime + ect + gdppc + violence + IMR, 
+                     family = binomial(link = "probit"), 
+                     data = coup_data)
+
+# View summary of the outcome model
+summary(outcome_model)
+```
+
+```{r}
+library(sampleSelection)
+
+# Assuming 'coup_data' is your data frame
+selection_model <- glm(Coup > 0 ~ regime + ect + gdppc + violence + coup_dummy, 
+                       data = coup_data, family = binomial(link = "probit"))
+
+
+# Calculate the inverse Mills ratio
+coup_data$inv_mills_ratio <- dnorm(predict(selection_model, type = "link")) / pnorm(predict(selection_model, type = "link"))
+
+# Fit the outcome equation
+outcome_model <- glm(Coup > 1 ~ regime + ect + gdppc + violence + inv_mills_ratio, 
+                      data = coup_data, family = binomial(link = "probit"))
+
+summary(outcome_model)
+```
