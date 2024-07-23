@@ -381,13 +381,14 @@ expansions and power extensions\footnote{The definitions and concepts of
   define power expansion as an incumbent acquiring additional authority
   from other state apparatuses, whereas power extension refers to an
   incumbent prolonging their tenure beyond the designated term in
-  office.}. For example, Cameron (\citeproc{ref-cameron1998a}{1998})
-defines an autogolpe as a temporary suspension of the constitution and
-dissolution of Congress by the executive, who then rules by decree. This
-definition focuses on power expansion instead of power extension,
-leading to conceptual confusion and misalignment with the definition of
-a classic coup. Third, a consensus autocoup dataset is lacking. While
-several related datasets exist, as discussed by Baturo and Tolstrup
+  office.}. For example, Maxwell A. Cameron
+(\citeproc{ref-cameron1998a}{1998a}) defines an autogolpe as a temporary
+suspension of the constitution and dissolution of Congress by the
+executive, who then rules by decree. This definition focuses on power
+expansion instead of power extension, leading to conceptual confusion
+and misalignment with the definition of a classic coup. Third, a
+consensus autocoup dataset is lacking. While several related datasets
+exist, as discussed by Baturo and Tolstrup
 (\citeproc{ref-baturo2022}{2022}) in coding their Incumbent Takeover
 dataset, the terminologies, definitions, and coverage years vary,
 lacking wide acknowledgement and extensive academic exploration. In
@@ -538,6 +539,41 @@ factors. This means more attention is paid to factors observable before
 a coup, such as military force or spending, economic performance,
 political stability, and previous coups.
 
+\begingroup
+\setlength\LTleft{0.05\linewidth}
+\setlength\LTright{0.05\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
+\setlength{\LTpost}{0mm}
+
+\begin{longtable}{@{\extracolsep{\fill}}lccr}
+
+\caption{\label{tbl-coups}Top 10 countries with the most coup attempts}
+
+\tabularnewline
+
+\toprule
+Country & Coup Attempted & Coup Succeeded & Success Rate \\ 
+\midrule\addlinespace[2.5pt]
+Bolivia & 23 & 11 & 47.8\% \\ 
+Argentina & 20 & 7 & 35.0\% \\ 
+Sudan & 17 & 6 & 35.3\% \\ 
+Haiti & 13 & 9 & 69.2\% \\ 
+Venezuela & 13 & 0 & 0.0\% \\ 
+Iraq & 12 & 4 & 33.3\% \\ 
+Syria & 12 & 8 & 66.7\% \\ 
+Thailand & 12 & 8 & 66.7\% \\ 
+Ecuador & 11 & 5 & 45.5\% \\ 
+Burundi & 11 & 5 & 45.5\% \\ 
+Guatemala & 10 & 5 & 50.0\% \\ 
+Total & 491 & 245 & 49.9\% \\ 
+\bottomrule
+
+\end{longtable}
+
+\begin{minipage}{\linewidth}
+\emph{Source: GIC dataset}\\
+\end{minipage}
+\endgroup
+
 However, coups are high-stakes gambles with an all-or-nothing nature.
 Due to its illegality, the consequences of a failed coup can be severe,
 with perpetrators risking imprisonment, exile, or even death. In some
@@ -546,7 +582,7 @@ plotters would not take the risk without some assurance of success.
 
 Historical coup attempts and their success rates provide valuable hints
 about coup plotters' decision-making processes. Despite the significant
-risks associated with coups, as shown in \textbf{?@tbl-coups}, there
+risks associated with coups, as shown in Table~\ref{tbl-coups}, there
 have been 491 coups worldwide since 1950. Importantly, about half of
 these coups have been successful. At first glance, coups appear to be a
 high-success-rate political venture. However, compared to over 12,000
@@ -684,7 +720,7 @@ success. Several factors can influence this threshold:
 \end{itemize}
 
 The high success rate of coups since 1950, as shown in
-\textbf{?@tbl-coups}, might suggest that coups are not particularly
+Table~\ref{tbl-coups}, might suggest that coups are not particularly
 difficult to succeed. However, it is important to consider selection
 bias. We only observe attempted coups, not the numerous dispositions and
 conspiracies that never came to light. Analysing launched coup data
@@ -760,7 +796,7 @@ p > (1-p)
 Equation~\ref{eq-eq3} suggests that, to hold Equation~\ref{eq-eq2} true,
 a success probability greater than \(50\%\) is necessary. Interestingly,
 empirical data on coups since 1950 somewhat supports this notion. As
-shown in \textbf{?@tbl-coups}, the overall success rate is \(49.9\%\).
+shown in Table~\ref{tbl-coups}, the overall success rate is \(49.9\%\).
 While this falls short of the \(50\%\) threshold, it's important to
 consider two factors. Firstly, this is an average rate, not necessarily
 reflective of the probabilities assessed by coup plotters beforehand.
@@ -1095,7 +1131,7 @@ defined as one where the incumbent leader is removed from power for more
 than seven days. The dataset covers the period from 1950 to 2023 and
 includes information on 491 coup attempts, with roughly half (245) being
 successful. Descriptive statistics for these coup attempts and regime
-types can be found in \textbf{?@tbl-coups} and Table~\ref{tbl-regimes}.
+types can be found in Table~\ref{tbl-coups} and Table~\ref{tbl-regimes}.
 
 \begin{itemize}
 \tightlist
@@ -1201,7 +1237,7 @@ attempts.
  Yrs since coup (Y) &  &  & $-$0.018$^{***}$ &  \\ 
   &  &  & (0.004) &  \\ 
   & & & & \\ 
- Interactive term: P * Y &  &  & $-$0.013$^{***}$ &  \\ 
+ Interaction term: P * Y &  &  & $-$0.013$^{***}$ &  \\ 
   &  &  & (0.005) &  \\ 
   & & & & \\ 
 \hline \\[-1.8ex] 
@@ -1217,10 +1253,12 @@ $\rho$ & 0.898$^{***}$  (0.158) & 0.898$^{***}$  (0.158) & 0.386$^{*}$  (0.234) 
 The double \texttt{probit} model with sample selection, estimated using
 the \texttt{sampleSelection} package
 (\citeproc{ref-sampleSelection-2}{Toomet and Henningsen 2008}) in R,
-offers valuable insights into the factors influencing coup attempts and
-their outcomes across different regime types from 1950 to 2019 (Table
-\ref{results}). Models 1 uses the numbers of previous coups, while model
-2 uses the time since the last coup.
+provides valuable insights into the factors influencing coup attempts
+and their outcomes across different regime types from 1950 to 2019
+(Table \ref{results}). We present two models that differ slightly in
+their treatment of previous coups: Model 1 incorporates the number of
+previous coups, while Model 2 utilizes the time elapsed since the last
+coup.
 
 \newpage
 
@@ -1272,48 +1310,48 @@ coup attempts, indicating that higher levels of instability increase the
 likelihood of coups. The positive coefficient for the number of previous
 coups suggests a ``copycat'' effect from earlier incidents.
 
-While it is not intuitive to interpret the results of probit model,
-Table~\ref{tbl-mfx1}, using a marginal effect package
+While interpreting \texttt{probit} model results directly is not
+intuitive, Table~\ref{tbl-mfx1}, generated using
+\texttt{marginaleffects} package
 (\citeproc{ref-marginaleffects}{Arel-Bundock, Greifer, and Heiss NaN}),
-helps us to understand the regime effect more clearly. Column AME shows
-the marginal effect in terms of changes in probability, which means how
-much probability increase when the variable increases 1 unit( numeric
-variables) or compared to reference (categorical variables). For
-example, military's marginal effect is 0.07, means probability of coup
-attempts in military regimes is 7 percentage points (pp) higher than in
-dominant-party regimes, holding other factors constant. GDP per capita's
-marginal effect is -0.002, means the probability of coup attempts in
-average condition will decrease by 0.2 pp when GDP per capita increase 1
-unit, i.e., 1000 dollars in this case.
+helps clarify the regime effects. The Average Marginal Effect (AME)
+column shows changes in probability when a variable increases by one
+unit (for numeric variables) or compared to a reference category (for
+categorical variables). For instance, the military regime's marginal
+effect of 0.07 indicates that the probability of coup attempts in
+military regimes is 7 percentage points (pp) higher than in
+dominant-party regimes, ceteris paribus. For GDP per capita, the
+marginal effect of -0.002 suggests that a \$1000 increase reduces the
+probability of coup attempts by 0.2 pp under average conditions.
 
-Ratio column shows the change ratio in percent. It tells the relative
-increase or decrease. While a 7 pp increase might initially seem modest,
-it is substantial in context. The average probability of a coup attempt
-in dominant-party regimes is only about 2.53\%. Therefore, a 7 pp
-increase means that military regimes are approximately 277.7\% more
-likely to encounter coups than dominant-party regimes, which represents
-a significant and substantial change. Similarly, personalist regimes are
-2.4 pp higher, about 94\% more likely compared to dominant-party, which
-is substantial as well. Monarch regimes also display a positive effect
-similar to personalist regimes, reflecting the fact that monarchies are
-a subset of personalist regimes with royal titles.
+The Ratio column displays the relative change in percent. While a 7 pp
+increase might seem modest, it is substantial in context. Given that the
+average probability of a coup attempt in dominant-party regimes is
+approximately 2.53\%, the 7 pp increase means military regimes are about
+277.7\% more likely to encounter coups than dominant-party regimes---a
+significant change. Similarly, personalist regimes show a 2.4 pp higher
+probability, about 94\% more likely compared to dominant-party regimes.
+Monarchies display a positive effect similar to personalist regimes,
+reflecting that monarchies are essentially a subset of personalist
+regimes with royal titles.
 
-However, effects from control variables are weak in predicting coup
-attempts. None of their marginal effect of probability reach 1 pp, and
-less than 7\% in ratio. Given the actually probability is only 2\% to
-3\%, less than 7\% increase or decrease can be ignored.
+Control variables, however, show weak effects in predicting coup
+attempts. None of their marginal effects reach 1 pp in probability, and
+all are less than 7\% in ratio. Given that the actual probability of a
+coup attempt is only 2\% to 3\%, these small increases or decreases can
+be considered negligible.
 
-The results aligns with theoretical expectations regarding the internal
-power struggles within military juntas and the succession
-vulnerabilities in personalist regimes, underscoring the importance of
-regime structure in understanding coup likelihood.
+These results align with our theoretical expectations regarding internal
+power struggles within military juntas and succession vulnerabilities in
+personalist regimes, underscoring the importance of regime structure in
+understanding coup likelihood.
 
-Model 2 uses the years since last coup instead of number of previous
-coups. Since most countries did not experience coups, I use an
-interactive term of previous coups (Notice: in Model 2, previous coups
-is a dummy variable of with coup or without coup) and years since last
-coup. Generally speaking, model 2 shows the same direction results, with
-relatively lower coefficients than model 1.
+Model 2 employs years since the last coup instead of the number of
+previous coups. Due to most countries not experiencing coups, an
+interaction term between previous coups (as a binary variable indicating
+presence or absence of coups) and years since the last coup is used.
+Generally, Model 2 shows results in the same direction as Model 1,
+albeit with relatively lower coefficients (Table~\ref{tbl-mfx2}).
 
 \begingroup
 \setlength\LTleft{0.025\linewidth}
@@ -1351,50 +1389,41 @@ NA & mean(+1) & -0.002 & -5.050 \\
 \subsection{The Outcome Model: Coup
 Success}\label{the-outcome-model-coup-success}
 
-The outcome model (Column 2 in Table \ref{results}) reveals determinants
-of coup success. Military regimes have a higher probability of coup
-success compared to dominant-party regimes, meeting expectations that
-military regimes face higher coup risks due to their better chances of
-success. Personalist and monarch regimes show a slight positive effect
-on coup success, but these are not statistically significant.
+The outcome model (Columns 2 and 4 in Table \ref{results}) reveals
+determinants of coup success. Military regimes demonstrate a higher
+probability of coup success compared to dominant-party regimes, aligning
+with expectations that military regimes face higher coup risks due to
+their increased chances of success. Personalist and monarchical regimes
+show slight positive effects on coup success, but these effects are not
+statistically significant.
 
-Control variables exhibit different effects in the outcome model. Both
-GDP per capita and political violence maintain a weak influence similar
-to the selection model, while the economic trend shows a less
-significant negative effect.
+Control variables exhibit different patterns in the outcome model
+compared to the selection model. Both GDP per capita and political
+violence maintain a weak influence, similar to their effects in the
+selection model. However, the economic trend shows a less significant
+negative effect on coup success.
 
 These results indicate that regime type remains a significant
-determinant of coup attempts and successes, even after controlling for
-other factors, strongly supporting the theoretical framework.
-
-\begin{figure}
-
-\centering{
-
-\includegraphics{coups_and_autocoups_files/figure-pdf/fig-margins-1.pdf}
-
-}
-
-\caption{\label{fig-margins}Probability of Coup Attempts + Coup Success}
-
-\end{figure}%
+determinant of both coup attempts and successes, even after controlling
+for other factors, strongly supporting the proposed theoretical
+framework.
 
 \subsection{Discussion}\label{discussion}
 
-The \(\rho\) value of 0.898, which is highly significant (p \textless{}
-0.01), is a crucial parameter in the sample selection model. This value
-represents the correlation between the error terms of the selection
-equation (coup attempts) and the outcome equation (coup outcomes). A
-high and significant \(\rho\) suggests that unobserved factors
-influencing the likelihood of a coup attempt are strongly correlated
-with those influencing the likelihood of a successful coup. In practical
-terms, this means that the selection model is appropriate and that
-accounting for the selection bias (i.e., the fact that only coups with
-high chances of success will be attempted) is critical to obtaining
-unbiased estimates. The high \(\rho\) value indicates that the same
-underlying conditions that lead to a coup attempt also affect the
-success of the coup, underscoring the importance of considering both
-stages in the analysis.
+The \(\rho\) values of 0.898 in Model 1 and 0.386 in Model 2,
+significant at 1\% and 10\% levels respectively, are crucial parameters
+in the sample selection model. These values represent the correlation
+between the error terms of the selection equation (coup attempts) and
+the outcome equation (coup outcomes). A high and significant \(\rho\)
+suggests that unobserved factors influencing the likelihood of a coup
+attempt are strongly correlated with those influencing the likelihood of
+a successful coup. Practically, this indicates that the selection model
+is appropriate and that accounting for selection bias (i.e., the fact
+that only coups with high chances of success will be attempted) is
+critical for obtaining unbiased estimates. The high \(\rho\) value
+indicates that the same underlying conditions that lead to a coup
+attempt also affect its success, underscoring the importance of
+considering both stages in the analysis.
 
 The results strongly support the choice of the sample selection model.
 Significant coefficients with theoretically consistent directions
@@ -1408,7 +1437,7 @@ The observed disparity between coup attempt rates and success rates
 across regimes points towards selection bias, further validating the use
 of the sample selection model. This model acknowledges that coups are
 not random events, but rather strategic actions undertaken when the odds
-appear favorable.
+appear favourable.
 
 In summary, the double \texttt{probit} model with sample selection
 proves to be a well-suited approach for this research. It provides
@@ -1417,6 +1446,37 @@ attempts and their success rates across different regime types. The
 findings highlight the crucial role of regime structure and the
 selective nature of coup attempts, supporting the theoretical framework
 and empirical strategy employed in this study.
+
+\subsection{Implications}\label{implications}
+
+The finding that regime type plays a crucial role in determining coup
+attempts, while not surprising, has received relatively little attention
+as a primary research focus. However, even if this result is
+acknowledged more widely by academics or politicians, it is unlikely to
+be implemented as a coup-proofing strategy.
+
+Firstly, regime type is not a policy that can be easily altered. It is
+largely established during the formation of the regime, resulting from
+power struggles within the ruling group. As previously discussed, there
+are specific reasons why one regime type is chosen over another. Regimes
+established through irregular means are unlikely to transition to a more
+stable regime type peacefully and smoothly.
+
+Secondly, even if a particular regime type is more effective at
+preventing coups, this may hold little significance for those in power.
+Autocratic leaders often prioritize personal power and survival over
+long-term regime stability, as more stable systems may not benefit them
+personally. Democratic norms and constraints may be seen as obstacles to
+their goals rather than as safeguards against instability.
+
+While this conclusion might seem discouraging, it is not entirely
+pessimistic. The power game involves not only the top leaders but also
+the majority of other elites. While top leaders may prioritize personal
+gains, other elites, including the military, economic elites, and civil
+society, have a vested interest in a stable political environment.
+Therefore, it is possible to reach a consensus for a political system
+that is less susceptible to coups, potentially benefiting a broader
+spectrum of society.
 
 \section{Conclusion}\label{conclusion}
 
@@ -1455,6 +1515,116 @@ most effective in improving stability across different regimes.
 \chapter{Autocoups: Conceptual Clarification and Analysis of Power
 Extensions by Incumbent
 Leaders}\label{autocoups-conceptual-clarification-and-analysis-of-power-extensions-by-incumbent-leaders}
+
+\section*{Abstract}\label{abstract-1}
+\addcontentsline{toc}{section}{Abstract}
+
+This study aims to clarify the concept of autocoups, specifically
+focusing on power extensions by incumbent leaders. By distinguishing
+autocoups from the broader and more ambiguous concepts of self-coups or
+executive takeover, which encompass both executive power aggrandizement
+and power extension, this research redefines the concept of autocoups.
+Based on this refined definition, I introduce a novel dataset of
+autocoup events from 1945 to 2022. Using the newly compiled dataset, the
+research includes three types of case studies that provide qualitative
+insights into the dynamics of autocoups. Additionally, an empirical
+analysis on the determinants of autocoup attempts and success is offered
+to demonstrate how the autocoup dataset can be employed for more
+quantitative research. This study contributes to the existing literature
+by providing a clearer conceptual framework and a novel dataset of
+autocoups. It enhances our understanding of the mechanisms and
+motivations behind power extensions by incumbent leaders and examines
+the implications for democratic backsliding, democratic breakdown,
+personalization, and autocratic deterioration. The insights gained from
+this study could draw more attention to the effects of autocoups on
+power transitions, political stability, and democratic resilience.
+
+keywords: \emph{Coups, Autocoups, Political Leadership}
+
+\newpage
+
+\section{Introduction}\label{introduction-2}
+
+The study of irregular power transitions, encompassing both irregular
+entries and exits from office, has long been a central topic in
+political science. However, one form of irregular power transition - the
+incumbent leader's refusal to relinquish power - remains relatively
+understudied. This scenario, where leaders overstay their mandated term
+limits for one or more terms, or even indefinitely, lacks a universally
+accepted term in the existing literature. To address this gap, this
+study adopts the term ``autocoup'' to denote this phenomenon.
+
+Coups, being the primary form of irregular power transitions, have
+received significant scholarly attention. Research by Goemans,
+Gleditsch, and Chiozza (\citeproc{ref-goemans2009}{2009}) indicate that
+coups account for a substantial portion of such transitions, with
+roughly two-thirds (65.8\%) of 374 irregular exits occurring through
+coups. Additionally, Frantz and Stein (\citeproc{ref-frantz2016}{2016})
+demonstrate that coups are the most common form of exit in autocracies,
+surpassing regular transitions by a third.
+
+However, while coups were once frequent, recent decades have witnessed a
+decline in their occurrence (\citeproc{ref-bermeo2016}{Bermeo 2016};
+\citeproc{ref-thyne2019}{Thyne and Powell 2019}). Conversely, autocoups
+appear to be on the rise, particularly since the Cold War's end
+(\citeproc{ref-ginsburg2010evasion}{Ginsburg, Melton, and Elkins 2010};
+\citeproc{ref-baturo2014}{Baturo 2014};
+\citeproc{ref-versteeg2020law}{Versteeg et al. 2020}). Despite the
+significant political impact and rising prevalence of autocoups, their
+study lags behind that of classical coups, which are extensively
+documented due to their historical frequency
+(\citeproc{ref-thyne2019}{Thyne and Powell 2019}).
+
+This research aims to bridge this gap by focusing on the understudied
+phenomenon of autocoups as they are at least equally important and
+warrant comprehensive analysis. Firstly, autocoups are typically
+accompanied by a disregard for the rule of law, weakened institutions,
+and potential democratic backsliding or authoritarian personalization.
+Secondly, like traditional coups, successful autocoups increase the risk
+of future irregular power transitions. Research indicates that since
+1945, approximately 62 percent of leaders who overstayed their term
+limits through autocoups in non-democratic countries were either ousted
+or assassinated while in office (\citeproc{ref-baturo2019}{Baturo
+2019}). Thirdly, failed autocoups often trigger instability that fuels
+protests, violence, and even civil wars.
+
+Despite their significance, autocoups are understudied compared to
+traditional coups. Although several relevant concepts and terminologies
+such as self-coups, autocoups, autogolpes, incumbent takeovers,
+executive aggrandizement, overstay, and continuismo have been proposed
+and discussed (\citeproc{ref-marsteintredet2019}{Marsteintredet and
+Malamud 2019}; \citeproc{ref-baturo2022}{Baturo and Tolstrup 2022}),
+there is no clear and widely accepted term to describe these events.
+Different terms are often used interchangeably or inconsistently,
+leading to confusion. Moreover, due to the lack of clear concepts, the
+collection of autocoup datasets is still in its early stages compared to
+the rich datasets of traditional coups. Hence, the limited existing
+studies on autocoups have primarily relied on case studies
+(\citeproc{ref-cameron1998}{Maxwell A. Cameron 1998b};
+\citeproc{ref-antonio2021}{Antonio 2021};
+\citeproc{ref-pion-berlin2022}{Pion-Berlin, Bruneau, and Goetze 2022}),
+with few focusing on quantitative analyses.
+
+To fully understand irregular political leadership transitions and
+survival, we need to redefine and clarify the term ``autocoup'' first.
+Based on a clear definition, we can introduce an autocoup dataset that
+can be used for further empirical analysis. This study aims to address
+these knowledge gap surrounding autocoups and contribute in three areas.
+First, it clarifies the terminology by defining autocoups based mainly
+on power extension. Second, it introduces a new dataset of autocoups
+since 1945 based on this refined definition. Finally, the research
+utilizes this dataset for a quantitative analysis of the factors that
+influence leaders' decisions to attempt autocoups.
+
+The subsequent section, based on a comprehensive review of the
+definitions of power expansions and power extensions, proposes a precise
+definition of autocoups. This will be followed by an introduction to the
+new autocoup dataset in Section 3. In Section 4 and 5, I will explain
+the determinants of autocoup attempts through two case studies and
+demonstrate how the novel autocoup dataset collected in this study can
+be used in empirical analysis. Finally, I will conclude this chapter in
+Section, summarizing the key insights gained from the study and
+suggesting avenues for future research.
 
 \chapter{Power Acquisition and Leadership Survival: A Comparative
 Analysis of Coup-Entry and Autocoup
@@ -1608,12 +1778,26 @@ Aidt, Toke, and Gabriel Leon. 2019. {``The Coup.''} Edited by Roger D.
 Congleton, Bernard Grofman, and Stefan Voigt, February.
 \url{https://doi.org/10.1093/oxfordhb/9780190469771.013.15}.
 
+\bibitem[\citeproctext]{ref-antonio2021}
+Antonio, Robert J. 2021. {``Democracy and Capitalism in the Interregnum:
+Trump{'}s Failed Self-Coup and After.''} \emph{Critical Sociology} 48
+(6): 937--65. \url{https://doi.org/10.1177/08969205211049499}.
+
 \bibitem[\citeproctext]{ref-marginaleffects}
 Arel-Bundock, Vincent, Noah Greifer, and Andrew Heiss. NaN. {``How to
 Interpret Statistical Models Using
 {\textbraceleft}Marginaleffects{\textbraceright} in
 {\textbraceleft}r{\textbraceright} and
 {\textbraceleft}Python{\textbraceright},''} NaN.
+
+\bibitem[\citeproctext]{ref-baturo2014}
+Baturo, Alexander. 2014. {``Democracy, Dictatorship, and Term Limits.''}
+\url{https://doi.org/10.3998/mpub.4772634}.
+
+\bibitem[\citeproctext]{ref-baturo2019}
+---------. 2019. {``Continuismo in Comparison.''} In, 75--100. Oxford
+University Press.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0005}.
 
 \bibitem[\citeproctext]{ref-baturo2022}
 Baturo, Alexander, and Jakob Tolstrup. 2022. {``Incumbent Takeovers.''}
@@ -1625,10 +1809,15 @@ Bermeo, Nancy. 2016. {``On Democratic Backsliding.''} \emph{Journal of
 Democracy} 27 (1): 5--19. \url{https://doi.org/10.1353/jod.2016.0012}.
 
 \bibitem[\citeproctext]{ref-cameron1998a}
-Cameron, Maxwell A. 1998. {``Latin American Autogolpes : Dangerous
+Cameron, Maxwell A. 1998a. {``Latin American Autogolpes : Dangerous
 Undertows in the Third Wave of Democratisation.''} \emph{Third World
 Quarterly} 19 (2): 219--39.
 \url{https://doi.org/10.1080/01436599814433}.
+
+\bibitem[\citeproctext]{ref-cameron1998}
+Cameron, Maxwell A. 1998b. {``Self-Coups: Peru, Guatemala, and
+Russia.''} \emph{Journal of Democracy} 9 (1): 125--39.
+\url{https://doi.org/10.1353/jod.1998.0003}.
 
 \bibitem[\citeproctext]{ref-chin2021}
 Chin, John J, David B Carter, and Joseph G Wright. 2021. {``The
@@ -1645,6 +1834,12 @@ Fariss, Christopher J., Therese Anders, Jonathan N. Markowitz, and
 Miriam Barnum. 2022. {``New Estimates of Over 500 Years of Historic GDP
 and Population Data.''} \emph{Journal of Conflict Resolution} 66 (3):
 553--91. \url{https://doi.org/10.1177/00220027211054432}.
+
+\bibitem[\citeproctext]{ref-frantz2016}
+Frantz, Erica, and Elizabeth A. Stein. 2016. {``Countering Coups:
+Leadership Succession Rules in Dictatorships.''} \emph{Comparative
+Political Studies} 50 (7): 935--62.
+\url{https://doi.org/10.1177/0010414016655538}.
 
 \bibitem[\citeproctext]{ref-freedomhouse2024freedom}
 Freedom House. 2024. {``Freedom in the World 2024.''}
@@ -1672,6 +1867,10 @@ Ginsburg, Tom, and Zachary Elkins. 2019. {``One Size Does Not Fit
 All.''} In, 37--52. Oxford University Press.
 \url{https://doi.org/10.1093/oso/9780198837404.003.0003}.
 
+\bibitem[\citeproctext]{ref-ginsburg2010evasion}
+Ginsburg, Tom, James Melton, and Zachary Elkins. 2010. {``On the Evasion
+of Executive Term Limits.''} \emph{Wm. \& Mary L. Rev.} 52: 1807.
+
 \bibitem[\citeproctext]{ref-goemans2009}
 Goemans, Henk E., Kristian Skrede Gleditsch, and Giacomo Chiozza. 2009.
 {``Introducing Archigos: A Dataset of Political Leaders.''}
@@ -1697,6 +1896,12 @@ Marshall, Monty G. 2005. {``Current Status of the World's Major Episodes
 of Political Violence.''} \emph{Report to Political Instability Task
 Force.(3 February)}.
 
+\bibitem[\citeproctext]{ref-marsteintredet2019}
+Marsteintredet, Leiv, and Andrés Malamud. 2019. {``Coup with Adjectives:
+Conceptual Stretching or Innovation in Comparative Research?''}
+\emph{Political Studies} 68 (4): 1014--35.
+\url{https://doi.org/10.1177/0032321719888857}.
+
 \bibitem[\citeproctext]{ref-mechkova2017}
 Mechkova, Valeriya, Anna Lührmann, and Staffan I. Lindberg. 2017. {``How
 Much Democratic Backsliding?''} \emph{Journal of Democracy} 28 (4):
@@ -1707,6 +1912,12 @@ Peyton, Buddy, Joseph Bajjalieh, Dan Shalmon, Michael Martin, and Emilio
 Soto. 2024. {``Cline Center Coup d{'}état Project Dataset.''} University
 of Illinois at Urbana-Champaign.
 \url{https://doi.org/10.13012/B2IDB-9651987_V7}.
+
+\bibitem[\citeproctext]{ref-pion-berlin2022}
+Pion-Berlin, David, Thomas Bruneau, and Richard B. Goetze. 2022. {``The
+Trump Self-Coup Attempt: Comparisons and Civil{\textendash}Military
+Relations.''} \emph{Government and Opposition} 58 (4): 789--806.
+\url{https://doi.org/10.1017/gov.2022.13}.
 
 \bibitem[\citeproctext]{ref-powell2012}
 Powell, Jonathan. 2012. {``Determinants of the Attempting and Outcome of
@@ -1748,6 +1959,11 @@ Toomet, Ott, and Arne Henningsen. 2008. {``Sample Selection Models in
 {\textbraceleft}r{\textbraceright}: Package
 {\textbraceleft}sampleSelection{\textbraceright}''} 27.
 \url{https://www.jstatsoft.org/v27/i07/}.
+
+\bibitem[\citeproctext]{ref-versteeg2020law}
+Versteeg, Mila, Timothy Horley, Anne Meng, Mauricio Guim, and Marilyn
+Guirguis. 2020. {``The Law and Politics of Presidential Term Limit
+Evasion.''} \emph{Colum. L. Rev.} 120: 173.
 
 \end{CSLReferences}
 

@@ -135,3 +135,21 @@ outcome_model <- glm(Coup > 1 ~ regime + ect + gdppc + violence + inv_mills_rati
 
 summary(outcome_model)
 ```
+
+```{r}
+library(psych)
+describe(reg_data) |> 
+  view()
+```
+
+```{r}
+library(RedditExtractoR)
+
+reddit_urls <- find_thread_urls(
+  keywords = "text AND network AND analysis AND university",
+  sort_by = "top",
+  subreddit = NA,
+  period = "month"
+)
+View(reddit_urls)
+```

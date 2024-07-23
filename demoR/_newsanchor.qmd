@@ -1,0 +1,128 @@
+---
+title: "Get news from the web with newsanchor"
+date: "Updated `r format(Sys.time(), '%d %B, %Y')`"
+format: 
+  aps-html:
+    code-tools: true
+categories: [news, package]
+---
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+
+library(tidyverse)
+require(newsanchor)
+# api_key="a650ef8d32344edd8099f0652bd19e76"
+# 
+
+
+# set_api_key(path = "~/.Renviron")
+```
+
+## Get headlines from the source
+
+```{r}
+#| label: get_headlines
+
+terms_sources
+
+results_BBC <- get_headlines(sources = "bbc-news", 
+                             page_size = 3)
+
+
+View(results_BBC$results_df)
+
+results_BBC$results_df["description"] |> 
+  pull(description)
+
+results_BBC$results_df["description"][1,]
+```
+
+# Get headlines published in the category
+
+```{r}
+terms_category
+```
+
+```{r}
+results_sports <- get_headlines(category = "sports", country="cn",  page_size = 10)
+View(results_sports$results_df)
+```
+
+```{r}
+results_general <- get_headlines(category = "general", 
+                                 # country = "cn",
+                                 page_size = 30) 
+
+View(results_general$results_df)
+```
+
+```{r}
+terms_language |> 
+  view()
+```
+
+## get headlines published by query
+
+```{r}
+results <- get_headlines(query = "Trump",
+                         languages = "zh")
+view(results)
+```
+
+```{r}
+if(!require('newscatcheR')) {
+  install.packages('newscatcheR')
+  library('newscatcheR')
+}
+```
+
+```{r}
+get_news(website = "bbc.com")
+```
+
+## Google News
+
+```{r}
+library(rvest)
+google_China <- read_html("https://news.google.com/home?hl=zh-CN&gl=CN&ceid=CN:zh-Hans")
+google_UK <- read_html("https://news.google.com/home?hl=en-GB&gl=GB&ceid=GB:en")
+google_USA <- read_html("https://news.google.com/home?hl=en-US&gl=US&ceid=US:en")
+
+View(google)
+```
+
+```{r}
+page_body <- html_node(google_China, "body")
+print(page_body)
+```
+
+```{r}
+articles_UK <- google_UK |> 
+  html_nodes("article") |> 
+  html_text()
+articles_USA <- google_USA |> 
+  html_nodes("article") |> 
+  html_text()
+articles_China <- google_China |> 
+  html_nodes("article") |> 
+  html_text()
+  
+
+articles_USA[1:10]
+
+View(google_China)
+```
+
+```{r}
+google <- read_html("https://news.google.com/home?hl=en-US&gl=US&ceid=US:en")
+
+google %>% 
+  html_nodes("article") %>% 
+  html_text()
+```
