@@ -60,20 +60,8 @@ execute:
 #| label: setup
 #| include: false
 format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
-library(tidyverse)
-library(data.table)
-library(gt)
-library(janitor)
-library(scales)
-library(zoo)
-library(democracyData)
-library(vdemdata)
-library(readxl)
-library(here)
-library(stargazer)
-library(survival)
-library(sampleSelection)
-library(marginaleffects)
+
+pacman::p_load(tidyverse, data.table, gt, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects)
 ```
 
 ## Acknowledgements {.unnumbered}
@@ -143,25 +131,6 @@ This work contributes significantly to the political science literature by:
 ## Introduction
 
 ### Research question
-
-```{r}
-#| label: leader_data
-#| include: false
-
-download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/PLAD.csv","data/Plad.csv")
-Plad <- fread(here("data/Plad.csv"))
-download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/archigos.csv", "data/Archigos.csv")
-Archigos <- fread(here("data/Archigos.csv"))
-
-Plad |>
-  filter(startdate > 1945) |> 
-  tabyl(exit)
-Archigos |>
-  filter(startdate > 1945,
-         !exitcode  %in% c("Regular", "Still in Office")) |> 
-  tabyl(exitcode) |> 
-  adorn_totals()
-```
 
 Irregular power transitions, marked by a disregard for constitutional procedures,
 are a critical area of study in political science. They not only disrupt
@@ -344,8 +313,10 @@ autocoups.
 #| include: !expr format == "html"
 #load coup data
 
-download.file("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt", "data/Coup.txt")
-Coup <- fread(here("data/Coup.txt"))
+Coup <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt")
+
+attempts <- length(Coup$country)
+succeeded <- length(Coup$country[Coup$coup == 2])
 
 coups <- Coup |>
   summarise(
@@ -354,8 +325,7 @@ coups <- Coup |>
     .by = country
   )
 
-attempts <- length(Coup$country)
-succeeded <- length(Coup$country[Coup$coup == 2])
+
 
 Coup |> 
   summarise(counts = n(),
@@ -816,7 +786,10 @@ regimes <- REIGN |>
   ) |>
   filter(year > 1949)
 
-regime_total <- regimes |>
+coup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/coup_model.csv")
+
+regime_total <- coup_model |>
+  select(regime_type = regime) |> 
   tabyl(regime_type) |> 
   arrange(-n) |> 
   adorn_totals("row") |> 
@@ -883,7 +856,7 @@ account for this selectivity, potentially leading to biased results.
 To address this issue, we utilize a two-stage sample selection model, similar to
 the approach used by @powell2012. This model has two parts:
 
--   **Selection Equation (Stage 1):** This stage analyzes the factors influencing
+-   **Selection Equation (Stage 1):** This stage analyses the factors influencing
     whether a coup attempt occurs in a particular regime. The primary explanatory
     variable here is regime type, as previously discussed. Additional control
     variables may also be included, denoted by $\mathbf{XB}$.
@@ -999,7 +972,7 @@ $$
 \begin{aligned}
 CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
 \end{aligned}
-$$
+$$ {#eq-eq6}
 
 **Political Violence:** We capture overall regime stability by including a
 violence index that encompasses all types of internal and interstate wars and
@@ -1019,188 +992,47 @@ activity influences the likelihood of current coup attempts.
 
 ### Results and Discussion
 
-::: {.content-visible when-format="html"}
 ```{r}
-#| label: tbl-model
+#| label: tbl-coupmodel
 #| tbl-cap: "Sample Selection Model of Regime Type and Coup Success, 1950-2019"
 #| results: asis
-
-download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/political_violence.csv", "data/political_violence.csv")
-political_violence <- fread(here("data/political_violence.csv")) |> 
-  dplyr::select(ccode, year, violence = actotal)
-
-gdp <- vdem |> 
-  dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
-  filter(year > 1940) |> 
-  mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
-                               align = 'right', fill = NA)),
-         .by = c(ccode)) 
-
-download.file("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", "data/coup_all.csv")
-coup_all <- fread(here("data/coup_all.csv")) |> 
-  mutate(coup = case_when(
-    coup1 == 0 ~ 0,
-    coup1 == 2 | coup2 == 2 | coup3 == 2 | coup4 == 2 ~ 2,
-    TRUE ~ 1
-  )) |>
-  group_by(ccode) %>%
-  arrange(year) %>%
-  mutate(pre_coups = lag(cumsum(coup %in% c(1, 2)), default = 0),
-         last_coup_year = lag(case_when(coup %in% c(1, 2)  ~ year,
-                                        TRUE ~ NA_integer_)),
-         last_coup_year = case_when(year == min(year) ~ year,
-                                    TRUE ~ last_coup_year)) |> 
-  fill(last_coup_year, .direction = "down") |>
-  mutate(time_since_last_coup = year - last_coup_year,
-         coup_dummy = case_when(pre_coups == 0 ~ 0,
-                                TRUE ~ 1)) |>
-  dplyr::select(ccode, year, coup, pre_coups, time_since_last_coup, coup_dummy) 
-
-reg_data <- regimes |> 
-  dplyr::select(country = extended_country_name,
-         ccode = reign_cowcode, year, regime_type) |>
-  left_join(coup_all, by = join_by(ccode, year)) |> 
-  left_join(political_violence, by = join_by(ccode, year)) |>
-  left_join(gdp, by = join_by(ccode, year)) |> 
-  filter(!is.na(gdppc)) |> 
-  mutate(violence = na.locf(violence, .by = ccode)) 
-
-model_1 <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct-1)*100) |>
-  selection(coup > 0 ~ regime + ect + gdppc + violence + coup_dummy*time_since_last_coup,
-            coup > 1 ~ regime + ect + gdppc + violence,
-            data = _) 
-
-model_1_selection <- model_1
-model_1_selection$param$index$betaO <- model_1$param$index$betaS
-model_1_selection$param$index$betaS <- model_1$param$index$betaO
-
-model_2 <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct-1)*100,
-         Coup = coup) |>
-  select(Coup, regime, ect, gdppc, violence, coup_dummy = pre_coups) |> 
-  selection(Coup > 0 ~ regime + ect + gdppc + violence + coup_dummy,
-            Coup > 1 ~ regime + ect + gdppc + violence,
-            #method = "2step",
-            data = _) 
-
-model_2_selection <- model_2
-model_2_selection$param$index$betaO <- model_2$param$index$betaS
-model_2_selection$param$index$betaS <- model_2$param$index$betaO
-
-stargazer(model_2_selection, model_2, model_1_selection, model_1,
-          type = "html",
-          header = F,
-          dep.var.caption = "",
-          dep.var.labels = c("Model 1", "Model 2"),
-          #dep.var.labels.include = T,
-          #multicolumn = T,
-          #title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
-          column.labels = c("Coup Attempts", "Coup Outcome","Coup Attempts", "Coup Outcome"),
-          intercept.bottom = F,
-          #label = "results",
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "Previous coups (P)", "Yrs since coup (Y)", "Interaction term: P * Y"),
-          summary.logical = F,
-          column.sep.width = "7pt",
-          font.size = "small"
-          )
-```
-
-The double probit model with sample selection, estimated using the
-sampleSelection package [@sampleSelection-2] in R, provides valuable insights
-into the factors influencing coup attempts and their outcomes across different
-regime types from 1950 to 2019 (@tbl-model). We present two models that differ
-slightly in their treatment of previous coups: Model 1 incorporates the number of
-previous coups, while Model 2 utilizes the time elapsed since the last coup.
-:::
-
-::: {.content-visible unless-format="html"}
-```{r}
-#| label: regression_pdf
-#| results: asis
 #| echo: !expr format == "html"
-download.file("https://raw.githubusercontent.com/reddylee/Datasets/main/political_violence.csv", "data/political_violence.csv")
-political_violence <- fread(here("data/political_violence.csv")) |> 
-  dplyr::select(ccode, year, violence = actotal)
 
-gdp <- vdem |> 
-  dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
-  filter(year > 1940) |> 
-  mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
-                               align = 'right', fill = NA)),
-         .by = c(ccode)) 
-
-download.file("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt", "data/coup_all.csv")
-coup_all <- fread(here("data/coup_all.csv")) |> 
-  mutate(coup = case_when(
-    coup1 == 0 ~ 0,
-    coup1 == 2 | coup2 == 2 | coup3 == 2 | coup4 == 2 ~ 2,
-    TRUE ~ 1
-  )) |>
-  group_by(ccode) %>%
-  arrange(year) %>%
-  mutate(pre_coups = lag(cumsum(coup %in% c(1, 2)), default = 0),
-         last_coup_year = lag(case_when(coup %in% c(1, 2)  ~ year,
-                                        TRUE ~ NA_integer_)),
-         last_coup_year = case_when(year == min(year) ~ year,
-                                    TRUE ~ last_coup_year)) |> 
-  fill(last_coup_year, .direction = "down") |>
-  mutate(time_since_last_coup = year - last_coup_year,
-         coup_dummy = case_when(pre_coups == 0 ~ 0,
-                                TRUE ~ 1)) |>
-  dplyr::select(ccode, year, coup, pre_coups, time_since_last_coup, coup_dummy) 
-
-reg_data <- regimes |> 
-  dplyr::select(country = extended_country_name,
-         ccode = reign_cowcode, year, regime_type) |>
-  left_join(coup_all, by = join_by(ccode, year)) |> 
-  left_join(political_violence, by = join_by(ccode, year)) |>
-  left_join(gdp, by = join_by(ccode, year)) |> 
-  filter(!is.na(gdppc)) |> 
-  mutate(violence = na.locf(violence, .by = ccode)) 
-
-model_1 <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct-1)*100) |>
-  selection(coup > 0 ~ regime + ect + gdppc + violence + coup_dummy*time_since_last_coup,
-            coup > 1 ~ regime + ect + gdppc + violence,
+model_1 <- coup_model|>
+  filter(regime != "other") |>
+  select(coup, regime, GDP_trend, GDP_pc, violence, coup_dummy = pre_coups) |> 
+  mutate(regime = fct_relevel(regime, "dominant-party")) |> 
+  selection(coup > 0 ~ regime + GDP_trend + GDP_pc + violence + coup_dummy,
+            coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
+            #method = "2step",
             data = _) 
 
 model_1_selection <- model_1
 model_1_selection$param$index$betaO <- model_1$param$index$betaS
 model_1_selection$param$index$betaS <- model_1$param$index$betaO
 
-model_2 <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct-1)*100,
-         Coup = coup) |>
-  select(Coup, regime, ect, gdppc, violence, coup_dummy = pre_coups) |> 
-  selection(Coup > 0 ~ regime + ect + gdppc + violence + coup_dummy,
-            Coup > 1 ~ regime + ect + gdppc + violence,
-            #method = "2step",
+model_2 <- coup_model |>
+  filter(regime != "other") |>
+  select(Coup = coup, regime, GDP_trend, GDP_pc, violence, coup_dummy, time_since_last_coup) |> 
+  mutate(regime = fct_relevel(regime, "dominant-party")) |> 
+  selection(Coup > 0 ~ regime + GDP_trend + GDP_pc + violence + coup_dummy*time_since_last_coup,
+            Coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
             data = _) 
 
 model_2_selection <- model_2
 model_2_selection$param$index$betaO <- model_2$param$index$betaS
 model_2_selection$param$index$betaS <- model_2$param$index$betaO
 
-stargazer(model_2_selection, model_2, model_1_selection, model_1,
-          #type = "html",
+stargazer(model_1_selection, model_1, model_2_selection, model_2,
+          #type = "text",
+          float = F,
           header = F,
           dep.var.caption = "",
           dep.var.labels = c("Model 1", "Model 2"),
-          #dep.var.labels.include = T,
-          #multicolumn = T,
-          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
+          multicolumn = T,
+          dep.var.labels.include = T, 
           column.labels = c("Coup Attempts", "Coup Outcome","Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,
-          label = "results",
           covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "Previous coups (P)", "Yrs since coup (Y)", "Interaction term: P * Y"),
           summary.logical = F,
           column.sep.width = "7pt",
@@ -1208,33 +1040,43 @@ stargazer(model_2_selection, model_2, model_1_selection, model_1,
           )
 ```
 
-The double `probit` model with sample selection, estimated using the
-`sampleSelection` package [@sampleSelection-2] in R, provides valuable insights
+The double *`probit`* model with sample selection, estimated using the
+*`sampleSelection`* package [@sampleSelection-2] in R, provides valuable insights
 into the factors influencing coup attempts and their outcomes across different
-regime types from 1950 to 2019 (Table \ref{results}). We present two models that
+regime types from 1950 to 2019 (@tbl-coupmodel). We present two models that
 differ slightly in their treatment of previous coups: Model 1 incorporates the
 number of previous coups, while Model 2 utilizes the time elapsed since the last
 coup.
-:::
-
-\newpage
 
 #### The Selection Model: Coup Attempts
+
+In the selection model (Column 1), military and personalist regimes exhibit
+significant positive coefficients at the 1% level, indicating a higher likelihood
+of experiencing coup attempts compared to dominant-party regimes. Control
+variables also exhibit effects in expected directions. Stronger economic
+performance, indicated by higher economic growth trends and GDP per capita
+levels, correlates with a lower risk of coup attempts. This suggests that better
+economic conditions and relatively higher living standards reduce incentives for
+coups. Political violence shows a positive and significant effect on coup
+attempts, indicating that higher levels of instability increase the likelihood of
+coups. The positive coefficient for the number of previous coups suggests a
+"copycat" effect from earlier incidents.
 
 ```{r}
 #| label: tbl-mfx1
 #| tbl-cap: Average marginal effects of coup attempts (Selection of Model 1)
 #| echo: !expr format == "html"
-avg_comparisons(model_2) |> 
+
+avg_comparisons(model_1) |> 
   select(1:3) |> 
   select(1:2, ame = estimate) |>
-  cbind(avg_comparisons(model_2, comparison = "ratio") |> select(3)) |> 
+  cbind(avg_comparisons(model_1, comparison = "ratio") |> select(3)) |> 
   mutate('ratio(%)' = round((estimate - 1) * 100, 2),
          ame = round(ame, 3)) |> 
   select(-estimate) |>
   mutate(term = case_when(term == "coup_dummy" ~ "Previous coups",
-                          term == "ect" ~ "Economic trend",
-                          term == "gdppc" ~ "GDP per capita",
+                          term == "GDP_trend" ~ "Economic trend",
+                          term == "GDP_pc" ~ "GDP per capita",
                           term == "violence" ~ "Political violence",
                           str_detect(contrast, "democracy") ~ "Regime: Democracy",
                           str_detect(contrast, "military") ~ "Military",
@@ -1281,78 +1123,54 @@ contrast = str_replace(
     footnote = "AME: Average Marginal Effect",
     locations = cells_column_labels(columns = AME)
   )
-#avg_predictions(model_2, variables = "regime")
-# slopes(model_2, newdata = "mean")
-# predictions(model_2, newdata = "mean") |>
-#   view()
-  
 ```
 
-In the selection model (Column 1), military and personalist regimes exhibit
-significant positive coefficients at the 1% level, indicating a higher likelihood
-of experiencing coup attempts compared to dominant-party regimes. Control
-variables also exhibit effects in expected directions. Stronger economic
-performance, indicated by higher economic growth trends and GDP per capita
-levels, correlates with a lower risk of coup attempts. This suggests that better
-economic conditions and relatively higher living standards reduce incentives for
-coups. Political violence shows a positive and significant effect on coup
-attempts, indicating that higher levels of instability increase the likelihood of
-coups. The positive coefficient for the number of previous coups suggests a
-"copycat" effect from earlier incidents.
-
-While interpreting `probit` model results directly is not intuitive, @tbl-mfx1,
-generated using `marginaleffects` package [@marginaleffects], helps clarify the
-regime effects. The Average Marginal Effect (AME) column shows changes in
+While interpreting probit model results directly is not intuitive, @tbl-mfx1,
+generated using the `marginaleffects` package [@marginaleffects], helps clarify
+the regime effects. The Average Marginal Effect (AME) column shows changes in
 probability when a variable increases by one unit (for numeric variables) or
-compared to a reference category (for categorical variables). For instance, the
-military regime's marginal effect of 0.07 indicates that the probability of coup
-attempts in military regimes is 7 percentage points (pp) higher than in
-dominant-party regimes, ceteris paribus. For GDP per capita, the marginal effect
-of -0.002 suggests that a \$1000 increase reduces the probability of coup
-attempts by 0.2 pp under average conditions.
+compared to a reference category (for categorical variables). In the selection
+equation of Model 1, the military regime's marginal effect of 0.07 indicates that
+the probability of coup attempts in military regimes is 7 percentage points (pp)
+higher than in dominant-party regimes, ceteris paribus. For GDP per capita, the
+marginal effect of -0.002 suggests that a unit increase (\$1000) reduces the
+probability of coup attempts by 0.2 pp under average conditions.
 
-The Ratio column displays the relative change in percent. While a 7 pp increase
-might seem modest, it is substantial in context. Given that the average
-probability of a coup attempt in dominant-party regimes is approximately 2.53%,
-the 7 pp increase means military regimes are about 277.7% more likely to
-encounter coups than dominant-party regimes—a significant change. Similarly,
-personalist regimes show a 2.4 pp higher probability, about 94% more likely
-compared to dominant-party regimes. Monarchies display a positive effect similar
-to personalist regimes, reflecting that monarchies are essentially a subset of
-personalist regimes with royal titles.
+The Ratio Percent column displays the relative change in percentage terms. While
+a 7 pp increase might seem modest, it is actually substantial. Given that the
+average probability of a coup attempt in dominant-party regimes is approximately
+2.53%, the 7 pp increase means military regimes are about 277.7% more likely to
+encounter coups than dominant-party regimes—more than two times higher.
+Similarly, personalist regimes show a 2.4 pp higher probability, about 94% more
+likely compared to dominant-party regimes, nearly doubling the risk. Monarchies
+display a positive effect similar to personalist regimes, reflecting that
+monarchies are essentially a subset of personalist regimes with royal titles.
 
 Control variables, however, show weak effects in predicting coup attempts. None
 of their marginal effects reach 1 pp in probability, and all are less than 7% in
-ratio. Given that the actual probability of a coup attempt is only 2% to 3%,
-these small increases or decreases can be considered negligible.
+ratio, which is negligible given the baseline probabilities.
 
 These results align with our theoretical expectations regarding internal power
 struggles within military juntas and succession vulnerabilities in personalist
 regimes, underscoring the importance of regime structure in understanding coup
 likelihood.
 
-Model 2 employs years since the last coup instead of the number of previous
-coups. Due to most countries not experiencing coups, an interaction term between
-previous coups (as a binary variable indicating presence or absence of coups) and
-years since the last coup is used. Generally, Model 2 shows results in the same
-direction as Model 1, albeit with relatively lower coefficients (@tbl-mfx2).
-
 ```{r}
 #| label: tbl-mfx2
 #| tbl-cap: Average marginal effects of coup attempts (Selection of Model 2)
 #| echo: !expr format == "html"
-avg_comparisons(model_1) |> 
+avg_comparisons(model_2) |> 
   select(1:3) |> 
   select(1:2, ame = estimate) |>
-  cbind(avg_comparisons(model_1, comparison = "ratio") |> select(3)) |> 
+  cbind(avg_comparisons(model_2, comparison = "ratio") |> select(3)) |> 
   mutate('ratio(%)' = round((estimate - 1) * 100, 2),
          ame = round(ame, 3)) |> 
   select(-estimate) |>
   mutate(term = case_when(term == "coup_dummy" ~ "Previous coups (P)",
                           term == "time_since_last_coup" ~ "Yrs since coup (P)" ,
                           term == "coup_dummy*time_since_last_coup" ~ "Interaction term: P * Y",
-                          term == "ect" ~ "Economic trend",
-                          term == "gdppc" ~ "GDP per capita",
+                          term == "GDP_trend" ~ "Economic trend",
+                          term == "GDP_pc" ~ "GDP per capita",
                           term == "violence" ~ "Political violence",
                           str_detect(contrast, "democracy") ~ "Regime: Democracy",
                           str_detect(contrast, "military") ~ "Military",
@@ -1403,14 +1221,20 @@ contrast = str_replace(
   )
 ```
 
+Model 2 employs years since the last coup instead of the number of previous
+coups. Due to most countries not experiencing coups, an interaction term between
+previous coups (as a binary variable indicating presence or absence of coups) and
+years since the last coup is used. Generally, Model 2 shows results in the same
+direction as Model 1, albeit with relatively lower coefficients (@tbl-mfx2).
+
 #### The Outcome Model: Coup Success
 
-The outcome model (Columns 2 and 4 in Table \ref{results}) reveals determinants
-of coup success. Military regimes demonstrate a higher probability of coup
-success compared to dominant-party regimes, aligning with expectations that
-military regimes face higher coup risks due to their increased chances of
-success. Personalist and monarchical regimes show slight positive effects on coup
-success, but these effects are not statistically significant.
+The outcome model (Columns 2 and 4 in @tbl-coupmodel) reveals determinants of
+coup success. Military regimes demonstrate a higher probability of coup success
+compared to dominant-party regimes, aligning with expectations that military
+regimes face higher coup risks due to their increased chances of success.
+Personalist and monarchical regimes show slight positive effects on coup success,
+but these effects are not statistically significant.
 
 Control variables exhibit different patterns in the outcome model compared to the
 selection model. Both GDP per capita and political violence maintain a weak
@@ -1426,7 +1250,7 @@ supporting the proposed theoretical framework.
 #| fig-cap: "Probability of Coup Attempts + Coup Success"
 #| echo: !expr format == "html"
 #| include: false
-plot_predictions(model_2, by = "regime")+
+plot_predictions(model_1, by = "regime") +
   labs(
     x = "Regimes",
     y = "Total probability")
@@ -1724,19 +1548,19 @@ at which it becomes an autocoup is again problematic.
 Therefore, this study argues that a more accurate definition of autocoups should
 prioritize power extension as the core characteristic.
 
-In light of this discussion, we formally define an autocoup as *the practice of
+In light of this discussion, we formally define an autocoup as ***the practice of
 current political leaders extending their time in office beyond their originally
-mandated term limits*. Three key points need to be highlighted for this
-definition. Firstly, this definition refers to the actual leaders of the country,
-regardless of their official titles. Typically, this would be the president;
-however, in some cases, such as in Germany, the primary leader is the premier, as
-the president is a nominal head of state. Secondly, while the primary
-characteristic of an autocoup is extending the term in office, this definition
-does not exclude instances of power expansion. Both aspects can coexist, but the
-extension of the term is the central element. Thirdly, autocoups, by their
-nature, subvert legal norms and established power transfer mechanisms. While they
-may employ seemingly legal tactics, their essence is illegitimacy. This critical
-aspect will be explored further in Chapter III.
+mandated term limits through illegitimate means*****.** Three key points need to
+be highlighted for this definition. Firstly, this definition refers to the actual
+leaders of the country, regardless of their official titles. Typically, this
+would be the president; however, in some cases, such as in Germany, the primary
+leader is the premier, as the president is a nominal head of state. Secondly,
+while the primary characteristic of an autocoup is extending the term in office,
+this definition does not exclude instances of power expansion. Both aspects can
+coexist, but the extension of the term is the central element. Thirdly,
+autocoups, by their nature, subvert legal norms and established power transfer
+mechanisms. While they may employ seemingly legal tactics, their essence is
+illegitimacy. This critical aspect will be explored further in Section 3.
 
 ### Introduction to the Autocoup Dataset
 
@@ -1769,7 +1593,7 @@ Even in contexts where leaders lack clear term limits or the constitution allows
 indefinite terms, identifying autocoups remains possible. We will discuss and
 explain this in the next section.
 
-#### **Classifying autocoups** {#sec-classify}
+#### Classifying autocoups {#sec-classify}
 
 Autocoups can manifest in various forms. To understand this phenomenon better, we
 can categorize them based on several key factors:
@@ -1907,7 +1731,6 @@ one-time arrangement.
 #| tbl-cap: Sources of coding autocoup dataset 
 #| echo: !expr format == "html"
 #| results: asis
-# library(kableExtra)
 
 read.csv(here("data/autocoup_source.csv")) |> 
   clean_names(case = "title") |> 
@@ -1943,15 +1766,15 @@ qualifications for autocoups.
 #| label: data-autocoups
 #| echo: !expr format == "html"
 
-Autocoup <- read_csv("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup.csv")
+Autocoup <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_clean.csv")
 # nrow(Autocoup)
-# nrow(Autocoup |> filter(!is.na(baturo)))
+# nrow(Autocoup |> filter(!is.na(source)))
 ```
 
 In total, I coded `r nrow(Autocoup)` observations, with
-`r nrow(Autocoup |> filter(!is.na(baturo)))` overlapping with the candidate data
+`r nrow(Autocoup |> filter(!is.na(source)))` overlapping with the candidate data
 from Incumbent Takeover. The remaining
-`r nrow(Autocoup) - nrow(Autocoup |> filter(!is.na(baturo)))` events were newly
+`r nrow(Autocoup) - nrow(Autocoup |> filter(!is.na(source)))` events were newly
 coded by the author through verification with other sources such as Archigos, and
 news reports.The main deviation from the Incumbent Takeover dataset arises from
 excluding power expansions that do not involve attempts to extend tenure.
@@ -1990,7 +1813,7 @@ The main variables included in the autocoup dataset are:
 -   **Power Transition Methods:**
 
     -   `entry_method` and `exit_method`: These categorical variables record how
-        the leader entered and exited power (e.g., election, coup d'état, death).
+        the leader entered and exited power (e.g., election, coup, death).
 
     -   `entry_regular` and `exit_regular`: These dummy variables indicate
         whether the entry and exit methods were regular (e.g., election) or
@@ -2024,18 +1847,12 @@ The dataset encompasses a total of 14 variables along with the `notes` field.
 ```{r}
 #| label: data_descriptions
 #| echo: !expr format == "html"
-autocoup <- Autocoup |> 
-  mutate(exit_date = ifelse(exit_date != "Incumbent", exit_date, NA)) |> 
-  mutate(exit_date = case_when(is.na(exit_date) ~ Sys.Date(), 
-                               .default = convert_to_date(exit_date)),
-         extending_date = make_date(year = extending_date, month(entry_date), day(entry_date))) |> 
-  select(1:14)
 
-country <- autocoup |> 
+country <- Autocoup |> 
   distinct(ccode) |> 
   summarise(count = n())
 
-autocoup_desc <- autocoup |> 
+autocoup_desc <- Autocoup |> 
   summarise(autocoup_attempted = n(),
             autocoup_succeeded = sum(autocoup_outcome == "Yes"),
     .by = autocoup_method) |> 
@@ -2073,7 +1890,7 @@ less likely for them to overturn election results.
 
 autocoup_desc |> 
   adorn_totals() |> 
-  mutate(Success_rate = percent (autocoup_succeeded/autocoup_attempted)) |> 
+  mutate(Success_rate = percent(autocoup_succeeded/autocoup_attempted)) |> 
   clean_names(case = "title") |> 
   gt() |>
   tab_options(column_labels.font.weight = "bold",
@@ -2141,8 +1958,6 @@ Belarus, Nazarbayev passed the presidency to Kassym-Jomart Tokayev, a specially
 designated successor, in 2019. However, he retained significant influence as the
 Chairman of the Security Council of Kazakhstan until 2022.
 
-\clearpage
-
 ```{r}
 #| label: region
 #| echo: !expr format == "html"
@@ -2158,22 +1973,6 @@ africa <- codelist |>
   select(continent, cown) |>
   drop_na() |> 
   pull(cown)
-
-# autocoup |> 
-#   filter(ccode %in% latin) |> 
-#   summarise(count = n(),
-#             .by = country) |> 
-#   adorn_totals() 
-# autocoup |> 
-#   filter(ccode %in% latin) |> 
-#   summarise(count = n(),
-#             .by = autocoup_method) |> 
-#   adorn_totals()
-# autocoup |> 
-#   filter(ccode %in% latin) |> 
-#   summarise(count = n(),
-#             .by = autocoup_outcome) |> 
-#   adorn_totals() 
 ```
 
 #### Autocoups for immediate re-election: Cases of Latin American countries
@@ -2237,44 +2036,6 @@ the National Assembly of Nicaragua approved constitutional amendments that
 abolished term limits for the presidency, allowing Ortega to run for an unlimited
 number of five-year terms, making him president since 2007 [@close2019].
 
-```{r}
-#| label: africa
-#| eval: FALSE
-#| include: FALSE
-# autocoup |> 
-#   filter(ccode %in% africa) |> 
-#   summarise(count = n(),
-#             Post_Cold_War = sum(autocoup_date > 1990),
-#             Pre_Cold_War = sum(autocoup_date < 1991),
-#             .by = autocoup_outcome) |> 
-#   adorn_totals() 
-# 
-# autocoup |> 
-#   filter(ccode %in% africa) |> 
-#   summarise(count = n(),
-#             .by = country) |> 
-#   adorn_totals()
-# autocoup |> 
-#   filter(ccode %in% africa) |> 
-#   summarise(count = n(),
-#             .by = autocoup_outcome) |> 
-#   adorn_totals() 
-# autocoup |> 
-#   filter(ccode %in% africa) |> 
-#   summarise(count = n(),
-#             .by = autocoup_method) |> 
-#   adorn_totals() 
-# coup <- read.csv("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt",
-#                  sep = "\t")
-# coup |> 
-#   filter(ccode  %in% africa) |> 
-#   summarise(count = n(),
-#             Success = sum(coup == 2),
-#             Cold_War = sum(year > 2000),
-#             .by = country) |> 
-#   adorn_totals()
-```
-
 #### As common as classical coups: Cases of African countries
 
 Classical coups have been very common in Africa, accounting for about 45% of all
@@ -2322,14 +2083,37 @@ does not imply that violations are more common than adherence to term limits.
 
 ### Empirical Analysis: A Simple Example of Utilizing the Autocoup Dataset
 
-With the availability of the autocoup dataset, we can conduct quantitative
-analyses beyond traditional case studies. This chapter provides a simple example
-of demonstrating how to utilize the dataset. To analyse the determinants of
-autocoup attempts, we employ a `probit` regression model. This model is
-appropriate for binary dependent variables, allowing us to estimate the
-probability of an autocoup attempt given the independent variables.
+With the availability of the autocoup dataset, we can now conduct quantitative
+analyses that extend beyond traditional case studies. This section provides a
+straightforward example of how to utilize this dataset effectively. To analyse
+the determinants of autocoup attempts, we employ a probit regression model. This
+model is particularly appropriate for binary dependent variables, allowing us to
+estimate the probability of an autocoup attempt given a set of independent
+variables.
 
-#### **Dependent Variable**
+However, our approach here differs from the double probit model with sample
+selection used in Chapter 2 for coup attempts and success analyses. Instead, we
+use two separate probit models. This methodological choice is justified by
+several factors specific to autocoups:
+
+-   **Incumbent Advantage**: Autocoups have a significantly higher success rate
+    compared to traditional coups, often exceeding 80%. This high probability of
+    success fundamentally alters the decision-making calculus for potential
+    perpetrators.
+
+-   **Reduced Risk**: Even in cases where autocoup attempts fail, the
+    consequences for the instigators are typically less severe than those faced
+    by leaders of failed traditional coups. This lower risk profile further
+    distinguishes autocoups from other types of coup attempts.
+
+Due to these unique features, autocoup attempts do not exhibit the typical sample
+selection characteristics that necessitated the use of a sample selection model
+in our earlier analysis of traditional coups. Given these considerations, a
+sample selection model might not be appropriate in this context. By using
+separate probit models, we can independently examine the factors that influence
+autocoup attempts and their outcomes, without assuming a strong selection effect.
+
+#### Dependent Variable
 
 -   **Autocoup Attempts**: This binary variable indicates whether an autocoup was
     attempted during the tenure of an incumbent leader, based on the data
@@ -2339,7 +2123,7 @@ probability of an autocoup attempt given the independent variables.
     autocoup of the incumbent leader succeeded, based on the data introduced in
     this study.
 
-#### **Independent Variables**
+#### Independent Variables
 
 -   **Economic Performance:** This variable is measured using two indicators:
     economic level and economic growth trend.
@@ -2349,18 +2133,10 @@ probability of an autocoup attempt given the independent variables.
     country.
 
     **Economic Growth Trend:** Assessed using the current-trend (CT) ratio,
-    developed by @krishnarajan2019. The CT ratio compares a country's current GDP
-    per capita to the average GDP per capita over the previous five years. A
-    higher CT ratio signifies stronger economic performance.
-
-$$
-\begin{aligned}
-CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
-\end{aligned}
-$$
+    developed by @krishnarajan2019, which is consistent with @eq-eq6.
 
 The GDP per capita data, expressed in constant 2017 international dollars (PPP)
-and measured in units of \$10,000, is sourced from the V-Dem dataset by
+and measured in units of \$10,000, is sourced from the *V-Dem* dataset by
 @fariss2022. To account for the economic impact of the previous year, this data
 is lagged by one year.
 
@@ -2376,7 +2152,7 @@ is lagged by one year.
     scores at the entry year for each respective country. These scores range from
     -10 (fully autocratic) to +10 (fully democratic), capturing the extent of
     democratic versus autocratic governance. This dataset is sourced from the
-    Centre for Systemic Peace (CSP)\[\^1\] and provides an essential measure of
+    Centre for Systemic Peace (CSP)[^6] and provides an essential measure of
     political regime type, which might influence the political stability and
     power transitions.
 
@@ -2403,11 +2179,11 @@ term, or even strive for leadership for life. A leader who failed in the first
 attempt might make another try if they are not removed due the first failure. To
 simplify the analysis, we overlook those possibilities.
 
-Therefore, in the `probit` model, the unit of analysis in autocoups is the whole
-tenure of the leader, not country-year. So, we need to settle a base-year for the
-variables. For leaders who staged an autocoup, we take the year of their first
-attempts as the base-year, while for leaders who did not attempt to overstay, we
-take the middle year of their tenure as the base-year.
+Therefore, in the *`probit`* model, the unit of analysis in autocoups is the
+whole tenure of the leader, not country-year. So, we need to settle a base-year
+for the variables. For leaders who staged an autocoup, we take the year of their
+first attempts as the base-year, while for leaders who did not attempt to
+overstay, we take the middle year of their tenure as the base-year.
 
 Unlike the analysis of coup determinants, which could theoretically occur in any
 given year, we assume that an autocoup happens only once during an incumbent
@@ -2418,7 +2194,7 @@ extensions, striving for lifelong leadership. Conversely, a leader who fails in
 their first attempt may try again if they are not removed from power after the
 initial failure. For simplicity, we overlook these possibilities in our analysis.
 
-Therefore, in our `probit` model, the unit of analysis for autocoups is the
+Therefore, in our *`probit`* model, the unit of analysis for autocoups is the
 entire tenure of a leader, rather than a country-year. We establish a base year
 for the variables: for leaders who staged an autocoup, we use the year of their
 first attempt as the base year; for leaders who did not attempt to overstay, we
@@ -2427,37 +2203,39 @@ use the middle year of their tenure as the base year.
 #### Results and discussions
 
 ```{r}
-#| label: model
+#| label: tbl-autocoupmodel
+#| tbl-cap: "Determinants of autocoup attempts and success (1945-2018)"
 #| results: asis
 #| echo: !expr format == "html"
 
+autocoup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_model.csv")
 
-autocoup_final_data <- read_csv(here("data/Autocoup_model_data.csv"))
-
-model_attempt <- autocoup_final_data |> 
+model_attempt <- autocoup_model |> 
+  filter(!regime %in% c("monarchy", "other")) |> 
   mutate(regime = fct_relevel(regime, "presidential")) |>
   glm(autocoup_attempt ~ regime + GDP_pc + GDP_trend + polity5 + violence + age + pop_log, 
       family = binomial(link = "probit"),
       data = _)
 
-model_success <- autocoup_final_data |> 
-  mutate(regime = fct_relevel(regime, "presidential")) |>
+model_success <- autocoup_model |> 
+  filter(!regime  %in% c("monarchy", "other")) |> 
+  mutate(regime = fct_relevel(regime, "presidential"),
+         autocoup_outcome = factor(autocoup_outcome)) |>
   filter(autocoup_attempt == 1) |> 
-  glm(autocoup_success ~ regime + GDP_pc + GDP_trend + polity5 + violence + age + pop_log, 
+  glm(autocoup_outcome ~ regime + GDP_pc + GDP_trend + polity5 + violence + age + pop_log, 
       family = binomial(link = "probit"),
       data = _)
 
 stargazer(model_attempt, model_success, 
           header = F,
+          float = F,
           column.labels = c("Coup Attempts", "Coup Outcome"),
           intercept.bottom = F,
-          title = "Determinants of autocoup attempts and success (1945-2018)",
-          label = "results",
           covariate.labels = c("Constant",
                                "Regime: Dominant-party",
                                "\\hspace{1.6cm}Military",
                                "\\hspace{1.6cm}Personalist",
-                               " GDP per capita",
+                               "GDP per capita",
                                "Economic trend",
                                "Political 5",
                                "Political violence",
@@ -2470,7 +2248,7 @@ stargazer(model_attempt, model_success,
           )
 ```
 
-Table \ref{results} summarizes the findings from the `probit` regression models
+@tbl-autocoupmodel summarizes the findings from the *`probit`* regression models
 based on our analysis of the determinants of autocoup attempts and their success.
 
 Model 1, which examines autocoup attempts, reveals only one significant predictor
@@ -2510,7 +2288,7 @@ succeed. Using illegal means such as a coup is even more challenging, as the
 costs are high, the consequences are severe, and the likelihood of success is
 very low.
 
-#### Conclusion
+### Conclusion
 
 This study provides a comprehensive analysis of autocoups, specifically focusing
 on political events where incumbent leaders illegitimately extend their tenure in
@@ -2538,7 +2316,7 @@ cases will likely persist. Secondly, due to the nature of autocoups, which are
 less frequent than classic coups (491 coups versus 110 autocoups during the same
 period), the quantitative analysis cannot be conducted as a country-year variable
 as in coups. This raises the issue of choosing a base year. For example, when
-analyzing how GDP level or growth rate, the democratic index (such as Polity 5),
+analysing how GDP level or growth rate, the democratic index (such as Polity 5),
 or the age of the leader affect autocoup attempts, we need to decide which year's
 value should be used. In this study, we chose the middle year of a leader's
 tenure or the year they staged the autocoup, but determining the most appropriate
@@ -2552,6 +2330,146 @@ long-term impacts of these events on political systems, particularly on
 democratic backsliding, democratic breakdown, and personalization of power.
 
 ## Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders
+
+### Abstract {.unnumbered}
+
+This study examines how the method of power acquisition impacts the longevity of
+two main types of irregular-entry political leaders: coup-entry leaders and
+autocoup leaders. We hypothesize that the method of accession significantly
+affects leader tenure. Utilizing the Cox proportional hazards model and a
+time-dependent Cox model, we provide compelling evidence of differing survival
+times between these two leader types. The findings indicate that coup-entry
+leaders face a significantly higher risk of removal compared to autocoup leaders.
+Specifically, coup-entry leaders are found to have a much shorter average tenure
+and a higher probability of being ousted. This study underscores the implications
+of these findings for political stability and democratic processes, suggesting
+that the relatively low cost and high returns of autocoups could incentivize more
+incumbents to seize power in this manner, potentially leading to democratic
+backsliding. Furthermore, this research contributes to the academic literature by
+effectively utilizing a newly developed dataset on autocoups, offering valuable
+insights into the dynamics of irregular leadership transitions.
+
+keywords: ***Coups, Autocoups, Survival, Political Leadership, Cox Model***
+
+\newpage
+
+### Introduction
+
+Why do some leaders rule for decades while others stay in power for only years,
+months, or even days? This question has garnered substantial attention, making
+the survival of political leaders a well-explored topic in political science.
+Although the general framework of political survival has been extensively studied
+and numerous theories have been proposed, specific types of leaders—particularly
+coup-entry leaders and autocoup leaders (defined in more detail in Chapter
+3)—have received comparatively less scrutiny. Nonetheless, examining the tenures
+of these specific leader types is particularly significant, as it provides
+insights into the dynamics of irregular leadership transitions and their impact
+on political stability and democratic processes.
+
+The processes of entry, tenure, and exit are more predictable for leaders who
+come to power through regular channels, making their survival easier to
+anticipate and thus less compelling to study. In contrast, leaders who ascend
+through irregular means, such as coups or autocoups, attract more interest from
+both academics and journalists due to the unpredictable and often tumultuous
+nature of their tenures. According to @goemans2009, leaders with irregular
+entries or exits are quite common. Between 1945 and 2015, more than half of the
+leaders who entered power irregularly (158 out of 308) eventually exited
+irregularly as well. This rate is significantly higher than that of leaders who
+assumed office through regular channels, of whom only 14.5% (213 out of 1,472)
+experienced irregular exits. While this percentage is still notable, it is
+considerably lower than that for irregular-entry leaders.
+
+Among leaders with irregular entry or exit, coup-entry and autocoup leaders
+constitute the majority. According to @goemans2009, out of 374 leaders who exited
+irregularly, 246 were ousted through coups, accounting for 65.8% of these cases.
+@frantz2016 show that coup-related exits account for roughly one-third of all
+exits in autocracies, surpassing any other type, including regular transitions.
+Additionally, between 1945 and 2020, there were 106 autocoup attempts, with 86
+being successful [@zhu2024].
+
+```{r}
+#| label: data
+#| include: false
+survival_cox_ph_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_ph_model.csv") |> 
+  mutate(survival_year = survival_days / 365)
+
+survival_cox_td_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_td_model.csv")
+
+avg <- survival_cox_ph_model |>
+  summarise(avg=round(mean(survival_year),1),
+            .by = group)
+```
+
+Due to their irregularity and inherent uncertainty, precisely measuring the
+survival tenure of coup-entry and autocoup leaders presents a significant
+challenge. Nonetheless, a comparative analysis of the tenures of these two types
+of leaders is both feasible and valuable. Leaders who consolidate power through
+autocoups have a longer average tenure post-autocoup (approximately
+`r avg$avg[1]` years) compared to coup-entry leaders (approximately
+`r avg$avg[2]` years). This suggests a potential shortfall of about 5 years in
+the average tenure of coup-entry leaders.
+
+```{r}
+#| label: fig-logrank
+#| fig-width: 7
+#| fig-height: 5
+#| fig-align: center
+#| fig-cap: Survival curves of overstaying and coup-entry leaders
+#| echo: !expr format == "html"
+
+# Fit survival curves
+fit <- survfit(Surv(survival_year, status) ~ group, data = survival_cox_ph_model)
+# Create log-rank plot (Kaplan-Meier plot)
+ggsurvplot(fit, 
+           data = survival_cox_ph_model, 
+           risk.table = TRUE, 
+           risk.table.height = 0.3, 
+           pval = TRUE,
+           surv.median.line = "hv",
+           break.x.by = 5, 
+           legend.title = "Leader Type",
+           legend.labs = c("Autocoup leaders", "Coup-entry leaders"),
+           xlab = "Survival Years",
+           #title = "Survival Curves of overstay and coup-entry leaders",
+           font.title = 12)
+```
+
+A preliminary analysis using a log-rank test in survival analysis, as shown in
+@fig-logrank, reveals a distinct contrast in the tenures of autocoup leaders
+versus coup-entry leaders. The survival curve for autocoup leaders is
+consistently higher than that for coup-entry leaders, and the difference is
+statistically significant. This indicates that autocoup leaders generally have a
+longer survival tenure and a lower risk of being ousted compared to coup-entry
+leaders.
+
+We argue that the method of accession significantly influences leadership
+longevity. Coup-entry leaders are likely to face greater challenges to their
+rule, resulting in a shorter average tenure compared to autocoup leaders.
+
+Using the Cox proportional hazards model and the time-dependent Cox model, our
+results indicate that autocoup leaders generally experience longer tenures
+compared to coup-entry leaders.
+
+This study makes two potential contributions. Firstly, it sheds light on an
+understudied factor in leadership survival analysis: the impact of the method of
+accession to power. Leaders' survival is influenced not only by their ruling
+strategies after taking power but also by how they acquired power initially.
+Secondly, by utilizing survival models, this research provides empirical evidence
+of the significant difference in tenure duration between autocoup and coup-entry
+leaders. This finding may help explain the increasing prevalence of overstaying
+in power through autocoups since 2000. As more incumbents observe these
+precedents, they may be encouraged to adopt similar tactics, with ruling elites
+tending to follow and support such actions to benefit from a relatively longer
+tenure.
+
+The remainder of the paper delves deeper into this topic. Chapter 2 provides a
+comprehensive literature review on political survival, establishing the context
+for this research. Chapter 3 explores the factors influencing the survival of
+coup and autocoup leaders. Chapter 4 outlines the methodology and data used,
+including the application of survival models to analyze the determinants of
+leadership longevity. Chapter 5 presents the findings of the analysis and a
+detailed discussion of the results. Finally, Chapter 6 concludes by synthesizing
+the key takeaways and exploring their broader implications.
 
 ## Conclusion
 
@@ -2719,3 +2637,6 @@ cat("\\newpage
     additional authority from other state apparatuses, whereas power extension
     refers to an incumbent prolonging their tenure beyond the designated term in
     office.
+
+[^6]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on
+    `r Sys.Date()`.

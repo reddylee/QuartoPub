@@ -708,68 +708,45 @@ attempt.
 #| results: asis
 #| echo: false
 
-political_violence <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/political_violence.csv") |> 
-  dplyr::select(ccode, year, violence = actotal)
+coup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/coup_model.csv")
 
-gdp <- vdem |> 
-  dplyr::select(ccode = COWcode, year, gdppc = e_gdppc) |> 
-  filter(year > 1940) |> 
-  mutate(ct = gdppc / lag(rollapply(gdppc, width = 5, FUN = mean,
-                               align = 'right', fill = NA)),
-         .by = c(ccode)) 
-
-coup_all <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_ccode_year.txt") |> 
-  mutate(coup = case_when(
-    coup1 == 0 ~ 0,
-    coup1 == 2 | coup2 ==2 | coup3 == 2 | coup4 == 2 ~ 2,
-    TRUE ~ 1
-  )) |>
-  group_by(ccode) %>%
-  arrange(year) %>%
-  mutate(pre_coups = lag(cumsum(coup %in% c(1, 2)), default = 0),
-         last_coup_year = lag(case_when(coup %in% c(1, 2)  ~ year,
-                                        TRUE ~ NA_integer_)),
-         last_coup_year = case_when(year == min(year) ~ year,
-                                    TRUE ~ last_coup_year)) |> 
-  fill(last_coup_year, .direction = "down") |>
-  mutate(time_since_last_coup = year - last_coup_year,
-         coup_dummy = case_when(pre_coups == 0 ~ 0,
-                                TRUE ~ 1)) |>
-  dplyr::select(ccode, year, coup, pre_coups, time_since_last_coup, coup_dummy) 
-
-reg_data <- regimes |> 
-  dplyr::select(country = extended_country_name,
-         ccode = reign_cowcode, year, regime_type) |>
-  left_join(coup_all, by = join_by(ccode, year)) |> 
-  left_join(political_violence, by = join_by(ccode, year)) |>
-  left_join(gdp, by = join_by(ccode, year)) |> 
-  filter(!is.na(gdppc)) |> 
-  mutate(violence = na.locf(violence, .by = ccode)) 
-
-model_2step <- reg_data |>
-  filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct -1)*100) |>
-  selection(coup > 0 ~ regime + ect + gdppc + violence + pre_coups,
-            coup > 1 ~ regime + ect + gdppc + violence,
+model_1 <- coup_model |>
+  filter(regime != "other") |>
+  selection(coup > 0 ~ regime + GDP_trend + GDP_pc + violence + coup_dummy*time_since_last_coup,
+            coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
             data = _) 
-summary(model_2step)
-model_selection <- model_2step
-model_selection$param$index$betaO <- model_2step$param$index$betaS
-model_selection$param$index$betaS <- model_2step$param$index$betaO
 
-stargazer(model_selection, model_2step,
-          type = "text",
+model_1_selection <- model_1
+model_1_selection$param$index$betaO <- model_1$param$index$betaS
+model_1_selection$param$index$betaS <- model_1$param$index$betaO
+
+model_2 <- coup_model|>
+  filter(regime != "other") |>
+  select(coup, regime, GDP_trend, GDP_pc, violence, coup_dummy = pre_coups) |> 
+  selection(coup > 0 ~ regime + GDP_trend + GDP_pc + violence + coup_dummy,
+            coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
+            #method = "2step",
+            data = _) 
+
+model_2_selection <- model_2
+model_2_selection$param$index$betaO <- model_2$param$index$betaS
+model_2_selection$param$index$betaS <- model_2$param$index$betaO
+
+stargazer(model_2_selection, model_2, model_1_selection, model_1,
+          #type = "html",
           header = F,
-          column.labels = c("Coup Attempts", "Coup Outcome"),
-          intercept.bottom = F,
-          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
-          label = "results",
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", " GDP per capita", "Political violence", "Coup experience (yes)",  "Years since last coup"),
           dep.var.caption = "",
-          dep.var.labels.include = F,
-          summary.logical = T,
-          column.sep.width = "50pt"
+          dep.var.labels = c("Model 1", "Model 1", "Model 2", "Model 2"),
+          #dep.var.labels.include = T,
+          #multicolumn = T,
+          title = "Sample Selection Model of Regime Types and Coups, 1950-2019",
+          column.labels = c("Coup Attempts", "Coup Outcome","Coup Attempts", "Coup Outcome"),
+          intercept.bottom = F,
+          label = "results",
+          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "Previous coups (P)", "Yrs since coup (Y)", "Interaction term: P * Y"),
+          summary.logical = F,
+          column.sep.width = "7pt",
+          font.size = "small"
           )
 ```
 

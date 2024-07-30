@@ -234,3 +234,31 @@ data <- data %>%
 print(data)
 
 ```
+
+## Marginal effects
+
+```{r}
+library(tidyverse)
+library(sampleSelection)
+library(marginaleffects)
+data(Mroz87)
+
+m <- selection(lfp ~ educ + age + kids5 + kids618 + nwifeinc,
+               wage >= 5 ~ educ + exper, data = Mroz87)
+
+summary(m)
+avg_slopes(m) |> 
+  view()
+```
+
+```{r}
+avg_slopes(m, type = "unconditional", part = "outcome")#coefficients of outcome
+
+avg_slopes(m, type = "response", part = "selection")# marginal effects of selection
+
+avg_slopes(m, type = "link", part = "selection")#coefficients of selection
+```
+
+```{r}
+?predict.sampleSelection
+```

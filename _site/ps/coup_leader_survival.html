@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.55">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Zhu Qi">
 <meta name="dcterms.date" content="2024-06-10">
 <meta name="keywords" content="Coups, Autocoups, Survival, Political Leadership, Cox Model">
-<title>Can.Do.So - Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders</title>
+<title>Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders – Can.Do.So</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -128,7 +128,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -154,13 +154,13 @@ window.Quarto = {
   typesetMath
 };
 </script>
-<meta property="og:title" content="Can.Do.So - Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders">
+<meta property="og:title" content="Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders – Can.Do.So">
 <meta property="og:description" content="This study examines how the method of power acquisition impacts the longevity of two main types of irregular-entry political leaders: coup-entry leaders and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Utilizing the Cox proportional hazards model and a time-dependent Cox model, we provide compelling evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. Specifically, coup-entry leaders are found to have a much shorter average tenure and a higher probability of being ousted. This study underscores the implications of these findings for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. Furthermore, this research contributes to the academic literature by effectively utilizing a newly developed dataset on autocoups, offering valuable insights into the dynamics of irregular leadership transitions.">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
-<meta name="twitter:title" content="Can.Do.So - Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders">
+<meta name="twitter:title" content="Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders – Can.Do.So">
 <meta name="twitter:description" content="This study examines how the method of power acquisition impacts the longevity of two main types of irregular-entry political leaders: coup-entry leaders and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Utilizing the Cox proportional hazards model and a time-dependent Cox model, we provide compelling evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. Specifically, coup-entry leaders are found to have a much shorter average tenure and a higher probability of being ousted. This study underscores the implications of these findings for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. Furthermore, this research contributes to the academic literature by effectively utilizing a newly developed dataset on autocoups, offering valuable insights into the dynamics of irregular leadership transitions.">
 <meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
@@ -180,7 +180,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -205,7 +205,7 @@ window.Quarto = {
   </li>  
 </ul>
 </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
@@ -322,9 +322,9 @@ window.Quarto = {
 <span id="cb1-14"><a href="#cb1-14"></a>           <span class="co">#title = "Survival Curves of overstay and coup-entry leaders",</span></span>
 <span id="cb1-15"><a href="#cb1-15"></a>           <span class="at">font.title =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<div id="fig-logrank" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-logrank" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-logrank-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders"><img src="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logrank-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
@@ -395,11 +395,10 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 <span id="cb2-10"><a href="#cb2-10"></a>    <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">~</span> <span class="fu">px</span>(<span class="dv">250</span>)</span>
 <span id="cb2-11"><a href="#cb2-11"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb2-12"><a href="#cb2-12"></a>   <span class="fu">data_color</span>(<span class="at">rows =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="at">colors =</span> <span class="st">"#edede9"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="tbl-leaders" class="cell quarto-float anchored">
+</details><div id="tbl-leaders" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-leaders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Main features of autocoup and coup-entry leaders
 </figcaption><div aria-describedby="tbl-leaders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
 <div id="thrqenewgr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#thrqenewgr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -849,7 +848,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   height: 0px !important;
 }
 </style>
-<table class="gt_table cell table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="header gt_col_headings">
 <th id="Feature" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Feature</th>
 <th id="Autocoup Leader" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Autocoup Leader</th>
@@ -878,7 +877,6 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </figure>
@@ -919,12 +917,11 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
 <span id="cb3-31"><a href="#cb3-31"></a>    <span class="at">columns =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span></span>
 <span id="cb3-32"><a href="#cb3-32"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb3-33"><a href="#cb3-33"></a>  <span class="fu">tab_source_note</span>(<span class="at">source_note =</span> <span class="fu">md</span>(<span class="st">"*Source: GIC dataset*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="tbl-coups" class="cell quarto-float anchored">
+</details><div id="tbl-coups" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
 </figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div>
 <div id="sskwulqvov" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#sskwulqvov table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -1374,7 +1371,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   height: 0px !important;
 }
 </style>
-<table class="gt_table do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -1465,7 +1462,6 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
 <td colspan="4" class="gt_sourcenote"><p><em>Source: GIC dataset</em></p></td>
 </tr></tfoot>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -1606,12 +1602,11 @@ Surv(survival\_time, status) &amp;= Group + \\
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">tbl_merge</span>(<span class="fu">list</span>(tbl1, tbl2),</span>
 <span id="cb5-2"><a href="#cb5-2"></a>          <span class="at">tab_spanner =</span> <span class="fu">c</span>(<span class="st">"**Cox PH Model**"</span>, <span class="st">"**Time-dependent Cox Model**"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">as_gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="tbl-cox" class="cell quarto-float anchored">
+</details><div id="tbl-cox" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3: Cox models for survival time of different types of leaders
 </figcaption><div aria-describedby="tbl-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div>
 <div id="iuutiqrfgd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#iuutiqrfgd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -2061,7 +2056,7 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
   height: 0px !important;
 }
 </style>
-<table class="gt_table do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 11%">
 <col style="width: 11%">
@@ -2238,7 +2233,6 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
 </div>
 </div>
 </div>
-</div>
 </figure>
 </div>
 </div>
@@ -2290,9 +2284,9 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-coxSurv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxSurv" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxSurv-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-coxSurv-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coxSurv-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="lightbox" data-gallery="fig-coxSurv" data-glightbox="description: .lightbox-desc-2"><img src="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="img-fluid figure-img" data-ref-parent="fig-coxSurv" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="lightbox" data-gallery="fig-coxSurv" title="Figure&nbsp;2&nbsp;(a): Cox PH Model"><img src="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="img-fluid figure-img" data-ref-parent="fig-coxSurv" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxSurv-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Cox PH Model
@@ -2300,9 +2294,9 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxSurv" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxSurv-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-coxSurv-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coxSurv-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="lightbox" data-gallery="fig-coxSurv" data-glightbox="description: .lightbox-desc-3"><img src="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="img-fluid figure-img" data-ref-parent="fig-coxSurv" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="lightbox" data-gallery="fig-coxSurv" title="Figure&nbsp;2&nbsp;(b): Time-dependent Cox Model"><img src="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="img-fluid figure-img" data-ref-parent="fig-coxSurv" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxSurv-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Time-dependent Cox Model
@@ -2365,9 +2359,9 @@ Figure&nbsp;2: Survival curves for Cox Model
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-coxHR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxHR" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxHR-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-coxHR-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coxHR-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="lightbox" data-gallery="fig-coxHR" data-glightbox="description: .lightbox-desc-4"><img src="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="img-fluid figure-img" data-ref-parent="fig-coxHR" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="lightbox" data-gallery="fig-coxHR" title="Figure&nbsp;3&nbsp;(a): Cox PH Model"><img src="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="img-fluid figure-img" data-ref-parent="fig-coxHR" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxHR-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Cox PH Model
@@ -2375,9 +2369,9 @@ Figure&nbsp;2: Survival curves for Cox Model
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxHR" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxHR-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-coxHR-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coxHR-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="lightbox" data-gallery="fig-coxHR" data-glightbox="description: .lightbox-desc-5"><img src="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="img-fluid figure-img" data-ref-parent="fig-coxHR" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="lightbox" data-gallery="fig-coxHR" title="Figure&nbsp;3&nbsp;(b): Time-dependent Cox Model"><img src="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="img-fluid figure-img" data-ref-parent="fig-coxHR" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxHR-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Time-dependent Cox Model
@@ -2407,13 +2401,6 @@ Figure&nbsp;3: Hazard ratios and 95% CIs for Leader Ousting
 
 <!-- -->
 
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2&nbsp;(a): Cox PH Model</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;2&nbsp;(b): Time-dependent Cox Model</span>
-<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;3&nbsp;(a): Cox PH Model</span>
-<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;3&nbsp;(b): Time-dependent Cox Model</span>
-</div>
 
 </section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-arriola2009" class="csl-entry" role="listitem">
@@ -2562,18 +2549,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2605,7 +2581,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -2664,7 +2662,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -3973,7 +3971,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-1006"><a href="#cb8-1006"></a></span>
 <span id="cb8-1007"><a href="#cb8-1007"></a><span class="ot">[^4]: </span>Center for Systemic Peace: <span class="ot">&lt;https://www.systemicpeace.org&gt;</span>. Accessed on</span>
 <span id="cb8-1008"><a href="#cb8-1008"></a>    <span class="in">`r Sys.Date()`</span>.</span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -3994,30 +3992,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </ul>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"fade","loop":true,"closeEffect":"fade"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+</footer><script>var lightboxQuarto = GLightbox({"loop":true,"closeEffect":"fade","descPosition":"bottom","selector":".lightbox","openEffect":"fade"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

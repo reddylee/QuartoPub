@@ -13,11 +13,11 @@
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.55">
 <meta name="author" content="Zhu Qi">
 <meta name="dcterms.date" content="2024-06-10">
 <meta name="keywords" content="Coups, Autocoups, Survival, Political Leadership, Cox Model">
-<title>Can.Do.So - Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders</title>
+<title>Can.Do.So – Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -48,7 +48,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -422,13 +422,13 @@
   </style>
 <link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<meta property="og:title" content="Can.Do.So - Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders">
+<meta property="og:title" content="Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders – Can.Do.So">
 <meta property="og:description" content="This study examines how the method of power acquisition impacts the longevity of two main types of irregular-entry political leaders: coup-entry leaders and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Utilizing the Cox proportional hazards model and a time-dependent Cox model, we provide compelling evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. Specifically, coup-entry leaders are found to have a much shorter average tenure and a higher probability of being ousted. This study underscores the implications of these findings for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. Furthermore, this research contributes to the academic literature by effectively utilizing a newly developed dataset on autocoups, offering valuable insights into the dynamics of irregular leadership transitions.">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
-<meta name="twitter:title" content="Can.Do.So - Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders">
+<meta name="twitter:title" content="Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-Entry and Autocoup Leaders – Can.Do.So">
 <meta name="twitter:description" content="This study examines how the method of power acquisition impacts the longevity of two main types of irregular-entry political leaders: coup-entry leaders and autocoup leaders. We hypothesize that the method of accession significantly affects leader tenure. Utilizing the Cox proportional hazards model and a time-dependent Cox model, we provide compelling evidence of differing survival times between these two leader types. The findings indicate that coup-entry leaders face a significantly higher risk of removal compared to autocoup leaders. Specifically, coup-entry leaders are found to have a much shorter average tenure and a higher probability of being ousted. This study underscores the implications of these findings for political stability and democratic processes, suggesting that the relatively low cost and high returns of autocoups could incentivize more incumbents to seize power in this manner, potentially leading to democratic backsliding. Furthermore, this research contributes to the academic literature by effectively utilizing a newly developed dataset on autocoups, offering valuable insights into the dynamics of irregular leadership transitions.">
 <meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
@@ -483,9 +483,9 @@ Zhu Qi
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-logrank" class="quarto-figure quarto-figure-center quarto-float" data-fig-align="center">
+<div id="fig-logrank" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-logrank-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img data-src="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders"><img data-src="coup_leader_survival_files/figure-html/fig-logrank-1.png" class="quarto-figure quarto-figure-center" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logrank-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
@@ -556,11 +556,10 @@ Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders
 <span id="cb2-10"><a></a>    <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">~</span> <span class="fu">px</span>(<span class="dv">250</span>)</span>
 <span id="cb2-11"><a></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb2-12"><a></a>   <span class="fu">data_color</span>(<span class="at">rows =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="at">colors =</span> <span class="st">"#edede9"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="tbl-leaders" class="cell quarto-float">
+</details><div id="tbl-leaders" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-leaders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Main features of autocoup and coup-entry leaders
 </figcaption><div aria-describedby="tbl-leaders-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
 <div id="thrqenewgr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#thrqenewgr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -1010,7 +1009,7 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
   height: 0px !important;
 }
 </style>
-<table class="gt_table cell" data-quarto-postprocess="true" style="table-layout: fixed;; width: 100%" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table cell caption-top" data-quarto-postprocess="true" style="table-layout: fixed;; width: 100%" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="header gt_col_headings">
 <th id="Feature" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Feature</th>
 <th id="Autocoup Leader" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Autocoup Leader</th>
@@ -1039,7 +1038,6 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 </figure>
@@ -1083,12 +1081,11 @@ Table&nbsp;1: Main features of autocoup and coup-entry leaders
 </details>
 </div>
 <div class="cell fragment">
-<div id="tbl-coups" class="cell quarto-float">
+<div id="tbl-coups" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
 </figcaption><div aria-describedby="tbl-coups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div>
 <div id="sskwulqvov" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#sskwulqvov table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -1538,7 +1535,7 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
   height: 0px !important;
 }
 </style>
-<table class="gt_table do-not-create-environment cell" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table do-not-create-environment cell caption-top" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -1629,7 +1626,6 @@ Table&nbsp;2: Top 10 countries with the most coup attempts (1950–2023)
 <td colspan="4" class="gt_sourcenote"><p><em>Source: GIC dataset</em></p></td>
 </tr></tfoot>
 </table>
-</div>
 </div>
 </div>
 </div>
@@ -1780,12 +1776,11 @@ Surv(survival\_time, status) &amp;= Group + \\
 </details>
 </div>
 <div class="cell fragment">
-<div id="tbl-cox" class="cell quarto-float">
+<div id="tbl-cox" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3: Cox models for survival time of different types of leaders
 </figcaption><div aria-describedby="tbl-cox-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div>
 <div id="iuutiqrfgd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#iuutiqrfgd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -2235,7 +2230,7 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
   height: 0px !important;
 }
 </style>
-<table class="gt_table do-not-create-environment cell" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table do-not-create-environment cell caption-top" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 11%">
 <col style="width: 11%">
@@ -2412,7 +2407,6 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
 </div>
 </div>
 </div>
-</div>
 </figure>
 </div>
 </div>
@@ -2465,9 +2459,9 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-coxSurv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxSurv" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxSurv-1" class="quarto-figure quarto-figure-center quarto-float">
+<div id="fig-coxSurv-1" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxSurv-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="lightbox" data-gallery="fig-coxSurv" data-glightbox="description: .lightbox-desc-2"><img data-src="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" data-ref-parent="fig-coxSurv" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" class="lightbox" data-gallery="fig-coxSurv" title="Figure&nbsp;2&nbsp;(a): Cox PH Model"><img data-src="coup_leader_survival_files/figure-html/fig-coxSurv-1.png" data-ref-parent="fig-coxSurv" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxSurv-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Cox PH Model
@@ -2475,9 +2469,9 @@ Table&nbsp;3: Cox models for survival time of different types of leaders
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxSurv" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxSurv-2" class="quarto-figure quarto-figure-center quarto-float">
+<div id="fig-coxSurv-2" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxSurv-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="lightbox" data-gallery="fig-coxSurv" data-glightbox="description: .lightbox-desc-3"><img data-src="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" data-ref-parent="fig-coxSurv" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" class="lightbox" data-gallery="fig-coxSurv" title="Figure&nbsp;2&nbsp;(b): Time-dependent Cox Model"><img data-src="coup_leader_survival_files/figure-html/fig-coxSurv-2.png" data-ref-parent="fig-coxSurv" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxSurv-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Time-dependent Cox Model
@@ -2540,9 +2534,9 @@ Figure&nbsp;2: Survival curves for Cox Model
 <figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-coxHR-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxHR" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxHR-1" class="quarto-figure quarto-figure-center quarto-float">
+<div id="fig-coxHR-1" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxHR-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="lightbox" data-gallery="fig-coxHR" data-glightbox="description: .lightbox-desc-4"><img data-src="coup_leader_survival_files/figure-html/fig-coxHR-1.png" data-ref-parent="fig-coxHR" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxHR-1.png" class="lightbox" data-gallery="fig-coxHR" title="Figure&nbsp;3&nbsp;(a): Cox PH Model"><img data-src="coup_leader_survival_files/figure-html/fig-coxHR-1.png" data-ref-parent="fig-coxHR" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxHR-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Cox PH Model
@@ -2550,9 +2544,9 @@ Figure&nbsp;2: Survival curves for Cox Model
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coxHR" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-coxHR-2" class="quarto-figure quarto-figure-center quarto-float">
+<div id="fig-coxHR-2" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-subfloat-fig"><div aria-describedby="fig-coxHR-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="lightbox" data-gallery="fig-coxHR" data-glightbox="description: .lightbox-desc-5"><img data-src="coup_leader_survival_files/figure-html/fig-coxHR-2.png" data-ref-parent="fig-coxHR" width="672"></a>
+<a href="coup_leader_survival_files/figure-html/fig-coxHR-2.png" class="lightbox" data-gallery="fig-coxHR" title="Figure&nbsp;3&nbsp;(b): Time-dependent Cox Model"><img data-src="coup_leader_survival_files/figure-html/fig-coxHR-2.png" data-ref-parent="fig-coxHR" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coxHR-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Time-dependent Cox Model
@@ -2571,9 +2565,6 @@ Figure&nbsp;3: Hazard ratios and 95% CIs for Leader Ousting
 <h3 data-number="5.3" id="assessing-the-proportional-hazards-assumption">
 <span class="header-section-number">5.3</span> Assessing the Proportional Hazards Assumption</h3>
 <p>The validity of the model assumptions significantly influences our confidence in the results. To assess the proportional hazards assumption of the Cox model, we use the chi-square test based on Schoenfeld residuals to determine whether the covariate effects remain constant (proportional) over time. Although the Cox PH model violates the proportional hazards assumption, our primary analysis relies on the time-dependent Cox model, which does not show strong evidence of violating the proportional hazards assumption for any covariate. The global p-value of 0.382 is much greater than the 5% significance level, indicating that the proportional hazards assumption is reasonably met for the time-dependent Cox model.</p>
-<div class="cell">
-
-</div>
 </section><section id="conclusion" class="slide level2 smaller scrollable" data-number="6"><h2>
 <span class="header-section-number">6</span> Conclusion</h2>
 <p>This study examined the survival durations of political leaders who come to power through irregular means, specifically coups and autocoups. We hypothesized that the mode of accession significantly influences leader tenure. Employing survival analysis techniques, including the Cox proportional hazards model and a time-dependent Cox model, we found strong evidence that autocoup leaders generally enjoy longer tenures than coup-entry leaders.</p>
@@ -2587,13 +2578,6 @@ Figure&nbsp;3: Hazard ratios and 95% CIs for Leader Ousting
 <div class="footer footer-default">
 <p><a href="https://www.candoso.org">Can.Do.So</a></p>
 </div>
-</div>
-<div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Survival curves of overstaying and coup-entry leaders</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2&nbsp;(a): Cox PH Model</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;2&nbsp;(b): Time-dependent Cox Model</span>
-<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;3&nbsp;(a): Cox PH Model</span>
-<span class="glightbox-desc lightbox-desc-5">Figure&nbsp;3&nbsp;(b): Time-dependent Cox Model</span>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-arriola2009" class="csl-entry" role="listitem">
@@ -2716,7 +2700,7 @@ Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"17175858582665290355","id":"1e01a24a2e3ddaa6","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"17223799151427286361","id":"2522c81c2ce1dc25","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -2927,18 +2911,7 @@ Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2970,7 +2943,29 @@ Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp("https:\/\/reddylee\.quarto\.pub\/candoso");
@@ -2978,7 +2973,7 @@ Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {
@@ -3070,30 +3065,37 @@ Zhu, Qi. 2024. <span>“Determinants of Incumbent Overstay Attempts and Outcomes
         }
       }
     });
-    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","selector":".lightbox","descPosition":"bottom","loop":true,"openEffect":"fade"});
-    window.onload = () => {
-      lightboxQuarto.on('slide_before_load', (data) => {
-        const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-        const href = trigger.getAttribute('href');
-        if (href !== null) {
-          const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-          if (imgEl !== null) {
-            const srcAttr = imgEl.getAttribute("src");
-            if (srcAttr && srcAttr.startsWith("data:")) {
-              slideConfig.href = srcAttr;
-            }
-          }
-        } 
-      });
-
-      lightboxQuarto.on('slide_after_load', (data) => {
-        const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(slideNode);
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","openEffect":"fade","loop":true,"descPosition":"bottom","selector":".lightbox"});
+    (function() {
+      let previousOnload = window.onload;
+      window.onload = () => {
+        if (previousOnload) {
+          previousOnload();
         }
-      });
-
-    };
+        lightboxQuarto.on('slide_before_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          const href = trigger.getAttribute('href');
+          if (href !== null) {
+            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+            if (imgEl !== null) {
+              const srcAttr = imgEl.getAttribute("src");
+              if (srcAttr && srcAttr.startsWith("data:")) {
+                slideConfig.href = srcAttr;
+              }
+            }
+          } 
+        });
+      
+        lightboxQuarto.on('slide_after_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(slideNode);
+          }
+        });
+      
+      };
+      
+    })();
               </script>
 
 

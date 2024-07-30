@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.55">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Can.Do.So - DuckDB in R</title>
+<title>DuckDB in R – Can.Do.So</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -106,13 +106,13 @@ gtag('js', new Date());
 gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </script><link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<meta property="og:title" content="Can.Do.So - DuckDB in R">
+<meta property="og:title" content="DuckDB in R – Can.Do.So">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://reddylee.quarto.pub/candoso/fig/candoso2.png">
 <meta property="og:site_name" content="Can.Do.So">
 <meta property="og:image:height" content="180">
 <meta property="og:image:width" content="323">
-<meta name="twitter:title" content="Can.Do.So - DuckDB in R">
+<meta name="twitter:title" content="DuckDB in R – Can.Do.So">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://reddylee.quarto.pub/candoso/fig/candoso.png">
 <meta name="twitter:creator" content="@reddy_lee">
@@ -132,7 +132,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -157,7 +157,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   </li>  
 </ul>
 </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
@@ -267,7 +267,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1"></a>show <span class="kw">tables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>5 records</caption>
 <thead><tr class="header">
 <th style="text-align: left;">name</th>
@@ -303,7 +303,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> gdp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <thead><tr class="header">
 <th style="text-align: left;">X</th>
@@ -416,7 +416,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span id="cb9-2"><a href="#cb9-2"></a><span class="kw">where</span> hp <span class="op">&gt;</span> <span class="dv">100</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a><span class="kw">order</span> <span class="kw">by</span> <span class="op">-</span>hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <thead><tr class="header">
 <th style="text-align: right;">mpg</th>
@@ -572,7 +572,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span id="cb10-2"><a href="#cb10-2"></a><span class="kw">where</span> hp <span class="op">&gt;</span> <span class="dv">100</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="kw">order</span> <span class="kw">by</span> <span class="op">-</span>hp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <thead><tr class="header">
 <th style="text-align: right;">mpg</th>
@@ -730,7 +730,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span id="cb11-4"><a href="#cb11-4"></a><span class="kw">order</span> <span class="kw">by</span> dep_delay <span class="kw">desc</span></span>
 <span id="cb11-5"><a href="#cb11-5"></a><span class="kw">limit</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <colgroup>
 <col style="width: 5%">
@@ -968,7 +968,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span id="cb12-11"><a href="#cb12-11"></a><span class="kw">WHERE</span> (<span class="fu">count</span> <span class="op">&gt;</span> <span class="fl">20.0</span>) <span class="kw">AND</span> (dist <span class="op">&lt;</span> <span class="fl">2000.0</span>) <span class="kw">AND</span> (<span class="kw">NOT</span>((delay <span class="kw">IS</span> <span class="kw">NULL</span>)))</span>
 <span id="cb12-12"><a href="#cb12-12"></a><span class="kw">limit</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
 <thead><tr class="header">
 <th style="text-align: left;">tailnum</th>
@@ -1085,7 +1085,6 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <span id="cb20-7"><a href="#cb20-7"></a>              <span class="at">column_labels.text_transform =</span> <span class="st">"capitalize"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">opt_row_striping</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<div>
 <div id="tjuoqguqcw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#tjuoqguqcw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -1526,7 +1525,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
   text-indent: 25px;
 }
 </style>
-<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="header gt_col_headings">
 <th id="tailnum" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">tailnum</th>
 <th id="dist" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">dist</th>
@@ -1588,7 +1587,6 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-</div>
 <p>Why bother with <code>duckdb</code> when we can do the same in <code>R</code>? You might ask. The answer is that <code>duckdb</code> is faster than <code>R</code> for large datasets. As showed above, the query in <code>duckdb</code> is much faster than in <code>R</code> to get the same results.</p>
 <p>We might not notice a significant difference in query execution speed in this example because the dataset is small. However, the discrepancy becomes more apparent with larger datasets. Let’s examine a big dataset to observe the contrast in query execution speed. We’ll use a dataset containing item checkouts from Seattle public libraries, accessible online at <a href="https://data.seattle.gov/Community/Checkouts-by-Title/tmmm-ytt6/about_data">Seattle</a>.</p>
 <p>When attempting to read the dataset with <code>read_csv()</code>, it may encounter considerable processing delays or even fail outright. This is primarily due to the dataset’s substantial size, comprising approximately 41,389,465 rows, spanning 12 columns, and occupying 9.21 GB of storage space. The following code would fail to read such voluminous data.</p>
@@ -1605,7 +1603,7 @@ gtag('config', 'G-X0K8K06WME', { 'anonymize_ip': true});
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">Select</span> <span class="fu">Count</span>(<span class="op">*</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a><span class="kw">From</span> read_csv(<span class="st">'~/GitHub/data/seattle-library-checkouts.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>1 records</caption>
 <thead><tr class="header">
 <th style="text-align: right;">count_star()</th>
@@ -1671,18 +1669,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1714,7 +1701,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1773,7 +1782,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -2311,7 +2320,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb27-239"><a href="#cb27-239"></a><span class="in">```{r}</span></span>
 <span id="cb27-240"><a href="#cb27-240"></a><span class="fu">dbDisconnect</span>(con, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb27-241"><a href="#cb27-241"></a><span class="in">```</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
@@ -2332,30 +2341,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </ul>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":true,"closeEffect":"fade","openEffect":"fade"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+</footer><script>var lightboxQuarto = GLightbox({"openEffect":"fade","selector":".lightbox","loop":true,"descPosition":"bottom","closeEffect":"fade"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 
