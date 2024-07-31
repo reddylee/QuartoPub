@@ -679,7 +679,7 @@ model_cox1 <- Mydata1 |>
 
 tbl1 <- model_cox1|> 
    tbl_regression(exponentiate = T,
-                 conf.int = NULL,
+                 conf.int = F,
                  add_estimate_to_reference_rows = T,
                  label = list(group ~ "Leader Type",
                    GDP_trend ~ "GDP Growth Trend",
@@ -707,7 +707,7 @@ model_cox2 <- Mydata2 |>
   ) 
 tbl2 <- model_cox2|>
   tbl_regression(exponentiate = T,
-                 conf.int = NULL,
+                 conf.int = F,
                  add_estimate_to_reference_rows = T,
                  label = list(group ~ "Leader Type",
                    GDP_trend ~ "GDP Growth Trend",
