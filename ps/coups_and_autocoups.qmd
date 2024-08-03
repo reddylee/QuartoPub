@@ -66,190 +66,253 @@ pacman::p_load(tidyverse, data.table, gt, gtsummary, janitor, scales, zoo, democ
 
 ## Acknowledgements {.unnumbered}
 
-The completion of this thesis has been a significant journey, filled with hard
-work, learning, and moments of joy. Throughout this time, I have received support
-and encouragement from many individuals, without whom this dissertation would not
-have been possible.
+The completion of this thesis marks the end of a significant journey, one filled
+with hard work, continuous learning, and moments of profound joy. This
+dissertation would not have been possible without the support and encouragement
+of numerous individuals to whom I am deeply indebted.
 
-First and foremost, I would like to express my deepest gratitude to my great
-supervisor, Professor Kristian Skrede Gleditsch, for his invaluable guidance,
-unwavering support, and insightful feedback throughout this journey. His
-expertise and encouragement have been instrumental in shaping this dissertation.
-I would also like to extend my heartfelt thanks to the chair of my board panel,
-Professor Han Dorussen, for his continuous support and constructive criticism,
-which have significantly enhanced the quality of my research.
+First and foremost, I extend my heartfelt gratitude to my esteemed supervisor,
+Professor Kristian Skrede Gleditsch. His invaluable guidance, unwavering support,
+and insightful feedback have been instrumental in shaping this research. His
+expertise and encouragement have truly been the cornerstone of this academic
+endeavor.
 
-I am profoundly grateful for the comments, advice, and suggestions from several
-esteemed scholars who have contributed to this work. Dr. Brian J Phillips, Dr.
-Prabin Khadka, and Dr. Winnie Xia, their expertise and thoughtful input have been
-greatly appreciated and have enriched this dissertation.
+I am equally grateful to Professor Han Dorussen, the chair of my board panel, for
+his continuous support and constructive criticism. His thoughtful input has
+significantly enhanced the quality and depth of my research.
 
-Finally, I want to thank my family for their unwavering support and love. To my
-beloved wife, Ji Zhi, who has been my rock throughout this journey, and to my
-dear daughter, Siyan, and son, Sisheng, who have been my source of joy and
-motivation. I am deeply thankful to my father for his enduring support, and to
-the memory of my late mother, whose love and guidance continue to inspire me.
+I would like to acknowledge the vital contributions of my initial co-supervisors,
+Dr. Saurabh Pant and Professor David Siroky. Their instruction and guidance
+during the early stages of my research, prior to their departure from the
+University of Essex, laid a strong foundation for this work.
 
-All errors and faults are my own.
+This dissertation has benefited immensely from the expertise of several esteemed
+scholars in the field. I am particularly indebted to Dr. Brian J Phillips, Dr.
+Prabin Khadka, and Dr. Winnie Xia for their insightful comments, advice, and
+suggestions. Their contributions have undoubtedly enriched this research.
+
+On a personal note, I owe a debt of gratitude to my family for their unwavering
+support and love. To my beloved wife, Ji Zhi, who has been my steadfast pillar of
+strength throughout this journey - your patience and encouragement have been
+immeasurable. To my dear children, Siyan and Sisheng, your joy and curiosity have
+been a constant source of motivation and inspiration.
+
+I am profoundly thankful to my father for his enduring support and belief in my
+abilities. To the cherished memory of my late mother - your love, guidance, and
+the values you instilled in me continue to shape my path and inspire my
+endeavors. And to my three brothers, whose support enabled me to pursue my PhD
+without worries - your contribution to this achievement cannot be overstated.
+
+While many have contributed to the success of this work, any errors or
+shortcomings remain entirely my own.
 
 ## Abstract {.unnumbered}
 
 This dissertation examines the dynamics of irregular power transitions,
-particularly coups and autocoups, and their influence on leader survival. It
-highlights the critical role of power dynamics, shaped by **regime type**, in
-determining coup success rates and attempt frequency. Utilizing a **double probit
-model with sample selection**, the study reveals that expected coup success
-significantly influences attempts, with military regimes facing a heightened
-vulnerability due to their power structure.
+specifically coups and autocoups, and their influence on leader survival. Through
+a rigorous analysis of historical data, case studies, and quantitative modeling,
+this dissertation contributes to the broader understanding of political power
+dynamics and the intricate factors that shape leadership survival in the wake of
+irregular transitions.
+
+The study first highlights the critical role of power dynamics, shaped by regime
+type, in determining coup success rates and attempt frequency. Utilizing a double
+probit model with sample selection, the research reveals that the expected
+chances of coup success significantly influence coup attempts, with military
+regimes facing heightened vulnerability due to their power structure.
 
 While often understudied, autocoups are shown to have a substantial impact on
-democratic trends. This research introduces a refined definition of autocoups
-alongside a novel dataset encompassing events from 1945 to 2022, enabling a more
-robust quantitative analysis.
+democratic backsliding. This research introduces a refined definition of
+autocoups alongside a novel dataset encompassing events from 1945 to 2023,
+enabling more robust quantitative analysis.
 
 Employing survival analysis, the study compares the longevity of leaders who rise
 to power through coups versus autocoups. The findings demonstrate that
-coup-installed leaders face a significantly shorter tenure and higher risk of
+coup-installed leaders face significantly shorter tenures and higher risks of
 removal. This contrasts with autocoup leaders who manipulate the system to extend
-their rule, suggesting the potential for autocoups to incentivize power grabs and
+their rule, suggesting the potential for autocoups to motivate power grabs and
 contribute to democratic backsliding.
 
 This work contributes significantly to the political science literature by:
 
--   Defining key concepts: It establishes a clear definition of autocoups, a
+-   Defining key concepts: Establishing a clear definition of autocoups, a
     previously understudied phenomenon.
 
--   Introducing a novel dataset: This dataset enables researchers to conduct more
+-   Introducing a novel dataset: Enabling researchers to conduct more
     comprehensive quantitative analyses of autocoups.
 
--   Establishing a general framework: The framework provides a comparative
-    approach to studying the dynamics of irregular power transitions and their
-    impact on democratic stability.
+-   Establishing a general framework: Providing a comparative approach to
+    studying both coups and autocoups, enabling analysis in a unified framework
+    for these two highly relevant political events and their potential effects on
+    democratic backsliding.
 
-**keywords:** *Coups, Autocoups, Power transitions, Leadership Survival*
+***Keywords:*** Coups, Autocoups, Power transitions, Leadership survival,
+Democratic backsliding
 
 ## Introduction
 
 ### Research question
 
-Irregular power transitions, marked by a disregard for constitutional procedures,
-are a critical area of study in political science. They not only disrupt
-established rules but often require unconstitutional tactics to secure power.
-Furthermore, these transitions can inspire copycat behaviour among other
-ambitious leaders.
+Irregular power transitions, characterized by a disregard for constitutional
+procedures, represent a critical area of study in political science. These
+transitions not only disrupt established rules but often employ unconstitutional
+tactics to consolidate power post-transition. Moreover, such events can inspire
+emulation among other ambitious leaders, potentially triggering a cascade of
+similar actions across different political contexts.
 
-Despite their central role in political science and the extensive research
-conducted on irregular power transitions, a long-standing question continues to
-intrigue political scientists: ***Why are some leaders ousted before their terms
-expire, while others complete their full terms or even overstay beyond their
-originally mandated limits?*** In other words, why do some leaders survive for
-decades while others last for only years, months, or even days? This dissertation
-focuses on this question and seeks to provide a comprehensive analysis, dedicated
-to understanding how leaders come to power through unconstitutional means and
-what factors determine the duration of a leader's rule following an irregular
-ascent.
+Despite extensive research on irregular power transitions, a fundamental question
+continues to challenge political scientists: ***Why do some leaders face
+premature ousting while others complete their full terms or even extend their
+tenure beyond constitutionally mandated limits?*** This inquiry extends to
+understanding the stark disparities in leadership longevity, where some rulers
+maintain power for decades while others' tenures are measured in years, months,
+or even days.
 
-### Analyses on coups and autocoups in a general framework
+This dissertation focuses on this central question, aiming to provide a
+comprehensive analysis dedicated to understanding how leaders ascend to power
+through unconstitutional means, and what factors determine the duration of a
+leader's rule following an irregular ascent to power.
 
-When discussing irregular power transitions, the concepts that often come to mind
-are irregular entries or exits, such as coups, assassinations, rebellions,
-protests, and foreign interventions. Among these methods, coups hold a prominent
-position due to their frequent occurrence. According to the Archigos dataset
-[@goemans2009], from 1945 to 2015, there were approximately 145 instances of
-irregular leader exits, with coups[^1] accounting for more than half (79
-leaders). The often-cited Global Instances of Coups (GIC)[^2] dataset
-[@powell2011] records even more leaders (245 cases) removed by coups from 1950 to
-2023.
+### Coups and Autocoups: A Comparative Framework for Irregular Power Transitions
 
-Given their prevalence and substantial influence on political systems, coups have
-been extensively studied, particularly since 2000 [@thyne2019]. Consequently, the
-concept of a coup is comparatively clear and widely accepted in academic circles.
-Many scholars, including this study, follow the definition by @powell2011, which
-describes coups as "illegal and overt attempts by the military or other elites
-within the state apparatus to unseat the sitting executive... \[a coup is
-successful\] if the perpetrators seize and hold power for at least seven days"
-(P. 252). Although debates persist, two elements are clear: first, the
-perpetrators are elites within the ruling group, and the victims of coups are
-incumbent executive leaders. Second, the strategy or aim of a coup involves
-completely removing the incumbents, not merely seizing part of their power or
-forcing them to concede on specific policies. Beyond defining coups, several
-datasets have been developed for quantitative analyses, such as the Global
-Instances of Coups [@powell2011], the Cline Centre Coup d’État Project Dataset
-[@peyton2024], and the Colpus Dataset [@chin2021]. These datasets are
-well-developed and frequently used in political science research.
+In the study of irregular power transitions, coups have traditionally dominated
+academic discourse due to their frequency and visibility. According to the
+Archigos dataset [@goemans2009], coups[^1] accounted for more than half of the
+approximately 145 irregular leader exits from 1945 to 2015. The Global Instances
+of Coups (GIC) dataset [@powell2011] records an even higher number, with 245
+coup-related removals from 1950 to 2024.
 
-However, irregular power transitions are not limited to irregular entries and
-exits but should also include irregular "overstays." Using illegal means to
-overthrow an incumbent leader before their term expires is undoubtedly an
-irregular power transition. Similarly, an incumbent using illegitimate means to
-extend their term beyond term limits is also an irregular power transition.
+The prevalence of coups has led to a well-established definition and extensive
+research, particularly since 2000 [@thyne2019]. Most scholars, including this
+study, adhere to Powell and @powell2011 definition: "illegal and overt attempts
+by the military or other elites within the state apparatus to unseat the sitting
+executive... \[a coup is successful\] if the perpetrators seize and hold power
+for at least seven days" (p. 252). This definition emphasizes two key elements:
+the involvement of internal elites and the complete removal of incumbents.
 
-Although academic attention to irregular retention of power has increased since
-the 1990s, especially after Peru’s President Alberto Fujimori's self-coup in
-1992, it remains comparatively understudied and has several shortcomings. First,
-there is no universally accepted terminology for this "overstaying in power" type
-of irregular power transition, unlike the clear term "coup." Consequently,
-various terms such as self-coup, autogolpe, and executive coup are used by
-different scholars. This dissertation will use 'autocoup' to refer to this type
-of irregular power transition, which will be thoroughly discussed in Chapter 3.
-Second, there is no consensus on the definition of an autocoup. Existing
-definitions remain vague, often conflating power expansions and power
-extensions[^3]. For example, @cameron1998a defines an autogolpe as a temporary
-suspension of the constitution and dissolution of Congress by the executive, who
-then rules by decree. This definition focuses on power expansion instead of power
-extension, leading to conceptual confusion and misalignment with the definition
-of a classic coup. Third, a consensus autocoup dataset is lacking. While several
-related datasets exist, as discussed by @baturo2022 in coding their Incumbent
-Takeover dataset, the terminologies, definitions, and coverage years vary,
-lacking wide acknowledgement and extensive academic exploration. In summary,
-autocoup has not been analysed in a comparative manner connected with coups.
+However, another form of irregular power transition has been largely overlooked
+in power transition studies: leaders who refuse to relinquish power and extend
+their mandated terms. While the concept of "irregular retention of power" has
+been discussed in various literatures from different perspectives, it has not
+been systematically analysed as a form of irregular power transition. This
+oversight may stem from the technicality that no apparent transfer of power
+occurs in these situations. Nevertheless, this phenomenon, although distinct from
+traditional coups, constitutes an irregular power transition in that it subverts
+the expected and legally mandated change in leadership.
 
-Analysing coups and autocoups separately is less problematic. However, from a
-comprehensive framework perspective on irregular power transitions and leader
-survival, coups and autocoups should be, and can be, analysed within the same
-framework. Both coup and autocoup significantly influence democratic backsliding
-and are the most frequent means of irregular power transition. Furthermore, as
-both are called "coups," classic coups and autocoups are very similar since a
-coup is launched to replace the current leader, while an autocoup is staged to
-replace the future leader.
+Compared to tranditional coups, the study of "irregular retention of power" faces
+several challenges:
+
+-   **Terminology**: Unlike the universally accepted term "coup," various terms
+    (e.g., self-coup, autogolpe, executive coup, incumbent takeover) are used to
+    describe this phenomenon.
+
+-   **Definition**: Existing definitions often conflate power expansion and power
+    extension[^2]. For instance, @cameron1998a defines an autogolpe primarily in
+    terms of power expansion, which is not align with the definition of coup.
+
+-   **Data**: A consensus dataset for autocoups is lacking, with existing
+    datasets varying in terminology, definitions, and coverage years @baturo2022.
+
+To address this gap in the literature and provide a framework for analysis, I
+propose the term "autocoup" to describe this type of transition. This concept
+will be extensively discussed and defined in Chapter 3, providing a basis for
+integrating these events into the broader study of irregular power transitions
+and their impact on political systems and leader longevity.
+
+Analysing coups and autocoups within a unified framework is crucial for a
+comprehensive understanding of irregular power transitions and leader survival.
+Both phenomena significantly influence democratic backsliding and represent the
+most frequent means of irregular power transition. Moreover, their similar
+nomenclature reflects a fundamental similarity: while a coup aims to replace the
+current leader, an autocoup seeks to prevent the succession of a future leader.
+This comparative approach will enable a more nuanced analysis of irregular power
+transitions, contributing to our understanding of political stability, democratic
+erosion, and leadership longevity in various regime types.
 
 ### Academic Contributions
 
-This study addresses a critical gap in the literature by offering a comprehensive
-framework for analysing both coups and autocoups, which are the most common forms
-of irregular power transitions. While existing research often examines these
-topics separately with varying terminologies, definitions, methods, and datasets,
-this dissertation integrates these elements to provide a unified perspective on
-irregular power transitions and leader survival.
+This study addresses a critical gap in the literature by offering a unified
+framework for analysing both coups and autocoups. My contributions are threefold:
 
-Our contributions are threefold:
+-   **Emphasis on Power Dynamics and Regime Types:**
+    I highlight the significant role of power dynamics, particularly the
+    influence of regime types, in determining the success and frequency of coup
+    attempts. The analysis underscores how the expected chances of coup success
+    motivate such attempts, with military regimes being notably susceptible. This
+    approach provides a more nuanced understanding of the structural factors that
+    shape irregular power transitions.
 
--   **Emphasis on power dynamics and regime types**: We highlight the significant
-    role of power dynamics, particularly the influence of regime types, in
-    determining the success and frequency of coup attempts. Our analysis
-    underscores how the expected chances of coup success motivate such attempts,
-    with military regimes being notably susceptible.
+-   **Refined Definition and Novel Dataset for Autocoups:**
+    I introduce a refined definition of autocoups and develop a novel dataset
+    covering events from 1945 to 2024. This contribution fills a significant gap
+    in the existing literature and enables a comparative analysis with classic
+    coups. By providing clearer insights into the nature and impact of autocoups
+    on political systems, I enhance the scholarly understanding of this
+    understudied phenomenon. The autocoup dataset offers a valuable resource for
+    future research in this area.
 
--   **Refined definition and novel dataset for autocoups:** We introduce a
-    refined definition of autocoups and develop a novel dataset covering events
-    from 1945 to 2022. This enables a comparative analysis with classic coups,
-    providing clearer insights into the nature and impact of autocoups on
-    political systems.
+-   **Survival Analysis of Leaders from Different Entry Modes:**
+    By applying survival analysis to existing coup data and the new autocoup
+    dataset, I demonstrate how different modes of entry into power significantly
+    affect leader survival. The findings reveal that leaders who come to power
+    through coups typically have shorter tenures and face higher removal risks
+    compared to those who extend their rule through autocoups. This comparative
+    analysis provides a more comprehensive picture of leadership longevity in the
+    context of irregular power transitions.
 
--   **Survival analysis of leaders from different entry modes:** By applying
-    survival analysis to existing coup data and our new autocoup dataset, we
-    demonstrate how different modes of entry into power significantly affect
-    leader survival. Our findings reveal that leaders who come to power through
-    coups typically have shorter tenures and face higher removal risks compared
-    to those who extend their rule through autocoups.
+These contributions collectively advance the field by providing a more holistic
+understanding of irregular power transitions, offering new tools and data for
+quantitative analysis of autocoups, and demonstrating the interconnectedness of
+power acquisition methods and leadership survival.
 
-Our analysis of irregular power transitions is particularly relevant to
-understanding democratic backsliding. These transitions violate democratic norms
-and disrupt the path towards stable democracy. Leaders who gain power through
-irregular means often employ undemocratic tactics, such as suppressing
-opposition, to consolidate their illegitimate hold on power. This creates a
-vicious cycle where the erosion of democratic institutions is both a cause and
-consequence of efforts to maintain power.
+This work lays the foundation for future research on the dynamics of political
+power, regime stability, and democratic backsliding, offering both theoretical
+insights and practical implications for policy-makers and scholars alike.
+
+### Policy Implications
+
+The examination of irregular power transitions provides a crucial perspective on
+the interrelated phenomena of democratic backsliding, breakdown, and autocratic
+intensification. This research underscores the significance of irregular power
+transitions as a key factor in democratic erosion within regimes.
+
+Irregular power transitions, predominantly manifesting as coups or auto-coups,
+violate democratic or constitutional norms and disrupt the trajectory towards
+stable democracies or democratization from autocracies. Leaders who ascend to
+power through these irregular means often undermine constitutional norms to seize
+or overstay in power. Subsequently they employ illegal methods to suppress
+political opponents, which create a vicious cycle of eroding democratic
+institutions.
+
+Freedom House reports an 18th consecutive year of global freedom decline in 2023
+[@freedomhouse2024freedom]. While complete regression to autocracy remains rare,
+the average global democracy level has regressed to pre-2000 levels. Notably,
+democratic backsliding often occurs within regimes, democracies are becoming less
+liberal, and autocracies are becoming less competitive [@mechkova2017].
+
+The findings of this study provide a logical explanation for these phenomena,
+particularly given that autocoups have become more prevalent than traditional
+coups since 2000 [@bermeo2016]. Importantly, autocoups typically do not result in
+immediate regime change, contributing to the observed pattern of within-regime
+democratic erosion.
+
+Moreover, this study offers several explanations for the increasing prevalence of
+autocoups over classic coups in the past two decades:
+
+-   **Higher Success Rate**: Autocoups have a significantly higher probability of
+    success compared to traditional coups.
+
+-   **Mitigated Consequences**: Even when unsuccessful, the repercussions of
+    autocoups are generally less severe than those of failed traditional coups.
+
+-   **Extended Tenure**: Successful autocoup leaders tend to maintain power for
+    substantially longer periods than leaders who enter through traditional
+    coups.
+
+These factors collectively contribute to the growing preference for autocoups as
+a means of irregular power transition, with significant implications for
+democratic stability and governance worldwide.
 
 ### Overview of the thesis
 
@@ -596,7 +659,7 @@ $\mathbf B$ (the value of a successful coup) and $\mathbf C$ (the cost of
 failure) is difficult. The loss of life, freedom, or loved ones after a failed
 coup, as well as the value of assuming leadership after a successful coup, are
 intangible concepts that defy precise measurement. As evidenced by the 1979 coup
-in Ghana[^4], the fate of the coup leader(s) hangs in the balance; they are high
+in Ghana[^3], the fate of the coup leader(s) hangs in the balance; they are high
 likely to be killed if the coup fails, or to execute others if the coup succeeds.
 
 However, these challenges do not render the framework useless. Firstly, its core
@@ -659,7 +722,7 @@ the military as a monolithic entity ignores its complex internal dynamics
 fostering suspicion, competition, and vigilance rather than unity. The
 clandestine nature of coups necessitates small, secretive groups. Plotters are
 unsure of other factions' stances and fear their opposition or intervention, as
-exemplified by the swiftly thwarted 2021 Niger coup[^5]. The success of a coup
+exemplified by the swiftly thwarted 2021 Niger coup[^4]. The success of a coup
 hinges heavily on other military factions' reactions [@geddes1999].
 
 Moreover, military force is not the only factor shaping the balance of power.
@@ -1383,6 +1446,36 @@ keywords: *Coups, Autocoups, Political Leadership*
 \newpage
 
 ### Introduction
+
+"Definitions of power expansion and power extension in political science can
+often be ambiguous or overlapping. To ensure clarity in this study, we propose
+distinct definitions for these concepts:
+
+-   Power Expansion: This refers to the process by which an incumbent leader
+    acquires additional authority or control over state apparatuses beyond their
+    original mandate. This may involve centralizing power, reducing checks and
+    balances, or assuming roles typically held by other branches of government.
+
+-   Power Extension: This concept specifically relates to the temporal aspect of
+    an incumbent's rule. It describes situations where a leader prolongs their
+    tenure beyond the originally mandated term in office, often through
+    constitutional amendments, cancellation of elections, or other means of
+    circumventing term limits.
+
+By distinguishing between these two concepts, we aim to provide a more nuanced
+analysis of how leaders consolidate and maintain their positions. While power
+expansion and extension can often occur simultaneously, differentiating between
+them allows for a more precise examination of the strategies employed by leaders
+to entrench their rule.
+
+This distinction is crucial for our study as it enables us to: 1. Analyze the
+different mechanisms leaders use to solidify their power 2. Examine the potential
+consequences of each type of power consolidation 3. Explore the relationship
+between power expansion and extension in various political contexts
+
+Understanding these nuances is essential for comprehending the complex dynamics
+of political power and leadership longevity in both democratic and authoritarian
+systems."
 
 The study of irregular power transitions, encompassing both irregular entries and
 exits from office, has long been a central topic in political science. However,
@@ -2152,7 +2245,7 @@ is lagged by one year.
     scores at the entry year for each respective country. These scores range from
     -10 (fully autocratic) to +10 (fully democratic), capturing the extent of
     democratic versus autocratic governance. This dataset is sourced from the
-    Centre for Systemic Peace (CSP)[^6] and provides an essential measure of
+    Centre for Systemic Peace (CSP)[^5] and provides an essential measure of
     political regime type, which might influence the political stability and
     power transitions.
 
@@ -2646,13 +2739,13 @@ their rise to power. After a coup, three major uncertainties arise:
 -   **Duration of Rule**: The duration of the coup leader's rule is uncertain.
     Leaders like Gamal Abdel Nasser in Egypt (1954 coup), Muammar Gaddafi in
     Libya (1969 coup), and Idi Amin in Uganda (1971 coup) aimed to retain power
-    for life \[@geddes2018\], but their ability to do so was uncertain. Others
+    for life [@geddes2018], but their ability to do so was uncertain. Others
     promise to transfer power to civilian authorities, but the timing and
     fulfilment of these promises are unclear. For example, Myanmar's military
     junta (2021 coup) has repeatedly extended a state of emergency, clinging to
-    power beyond the promised time-frame[^7]. Conversely, after the 2010 coup in
+    power beyond the promised time-frame[^6]. Conversely, after the 2010 coup in
     Niger, the military honoured their promise by restoring civilian rule within
-    the same year \[@ginsburg2019\].
+    the same year [@ginsburg2019].
 
 -   **Succession**: The successors of coup leaders are uncertain. Some may
     designate successors from their inner circle, including family members, while
@@ -2745,8 +2838,8 @@ stronger initial position, are better able to consolidate power and attract
 supporters. This advantage can be self-reinforcing, as a strong power base
 discourages challenges and fosters loyalty. This dynamic is evident in cases like
 China (2018), where the National People's Congress granted Xi Jinping the
-potential to rule for life[^8], and Russia (2020), where constitutional changes
-allow Putin to potentially remain in power until 2036[^9].
+potential to rule for life[^7], and Russia (2020), where constitutional changes
+allow Putin to potentially remain in power until 2036[^8].
 
 These factors contribute to a shorter expected tenure for coup-entry leaders
 compared to the relatively longer tenures of autocoup leaders. The average
@@ -2761,19 +2854,18 @@ the following hypothesis:
 
 #### Methodology: Survival analysis
 
-To test the hypothesis, I will employ two Cox models to analyse the survival
+To test the hypothesis, I will employ two Cox models to analyze the survival
 tenures of coup-entry leaders and autocoup leaders. Unlike the Kaplan-Meier
-model, the Cox model enables the estimation of the impacts of multiple factors.
-Although it does not directly estimate the duration of tenure in office, it
-evaluates the hazard rate associated with being ousted from power. Essentially,
-this represents different facets of the same phenomenon: as a leader's cumulative
-hazard of being ousted increases, their probability of survival in office
-decreases.
+model, the Cox model allows for the estimation of the impacts of multiple
+factors. Although it does not directly estimate the duration of tenure in office,
+it evaluates the hazard rate associated with being ousted from power.
+Essentially, this represents different facets of the same phenomenon: as a
+leader's cumulative hazard of being ousted increases, their probability of
+survival in office decreases.
 
-The first model will utilize the Cox proportional hazards model (referred to as
-the Cox PH model), where I will only use the variables present at the entry year,
-without considering the changes in these variables over the leaders' survival
-times.
+The first model will utilize the Cox proportional hazards model (Cox PH model),
+using only the variables present at the entry year, without considering changes
+in these variables over the leaders' survival times.
 
 However, apart from the primary variable of interest in this research—the leader
 type—control variables such as economic performance, Polity5 scores, and
@@ -2788,45 +2880,49 @@ for these variations by using the time-dependent Cox model.
     expiration date of their original legitimate term. For example, Xi Jinping
     assumed power in 2013 and removed term limits in 2018. His original
     legitimate tenure was set to end in 2023, so his survival time begins in
-    2023, not 2013 or 2018, marking the start of his post-autocoup tenure. The
-    survival time concludes on the day the leader exits office, applicable to
-    both coup-entry and autocoup leaders.
+    2023, marking the start of his post-autocoup tenure. The survival time
+    concludes on the day the leader exits office, applicable to both coup-entry
+    and autocoup leaders.
 
 -   **End point status:** This variable indicates the manner in which the
     leader's tenure concluded, categorized as follows:
 
     -   **0 = Censored:** This status is assigned to leaders who leave office
-        through means other than being ousted. This includes leaders who appoint
-        their successors, opt for democratic transitions, or leave office due to
-        health issues or natural death.
+        through regular means other than being ousted. This includes leaders
+        transferring power to their designated successors, leaving office as
+        their terms expire, losing in general elections, voluntarily leaving
+        office due to health issues, or dying of natural causes.
 
-    -   **1 = Ousted:** This status is assigned to leaders who are forced out of
-        office. This includes cases where leaders "voluntarily" resign under
-        pressure, reflecting a de facto ousting by force.
+    -   **1 = Ousted:** This status is assigned to leaders who are forced to
+        leave office. This includes leaders resigning under pressure, being
+        ousted by coups or other forces, or being assassinated.
 
 #### Key Independent variable: Leader type
 
 This variable categorizes leaders into two distinct groups:
 
--   Group A = Autocoup Leader: Leaders who extend their tenure through autocoups.
--   Group B = Coup-Entry Leader: Leaders who assume power through coups.This
-    variable is the primary independent variable of interest, serving as the
-    basis for comparing the survival time between these two types of leaders.
+-   **Group A = Autocoup Leader**: Leaders who extend their tenure through
+    autocoups.
+-   **Group B = Coup-Entry Leader**: Leaders who assume power through coups.
 
-The data for both dependent and independent variables are sourced from @zhu2024
-and @goemans2009.
+This variable is the primary independent variable of interest, serving as the
+basis for comparing the survival time between these two types of leaders.
+
+The data for both dependent and independent variables are sourced from the
+autocoup dataset introduced in this study, Archigos, and PLAD.
 
 #### Control variables
 
 -   **Economic Performance:** This variable is measured using two indicators:
-    economic level and economic growth rate.
+    economic level and economic growth trend.
 
     -   **Economic Level:** Represented by GDP per capita. This measure provides
         an indication of the overall economic health and standard of living in a
         country.
 
-    -   **Economic Growth Trend:** Assessed using the current-trend (CT) ratio,
-        developed by @krishnarajan2019, which is consistent with @eq-eq6.
+    -   **Economic Growth Trend:** Assessed using the current-trend ratio,
+        developed by @krishnarajan2019, which is consistent with @eq-eq6 in
+        chapters 2 and 3.
 
 The GDP per capita data, expressed in constant 2017 international dollars (PPP)
 and measured in units of \$10,000, is sourced from the V-Dem dataset by
@@ -2836,10 +2932,9 @@ is lagged by one year.
 -   **Political Stability:** This variable captures overall regime stability by
     including a violence index that encompasses all types of internal and
     interstate wars and violence. The data for this index is sourced from the
-    Major Episodes of Political Violence dataset by Marshall. This index provides
-    a comprehensive measure of the level of violence and conflict within a
-    country, which can significantly impact leadership survival.
-    [@marshall2005current].
+    Major Episodes of Political Violence dataset by @marshall2005current. This
+    index provides a comprehensive measure of the level of violence and conflict
+    within a country, which can significantly impact leadership survival.
 
 -   **Degree of Democracy:** The level of democracy is gauged using Polity 5
     scores at the entry year for each respective country. These scores range from
@@ -2862,14 +2957,15 @@ is lagged by one year.
     correlations with leadership survival. Older leaders may have different
     experiences, networks, and health considerations that could influence their
     ability to maintain power. This data is sourced from the leaders dataset by
-    [@goemans2009].
+    Archigos and PLAD.
 
 ### Results and discussion
 
 #### Model results
 
-Using the @survival package in R, we present the regression results for both the
-Cox PH model and the Time-dependent Cox model in Table @tbl-cox.
+Using the `survival` package in R [@survival], I present the regression results
+for both the Cox Proportional Hazards (Cox PH) model and the time-dependent Cox
+model in @tbl-cox.
 
 ```{r}
 #| label: model
@@ -2900,7 +2996,11 @@ tbl1 <- model_cox1|>
                    age ~ "Age")) |> 
   add_n(location = "level") |> 
   add_nevent(location = "level") |> 
-  add_significance_stars(hide_p = T, hide_se = F, hide_ci = T) |> 
+  add_significance_stars(hide_p = T,
+                         hide_se = F, 
+                         hide_ci = T,
+                         thresholds = c(0.01, 0.05, 0.1),
+                         ) |> 
   bold_p(t = 0.05) |> 
   bold_labels() 
 
@@ -2929,7 +3029,11 @@ tbl2 <- model_cox2|>
                    age ~ "Age")) |> 
   add_n(location = "level") |> 
   add_nevent(location = "level") |> 
-  add_significance_stars(hide_p = T, hide_se = F, hide_ci = T) |> 
+  add_significance_stars(hide_p = T,
+                         hide_se = F, 
+                         hide_ci = T,
+                         thresholds = c(0.01, 0.05, 0.1),
+                         ) |> 
   bold_p(t = 0.05) |> 
   bold_labels() 
 ```
@@ -2944,32 +3048,40 @@ tbl_merge(list(tbl1, tbl2),
   as_gt()
 ```
 
-Generally speaking, both the Cox PH model and time-dependent Cox model analyses
-revealed a statistically significant association between leadership type and the
-hazard of removal from power. Coup-entry leaders were found to have a hazard
-ratio of 2.42 (in time-dependent Cox model) compared to autocoup leaders
-(reference group), assuming all other variables in the model are held constant.
-The analysis suggests that coup-entry leaders face a significantly greater risk
-of removal from power compared to autocoup leaders. At any given time during
-their tenure, coup-entry leaders are 2.42 times more likely to be ousted from
-power compared to autocoup leaders, all else being equal in the model.
+Both the Cox PH model and the time-dependent Cox model analyses revealed a
+statistically significant association between leadership type and the hazard of
+removal from power. Since time-dependent Cox model use the control variables
+which change over time, I interpret the main findings based on time-dependent
+model.
 
-All other control variables in Cox PH model are not statistically significant. In
-time-dependent Cox model, however, GDP per capita and the log of population are
-both statistically significant at 5% level.
+Coup-entry leaders were found to have a hazard ratio of 2.23 in the
+time-dependent model compared to autocoup leaders (reference group), assuming all
+other variables in the model are held constant. This suggests that coup-entry
+leaders face a significantly greater risk of removal from power compared to
+autocoup leaders. At any given time during their tenure, coup-entry leaders are
+2.23 times more likely to be ousted from power compared to autocoup leaders, all
+else being equal in the model.
 
--   **GDP per capita:** The hazard ratio of 0.94 indicates that for each unit
-    increase in GDP per capita (measured in constant 2017 international dollars,
-    PPP, in units of \$10,000), the hazard (or risk) of being ousted at any given
-    time is reduced by 6%, assuming all other variables in the model are held
-    constant. Similarly, it indicates that for each unit increase in the log of
-    population, the hazard (or risk) of being oustedat any given time is reduced
-    by 14%, assuming all other variables in the model are held constant.
+The control variables perform differently in the two models. Economic level (GDP
+per capita) exhibits statistically significant effects in both models. In the
+time-dependent model, the hazard ratio of 0.95 indicates that for each unit
+increase in GDP per capita (measured in units of \$10,000), the hazard (or risk)
+of being ousted at any given time is reduced by 5%, assuming all other variables
+in the model are held constant.
 
--   **Population:** The hazard ratio of 0.86 indicates that for each unit
-    increase in the logarithm of the population (one percent increase of
-    population), the hazard (or risk) of being ousted at any given time decreases
-    by 14%, assuming all other variables in the model are held constant.
+GDP growth trend demonstrates a more substantial effect in reducing the risk of
+coups. Specifically, a 1 percentage point higher economic growth trend is
+associated with an 80% reduction in the risk of being ousted, although this
+effect is only statistically significant at the 10% level. This suggests a
+possible trend where positive economic performance might mitigate the risk of
+removal from power, but the evidence is not robust enough to confirm this
+conclusively.
+
+Political stability, as measured by the violence index, shows that a 1-point
+increase in the index correlates with an 11% higher risk of being ousted.
+However, this effect is also only statistically significant at the 10% level,
+indicating a weaker but potentially important relationship between increased
+violence and the risk of removal from office.
 
 #### Discussion
 
@@ -3022,15 +3134,15 @@ model_cox2 |>
 ```
 
 The survival curves depicted in @fig-coxSurv illustrate the survival rates for
-leaders of both types. Both the Cox Proportional Hazards (Cox PH) model and the
-time-dependent model produce similar plots. Notably, the survival curve for
-coup-entry leaders exhibits a significantly lower trajectory compared to that of
-autocoup leaders. The steeper drop at the early stage for coup-entry leaders
-indicates they are more likely to be ousted shortly after assuming power.
-Additionally, the survival curve for coup-entry leaders crosses the median
-survival line much earlier than that of autocoup leaders. This disparity suggests
-that autocoup leaders tend to remain in power for longer durations than their
-coup-entry counterparts.
+leaders of both types. Both the Cox PH model and the time-dependent Cox model
+produce similar plots. Notably, the survival curve for coup-entry leaders
+exhibits a significantly lower trajectory compared to that of autocoup leaders.
+The steeper drop at the early stage for coup-entry leaders indicates they are
+more likely to be ousted shortly after assuming power. Additionally, the survival
+curve for coup-entry leaders crosses the median survival line much earlier (about
+3,000 days) than that of autocoup leaders (about 8,500 days). This disparity
+suggests that autocoup leaders tend to remain in power for longer durations than
+their coup-entry counterparts.
 
 ```{r}
 #| label: fig-coxHR
@@ -3086,47 +3198,54 @@ coxplottidy |>
              color = "skyblue") +
   labs(x = "Hazard ratios", y = "", title = "") +
   theme_bw() 
+
+summary(model_cox2)
 ```
 
 @fig-coxHR displays the hazard ratios and corresponding 95% confidence intervals
 for the variables incorporated in the Cox model. Both the Cox Proportional
-Hazards (PH) model and the time-dependent model yield nearly identical plots. The
-hazard ratio for coup-entry leaders compared to autocoup leaders is significantly
-greater than 1 and statistically significant, indicating that coup-entry leaders
-are at a higher risk of being ousted. Most other variables have hazard ratios
-close to 1, suggesting that a one-unit increase in these variables does not
-significantly affect the risk of being ousted. Although the hazard ratio for GDP
-growth trend is considerably less than 1, it is not statistically significant at
-the 5% level. However, it is statistically significant at the 10% level,
-suggesting that better economic performance may help to consolidate the rule of
-the incumbents to some extent.
+Hazards (PH) model and the time-dependent model produce similar plots,
+reinforcing the robustness of the findings. Key points to note include:
 
-@fig-coxHR presents the hazard ratios (HRs) and their corresponding 95%
-confidence intervals (CIs) for the variables included in the Cox proportional
-hazards model (Cox PH) and the time-dependent model. The HR for coup-entry
-leaders compared to autocoup leaders is significantly greater than 1, indicating
-a substantially higher risk of removal from power for coup-entry leaders. Most
-other variables have HRs close to 1, suggesting that a one-unit increase in those
-variables has minimal impact on the risk of removal.
+-   The closer the hazard ratio (represented by the dots) is to 1, the less
+    impact the variable has on the risk of being ousted. A hazard ratio of 1
+    indicates no effect.
 
-The HR for GDP growth trend is noteworthy. While it is considerably less than 1,
-it is statistically significant at the 10% level (0.10 \> p-value \> 0.05). This
-suggests a possible trend where positive economic performance might reduce the
-risk of removal from power for the incumbents, although the evidence is not
-conclusive.
+-   The whiskers extending from the dots represent the 95% confidence intervals.
+    If these whiskers cross the vertical blue line at 1, it indicates that the
+    variable is not statistically significant at the 5% level.
+
+<!-- -->
+
+-   The hazard ratio for coup-entry leaders is significantly greater than 1 and
+    statistically significant at the 5% level. This indicates that coup-entry
+    leaders face a substantially higher risk of being ousted compared to autocoup
+    leaders.
+
+-   Most other variables have hazard ratios close to 1, suggesting that a
+    one-unit increase in these variables does not significantly affect the risk
+    of being ousted.
+
+<!-- -->
+
+-   Although the hazard ratio for GDP growth trend is considerably less than 1 in
+    the time-dependent model, indicating a potential protective effect, it is not
+    statistically significant at the 5% level. However, it is statistically
+    significant at the 10% level, suggesting that better economic performance may
+    help to consolidate the rule of the incumbents to some extent, albeit the
+    evidence is not as strong.
 
 #### Assessing the Proportional Hazards Assumption
 
-The validity of the model assumptions significantly influences our confidence in
-the results. To assess the proportional hazards assumption of the Cox model, we
-use the chi-square test based on Schoenfeld residuals to determine whether the
-covariate effects remain constant (proportional) over time. Although the Cox PH
-model violates the proportional hazards assumption, our primary analysis relies
-on the time-dependent Cox model, which does not show strong evidence of violating
-the proportional hazards assumption for any covariate. The global p-value of
-0.382 is much greater than the 5% significance level, indicating that the
-proportional hazards assumption is reasonably met for the time-dependent Cox
-model.
+Assessing the proportional hazards assumption is crucial for the validity of the
+Cox model results. To evaluate this, we used the chi-square test based on
+Schoenfeld residuals to determine whether the covariate effects remain constant
+(proportional) over time. Although the Cox PH model violates the proportional
+hazards assumption, our primary analysis relies on the time-dependent Cox model,
+which does not show strong evidence of violating the proportional hazards
+assumption for any covariate. The global p-value of 0.416 is much greater than
+the 5% significance level, indicating that the proportional hazards assumption is
+reasonably met for the time-dependent Cox model.
 
 ```{r}
 #| label: robust_test
@@ -3134,20 +3253,20 @@ model.
 test <- cox.zph(model_cox2)
 ```
 
-#### Conclusion
+### Conclusion
 
-This study examined the survival durations of political leaders who come to power
-through irregular means, specifically coups and autocoups. We hypothesized that
-the mode of accession significantly influences leader tenure. Employing survival
-analysis techniques, including the Cox proportional hazards model and a
-time-dependent Cox model, we found strong evidence that autocoup leaders
-generally enjoy longer tenures than coup-entry leaders.
+This chapter examined the survival durations of political leaders who come to
+power through irregular means, specifically coups and autocoups. I hypothesized
+that the mode of accession significantly influences leader tenure. Employing
+survival analysis techniques, including the Cox proportional hazards model and a
+time-dependent Cox model, I found strong evidence that autocoup leaders generally
+enjoy longer tenures than coup-entry leaders.
 
-Our findings revealed a significant difference in average tenure, with
-post-autocoup leaders averaging approximately 10.8 years in power compared to 5.4
+The findings revealed a significant difference in average tenure, with
+post-autocoup leaders averaging approximately 11 years in power compared to 5.6
 years for coup-entry leaders. The time-dependent Cox model further indicated that
-coup-entry leaders are 2.42 times more likely to be ousted from power at any
-given time compared to autocoup leaders, all else being equal.
+coup-entry leaders are 2.23imes more likely to be ousted from power at any given
+time compared to autocoup leaders, all else being equal.
 
 These results highlight the importance of understanding the phenomenon of
 autocoups, where leaders extend their rule by manipulating legal frameworks. Due
@@ -3171,6 +3290,11 @@ recognition for the term "autocoup," leading to more accurate and comprehensive
 data collection efforts. Expanding the dataset to include more cases and
 integrating it with data on other irregular leadership transitions could yield a
 more holistic understanding of political survival in such contexts.
+
+Overall, this chapter underscores the need for more nuanced approaches to
+studying political tenure and the mechanisms of irregular power retention,
+contributing valuable insights into the dynamics of political stability and the
+risks associated with different forms of non-democratic leadership succession.
 
 ## Conclusion
 
@@ -3200,67 +3324,6 @@ differences in leader longevity between those who come to power through coups an
 those who extend their rule through autocoups. The results indicate that
 coup-installed leaders face a significantly higher risk of removal compared to
 autocoup leaders who manipulate the system to extend their rule.
-
-### Policy Implications
-
-The findings of this study offer valuable insights for policy-makers concerned
-with promoting and protecting global democracy, which has faced increasing
-challenges despite a general post-WWII trend towards democratization. Notably,
-the "third wave" of democratization [@huntington1991democratization] witnessed a
-surge in democratic transitions in the late 20th century. Since the Cold War's
-end, democratic nations have outnumbered non-democratic ones (@fig-democracy)
-with the gap widening.
-
-```{r}
-#| label: fig-democracy
-#| fig-cap: Comparison of the number of democratic and non-democratic countries (1945-2020)
-#| fig-width: 7
-#| fig-height: 5
-#| fig-align: center
-#| echo: !expr format == "html"
-REIGN |>
-  filter(year > 1945 & year < 2021) |> 
-  mutate(democracy = case_when(
-    gwf_regimetype %in% c("parliamentary", "presidential") ~ "Democracy",
-    .default = "Non-democracy")) |> 
-  summarise(Count = n(), 
-            .by = c(year, democracy)) |> 
-  #view()
-  ggplot(aes(year, Count, color = democracy)) +
-  geom_point() +
-  labs(color = 'Regime type',
-       x = "Years: 1945 ~ 2020",
-       y = "No. of Countries") +
-  theme(legend.position = "top") +
-  annotate("text",
-    label = "Data source: REIGN (Regime data)",
-    x = 2010,
-    y = 30,
-    fontface = "italic",
-    size = 3
-    )
-```
-
-However, a "democratic recession" has emerged in recent years [@diamond2008].
-Freedom House reports an 18th consecutive year of global freedom decline in 2023
-[@freedomhouse2024freedom]. While few countries have completely regressed to
-autocracy, the average global democracy level has fallen back to pre-2000 levels.
-Notably, democratic backsliding often occurs within regimes, with democracies
-becoming less liberal and autocracies becoming less competitive [@mechkova2017].
-
-This research highlights irregular power transitions as a significant factor in
-democratic backsliding within regimes. These transitions, often coups or
-autocoups, violate democratic norms and disrupt the path towards stable
-democracies. Leaders who gain power through irregular means often resort to
-undemocratic tactics to maintain control, creating a vicious cycle of eroding
-democratic institutions.
-
-Our findings suggest that the shorter lifespans and potentially severe
-consequences associated with coups may deter potential coup leaders. Conversely,
-autocoups appear to be a more tempting option for power-hungry leaders due to
-their higher success rates, seemingly moderate consequences, and extended leader
-tenure after the autocoup. This trend may explain the decline in classic coups
-since the 1990s alongside the rise of autocoups [@bermeo2016].
 
 ### Limitations and directions for future research
 
@@ -3319,37 +3382,33 @@ cat("\\newpage
     Support" and "Removed by Other Government Actors, without Foreign Support" in
     the variable `exitcode` are classified as coups.
 
-[^2]: According to the Archigos dataset, "Removed by Military, without Foreign
+[^2]: The definitions and concepts of power expansion and power extension can
+    often be ambiguous. In this study, we define power expansion as an incumbent
+    acquiring additional authority from other branches or apparatuses of the
+    state. Conversely, power extension refers to an incumbent prolonging their
+    tenure beyond the originally mandated term in office.
+
+[^3]: According to the Archigos dataset, "Removed by Military, without Foreign
     Support" and "Removed by Other Government Actors, without Foreign Support" in
     the variable `exitcode` are classified as coups.
 
-[^3]: The definitions and concepts of power expansion and power extension can be
+[^4]: The definitions and concepts of power expansion and power extension can be
     vague. In this study, we define power expansion as an incumbent acquiring
     additional authority from other state apparatuses, whereas power extension
     refers to an incumbent prolonging their tenure beyond the designated term in
     office.
 
-[^4]: According to the Archigos dataset, "Removed by Military, without Foreign
-    Support" and "Removed by Other Government Actors, without Foreign Support" in
-    the variable `exitcode` are classified as coups.
-
-[^5]: The definitions and concepts of power expansion and power extension can be
-    vague. In this study, we define power expansion as an incumbent acquiring
-    additional authority from other state apparatuses, whereas power extension
-    refers to an incumbent prolonging their tenure beyond the designated term in
-    office.
-
-[^6]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on
+[^5]: Center for Systemic Peace: <https://www.systemicpeace.org>. Accessed on
     `r Sys.Date()`.
 
-[^7]: https://thediplomat.com/2023/08/myanmar-junta-extends-state-of-emergency-for-fourth-time/:
+[^6]: https://thediplomat.com/2023/08/myanmar-junta-extends-state-of-emergency-for-fourth-time/:
     Myanmar\
     Junta Extends State of Emergency for Fourth Time. Accessed on `r Sys.Date()`.
 
-[^8]: https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to
+[^7]: https://www.bbc.co.uk/news/world-asia-china-43361276: China’s Xi allowed to
     remain ‘president for life’ as\
     term limits removed. Accessed on `r Sys.Date()`.
 
-[^9]: https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-rule-until-2036:
+[^8]: https://www.ucl.ac.uk/news/2020/jul/analysis-vladimir-putin-secures-constitutional-changes-allowing-him-rule-until-2036:
     Analysis: Vladimir Putin secures constitutional changes allowing him to rule
     until 2036. Accessed on `r Sys.Date()`.

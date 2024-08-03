@@ -1,0 +1,51 @@
+```{r}
+new_evs |> 
+  filter(v129 > 0) |> 
+  ggplot(aes(v129, new_v110)) + 
+  geom_point()
+
+str(new_evs)
+
+GV950_HW1_Reassessment_evs |> 
+        ggplot(aes(v91, v129)) + 
+        geom_point()
+```
+
+```{r}
+cor(GV950_HW1_Reassessment_evs$v91, GV950_HW1_Reassessment_evs$v129)
+```
+
+```{r}
+new_evs <- GV950_HW1_Reassessment_evs |> 
+   mutate(new_v110 = case_when(
+    v110 == "more than once week" ~ 1,
+    v110 == "once a week" ~ 2,
+    v110 == "once a month" ~ 3,
+    v110 == "only on specific holy days" ~ 4,
+    v110 == "once a year" ~ 5,
+    v110 == "less often" ~ 6,
+    v110 == "never, practically never" ~ 7,
+    v110 == "dk" ~ 8,
+    TRUE ~ 9
+  )) |> 
+  select(v110, new_v110, v129)
+
+table(new_evs$new_v110) |> 
+  data.frame()
+
+cor(new$new_v110, new$v129, use = "complete.obs")
+
+summary(new_evs$new_v110)
+table(new_evs$v129)
+```
+
+```{r}
+names(GV950_HW1_Reassessment_evs)
+```
+
+```{r}
+GV900_HW2_Reassessment_world |> 
+  filter(colony  %in% c("France", "Soviet Union")) |> 
+  ggplot(aes(x = urban03, colour = colony)) +
+  geom_density() 
+```
