@@ -1,4 +1,8 @@
 ```{r}
+pacman::p_load(tidyverse, gt, gtExtras, gapminder, janitor)
+```
+
+```{r}
 new_evs |> 
   filter(v129 > 0) |> 
   ggplot(aes(v129, new_v110)) + 
@@ -48,4 +52,38 @@ GV900_HW2_Reassessment_world |>
   filter(colony  %in% c("France", "Soviet Union")) |> 
   ggplot(aes(x = urban03, colour = colony)) +
   geom_density() 
+```
+
+```{r}
+gapminder |> 
+  filter(continent == "Europe") |>
+  summarise(
+    gdp_pc = round(mean(gdpPercap)),
+    pop_size = round(mean(pop)),
+    life_expectancy = list(lifeExp),
+    .by = country) |> 
+  arrange(-gdp_pc) |> 
+  head(10) |> 
+  clean_names("title") |> 
+  gt() |> 
+  gt_plt_dist(`Life Expectancy`) |> 
+  tab_header(title = "Top 10 European countries by GDP per capita and Population size") |>
+  cols_align(align = "left") |>
+  # gt_theme_538() |> 
+  # gt_theme_dark() |>
+  # gt_theme_espn() |>
+  # gt_theme_excel() |>
+  # gt_theme_guardian() |>
+  # gt_theme_nytimes() |>
+  gt_theme_pff() |> 
+  gt_highlight_rows(
+    rows = Country %in% c("Iceland", "Belgium"),
+    fill = "lightpink"
+  ) |>
+  gt_color_rows(columns = `Pop Size`,
+                palette = "Pastel1") |> 
+  gt_plt_bar_pct(`Gdp Pc`,
+                 fill = "steelblue",
+                 height = 15,
+                 width = 100)
 ```
