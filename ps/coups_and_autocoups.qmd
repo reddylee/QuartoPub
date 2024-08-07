@@ -50,7 +50,7 @@ format:
     
 categories: [Article, Coups, Autocoups, Leadership Survival]
 bibliography: references.bib
-#include-before-body: title.tex
+include-before-body: title.tex
 execute:
   warning: false
   message: false
@@ -61,7 +61,7 @@ execute:
 #| include: false
 format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 
-pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects)
+pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue)
 ```
 
 ## Acknowledgements {.unnumbered}
@@ -146,8 +146,8 @@ This work contributes significantly to the political science literature by:
     for these two highly relevant political events and their potential effects on
     democratic backsliding.
 
-***Keywords:*** Coups, Autocoups, Power transitions, Leadership survival,
-Democratic backsliding
+***Keywords:** Coups, Autocoups, Power transitions, Leadership survival,
+Democratic backsliding*
 
 ## Introduction
 
@@ -318,7 +318,7 @@ leadership survival and democratic processes. I examine three key aspects:
 classic coup attempts, autocoups, and how the method of power acquisition impacts
 leader longevity.
 
-#### Chapter 2: Determinants of Classic Coup Attempts
+#### Chapter 2: Determinants of Classic Coup Attempts {.unnumbered}
 
 This chapter delves into the factors influencing classic coup attempts, with a
 novel focus on the less observable but crucial factor of expected coup success
@@ -329,7 +329,7 @@ between incumbents and challengers, determining the chances of success of coups.
 Findings indicate a substantially higher coup risk in military regimes compared
 to dominant-party regimes.
 
-#### Chapter 3: Conceptualising and Analysing Autocoups
+#### Chapter 3: Conceptualising and Analysing Autocoups {.unnumbered}
 
 This chapter refines and analyses the concept of autocoups, with a specific focus
 on power extensions by incumbent leaders. Notable elements include the
@@ -339,7 +339,7 @@ power transitions. Introduction of a novel dataset covering autocoup events from
 studies and empirical analyses demonstrating the utility of this dataset for more
 quantitative research in political science.
 
-#### Chapter 4: Impact of Power Acquisition Methods on Leadership Longevity
+#### Chapter 4: Impact of Power Acquisition Methods on Leadership Longevity {.unnumbered}
 
 This chapter investigates how the method of power acquisition affects the tenure
 of leaders who ascend through coups versus those who extend their tenure via
@@ -349,7 +349,7 @@ between coup-entry and autocoup leaders, employing the Cox proportional hazards
 model and time-dependent Cox model. Analysis of how the risk-reward profile of
 autocoups might motivate democratic backsliding and power personalization.
 
-#### Chapter 5: Conclusion and Future Directions
+#### Chapter 5: Conclusion and Future Directions {.unnumbered}
 
 The final chapter synthesizes the summary of key findings from each substantive
 chapter. Acknowledges study limitations and their potential impact on findings.
@@ -371,6 +371,8 @@ internal power dynamics, is a crucial determinant of coup likelihood. Military
 and personalist regimes, characterized by weaker institutional frameworks and
 higher vulnerability, demonstrate significantly higher susceptibility to coups
 compared to dominant-party regimes.
+
+***Keywords:** Coups, Power transitions, Sample selection*
 
 \newpage
 
@@ -457,6 +459,22 @@ of variables presents a critical issue: How can we establish a framework that
 allows scholars to focus on the most relevant factors, rather than navigating an
 ever-expanding list of potential determinants?
 
+My analysis reveals a significant oversight in previous research: the exclusive
+focus on pre-coup conditions without adequate consideration of post-coup factors.
+This approach has neglected a critical element in coup dynamics – the expected
+probability of success. Key observations supporting this perspective, as shown in
+@tbl-coups, include:
+
+-   **High-stakes nature of coups**: Failed coups often result in severe
+    consequences for perpetrators, including imprisonment, exile, or death.
+
+-   **Selectivity in coup attempts**: Despite 491 coup attempts since 1950, they
+    represent only about 4% of over 12,000 country-years in the same period (GIC
+    dataset).
+
+-   **Satisfactory success rate**: Approximately half of all coup attempts
+    succeed, suggesting careful selection of opportunities by plotters.
+
 ```{r}
 #| label: tbl-coups
 #| tbl-cap: Top 10 countries with the most coup attempts
@@ -490,22 +508,6 @@ coups |>
   ) |> 
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
-
-My analysis reveals a significant oversight in previous research: the exclusive
-focus on pre-coup conditions without adequate consideration of post-coup factors.
-This approach has neglected a critical element in coup dynamics – the expected
-probability of success. Key observations supporting this perspective, as shown in
-@tbl-coups, include:
-
--   **High-stakes nature of coups**: Failed coups often result in severe
-    consequences for perpetrators, including imprisonment, exile, or death.
-
--   **Selectivity in coup attempts**: Despite 491 coup attempts since 1950, they
-    represent only about 4% of over 12,000 country-years in the same period (GIC
-    dataset).
-
--   **Satisfactory success rate**: Approximately half of all coup attempts
-    succeed, suggesting careful selection of opportunities by plotters.
 
 The low occurrence rate and high success rate clearly indicate that the
 initiation of coups is highly selective. In other words, the likelihood of a coup
@@ -598,7 +600,8 @@ calculated assessment of the chances of success. Several factors influence this
 assessment:
 
 -   **Military Strength**: A clear advantage in military capabilities compared to
-    the incumbent regime significantly increases the odds of a successful coup.
+    the incumbent regime significantly increases the odds of a successful coup
+    [@powell2018; @choulis2022].
 
 -   **Internal Divisions within the Regime**: Existing fractures within the
     government's power structure can be exploited by coup plotters to gain
@@ -612,17 +615,17 @@ assessment:
     resources, legitimacy, and even direct military intervention to tip the
     scales in favor of the coup plotters.
 
-While historical data might suggest a high success rate for coups, it's crucial
+While historical data might suggest a high success rate for coups, it is crucial
 to consider selection bias. We only observe attempted coups, not the numerous
 plots that never materialize. Analysing launched coup data alone can be
 misleading. To understand coup attempts and their likelihood comprehensively, we
 need a theoretical framework that accounts for this selection bias.
 
-#### Framework of coup success
+#### **Effect of Expected Coup Outcomes on Coup Attempts**
 
 A frequently cited framework [@gassebner2016; @aidt2019] offers a structured
 approach to assess the disposition and capability of coup attempts by evaluating
-the anticipated benefits for coup plotters. The expected payoff of a coup can be
+the anticipated benefits for coup plotters. The expected pay-off of a coup can be
 represented by the equation:
 
 $$
@@ -633,15 +636,10 @@ $$ {#eq-eq1}
 
 Where:
 
--   $E(U)$**:** Expected utility or pay-off of the coup attempt
-
-<!-- -->
-
--   $B$ represents the return of a successful coup
-
--   $C$ signifies the cost of a failed coup
-
--   $p$ represents the probability of coup success
+-   $E(U)$**:** Expected utility or pay-off of the coup attempt;
+-   $B$ represents the return of a successful coup;
+-   $C$ signifies the cost of a failed coup;
+-   $p$ represents the probability of coup success.
 
 The condition for staging a coup is when the expected benefit is positive
 ($E(U) > 0$). Rearranging the equation, we get:
@@ -672,43 +670,82 @@ $$ {#eq-eq3}
 
 This suggests that a success probability greater than 50% is necessary for a coup
 to be attempted. While empirical data shows a slightly lower overall success rate
-for coups since 1950 (49.9%, as shown in @tbl-coups), it's crucial to remember
+for coups since 1950 (49.9%, as shown in @tbl-coups), it is crucial to remember
 that this is an average and does not reflect the specific probabilities assessed
 by coup plotters beforehand.
 
-Therefore, I can propose the first hypothesis:
+Therefore, in this study, unlike the majority of previous research that focuses
+on the prerequisites for triggering a coup, I consider the expected coup outcome
+as the fundamental determinant of a coup. Based on this discussion, I propose the
+first hypothesis:
 
 > ***H1: The fundamental determinant of a coup attempt is the perceived chance of
 > success. Coup plotters likely require a success threshold of at least 50%.***
 
 This leads to the next question: What factors determine coup success and
-influence the decision to attempt one? The answer lies in understanding regime
-types and their inherent power dynamics.
+consequently influence the decision to attempt one? The answer lies in
+understanding the balance of power inherent in the different power dynamics
+across various regime types.
 
 #### Regime types and power dynamics
 
-Historical coup success rates do not dictate individual coup attempts. Coup
-plotters assess their chances based on their unique context. While military
-strength is undeniably crucial, often leading to an oversimplification of coups
-as solely military events, it is vital to recognize the complex internal dynamics
-within the military itself [@singh2016].
+Historical coup success rates do not dictate individual coup attempts as each one
+faces different situation and conditions. Coup plotters assess their chances
+based on their unique context. Although many factors determine the success of a
+coup, ultimately, the decisive factor remains the comparison of strength between
+incumbents and coup perpetrators. More precisely, it is the comparison of their
+military power.
 
-The clandestine nature of coups necessitates small, secretive groups, making it
-difficult to gauge the stance of other factions within the military. The success
-of a coup often hinges on the reactions of these other factions [@geddes1999].
+While military strength is often seen as the primary factor in coup attempts,
+leading to an oversimplification of coups as solely military events, the reality
+is far more complex [@singh2016]. The clandestine nature of coups necessitates
+small, secretive groups, making it difficult to gauge the stance of other
+factions within the military. As @geddes1999 points out, the success of a coup
+often hinges on the reactions of these other factions. This uncertainty creates a
+complex decision-making environment for potential coup plotters. Furthermore,
+incumbents often employ strategic division within the military as a coup-proofing
+measure. @böhmelt2014 describe how leaders intentionally create rival groups
+within the armed forces, establishing an artificial balance and structural
+obstacles. In addition, factors beyond military force, such as internal divisions
+within the ruling elites, public support, and foreign backing, significantly
+shape the balance of power.
 
-Furthermore, factors beyond military force, such as internal divisions within the
-ruling elites, public support, and foreign backing, significantly shape the
-balance of power.
+Therefore, a more holistic approach involves analyzing the overall balance of
+power within a political system. However, as noted in the introduction of this
+chapter, directly observing this balance of power presents significant challenges
+for outside observers. In stead, an alternative approach is to analyze the
+factors that are decisive in shaping power dynamics. This method aligns more
+closely with academic research goals, which are less concerned with identifying
+specific power challengers capable of launching successful coups and more focused
+on understanding the patterns and underlying factors of coup attempts.
 
-A useful framework for understanding coup susceptibility is to analyse regime
-types, as their classification is based on power structures [@geddes2014]. We can
-categorize autocracies into three main types:
+Among the various factors that influence power dynamics, regime type emerges as
+one of the most crucial. First of all, regime types are fundamentally
+classifications based on power structures within a political system. Secondly,
+different regime types allocate authority differently for critical decisions such
+as: deployment of military forces, appointment of key officials and military
+officers, and formulation and implementation of main policies.
+
+provide a classification of autocratic regime types based on their power
+structures. This classification offers valuable insights into the power dynamics
+within different autocracies and their relative susceptibility to coups. The
+three main types of autocratic regimes, their characteristics, and their
+vulnerability to coup attempts are explored as following (@tbl-regimes1).
+
+@geddes2014 provide a classification of autocratic regime types based on their
+power structures. The three main types in autocracies and their power dynamics
+are:
 
 -   **Military Regimes:** Characterized by a junta – a group of military officers
     controlling leadership selection and policy formulation. Examples include
     regimes in Brazil (1964-1985), Argentina (1976-1983), and El Salvador
     (1948-1984) [@geddes1999].
+
+    **Coup Susceptibility:** Despite their military nature, these regimes are
+    surprisingly unstable due to internal power struggles within the junta. The
+    absence of a clear final authority and the presence of multiple military
+    factions increase the likelihood of resorting to force to resolve disputes,
+    making these regimes the most vulnerable to coups.
 
 -   **Personalist Regimes:** Power is concentrated in a single, charismatic
     leader who controls the military, policy, and succession. Examples include
@@ -716,42 +753,43 @@ categorize autocracies into three main types:
     regime in Uganda (1971-1979), and Jean-Bédel Bokassa's regime in the Central
     African Republic (1966-1979) [@geddes1999].
 
+    **Coup Susceptibility:** Personalist regimes are relatively stable during the
+    leader's tenure. However, they face a higher risk of coups due to unclear
+    succession plans and vulnerabilities associated with the leader's personal
+    weaknesses, health, and mortality.
+
 -   **Dominant-Party Regimes:** Power resides within a well-organized ruling
     party, with leaders acting as its representatives. The party structure and
     ideology foster internal cohesion and a long-term vision. Examples include
-    the Partido Revolucionario Institucional (PRI) in Mexico, the Revolutionary
+    the Partido Revolucionario Institutional (PRI) in Mexico, the Revolutionary
     Party of Tanzania (CCM), and Leninist parties in various Eastern European
     countries [@geddes1999].
 
-These regime types exhibit distinct power dynamics that influence their
-susceptibility to coups (@tbl-regimes1):
+    **Coup Susceptibility:** Dominant-party regimes exhibit the greatest
+    resilience against coups due to their institutionalized structures, unified
+    leadership, clear ideology, and internal discipline.
 
--   **Military Regimes:** Despite concentrated military control, they are
-    surprisingly unstable due to internal power struggles within the junta. The
-    lack of a clear final authority and the presence of multiple military
-    factions increase the likelihood of resorting to force to resolve disputes,
-    making these regimes the most vulnerable to coups.
+Empirical data also supports this theoretical framework. While military regimes
+represent only 5.6% of country-years since 1950, they experience a
+disproportionate share of coups (over 22%). Personalist regimes, constituting 13%
+of country-years, account for 23% of coups. Conversely, dominant-party regimes,
+representing 22.6% of country-years, account for only 16.7% of coups
+(@tbl-regimes). These statistics demonstrate the disproportionate vulnerability
+of military and personalist regimes to coups, while highlighting the relative
+stability of dominant-party regimes.
 
--   **Personalist Regimes:** Relatively stable during the leader's tenure, but
-    face a higher risk of coups due to unclear succession plans and
-    vulnerabilities associated with the leader's personal weaknesses, health, and
-    mortality.
+The distinct power dynamics exhibited by these regime types significantly
+influence their susceptibility to coups. This analysis leads to our second
+hypothesis:
 
--   **Dominant-Party Regimes:** Exhibit the greatest resilience against coups due
-    to their institutionalized structures, unified leadership, clear ideology,
-    and internal discipline.
+The susceptibility to coups varies significantly among different types of
+autocratic regimes, with military regimes being the most vulnerable, followed by
+personalist regimes, and dominant-party regimes being the least susceptible.
 
-Empirical data supports this framework. While military regimes represent only
-5.6% of country-years since 1950, they experience a disproportionate share of
-coups (over 22%). Personalist regimes, constituting 13% of country-years, account
-for 23% of coups. Conversely, dominant-party regimes, representing 22.6% of
-country-years, account for only 16.7% of coups (@tbl-regimes).
-
-This leads to our second hypothesis:
-
-> ***H2: Due to their balance of power dynamics, military regimes are the most
-> prone to coups, followed by personalist regimes, while dominant-party regimes
-> are the least likely to experience coups among the three.***
+> ***H2: The susceptibility to coups varies significantly among different types
+> of autocratic regimes, with military regimes being the most vulnerable,
+> followed by personalist regimes, and dominant-party regimes being the least
+> susceptible.***
 
 \newpage
 
@@ -871,9 +909,9 @@ favorable. A standard statistical model would not account for this selectivity,
 potentially leading to biased results.
 
 To address this issue, we utilize a double probit with sample selection model,
-similar to the approach used by @powell2012. This model, known as a Heckman
-probit model or bivariate probit model with sample selection, consists of two
-parts:
+similar to the approach used by @powell2012 and @böhmelt2014. This model, known
+as a Heckman probit model or bivariate probit model with sample selection,
+consists of two parts:
 
 -   **Selection Equation (Stage 1)**: This stage analyses the factors influencing
     whether a coup attempt occurs in a particular country-year.
@@ -896,7 +934,7 @@ y_{1i} &=
 0 &\text{if $y_{1i}^*\le0$ (no coup attempt)}
 \end{cases}
 \end{aligned}
-$$
+$$ {#eq-eq4}
 
 The outcome equation (second stage) models the probability that a coup attempt is
 successful, given that it occurs:
@@ -913,7 +951,7 @@ y_{2i} &=
 0 &\text{if $y_{2i}^*\le0$ (coup failes)}
 \end{cases}
 \end{aligned}
-$$
+$$ {#eq-eq5}
 
 Where:
 
@@ -940,11 +978,15 @@ The probability equations are:
 
 $$
 \begin{aligned}
-P\left(y_{1 i}=1\right) & =\Phi\left(\alpha_0+\alpha_1 \operatorname{Regime}_i+\mathbf{X}_i \boldsymbol{A}\right) \\
-\\
+P\left(y_{1 i}=1\right) & =\Phi\left(\alpha_0+\alpha_1 \operatorname{Regime}_i+\mathbf{X}_i \boldsymbol{A}\right)
+\end{aligned}
+$$ {#eq-eq7}
+
+$$
+\begin{aligned}
 P\left(y_{2 i}=1 \mid y_{1 i}=1\right) & =\Phi\left(\beta_0+\beta_1 \operatorname{Regime}_i+\mathbf{Z}_i \boldsymbol{B}\right)
 \end{aligned}
-$$
+$$ {#eq-eq8}
 
 Where $\Phi(\cdot)$ is the cumulative distribution function of the standard
 normal distribution.
@@ -953,7 +995,7 @@ normal distribution.
 
 ##### Dependent variable
 
-Our analysis utilizes data on coup attempts and outcomes from @powell2011. A
+The analysis utilizes data on coup attempts and outcomes from @powell2011. A
 successful coup is defined as one where the incumbent leader is removed from
 power for more than seven days. The dataset covers the period from 1950 to 2023
 and includes information on 491 coup attempts, with roughly half (245) being
@@ -973,37 +1015,46 @@ personalist, and dominant-party regimes, with democracies and monarchies include
 for comparison. Descriptive statistics for regime types are presented in
 @tbl-regimes.
 
-##### Control variables
+##### Control variables {.unnumbered}
 
-Our control variables are chosen based on the research of @gassebner2016. They
-analyzed 66 factors potentially influencing coups and found that slow economic
+The control variables are chosen based on the research of @gassebner2016. They
+analysed 66 factors potentially influencing coups and found that slow economic
 growth, prior coup attempts, and other forms of political violence are
 particularly significant factors. Therefore, we include economic performance,
 political violence, and the number of previous coups as our main control
 variables.
 
--   **Economic Level:** Represented by GDP per capita. This measure provides an
+```{r}
+#| label: variables
+#| results: asis
+#| echo: false
+gdppc <- "-   **Economic Level:** Represented by GDP per capita. This measure provides an
     indication of the overall economic health and standard of living in a
     country. We use GDP per capita data (in constant 2017 international 1000
-    dollars, PPP) from the V-Dem dataset by @fariss2022.
+    dollars, PPP) from the V-Dem dataset by @fariss2022."
 
--   **Economic Performance:** Measured using the current-trend ($CT$) ratio
+ct <- "-   **Economic Performance:** Measured using the current-trend ($CT$) ratio
     developed by @krishnarajan2019. This ratio compares a country's current GDP
     per capita to the average GDP per capita over the previous five years. A
     higher $CT$ ratio indicates stronger economic performance. For a country $i$
-    at year $t$, the $CT$ ratio is calculated as follows: $$
+    at year $t$, the $CT$ ratio is calculated as follows:"
+
+glue(gdppc)
+glue(ct)
+```
+
+$$
     \begin{aligned}
     CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
     \end{aligned}
-    $$ {#eq-eq6}
+$$ {#eq-eq6}
 
--   **Political Stability**: This variable captures overall regime stability by
+-   **Political Stability:** This variable captures overall regime stability by
     including a violence index that encompasses all types of internal and
     interstate wars and violence. The data for this index is sourced from the
-    variable "actotal" in the Major Episodes of Political Violence dataset
+    variable “actotal” in the Major Episodes of Political Violence dataset
     [@marshall2005current], with 0 representing the most stable conditions (no
     violence at all) and 18 representing the most unstable.
-
 -   **Previous coups:** Included in the selection equation as either: a) The
     number of previous coups in a country (Model 1), or b) The time since the
     last coup attempt (Model 2 for robustness check).
@@ -1173,6 +1224,12 @@ coups, with an interaction term between previous coups (as a binary variable) an
 years since the last coup. Generally, Model 2 shows results in the same direction
 as Model 1, albeit with relatively lower coefficients (@tbl-mfx2).
 
+The differences between Model 1 and Model 2 suggest that while the recency of
+coups matters, the overall history of coups in a country may have a stronger
+influence on future coup attempts.
+
+\clearpage
+
 ```{r}
 #| label: tbl-mfx2
 #| tbl-cap: Average marginal effects of coup attempts (Selection of Model 2)
@@ -1240,10 +1297,6 @@ contrast = str_replace(
     locations = cells_column_labels(columns = AME)
   )
 ```
-
-The differences between Model 1 and Model 2 suggest that while the recency of
-coups matters, the overall history of coups in a country may have a stronger
-influence on future coup attempts.
 
 #### Discussion of key findings
 
@@ -1335,7 +1388,7 @@ democratic breakdown, and autocratic deterioration. The insights gained from thi
 study could draw more attention to the effects of autocoups on power transitions,
 political stability, and democratic resilience.
 
-keywords: *Autocoups, Coups, Power transitions*
+***keywords**: Autocoups, Coups, Power transitions*
 
 \newpage
 
@@ -1411,9 +1464,9 @@ explore the determinants of autocoup attempts through case studies and
 demonstrate the application of the dataset in empirical analysis. The conclusion
 will summarize key findings and suggest directions for future research.
 
-"Definitions of power expansion and power extension in political science can
-often be ambiguous or overlapping. To ensure clarity in this study, we propose
-distinct definitions for these concepts:
+Definitions of power expansion and power extension in political science can often
+be ambiguous or overlapping. To ensure clarity in this study, we propose distinct
+definitions for these concepts:
 
 -   Power Expansion: This refers to the process by which an incumbent leader
     acquires additional authority or control over state apparatuses beyond their
@@ -1713,6 +1766,22 @@ one-time arrangement.
 
 #### Data Coding
 
+The autocoup dataset is built upon existing studies and datasets, ensuring a
+comprehensive and reliable foundation. @tbl-source outlines the main sources used
+for coding the autocoup dataset.
+
+The Archigos dataset [@goemans2009] and the Political Leaders' Affiliation
+Database (PLAD) [@bomprezzi2024wedded] provide comprehensive data on all leaders
+from 1875 to 2023, although our coding only includes autocoups since 1945. These
+datasets are invaluable for identifying actual rulers, distinguishing them from
+nominal heads of state.
+
+The Incumbent Takeover dataset [@baturo2022] integrates data from 11 related
+datasets, offering a broad spectrum of cases where leaders significantly reduced
+constraints on their power. This dataset includes both power expansions and
+extensions, necessitating cross-referencing with Archigos to verify
+qualifications for autocoups.
+
 ```{r}
 #| label: tbl-source
 #| tbl-cap: Main Data Sources for Coding the Autocoup Dataset
@@ -1729,22 +1798,6 @@ read.csv(here("data/autocoup_source.csv")) |>
     2 ~ px(200)
   )
 ```
-
-The autocoup dataset is built upon existing studies and datasets, ensuring a
-comprehensive and reliable foundation. Table 1 outlines the main sources used for
-coding the autocoup dataset.
-
-The Archigos dataset [@goemans2009] and the Political Leaders' Affiliation
-Database (PLAD) [@bomprezzi2024wedded] provide comprehensive data on all leaders
-from 1875 to 2023, although our coding only includes autocoups since 1945. These
-datasets are invaluable for identifying actual rulers, distinguishing them from
-nominal heads of state.
-
-The Incumbent Takeover dataset [@baturo2022] integrates data from 11 related
-datasets, offering a broad spectrum of cases where leaders significantly reduced
-constraints on their power. This dataset includes both power expansions and
-extensions, necessitating cross-referencing with Archigos to verify
-qualifications for autocoups.
 
 ```{r}
 #| label: data-autocoups
@@ -1765,7 +1818,7 @@ PLAD and news reports.
 The main deviation from the Incumbent Takeover dataset arises from excluding
 power expansions that do not involve attempts to extend tenure.
 
-The dataset includes the following main variables:
+The dataset encompasses a total of 14 variables along with the *notes* field.
 
 -   **Country Identification:** Country code (*ccode*) and country name
     (*country*) from Correlates of War project [@stinnett2002].
@@ -1794,23 +1847,14 @@ The dataset includes the following main variables:
 
 -   **Additional Notes:** Provides context for exceptional cases (*notes*).
 
-The dataset encompasses a total of 14 variables along with the `notes` field.
-
-There are a few coding challenges and decisions worth mention.
-
--   Determining Autocoup Date: For cases where extensions happen incrementally,
-    the autocoup_date reflects a significant event marking the extension, such as
-    a legislative vote or successful referendum.
-
--   Multiple Autocoup Attempts: In cases where a leader undertook multiple
-    autocoup attempts, details are recorded in the notes field.
-
--   Distinguishing Autocoups from Power Expansions: Care was taken to
-    differentiate between cases of power expansion and actual attempts to extend
-    tenure, which required cross-referencing multiple sources.
-
--   Verifying Outcomes: Determining the success or failure of an autocoup attempt
-    often required in-depth research, especially for less documented cases.
+There are a few coding challenges and decisions worth mention. For cases where
+extensions happen incrementally, the *autocoup_date* reflects a significant event
+marking the extension, such as a legislative vote or successful referendum. In
+cases where a leader undertook multiple autocoup attempts, details are recorded
+in the notes field. Care was taken to differentiate between cases of power
+expansion and actual attempts to extend tenure, which required cross-referencing
+multiple sources. Determining the success or failure of an autocoup attempt often
+required in-depth research, especially for less documented cases.
 
 #### Data descriptions
 
@@ -1833,6 +1877,30 @@ The primary coding has identified `r nrow(Autocoup)` autocoup cases from 1945 to
 2024, involving `r country$count` countries. This comprehensive dataset provides
 a rich source of information for analysing trends and patterns in autocoup
 attempts across different political contexts.
+
+\clearpage
+
+```{r}
+#| label: tbl-autocoup_method
+#| tbl-cap: Autocoup methods and success rates (1945-2021)
+#| echo: !expr format == "html"
+
+autocoup_desc |> 
+  adorn_totals() |> 
+  mutate(Success_rate = percent(autocoup_succeeded/autocoup_attempted)) |> 
+  clean_names(case = "title") |> 
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  cols_width(
+    1 ~ px(180),
+    2:3 ~ px(140),
+    4 ~ px(100)
+  )
+
+#autocoup_desc$autocoup_attempted[1]
+```
 
 @tbl-autocoup_method presents a breakdown of the autocoup methods employed by
 leaders:
@@ -1874,28 +1942,6 @@ However, success rates vary significantly across different methods.
     pressure in response to blatant manipulation of election results, and
     stronger domestic opposition to such overt power grabs.
 
-```{r}
-#| label: tbl-autocoup_method
-#| tbl-cap: Autocoup methods and success rates (1945-2021)
-#| echo: !expr format == "html"
-
-autocoup_desc |> 
-  adorn_totals() |> 
-  mutate(Success_rate = percent(autocoup_succeeded/autocoup_attempted)) |> 
-  clean_names(case = "title") |> 
-  gt() |>
-  tab_options(column_labels.font.weight = "bold",
-              table.width = pct(100),
-              table.align = "center") |>
-  cols_width(
-    1 ~ px(180),
-    2:3 ~ px(140),
-    4 ~ px(100)
-  )
-
-#autocoup_desc$autocoup_attempted[1]
-```
-
 ### Determinants of Autocoup Attempts: Case Studies
 
 #### High Frequency and Success Rate of Autocoups in Post-Communist Countries
@@ -1922,7 +1968,7 @@ several distinctive characteristics:
     regimes frequently led to the circumvention of term limits and manipulation
     of elections [@nurumov2019].
 
-##### Case 1: Lifelong Ruler–Alexander Lukashenko in Belarus
+##### Case 1: Lifelong Ruler–Alexander Lukashenko in Belarus {.unnumbered}
 
 Alexander Lukashenko, a former member of the Supreme Soviet of the Byelorussian
 Soviet Socialist Republic, became the head of the interim anti-corruption
@@ -1938,7 +1984,7 @@ former Soviet Union, where post-dissolution leaders were typically high official
 or heads of the former Soviet republics who continued their leadership in the
 presidency.
 
-##### Case 2: Transferring Power to a Handpicked Successor–Nursultan Nazarbayev in Kazakhstan
+##### Case 2: Transferring Power to a Handpicked Successor–Nursultan Nazarbayev in Kazakhstan {.unnumbered}
 
 Nursultan Nazarbayev served as the first president of Kazakhstan from 1991 until
 2019. Prior to the dissolution of the Soviet Union, he held de facto leadership
@@ -1996,7 +2042,7 @@ and 1985 imposed some form of term limits on the presidency
 
 An analysis of cases in Latin American countries reveals two notable patterns.
 
-##### Often Successful at Breaking Non-re-election or Non-immediate Re-election Restrictions
+##### Often Successful at Breaking Non-re-election or Non-immediate Re-election Restrictions {.unnumbered}
 
 Unlike other presidential systems where two terms are more common,
 non-re-election or non-immediate re-election used to be prevalent in Latin
@@ -2025,7 +2071,7 @@ Republic (2012-2020), and President Juan Orlando Hernández of Honduras
 (2014-2022) [@ginsburg2019; @marsteintredet2019a; @landau2019; @baturo2019;
 @neto2019].
 
-##### Failing to Further Extend Tenure
+##### Failing to Further Extend Tenure {.unnumbered}
 
 This trend does not imply that none of these leaders attempted further
 extensions, but rather that most accepted their unsuccessful outcomes without
@@ -2139,10 +2185,11 @@ quantitative analyses that extend beyond traditional case studies. This section
 provides a straightforward example of how to utilize this dataset effectively. To
 analyze the determinants of autocoup attempts, I employ a probit regression
 model. This approach differs from the double probit model with sample selection
-used in Chapter 2 for coup attempts and success analyses. Instead, I use two
-separate probit models. Due to the high probability of success in autocoups, they
-do not exhibit the typical sample selection characteristics that necessitated the
-use of a sample selection model in our earlier analysis of traditional coups.
+used in [Chapter @sec-chapter2] for coup attempts and success analyses. Instead,
+I use two separate probit models. Due to the high probability of success in
+autocoups, they do not exhibit the typical sample selection characteristics that
+necessitated the use of a sample selection model in our earlier analysis of
+traditional coups.
 
 #### Dependent Variables
 
@@ -2155,28 +2202,8 @@ use of a sample selection model in our earlier analysis of traditional coups.
 
 #### Independent Variables
 
-The selection of independent variables are based on the analysis of traditional
-coups, plus the population size and the leader's age.
-
--   **Regime types**: Following @geddes2014 (GWF), focusing on military,
-    personalist, and dominant-party regimes, with democracies included for
-    comparison.
-
--   **Economic Level**: Represented by GDP per capita. This measure provides an
-    indication of the overall economic health and standard of living in a
-    country. We use GDP per capita data (in constant 2017 international 1000
-    dollars, PPP) from the V-Dem dataset by @fariss2022.
-
--   **Economic Performance**: Measured using the current-trend ($CT$) ratio
-    developed by @krishnarajan2019, which is consistent with @eq-eq6 in Chapter
-    2.
-
--   **Political Stability**: This variable captures overall regime stability by
-    including a violence index that encompasses all types of internal and
-    interstate wars and violence. The data for this index is sourced from the
-    variable "actotal" in the Major Episodes of Political Violence dataset
-    [@marshall2005current], with 0 representing the most stable conditions (no
-    violence at all) and 18 representing the most unstable.
+The selection of independent variables are consistent with the coup analysis in
+[Chapter @sec-chapter2], plus the population size and the leader's age.
 
 -   **Population Size:** To account for its potential impact on leaders' tenures,
     we consider the log of the population size. This transformation helps in
@@ -2384,7 +2411,7 @@ on autocoups. By doing so, it offers valuable insights into the dynamics of
 irregular leadership transitions and enhances our understanding of the complex
 interplay between power acquisition methods and political longevity.
 
-**keywords**: *Coups, Autocoups, Leadership Survival, Cox Model*
+***keywords**: Coups, Autocoups, Leadership Survival, Cox Model*
 
 \newpage
 
@@ -2609,6 +2636,8 @@ playing field in terms of power dynamics, with coup-entry leaders at a
 significant disadvantage. @tbl-leaders compares the main features between
 autocoup and coup-entry leaders.
 
+\clearpage
+
 ```{r}
 #| label: tbl-leaders
 #| tbl-cap: Main features of autocoup and coup-entry leaders 
@@ -2624,11 +2653,12 @@ read.csv(here("data/leader_comparison.csv")) |>
   cols_width(
     1 ~ px(100),
     2:3 ~ px(250)
-  ) |> 
-  data_color(rows = c(2, 4), colors = "#edede9")
+  )
+
+# |> data_color(rows = c(2, 4), colors = "#edede9")
 ```
 
-##### Illegitimacy
+##### Illegitimacy {.unnumbered}
 
 While both types of leaders suffer from a legitimacy deficit, the nature of this
 deficit differs:
@@ -2639,7 +2669,7 @@ deficit differs:
 -   **Autocoup Leaders**: They employ a deceptive strategy, manipulating legal
     processes to create a façade of democratic legitimacy.
 
-##### Uncertainty
+##### Uncertainty {.unnumbered}
 
 The irregular paths to power create uncertainty regarding their reigns and
 eventual departures. However, the levels of uncertainty differ.
@@ -2651,7 +2681,7 @@ future successors.
 Autocoup leaders present a clearer picture: No ambiguity about who will rule
 after an autocoup, many seek to extend their rule indefinitely or incrementally.
 
-##### Instability
+##### Instability {.unnumbered}
 
 The awareness of shaky legitimacy and persistent uncertainty breeds insecurity
 and a sense of crisis.
@@ -2665,7 +2695,7 @@ Autocoup leaders encounter fewer abrupt changes in their regimes. They face less
 pressure to dismantle existing ruling paradigms and have more time to implement
 changes gradually.
 
-##### Empirical Evidence and Hypothesis
+#### Empirical Evidence and Hypothesis
 
 Empirical evidence supports the disadvantage faced by coup-entry leaders. Data
 reveals a correlation between the frequency of coup attempts in a country and the
@@ -2689,27 +2719,33 @@ are more likely to survive longer compared to coup-entry leaders.***
 
 ### Research Design
 
+This study employs survival analysis to test the hypothesis that autocoup leaders
+have longer survival times in office compared to coup-entry leaders. The research
+design utilizes Cox models to analyze the survival tenures of these two types of
+leaders, accounting for multiple factors that may influence their time in power.
+
 #### Methodology: Survival analysis
 
-To test the hypothesis, I will employ two Cox models to analyze the survival
-tenures of coup-entry leaders and autocoup leaders. Unlike the Kaplan-Meier
-model, the Cox model allows for the estimation of the impacts of multiple
-factors. Although it does not directly estimate the duration of tenure in office,
-it evaluates the hazard rate associated with being ousted from power.
-Essentially, this represents different facets of the same phenomenon: as a
-leader's cumulative hazard of being ousted increases, their probability of
-survival in office decreases.
+Two Cox models will be employed to analyze the survival tenures of coup-entry and
+autocoup leaders:
 
-The first model will utilize the Cox proportional hazards model (Cox PH model),
-using only the variables present at the entry year, without considering changes
-in these variables over the leaders' survival times.
+-   **Cox Proportional Hazards (PH) Model**: This model uses only the variables
+    present at the entry year, without considering changes over time.
 
-However, apart from the primary variable of interest in this research—the leader
-type—control variables such as economic performance, Polity5 scores, and
-political stability do change over time. Therefore, the second model will account
-for these variations by using the time-dependent Cox model.
+-   **Time-Dependent Cox Model**: This model accounts for variations in
+    time-dependent control variables such as economic performance and political
+    stability.
 
-#### Dependent variables
+The Cox model is preferred over the Kaplan-Meier model as it allows for the
+estimation of multiple factors' impacts. While it does not directly estimate the
+duration of tenure in office, it evaluates the hazard rate associated with being
+ousted from power. This approach captures different facets of the same
+phenomenon: as a leader's cumulative hazard of being ousted increases, their
+probability of survival in office decreases.
+
+#### Data and Variables
+
+The dependent variables include survival time and end point status:
 
 -   **Survival Time:** The duration of a leader's tenure, measured in days. For
     coup-entry leaders, the survival time begins on the day they assume power
@@ -2724,19 +2760,18 @@ for these variations by using the time-dependent Cox model.
 -   **End point status:** This variable indicates the manner in which the
     leader's tenure concluded, categorized as follows:
 
-    -   **0 = Censored:** This status is assigned to leaders who leave office
-        through regular means other than being ousted. This includes leaders
-        transferring power to their designated successors, leaving office as
-        their terms expire, losing in general elections, voluntarily leaving
-        office due to health issues, or dying of natural causes.
+    **0 = Censored:** This status is assigned to leaders who leave office through
+    regular means other than being ousted. This includes leaders transferring
+    power to their designated successors, leaving office as their terms expire,
+    losing in general elections, voluntarily leaving office due to health issues,
+    or dying of natural causes.
 
-    -   **1 = Ousted:** This status is assigned to leaders who are forced to
-        leave office. This includes leaders resigning under pressure, being
-        ousted by coups or other forces, or being assassinated.
+    **1 = Ousted:** This status is assigned to leaders who are forced to leave
+    office. This includes leaders resigning under pressure, being ousted by coups
+    or other forces, or being assassinated.
 
-#### Key Independent variable: Leader type
-
-This variable categorizes leaders into two distinct groups:
+The key independent variable is the leader type, which categorizes leaders into
+two distinct groups:
 
 -   **Group A = Autocoup Leader**: Leaders who extend their tenure through
     autocoups.
@@ -2748,53 +2783,9 @@ basis for comparing the survival time between these two types of leaders.
 The data for both dependent and independent variables are sourced from the
 autocoup dataset introduced in this study, Archigos, and PLAD.
 
-#### Control variables
-
--   **Economic Performance:** This variable is measured using two indicators:
-    economic level and economic growth trend.
-
-    -   **Economic Level:** Represented by GDP per capita. This measure provides
-        an indication of the overall economic health and standard of living in a
-        country.
-
-    -   **Economic Growth Trend:** Assessed using the current-trend ratio,
-        developed by @krishnarajan2019, which is consistent with @eq-eq6 in
-        chapters 2 and 3.
-
-The GDP per capita data, expressed in constant 2017 international dollars (PPP)
-and measured in units of \$10,000, is sourced from the V-Dem dataset by
-@fariss2022. To account for the economic impact of the previous year, this data
-is lagged by one year.
-
--   **Political Stability:** This variable captures overall regime stability by
-    including a violence index that encompasses all types of internal and
-    interstate wars and violence. The data for this index is sourced from the
-    Major Episodes of Political Violence dataset by @marshall2005current. This
-    index provides a comprehensive measure of the level of violence and conflict
-    within a country, which can significantly impact leadership survival.
-
--   **Degree of Democracy:** The level of democracy is gauged using Polity 5
-    scores at the entry year for each respective country. These scores range from
-    -10 (fully autocratic) to +10 (fully democratic), capturing the extent of
-    democratic versus autocratic governance. This dataset is sourced from the
-    Center for Systemic Peace (CSP) and provides an essential measure of
-    political regime type, which can influence the stability and survival of
-    leaders in power.
-
--   **Population Size:** To account for its potential impact on leaders' tenures,
-    the log of the population size is considered. This transformation helps in
-    managing the wide range of population sizes across different countries. The
-    data is sourced from the V-Dem dataset and is evaluated to understand its
-    influence on leadership survival. Larger populations may present more
-    governance challenges and potential sources of opposition, thereby affecting
-    the stability and longevity of a leader's tenure.
-
--   **Leader's Age:** The age of the leader at the entry year is included as an
-    additional variable in the analysis, offering insights into potential
-    correlations with leadership survival. Older leaders may have different
-    experiences, networks, and health considerations that could influence their
-    ability to maintain power. This data is sourced from the leaders dataset by
-    Archigos and PLAD.
+Control variables include economic performance, political stability, population
+size, and the leader's age, which are consistent with the autocoup analysis in
+[Chapter @sec-chapter3].
 
 ### Results and discussion
 
@@ -3096,8 +3087,8 @@ enjoy longer tenures than coup-entry leaders.
 The findings revealed a significant difference in average tenure, with
 post-autocoup leaders averaging approximately 11 years in power compared to 5.6
 years for coup-entry leaders. The time-dependent Cox model further indicated that
-coup-entry leaders are 2.23imes more likely to be ousted from power at any given
-time compared to autocoup leaders, all else being equal.
+coup-entry leaders are 2.23 times more likely to be ousted from power at any
+given time compared to autocoup leaders, all else being equal.
 
 These results highlight the importance of understanding the phenomenon of
 autocoups, where leaders extend their rule by manipulating legal frameworks. Due
