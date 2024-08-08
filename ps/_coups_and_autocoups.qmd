@@ -1,14 +1,6 @@
 ---
-title: "Leadership Transitions and Survival:\n Coups, Autocoups, and Power Dynamics"
-
-author:
-  - name: Zhu Qi
-    affiliations: University of Essex
-    email: qz21485@essex.ac.uk
-  
 format:
-  aps-html: default
-  aps-pdf: 
+  pdf: 
     documentclass: report
     keep-tex: true
     colorlinks: true
@@ -66,250 +58,188 @@ pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, 
 
 ## Acknowledgements {.unnumbered}
 
-The completion of this thesis marks the end of a significant journey, one filled
-with hard work, continuous learning, and moments of profound joy. This
-dissertation would not have been possible without the support and encouragement
-of numerous individuals to whom I am deeply indebted.
+The completion of this thesis marks the culmination of a remarkable journey,
+filled with dedication, perseverance, and moments of profound joy. I am deeply
+grateful to the numerous individuals who have supported and encouraged me
+throughout this endeavour.
 
-First and foremost, I extend my heartfelt gratitude to my esteemed supervisor,
-Professor Kristian Skrede Gleditsch. His invaluable guidance, unwavering support,
-and insightful feedback have been instrumental in shaping this research. His
-expertise and encouragement have truly been the cornerstone of this academic
-endeavor.
+I would like to express my sincerest appreciation to my supervisor, Professor
+Kristian Skrede Gleditsch, whose guidance, expertise, and unwavering support have
+been instrumental in shaping this research. His constructive feedback and
+encouragement have been invaluable, and I am deeply indebted to him for his
+mentorship.
 
-I am equally grateful to Professor Han Dorussen, the chair of my board panel, for
-his continuous support and constructive criticism. His thoughtful input has
-significantly enhanced the quality and depth of my research.
+I am also grateful to Professor Han Dorussen, the chair of my board panel, for
+his continuous support and thoughtful input. His insightful comments and
+suggestions have significantly enhanced the quality and depth of my research.
 
-I would like to acknowledge the vital contributions of my initial co-supervisors,
-Dr. Saurabh Pant and Professor David Siroky. Their instruction and guidance
-during the early stages of my research, prior to their departure from the
-University of Essex, laid a strong foundation for this work.
+I would like to acknowledge the important contributions of my initial
+co-supervisors, Dr. Saurabh Pant and Professor David Siroky, who laid a strong
+foundation for this work during the early stages of my research. Although they
+are no longer at the University of Essex, their instruction and guidance were
+instrumental in shaping the direction of this project.
 
-This dissertation has benefited immensely from the expertise of several esteemed
-scholars in the field. I am particularly indebted to Dr. Brian J Phillips, Dr.
-Prabin Khadka, and Dr. Winnie Xia for their insightful comments, advice, and
-suggestions. Their contributions have undoubtedly enriched this research.
+I have been fortunate to receive feedback and guidance from several esteemed
+scholars in the field, including Dr. Brian J Phillips, Dr. Prabin Khadka, and Dr.
+Winnie Xia. Their expertise and insights have enriched this research, and I am
+grateful for their contributions.
 
-On a personal note, I owe a debt of gratitude to my family for their unwavering
-support and love. To my beloved wife, Ji Zhi, who has been my steadfast pillar of
-strength throughout this journey - your patience and encouragement have been
-immeasurable. To my dear children, Siyan and Sisheng, your joy and curiosity have
-been a constant source of motivation and inspiration.
+On a personal note, I would like to express my deepest gratitude to my family,
+who have been a constant source of support and inspiration throughout this
+journey. To my beloved wife, Ji Zhi, your patience, love, and encouragement have
+been immeasurable. To my dear children, Siyan and Sisheng, your joy and curiosity
+have motivated me to persevere and strive for excellence.
 
-I am profoundly thankful to my father for his enduring support and belief in my
-abilities. To the cherished memory of my late mother - your love, guidance, and
-the values you instilled in me continue to shape my path and inspire my
-endeavors. And to my three brothers, whose support enabled me to pursue my PhD
-without worries - your contribution to this achievement cannot be overstated.
+I am also deeply grateful to my father for his enduring support and belief in my
+abilities. To the cherished memory of my late mother, your love, guidance, and
+values continue to shape my path and inspire my endeavors. And to my three
+brothers, whose support enabled me to pursue my PhD without worries, I am forever
+grateful.
 
-While many have contributed to the success of this work, any errors or
-shortcomings remain entirely my own.
+While many individuals have contributed to the success of this work, I take full
+responsibility for any errors or shortcomings that may remain.
 
 ## Abstract {.unnumbered}
 
-This dissertation examines the dynamics of irregular power transitions,
-specifically coups and autocoups, and their influence on leader survival. Through
-a rigorous analysis of historical data, case studies, and quantitative modeling,
-this dissertation contributes to the broader understanding of political power
-dynamics and the intricate factors that shape leadership survival in the wake of
-irregular transitions.
+This dissertation presents a comprehensive analysis of irregular power
+transitions, with a focus on the dynamics of coups and autocoups, and their
+implications for leadership survival and democratic stability. By employing a
+comparative framework and novel analytical tools, this study sheds new light on
+the factors that drive the success and frequency of these unconstitutional
+transfers of power, as well as their consequences for democratic backsliding and
+regime stability.
 
-The study first highlights the critical role of power dynamics, shaped by regime
-type, in determining coup success rates and attempt frequency. Utilizing a double
-probit model with sample selection, the research reveals that the expected
-chances of coup success significantly influence coup attempts, with military
-regimes facing heightened vulnerability due to their power structure.
+The research first investigates the critical role of power dynamics, particularly
+the influence of regime types, on the likelihood of coup attempts and their
+success. Using a double probit model with sample selection, the study reveals
+that the expected probability of coup success is a key driver of coup attempts,
+with military regimes being particularly vulnerable due to their power
+structures.
 
-While often understudied, autocoups are shown to have a substantial impact on
-democratic backsliding. This research introduces a refined definition of
-autocoups alongside a novel dataset encompassing events from 1945 to 2023,
-enabling more robust quantitative analysis.
+In addition to examining coups, this dissertation also explores the understudied
+phenomenon of autocoups, where incumbent leaders refuse to relinquish power and
+extend their mandated terms. To address this knowledge gap, the study introduces
+a refined definition of autocoups and develops a novel dataset covering events
+from 1945 to 2024. This enables a comparative analysis of coups and autocoups,
+demonstrating the significant impact of autocoups on democratic backsliding.
 
-Employing survival analysis, the study compares the longevity of leaders who rise
-to power through coups versus autocoups. The findings demonstrate that
-coup-installed leaders face significantly shorter tenures and higher risks of
-removal. This contrasts with autocoup leaders who manipulate the system to extend
-their rule, suggesting the potential for autocoups to motivate power grabs and
-contribute to democratic backsliding.
+Using survival analysis techniques, the research further examines how the method
+of power acquisition – through coups or autocoups – affects the tenure of
+leaders. The findings indicate that leaders who come to power through coups
+typically face shorter tenures and higher risks of removal compared to those who
+extend their rule via autocoups. This contrast suggests that autocoups may
+incentivize power personalization and contribute to the erosion of democratic
+institutions.
 
-This work contributes significantly to the political science literature by:
-
--   Defining key concepts: Establishing a clear definition of autocoups, a
-    previously understudied phenomenon.
-
--   Introducing a novel dataset: Enabling researchers to conduct more
-    comprehensive quantitative analyses of autocoups.
-
--   Establishing a general framework: Providing a comparative approach to
-    studying both coups and autocoups, enabling analysis in a unified framework
-    for these two highly relevant political events and their potential effects on
-    democratic backsliding.
+Overall, this dissertation contributes to the field by providing a more nuanced
+understanding of irregular power transitions, offering new data and analytical
+tools for the study of autocoups, and highlighting the interconnectedness of
+power acquisition methods and leadership survival. The study's findings have
+important implications for scholars and policy-makers concerned with democratic
+resilience, regime stability, and the dynamics of political power.
 
 ***Keywords:** Coups, Autocoups, Power transitions, Leadership survival,
-Democratic backsliding*
+Democratic resilience*
 
 ## Introduction
 
-### Research Question and Context
+The study of irregular power transitions is a critical area of research in
+political science, as these unconventional transfers of authority can have
+profound and lasting impacts on political systems. This dissertation aims to
+provide a comprehensive analysis of the dynamics of two key forms of irregular
+power transitions - coups and autocoups - and their influence on leadership
+survival.
 
-Irregular power transitions, characterised by a disregard for constitutional
-procedures, represent a critical area of study in political science. These
-transitions not only disrupt established rules but also often employ
-unconstitutional tactics to consolidate power post-transition. Moreover, such
-events can inspire emulation among other ambitious leaders, potentially
-triggering a cascade of similar actions across different political contexts.
+### Motivation and Research Questions
 
-Despite extensive research on irregular power transitions, a fundamental question
-continues to challenge political scientists:
+A fundamental question driving this research is: **Why do some leaders face
+premature removal from power, while others are able to extend their rule far
+beyond constitutionally mandated limits?** This puzzle is especially relevant in
+the current global context, where democratic backsliding and authoritarianism are
+on the rise. By examining the factors that influence leadership survival
+following unconstitutional changes in government, this study aims to contribute
+to a deeper understanding of the complex relationships between power transitions,
+leadership longevity, political stability, and democratic resilience.
 
-**Why do some leaders face premature ousting while others extend their tenure
-beyond constitutionally mandated limits?**
+### Comparative Framework: Coups and Autocoups
 
-This inquiry extends to understanding the stark disparities in leadership
-longevity, where some rulers maintain power for decades while others' tenures are
-measured in years, months, or even days.
+Coups have traditionally dominated the academic discourse on irregular power
+transitions due to their frequency and visibility. The well-established
+definition of coups, as the complete removal of incumbent leaders by elites
+within the existing power structure, has facilitated the development of
+comprehensive datasets and rigorous quantitative analyses.
 
-This dissertation focuses on this central question, aiming to provide a
-comprehensive analysis dedicated to understanding:
+However, another form of irregular power transition has been largely overlooked -
+instances where incumbent leaders refuse to relinquish power and extend their
+mandated terms. This phenomenon, which we term "autocoups," has received
+comparatively less attention, with a lack of consensus on terminology,
+definition, and data.
 
--   How leaders ascend to or overstay in power through unconstitutional means.
+To address this gap, this study proposes a unified framework for analysing both
+coups and autocoups. Viewing these as related but distinct forms of irregular
+power transitions enables a more nuanced understanding of the factors that shape
+leadership survival in the wake of unconstitutional changes in government. This
+comparative approach is crucial for several reasons:
 
--   What factors determine the duration of a leader's rule following an irregular
-    ascent to power.
-
-### Coups and Autocoups: A Comparative Unified Framework for Irregular Power Transitions
-
-In the study of irregular power transitions, coups have traditionally dominated
-academic discourse due to their frequency and visibility. According to the
-Archigos dataset [@goemans2009], coups[^1] accounted for more than half of the
-approximately 145 irregular leader exits from 1945 to 2015. The Global Instances
-of Coups (GIC) dataset [@powell2011] records an even higher number, with 245
-coup-related removals from 1950 to 2024.
-
-The prevalence of coups has led to a well-established definition and extensive
-research, particularly since the turn of the millennium [@thyne2019]. This
-scholarly focus has resulted in a general consensus on the definition of coups,
-as well as the development of comprehensive datasets for quantitative analyses.
-While debates on the precise definition persist, most scholars, including this
-study, adhere to the definition proposed by @powell2011. This widely accepted
-definition encompasses two fundamental elements:
-
--   **Perpetrators and Victims**: Perpetrators of coups are elites within the
-    existing power structure and the victims are incumbent executive leaders.
-
--   **Strategy and Aim**: The primary objective is the complete removal of
-    incumbents from power.
-
-It is important to note that this definition excludes actions that only partially
-challenge the incumbent's authority or seek policy changes without aiming for a
-complete transfer of power.
-
-The scholarly consensus on coup definition has facilitated the development of
-several comprehensive datasets, enabling rigorous quantitative analyses in
-political science research. Notable among these are: GIC Dataset, Cline Centre
-Coup d'État Project Dataset [@peyton2024], and Colpus Dataset [@chin2021]. These
-datasets have become invaluable resources in political science, enabling
-researchers to conduct large-scale, comparative studies on the causes, dynamics,
-and consequences of coups across different political contexts and historical
-periods.
-
-However, another form of irregular power transition has been largely overlooked
-in power transition studies: leaders who refuse to relinquish power and extend
-their mandated terms. At least three challenges still exist in the analyses of
-this type of irregular power transition:
-
--   **Terminology**: Unlike the more widely accepted term "coup," various terms
-    (e.g., self-coup, autogolpe, executive coup, incumbent takeover) are used to
-    describe this phenomenon.
-
--   **Definition**: Existing definitions often conflate power expansion and power
-    extension[^2]. For instance, @cameron1998a defines an autogolpe primarily in
-    terms of power expansion, which does not align with the definition of coup.
-
--   **Data**: A consensus dataset for autocoups is lacking, with existing
-    datasets varying in terminology, definitions, and coverage years @baturo2022.
-
-To address this gap in the literature and provide a framework for analysis, we
-propose the term "autocoup" to describe this type of transition. This concept
-will be extensively discussed and defined in Chapter 3, providing a basis for
-integrating these events into the broader study of irregular power transitions
-and their impact on political systems and leader longevity.
-
-Analysing coups and autocoups within a unified framework is crucial for a
-comprehensive understanding of irregular power transitions and leader survival
-for three reasons:
-
--   Both phenomena significantly influence democratic backsliding and represent
-    the most frequent means of irregular power transition.
--   Their similar nomenclature reflects a fundamental similarity: while a coup
-    aims to replace the current leader, an autocoup seeks to prevent the
-    succession of a future leader.
--   This comparative approach will enable a more nuanced analysis of irregular
-    power transitions, contributing to our understanding of political stability,
+-   Both coups and autocoups significantly influence democratic backsliding and
+    represent the most frequent means of irregular power transition.
+-   The similar nomenclature reflects a fundamental similarity: while a coup aims
+    to replace the current leader, an autocoup seeks to prevent the succession of
+    a future leader.
+-   Integrating these phenomena within a single analytical framework can
+    contribute to a more comprehensive understanding of political stability,
     democratic erosion, and leadership longevity in various regime types.
 
-### Academic Contributions
+### Research Objectives and Contributions
 
-This study addresses a critical gap in the literature by offering a unified
-framework for analysing both coups and autocoups. My contributions are threefold:
+This study addresses the critical gap in the literature by offering a unified
+framework for analysing coups and autocoups. The key contributions are threefold:
 
--   **Emphasis on Power Dynamics and Regime Types**: This study highlights the
+-   **Emphasis on Power Dynamics and Regime Types**: The research highlights the
     significant role of power dynamics, particularly the influence of regime
-    types, in determining the success and frequency of coup attempts, underscores
-    how the expected chances of coup success motivate such attempts, with
-    military regimes being notably susceptible.
--   **Refined Definition and Novel Dataset for Autocoups**: I introduce a refined
-    definition of autocoups, develop a novel dataset covering events from 1945 to
-    2024, and fill a significant gap in the existing literature and enable a
-    comparative analysis with classic coups.
--   **Survival Analysis of Leaders from Different Entry Modes**: This research
-    applys survival analysis to existing coup data and the new autocoup dataset,
-    demonstrates how different modes of entry into power significantly affect
-    leader survival, and reveals that leaders who come to power through coups
-    typically have shorter tenures and face higher removal risks compared to
-    those who extend their rule through autocoups.
+    types, in determining the success and frequency of coup and autocoup
+    attempts.
+
+-   **Refined Definition and Novel Dataset for Autocoups**: The study introduces
+    a refined definition of autocoups and develops a novel dataset covering
+    events from 1945 to 2024, filling a significant gap in the existing
+    literature and enabling a comparative analysis with classic coups.
+
+-   **Survival Analysis of Leaders from Different Entry Modes**: The research
+    applies survival analysis to existing coup data and the new autocoup dataset,
+    demonstrating how different modes of entry into power significantly affect
+    leader survival.
 
 These contributions collectively advance the field by providing a more holistic
 understanding of irregular power transitions, offering new tools and data for
 quantitative analysis of autocoups, and demonstrating the interconnectedness of
-power acquisition methods and leadership survival.
-
-This work lays the foundation for future research on the dynamics of political
-power, regime stability, and democratic backsliding, offering both theoretical
-insights and practical implications for policy-makers and scholars alike.
+power acquisition methods and leadership survival. The findings have important
+implications for understanding democratic backsliding, regime stability, and the
+dynamics of political power.
 
 ### Implications
 
 The examination of irregular power transitions provides a crucial perspective on
 the interrelated phenomena of democratic backsliding, breakdown, and autocratic
 intensification. The findings of this study provide logical explanations for
-several political phenomena:
+several political trends:
 
--   **Regression of Global Democracy Levels**: This study can explain why global
-    democracy levels have regressed to pre-2000 levels. For example, Freedom
-    House reports an 18th consecutive year of global freedom decline in 2023
-    [@freedomhouse2024freedom]. Irregular power transitions inevitably violate
-    democratic or constitutional norms and disrupt the trajectory towards stable
-    democracies or democratization from autocracies. Leaders who ascend through
-    irregular means often undermine constitutional norms to seize or overstay in
-    power, creating a vicious cycle of eroding democratic institutions.
+-   **Regression of Global Democracy Levels:** This study can explain why global
+    democracy levels have regressed to pre-2000 levels
+    [@freedomhouse2024freedom], as irregular power transitions inevitably violate
+    democratic norms and disrupt the trajectory towards stable democracies.
 
--   **Within-Regime Democratic Erosion**: This study explains why democratic
-    backsliding often occurs within regimes, with democracies becoming less
-    liberal and autocracies becoming less competitive [@mechkova2017]. This is
-    particularly because autocoups have become more prevalent than traditional
-    coups since 2000 [@bermeo2016]. Importantly, autocoups typically do not
-    result in immediate regime change, contributing to the observed pattern of
-    within-regime democratic erosion.
+-   **Within-Regime Democratic Erosion:** The research explains why democratic
+    backsliding often occurs within regimes [@mechkova2017], with democracies
+    becoming less liberal and autocracies becoming less competitive, particularly
+    due to the prevalence of autocoups since 2000 [@bermeo2016].
 
--   **Prevalence of Autocoups Since 2000**: This research explains why autocoups
-    are more prevalent since 2000. Firstly, autocoups have a significantly higher
-    probability of success compared to traditional coups. Additionally, even when
-    unsuccessful, the repercussions of autocoups are generally less severe than
-    those of failed traditional coups. Moreover, successful autocoup leaders tend
-    to maintain power for substantially longer periods than leaders who enter
-    through traditional coups.
+-   **Prevalence of Autocoups Since 2000:** The analysis reveals that autocoups
+    possess several strategic advantages for incumbent leaders: they have a
+    significantly higher probability of success, the consequences of failure are
+    relatively milder, and leaders who manage to extend their rule through an
+    autocoup often enjoy considerably longer tenures compared to those who come
+    to power through a traditional coup.
 
 ### Overview of the Thesis
 
@@ -321,59 +251,60 @@ power acquisition methods on leadership longevity.
 
 #### Chapter 2: Determinants of Classic Coup Attempts {.unnumbered}
 
-This chapter delves into the factors influencing classic coup attempts, with a
-novel focus on the less observable but crucial factor of expected coup success
-rates. Key features include the utilization of a double probit model with sample
-selection and the analysis of how expected success rates significantly influence
-coup attempts. It also examines how regime types shape the balance of power
-between incumbents and challengers, determining the chances of success of coups.
-Findings indicate a substantially higher coup risk in military regimes compared
-to dominant-party regimes.
+This chapter explores the factors that influence classic coup attempts, with a
+novel focus on the role of expected coup success rates. Using a double probit
+model with sample selection, the analysis reveals that expected success rates
+significantly influence coup attempts. The chapter also examines how regime types
+shape the balance of power between incumbents and challengers, determining the
+chances of success of coups. The findings indicate that military regimes are
+substantially more vulnerable to coups than dominant-party regimes.
 
 #### Chapter 3: Conceptualising and Analysing Autocoups {.unnumbered}
 
 This chapter refines and analyses the concept of autocoups, with a specific focus
-on power extensions by incumbent leaders. Notable elements include the
-redefinition of autocoups as instances where incumbent leaders refuse mandated
-power transitions. Introduction of a novel dataset covering autocoup events from
-1945 to 2024, encompassing 110 attempts and 87 successes. Presentation of case
-studies and empirical analyses demonstrating the utility of this dataset for more
-quantitative research in political science.
+on power extensions by incumbent leaders. The chapter introduces a novel dataset
+covering autocoup events from 1945 to 2024, encompassing 110 attempts and 87
+successes. The analysis demonstrates the utility of this dataset for quantitative
+research in political science, and presents case studies and empirical analyses
+that highlight the significance of autocoups in shaping democratic backsliding
+and power personalization.
 
 #### Chapter 4: Impact of Power Acquisition Methods on Leadership Longevity {.unnumbered}
 
-This chapter investigates how the method of power acquisition affects the tenure
-of leaders who ascend through coups versus those who extend their tenure via
-autocoups. Key aspects include hypothesis testing on the significant impact of
-the accession method on leader tenure. Evidence of differing survival times
-between coup-entry and autocoup leaders, employing the Cox proportional hazards
-model and time-dependent Cox model. Analysis of how the risk-reward profile of
-autocoups might motivate democratic backsliding and power personalization.
+This chapter investigates the impact of power acquisition methods on leadership
+longevity, comparing the tenure of leaders who ascend through coups versus those
+who extend their tenure via autocoups. The analysis employs hypothesis testing
+and survival analysis techniques, including the Cox proportional hazards model
+and time-dependent Cox model. The findings indicate that the method of power
+acquisition has a significant impact on leader tenure, with autocoup leaders
+enjoying longer tenures than coup-entry leaders.
 
 #### Chapter 5: Conclusion and Future Directions {.unnumbered}
 
-The final chapter synthesizes the summary of key findings from each substantive
-chapter. Acknowledges study limitations and their potential impact on findings.
-Outlines future research directions, emphasizing the need for further exploration
-of irregular power transitions, particularly coups and autocoups.
+The final chapter synthesizes the key findings from each substantive chapter,
+acknowledges the study's limitations, and outlines future research directions.
+The chapter emphasizes the need for further exploration of irregular power
+transitions, particularly coups and autocoups, and highlights the significance of
+this research for understanding democratic backsliding, power personalization,
+and leadership survival.
 
 ## Power Dynamics and Coup Attempts: A Selection Mechanism Analysis {#sec-chapter2}
 
 ### Abstract {.unnumbered}
 
-Despite extensive research identifying around one hundred potential determinants
-of coup attempts, no consensus has been reached. This study introduces a novel
-approach that prioritizes determinants based on their impact on coup success. By
-analysing coup success rates, the study hypothesizes that the expected outcomes
-of coups are critical determinants of their occurrence. Utilizing a double probit
-model with sample selection, the research investigates the relationship between
-regime types and coup attempts. The findings confirm that regime type, by shaping
-internal power dynamics, is a crucial determinant of coup likelihood. Military
-and personalist regimes, characterized by weaker institutional frameworks and
-higher vulnerability, demonstrate significantly higher susceptibility to coups
-compared to dominant-party regimes.
+The literature on coup attempts has identified over a hundred potential
+determinants, yet a consensus on their relative importance remains elusive. This
+study proposes a novel approach that prioritizes determinants based on their
+impact on coup success, positing that the expected outcomes of coups are a
+critical factor in their occurrence. Using a double probit model with sample
+selection, I investigate the relationship between regime types and coup attempts,
+focusing on the role of internal power dynamics. Main findings confirm that
+regime type is a crucial determinant of coup likelihood, with military and
+personalist regimes exhibiting significantly higher susceptibility to coups due
+to their weaker institutional frameworks and higher vulnerability. In contrast,
+dominant-party regimes demonstrate a lower propensity for coups.
 
-***Keywords:** Coups, Power transitions, Sample selection*
+***Keywords:** Coups, Power transitions, Regime types,* *Sample selection*
 
 \newpage
 
@@ -433,47 +364,43 @@ Coup |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 ```
 
-Coups d'état, defined by @powell2011 as "illegal and overt attempts by the
-military or other elites within the state apparatus to unseat the sitting
-executive" (p. 252), represent a critical challenge to political stability and
-democratic governance worldwide. This chapter examines the complex dynamics of
-coup attempts, their success rates, and the factors that influence both their
-occurrence and outcomes.
+Coups d'état, defined as "illegal and overt attempts by the military or other
+elites within the state apparatus to unseat the sitting executive" [@powell2011],
+pose a significant threat to political stability and democratic governance
+worldwide. This chapter examines the complex dynamics of coup attempts, their
+success rates, and the factors that influence both their occurrence and outcomes.
 
-Coups occur with varying frequency across countries and regions. For instance: In
+The frequency of coups varies significantly across countries and regions. For
+instance, according to Global Instances of Coups dataset (GIC)[@powell2011].in
 Latin America, Bolivia experienced
 `r coups |> filter(country == "Bolivia") |> pull(2)` coups between 1950 and 1984,
-while Argentina saw `r coups |> filter(country == "Argentina") |> pull(2)` during
-a similar period. In Africa, Sudan endured
+while Argentina saw `r coups |> filter(country == "Argentina") |> pull(2)` coups
+during a similar period. In Africa, Sudan endured
 `r coups |> filter(country == "Sudan") |> pull(2)` coups between 1955 and 2023.
-Contrastingly, countries like Mexico (1917-2000) and South Africa (since 1950)
-have not experienced any coups.
+In contrast, countries like Mexico and South Africa have not experienced any
+coups since 1950. This variability raises a fundamental question: **Why are coups
+more frequent in some countries than others?**
 
-This variability raises a fundamental question: **Why are coups more frequent in
-some countries than others?**
-
-Despite decades of research, political scientists have yet to reach a consensus
-on the key determinants of coups. @gassebner2016 highlight this challenge, noting
-that approximately 100 potential factors have been proposed, with their study
-testing 66 of these across three million model permutations. This proliferation
-of variables presents a critical issue: How can we establish a framework that
-allows scholars to focus on the most relevant factors, rather than navigating an
-ever-expanding list of potential determinants?
+Despite decades of research, scholars have yet to reach a consensus on the key
+determinants of coups. Over 100 potential factors have been proposed, with no
+clear framework for prioritizing the most relevant ones [@gassebner2016]. This
+proliferation of variables presents a critical issue: How can we establish a
+framework that allows scholars to focus on the most relevant factors, rather than
+navigating an ever-expanding list of potential determinants?
 
 My analysis reveals a significant oversight in previous research: the exclusive
 focus on pre-coup conditions without adequate consideration of post-coup factors.
 This approach has neglected a critical element in coup dynamics – the expected
-probability of success. Key observations supporting this perspective, as shown in
-@tbl-coups, include:
+probability of success. Key observations supporting this perspective include:
 
--   **High-stakes nature of coups**: Failed coups often result in severe
+-   **The high-stakes nature of coups**: Failed coups often result in severe
     consequences for perpetrators, including imprisonment, exile, or death.
 
--   **Selectivity in coup attempts**: Despite 491 coup attempts since 1950, they
-    represent only about 4% of over 12,000 country-years in the same period (GIC
-    dataset).
+-   **The selectivity in coup attempts**: Despite 491 coup attempts since 1950,
+    they represent only about 4% of over 12,000 country-years in the same period
+    (GIC).
 
--   **Satisfactory success rate**: Approximately half of all coup attempts
+-   **The satisfactory success rate**: Approximately half of all coup attempts
     succeed, suggesting careful selection of opportunities by plotters.
 
 ```{r}
@@ -510,18 +437,17 @@ coups |>
   tab_source_note(source_note = md("*Source: GIC dataset*"))
 ```
 
-The low occurrence rate and high success rate clearly indicate that the
-initiation of coups is highly selective. In other words, the likelihood of a coup
-occurring depends greatly on its probability of success. However, this
-probability is not directly observable to outsiders, including researchers, prior
-to a coup attempt.
+These observations indicate that the initiation of coups is highly selective, and
+the likelihood of a coup occurring depends greatly on its probability of success.
+However, this probability is not directly observable to outsiders, including
+researchers, prior to a coup attempt.
 
 Given the limitations in directly observing coup success probabilities, I propose
 focusing on regime type as a crucial proxy for coup outcomes. This approach is
 based on the following reasoning: Coup outcomes are ultimately determined by the
-balance of power within a regime and regime types are classified based on control
-over the military, policy-making authority, and appointment of officials. By
-analysing power dynamics across different regime types, we can gain valuable
+balance of power within a regime, and regime types are classified based on
+control over the military, policy-making authority, and appointment of officials.
+By analysing power dynamics across different regime types, we can gain valuable
 insights into the structural factors shaping coup attempts and their outcomes.
 
 To address the selection bias inherent in studying coup attempts, I employ a
@@ -532,7 +458,7 @@ Through this comprehensive analysis, I aim to provide a more nuanced
 understanding of the factors driving coup attempts and shaping their outcomes,
 contributing to both scholarly discourse and practical efforts in two key ways:
 
--   **Emphasis on expected chances of success**: By focusing on the probability
+-   **Emphasis on expected chances of success:** By focusing on the probability
     of success as a driver of coup attempts, I offer a more targeted approach to
     understanding coup dynamics.
 
@@ -3200,13 +3126,3 @@ dataset and continuing to refine the framework.
 cat("\\newpage
 ## References")
 ```
-
-[^1]: According to the Archigos dataset, "Removed by Military, without Foreign
-    Support" and "Removed by Other Government Actors, without Foreign Support" in
-    the variable exitcode are classified as coups.
-
-[^2]: The definitions and concepts of power expansion and power extension can
-    often be ambiguous. In this study, we define power expansion as an incumbent
-    acquiring additional authority from other branches or apparatuses of the
-    state. Conversely, power extension refers to an incumbent prolonging their
-    tenure beyond the originally mandated term in office.
