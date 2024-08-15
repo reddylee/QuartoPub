@@ -1,0 +1,22 @@
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+evs <- read_csv("data/GV950_HW1_Reassessment_evs.csv")
+
+evs |> 
+  select(v193, v177) |> 
+  view()
+```
+
+```{r}
+evs_HW3 <- read_csv("data/GV900_HW3_Reassessment_evs.csv")
+
+evs |> 
+  separate(v336, into = c("edu","edu2"), sep = ":") |>
+  select(edu, edu2) |>
+  mutate(edu = if_else(edu  %in% c("na", "other missing", "dk"), NA, edu),
+         edu = as.numeric(edu))
+```

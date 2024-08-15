@@ -1,0 +1,127 @@
+---
+title: Create maps using the sf package in R programming
+date: 2024-08-12
+date-modified: last-modified
+format: 
+  aps-html:
+    code-tools: true
+categories: [maps, package]
+---
+
+## Setup
+
+```{r}
+#| label: setup
+
+pacman::p_load(
+  tidyverse,
+  sf,
+  rnaturalearth,
+  ggthemes,
+  democracyData,
+  readr,
+  here
+)
+```
+
+## Load the data
+
+```{r}
+#| label: load-data
+
+world <- ne_countries(scale = "medium",
+                      returnclass = "sf")
+View(world)
+```
+
+## Create a map
+
+```{r}
+#| label: create-map
+
+world |> 
+  ggplot(aes(fill = income_grp)) +
+  geom_sf() +
+  labs(title = "World map by income group",
+       fill = "Income group") +
+  scale_fill_viridis_d() +
+  theme_map() + 
+  theme(legend.position = "bottom",
+        legend.title = element_text(face = "bold"),
+        plot.title = element_text(size = 50,
+                                  color = "blue",
+                                  hjust = 0.5,
+                                  face = "bold"))
+        
+```
+
+```{r}
+#| label: create-population
+
+world |> 
+  filter(region_un == "Africa") |>
+  ggplot() +
+  geom_sf(aes(fill = pop_est/1e6),
+         color = "white",
+         lwd = 0.3) +
+  labs(title = "Africa population size",
+       fill = "Population\n(millions)") +
+  theme_map() + 
+  theme(legend.position = "top",
+        legend.key.width = unit(1.4, "cm"),
+        legend.text = element_text(size = 9),
+        plot.title = element_text(size = 50,
+                                  color = "blue",
+                                  hjust = 0.5,
+                                  face = "bold"))
+```
+
+```{r}
+world |> 
+  ggplot() +
+  geom_sf(aes(fill = gdp_md/pop_est),
+         color = "white",
+         lwd = 0.3) +
+  labs(title = "World GDP per capita Size",
+       fill = "GDP per capita)") +
+  theme_map() + 
+  theme(legend.position = "top",
+        legend.key.width = unit(1.4, "cm"),
+        legend.text = element_text(size = 9),
+        plot.title = element_text(size = 50,
+                                  color = "blue",
+                                  hjust = 0.5,
+                                  face = "bold"))
+```
+
+## HDI in Sao Paulo, Brazil (2010)
+
+```{r}
+#| label: hdi-sao-paulo
+
+atlas <- read_rds(here("data/atlas_sp_hdi.rds"))
+
+atlas |> 
+  ggplot() +
+  geom_sf(aes(fill = HDI),
+         color = "white",
+         lwd = 0.05) +
+  scale_fill_fermenter(
+    name = "HDI scores",
+    breaks = seq(0.65, 0.95, 0.05),
+    direction = -1,
+    palette = "YlGnBu") +
+  labs(title = "HDI in Sao Paulo, Brazil (2010)") +
+  theme_map() +
+  theme(legend.position = "bottom",
+        legend.key.width = unit(1.4, "cm"),
+        legend.text = element_text(size = 9),
+        plot.title = element_text(size = 50,
+                                  color = "blue",
+                                  hjust = 0.5,
+                                  face = "bold"))
+```
+
+```{r}
+prop.test(c(1036, 208), c(1036 + 362, 208+ 1205))
+```

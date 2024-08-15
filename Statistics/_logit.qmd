@@ -1,0 +1,97 @@
+---
+title: Logistic regression with R: example
+date: 2024-08-11
+date-modified: last-modified
+format: 
+  aps-html:
+    code-tools: true
+categories: [statistics, logit]
+---
+
+## Setup
+
+```{r}
+#| label: setup
+
+pacman::p_load(
+  tidymodels, stargazer, janitor, caret
+)
+```
+
+## Data
+
+```{r}
+#| label: data
+
+iris <- iris |>
+  mutate(
+    setosa = as.integer(Species == "setosa")
+  )
+View(iris)
+```
+
+## Split data
+
+```{r}
+#| label: split
+
+set.seed(2)
+split <- initial_split(iris, prop = 0.8,
+                       strata = setosa)
+iris_train <- training(split)
+iris_test <- testing(split)
+```
+
+## Visualize the data
+
+```{r}
+#| label: visualize
+
+iris_train |>
+  ggplot(aes(x = Sepal.Length, y = setosa)) +
+  geom_jitter(height = 0.05, 
+              alpha = .5) +
+  geom_smooth(method = "glm",
+              method.args = list(family = binomial),
+              se = FALSE) +
+  theme_minimal()
+```
+
+## Build Model
+
+```{r}
+#| label: logit_model
+
+model <- iris_train |>
+  glm(setosa ~ Sepal.Length, data = _, family = "binomial")
+summary(model)
+```
+
+```{r}
+stargazer(model, type = "text")
+```
+
+## Evaluate Model on the test set
+
+```{r}
+#| label: evaluate
+
+iris_test <- iris_test |>
+  mutate(
+    setosa_prob = predict(model, iris_test, type = "response"),
+    setosa_pred = ifelse(setosa_prob > .5, 1, 0)) 
+
+t <- table(iris_test$setosa, iris_test$setosa_pred)
+t
+diag(t)
+
+sum(diag(t)) / sum(t)
+```
+
+## Confusion matrix
+
+```{r}
+
+confusionMatrix(factor(iris_test$setosa_pred), 
+                factor(iris_test$setosa))
+```

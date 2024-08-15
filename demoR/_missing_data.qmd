@@ -1,0 +1,57 @@
+---
+title: Missing Data
+date: 2024-08-10
+date-modified: last-modified
+format: 
+  aps-html:
+    code-tools: true
+categories: [table, stargazer, package]
+---
+
+## Setup
+
+```{r}
+#| label: setup
+
+pacman::p_load(
+  tidyverse, ISLR2, broom
+)
+```
+
+## Data review
+
+```{r}
+glimpse(Bikeshare)
+sum(Bikeshare$bikers == 0)
+view(Bikeshare)
+```
+
+## Add missing rows to Bikeshare data
+
+```{r}
+bikes_new <- expand_grid(
+  day = 1: 365,
+  hr = as.factor(0:23)
+) |> 
+  left_join(Bikeshare, join_by(day, hr))
+
+Bikeshare |> 
+  complete(day, hr) |>
+  view()
+```
+
+## Impute missing values as appropriate
+
+```{r}
+bikes_imputed <- bikes_new |> 
+  mutate(
+    bikers = replace_na(bikers, 0),
+    temp = if_else(is.na(temp) & (!is.na(lag(temp)) | !is.na(lead(temp))), 
+                          mean(c(lag(temp), lead(temp)), na.rm = TRUE), 
+                          temp),
+    weathersit = fill(weathersit, .direction = "down")
+  ) |> 
+  view()
+```
+
+## Compare pisson models with and without missing data
