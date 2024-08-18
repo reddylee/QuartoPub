@@ -705,40 +705,49 @@ supporting this perspective include:
   plotters.
 \end{itemize}
 
-\begingroup
-\setlength\LTleft{0.05\linewidth}
-\setlength\LTright{0.05\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{@{\extracolsep{\fill}}lccr}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
 
 \caption{\label{tbl-coups}Top 10 countries with the most coup attempts}
 
 \tabularnewline
 
-\toprule
-Country & Coup Attempted & Coup Succeeded & Success Rate \\ 
-\midrule\addlinespace[2.5pt]
-Bolivia & 23 & 11 & 47.8\% \\ 
-Argentina & 20 & 7 & 35.0\% \\ 
-Sudan & 17 & 6 & 35.3\% \\ 
-Haiti & 13 & 9 & 69.2\% \\ 
-Venezuela & 13 & 0 & 0.0\% \\ 
-Iraq & 12 & 4 & 33.3\% \\ 
-Syria & 12 & 8 & 66.7\% \\ 
-Thailand & 12 & 8 & 66.7\% \\ 
-Ecuador & 11 & 5 & 45.5\% \\ 
-Burundi & 11 & 5 & 45.5\% \\ 
-Guatemala & 10 & 5 & 50.0\% \\ 
-Total & 491 & 245 & 49.9\% \\ 
-\bottomrule
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Country
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Coup Attempted
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Coup Succeeded
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Success Rate
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\midrule\noalign{}
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{1.0000} + 6\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\emph{Source: GIC dataset}
+\end{minipage}} \\
+\bottomrule\noalign{}
+\endlastfoot
+Bolivia & 23 & 11 & 47.8\% \\
+Argentina & 20 & 7 & 35.0\% \\
+Sudan & 17 & 6 & 35.3\% \\
+Haiti & 13 & 9 & 69.2\% \\
+Venezuela & 13 & 0 & 0.0\% \\
+Iraq & 12 & 4 & 33.3\% \\
+Syria & 12 & 8 & 66.7\% \\
+Thailand & 12 & 8 & 66.7\% \\
+Ecuador & 11 & 5 & 45.5\% \\
+Burundi & 11 & 5 & 45.5\% \\
+Guatemala & 10 & 5 & 50.0\% \\
+Total & 491 & 245 & 49.9\% \\
 
 \end{longtable}
-
-\begin{minipage}{\linewidth}
-\emph{Source: GIC dataset}\\
-\end{minipage}
-\endgroup
 
 These observations indicate that the initiation of coups is highly
 selective, and the likelihood of a coup occurring depends greatly on its
@@ -944,7 +953,7 @@ expected coup outcome as the fundamental determinant of a coup. Based on
 this discussion, I propose the first hypothesis:
 
 \begin{quote}
-\textbf{\emph{H1: The fundamental determinant of a coup attempt is the
+\textbf{\emph{H2-1: The fundamental determinant of a coup attempt is the
 perceived chance of success. Coup plotters likely require a success
 threshold of at least 50\%.}}
 \end{quote}
@@ -1073,74 +1082,97 @@ followed by personalist regimes, and dominant-party regimes being the
 least susceptible.
 
 \begin{quote}
-\textbf{\emph{H2: The susceptibility to coups varies significantly among
-different types of autocratic regimes, with military regimes being the
-most vulnerable, followed by personalist regimes, and dominant-party
+\textbf{\emph{H2-2: The susceptibility to coups varies significantly
+among different types of autocratic regimes, with military regimes being
+the most vulnerable, followed by personalist regimes, and dominant-party
 regimes being the least susceptible.}}
 \end{quote}
 
-\newpage
-
 \blandscape
 
-\begingroup
-\setlength\LTleft{0\linewidth}
-\setlength\LTright{0\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
 
 \caption{\label{tbl-regimes1}Main features of different types of
 regimes}
 
 \tabularnewline
 
-\toprule
-Regime Type & Power Concentration & Succession & Military Alignment & Stability & Examples \\ 
-\midrule\addlinespace[2.5pt]
-Military & Junta & Unclear & May have significant influence & Low & Brazil (1964-1985), Argentina (1976-1983) \\ 
-Personalist & Single Leader & Unclear or dependent on leader's will & Subordinated to leader & Moderate (initially), Low (long-term) & Dominican Republic (Trujillo, 1930-1961) \\ 
-Dominant-Party & Party Leadership & Institutionalized & Aligned with the party & High & Mexico (PRI), China (CPC) \\ 
-\bottomrule
+\toprule\noalign{}
+Regime Type & Power Concentration & Succession & Military Alignment &
+Stability & Examples \\
+\midrule\noalign{}
+\endhead
+\midrule\noalign{}
+\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{1.0000} + 10\tabcolsep}@{}}{%
+\emph{Source: GWF \& Author}} \\
+\bottomrule\noalign{}
+\endlastfoot
+Military & Junta & Unclear & May have significant influence & Low &
+Brazil (1964-1985), Argentina (1976-1983) \\
+Personalist & Single Leader & Unclear or dependent on
+leader\textquotesingle s will & Subordinated to leader & Moderate
+(initially), Low (long-term) & Dominican Republic (Trujillo,
+1930-1961) \\
+Dominant-Party & Party Leadership & Institutionalized & Aligned with the
+party & High & Mexico (PRI), China (CPC) \\
 
 \end{longtable}
 
-\begin{minipage}{\linewidth}
-\emph{Source: GWF \& Author}\\
-\end{minipage}
-\endgroup
+\clearpage
 
-\newpage
-
-\begingroup
-\setlength\LTleft{0\linewidth}
-\setlength\LTright{0\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{@{\extracolsep{\fill}}lrrrrrr}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}@{}}
 
 \caption{\label{tbl-regimes}Regime types and coups since 1950}
 
 \tabularnewline
 
-\toprule
-Regime Type & Country Year & Share & Num of Coups & Percent of Coups & Success Rate & Coup Likelihood \\ 
-\midrule\addlinespace[2.5pt]
-Democracy & 5312 & 46.7\% & 122 & 24.8\% & 51.6\% & 2.3\% \\ 
-Dominant-Party & 2569 & 22.6\% & 82 & 16.7\% & 53.7\% & 3.2\% \\ 
-Personal & 1476 & 13.0\% & 113 & 23.0\% & 44.2\% & 7.7\% \\ 
-Monarchy & 1056 & 9.3\% & 25 & 5.1\% & 56.0\% & 2.4\% \\ 
-Military & 638 & 5.6\% & 110 & 22.4\% & 48.2\% & 17.2\% \\ 
-Other & 322 & 2.8\% & 39 & 7.9\% & 53.8\% & 12.1\% \\ 
-Total & 11373 & 100.0\% & 491 & 100.0\% & 49.9\% & 4.3\% \\ 
-\bottomrule
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Regime Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Country Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Share
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Coups
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Coups Percent
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Success Rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Likelihood
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\midrule\noalign{}
+\multicolumn{7}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{1.0000} + 12\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\emph{Source: REIGN and GIC Datasets}
+\end{minipage}} \\
+\bottomrule\noalign{}
+\endlastfoot
+Democracy & 5312 & 46.7\% & 122 & 24.8\% & 51.6\% & 2.3\% \\
+Dominant-Party & 2569 & 22.6\% & 82 & 16.7\% & 53.7\% & 3.2\% \\
+Personal & 1476 & 13.0\% & 113 & 23.0\% & 44.2\% & 7.7\% \\
+Monarchy & 1056 & 9.3\% & 25 & 5.1\% & 56.0\% & 2.4\% \\
+Military & 638 & 5.6\% & 110 & 22.4\% & 48.2\% & 17.2\% \\
+Other & 322 & 2.8\% & 39 & 7.9\% & 53.8\% & 12.1\% \\
+Total & 11373 & 100.0\% & 491 & 100.0\% & 49.9\% & 4.3\% \\
 
 \end{longtable}
-
-\begin{minipage}{\linewidth}
-\emph{Source: REIGN and GIC Datasets}\\
-\end{minipage}
-\endgroup
 
 \elandscape
 
@@ -1419,37 +1451,32 @@ dominant-party regimes. This aligns with our theoretical expectations
 regarding internal power struggles within military juntas and succession
 vulnerabilities in personalist regimes.
 
-\begingroup
-\setlength\LTleft{0.025\linewidth}
-\setlength\LTright{0.025\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{@{\extracolsep{\fill}}llrr}
+\begin{longtable}[]{@{}llrr@{}}
 
 \caption{\label{tbl-mfx1}Average marginal effects of coup attempts
 (Selection of Model 1)}
 
 \tabularnewline
 
-\toprule
-Term & Contrast & AME\textsuperscript{\textit{1}} & Ratio Percent \\ 
-\midrule\addlinespace[2.5pt]
-Regime: Democracy & mean(democracy - dominant-party) & 0.003 & 13.040 \\ 
-{\hspace{47.25pt}Military} & mean(military - dominant-party) & 0.070 & 277.730 \\ 
-{\hspace{47.25pt}Monarchy} & mean(monarchy - dominant-party) & 0.020 & 80.280 \\ 
-{\hspace{47.25pt}Personal} & mean(personal - dominant-party) & 0.024 & 93.980 \\ 
-Economic trend & mean(+1) & -0.001 & -2.850 \\ 
-GDP per capita & mean(+1) & -0.002 & -5.400 \\ 
-Political violence & mean(+1) & 0.003 & 6.550 \\ 
-Previous coups & mean(+1) & 0.002 & 5.930 \\ 
-\bottomrule
+\toprule\noalign{}
+Term & Contrast & AME{\textsuperscript{1}} & Ratio Percent \\
+\midrule\noalign{}
+\endhead
+\midrule\noalign{}
+\multicolumn{4}{@{}l@{}}{%
+{\textsuperscript{1}} AME: Average Marginal Effect} \\
+\bottomrule\noalign{}
+\endlastfoot
+Regime: Democracy & mean(democracy - dominant-party) & 0.003 & 13.040 \\
+Military & mean(military - dominant-party) & 0.070 & 277.730 \\
+Monarchy & mean(monarchy - dominant-party) & 0.020 & 80.280 \\
+Personal & mean(personal - dominant-party) & 0.024 & 93.980 \\
+Economic trend & mean(+1) & −0.001 & −2.850 \\
+GDP per capita & mean(+1) & −0.002 & −5.400 \\
+Political violence & mean(+1) & 0.003 & 6.550 \\
+Previous coups & mean(+1) & 0.002 & 5.930 \\
 
 \end{longtable}
-
-\begin{minipage}{\linewidth}
-\textsuperscript{\textit{1}}AME: Average Marginal Effect\\
-\end{minipage}
-\endgroup
 
 Table~\ref{tbl-mfx1} clarifies the regime effects using Average Marginal
 Effects (AME) and ratio percentages. The military regime's marginal
@@ -1499,40 +1526,33 @@ The differences between Model 1 and Model 2 suggest that while the
 recency of coups matters, the overall history of coups in a country may
 have a stronger influence on future coup attempts.
 
-\clearpage
-
-\begingroup
-\setlength\LTleft{0.025\linewidth}
-\setlength\LTright{0.025\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{@{\extracolsep{\fill}}llrr}
+\begin{longtable}[]{@{}llrr@{}}
 
 \caption{\label{tbl-mfx2}Average marginal effects of coup attempts
 (Selection of Model 2)}
 
 \tabularnewline
 
-\toprule
-Term & Contrast & AME\textsuperscript{\textit{1}} & Ratio Percent \\ 
-\midrule\addlinespace[2.5pt]
-Regime: Democracy & mean(democracy - dominant-party) & 0.003 & 8.920 \\ 
-{\hspace{47.25pt}Military} & mean(military - dominant-party) & 0.028 & 91.630 \\ 
-{\hspace{47.25pt}Monarchy} & mean(monarchy - dominant-party) & 0.018 & 56.730 \\ 
-{\hspace{47.25pt}Personal} & mean(personal - dominant-party) & 0.009 & 30.080 \\ 
-Economic trend & mean(+1) & -0.001 & -2.530 \\ 
-GDP per capita & mean(+1) & -0.001 & -2.890 \\ 
-Political violence & mean(+1) & 0.003 & 7.330 \\ 
-Previous coups (P) & mean(1 - 0) & 0.023 & 92.090 \\ 
-NA & mean(+1) & -0.002 & -5.050 \\ 
-\bottomrule
+\toprule\noalign{}
+Term & Contrast & AME{\textsuperscript{1}} & Ratio Percent \\
+\midrule\noalign{}
+\endhead
+\midrule\noalign{}
+\multicolumn{4}{@{}l@{}}{%
+{\textsuperscript{1}} AME: Average Marginal Effect} \\
+\bottomrule\noalign{}
+\endlastfoot
+Regime: Democracy & mean(democracy - dominant-party) & 0.003 & 8.920 \\
+Military & mean(military - dominant-party) & 0.028 & 91.630 \\
+Monarchy & mean(monarchy - dominant-party) & 0.018 & 56.730 \\
+Personal & mean(personal - dominant-party) & 0.009 & 30.080 \\
+Economic trend & mean(+1) & −0.001 & −2.530 \\
+GDP per capita & mean(+1) & −0.001 & −2.890 \\
+Political violence & mean(+1) & 0.003 & 7.330 \\
+Previous coups (P) & mean(1 - 0) & 0.023 & 92.090 \\
+NA & mean(+1) & −0.002 & −5.050 \\
 
 \end{longtable}
-
-\begin{minipage}{\linewidth}
-\textsuperscript{\textit{1}}AME: Average Marginal Effect\\
-\end{minipage}
-\endgroup
 
 \subsection{Discussion of key
 findings}\label{discussion-of-key-findings}
@@ -2112,28 +2132,24 @@ on their power. This dataset includes both power expansions and
 extensions, necessitating cross-referencing with Archigos to verify
 qualifications for autocoups.
 
-\begingroup
-\setlength\LTleft{0\linewidth}
-\setlength\LTright{0\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-
-\begin{longtable}{@{\extracolsep{\fill}}l>{\raggedright\arraybackslash}p{\dimexpr 150.00pt -2\tabcolsep-1.5\arrayrulewidth}rr}
+\begin{longtable}[]{@{}llrr@{}}
 
 \caption{\label{tbl-source}Main Data Sources for Coding the Autocoup
 Dataset}
 
 \tabularnewline
 
-\toprule
-Dataset & Authors & Coverage & Obervations \\ 
-\midrule\addlinespace[2.5pt]
-Archigos & Goemans et al (2009) & 1875-2015 & 3409 \\ 
-PLAD & Bomprezzi et al. (2024) & 1989-2023 & 1334 \\ 
-Incumbent Takeover & Baturo and Tolstrup (2022) & 1913-2019 & 279 \\ 
-\bottomrule
+\toprule\noalign{}
+Dataset & Authors & Coverage & Obervations \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Archigos & Goemans et al (2009) & 1875-2015 & 3409 \\
+PLAD & Bomprezzi et al. (2024) & 1989-2023 & 1334 \\
+Incumbent Takeover & Baturo and Tolstrup (2022) & 1913-2019 & 279 \\
 
 \end{longtable}
-
-\endgroup
 
 In total, 110 observations were coded, with 95 overlapping with the
 candidate data from Incumbent Takeover. The remaining 15 events were
@@ -2201,39 +2217,34 @@ involving 73 countries. This comprehensive dataset provides a rich
 source of information for analysing trends and patterns in autocoup
 attempts across different political contexts.
 
-\clearpage
-
-\begingroup
-\setlength\LTleft{0\linewidth}
-\setlength\LTright{0\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-
-\begin{longtable}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{\dimexpr 135.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedleft\arraybackslash}p{\dimexpr 105.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedleft\arraybackslash}p{\dimexpr 105.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedleft\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}}
+\begin{longtable}[]{@{}lrrr@{}}
 
 \caption{\label{tbl-autocoup_method}Autocoup methods and success rates
 (1945-2021)}
 
 \tabularnewline
 
-\toprule
-Autocoup Method & Autocoup Attempted & Autocoup Succeeded & Success Rate \\ 
-\midrule\addlinespace[2.5pt]
-Enabling re-election & 46 & 33 & 71.74\% \\ 
-Removing term limits & 14 & 14 & 100.00\% \\ 
-Delaying elections & 9 & 9 & 100.00\% \\ 
-Leader for life & 9 & 9 & 100.00\% \\ 
-Changing term length & 7 & 5 & 71.43\% \\ 
-Figurehead & 6 & 5 & 83.33\% \\ 
-One-time arrangement & 5 & 4 & 80.00\% \\ 
-Refusing election results & 4 & 1 & 25.00\% \\ 
-Reassigning power role & 4 & 2 & 50.00\% \\ 
-Rigging elections & 3 & 2 & 66.67\% \\ 
-Cancelling elections & 3 & 3 & 100.00\% \\ 
-Total & 110 & 87 & 79.09\% \\ 
-\bottomrule
+\toprule\noalign{}
+Autocoup Method & Autocoup Attempted & Autocoup Succeeded & Success
+Rate \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Enabling re-election & 46 & 33 & 71.74\% \\
+Removing term limits & 14 & 14 & 100.00\% \\
+Delaying elections & 9 & 9 & 100.00\% \\
+Leader for life & 9 & 9 & 100.00\% \\
+Changing term length & 7 & 5 & 71.43\% \\
+Figurehead & 6 & 5 & 83.33\% \\
+One-time arrangement & 5 & 4 & 80.00\% \\
+Refusing election results & 4 & 1 & 25.00\% \\
+Reassigning power role & 4 & 2 & 50.00\% \\
+Rigging elections & 3 & 2 & 66.67\% \\
+Cancelling elections & 3 & 3 & 100.00\% \\
+Total & 110 & 87 & 79.09\% \\
 
 \end{longtable}
-
-\endgroup
 
 Table~\ref{tbl-autocoup_method} presents a breakdown of the autocoup
 methods employed by leaders:
@@ -3029,19 +3040,17 @@ with coup-entry leaders at a significant disadvantage.
 Table~\ref{tbl-leaders} compares the main features between autocoup and
 coup-entry leaders.
 
-\clearpage
+\blandscape
 
-\begingroup
-\setlength\LTleft{0\linewidth}
-\setlength\LTright{0\linewidth}\fontsize{12.0pt}{14.4pt}\selectfont
-
-\begin{longtable}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{\dimexpr 75.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 187.50pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 187.50pt -2\tabcolsep-1.5\arrayrulewidth}}
+\begin{table}
 
 \caption{\label{tbl-leaders}Main features of autocoup and coup-entry
 leaders}
 
-\tabularnewline
+\centering{
 
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{1\linewidth}{@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{\dimexpr 112.50pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 225.00pt -2\tabcolsep-1.5\arrayrulewidth}>{\raggedright\arraybackslash}p{\dimexpr 225.00pt -2\tabcolsep-1.5\arrayrulewidth}}
 \toprule
 Feature & Autocoup Leader & Coup Entry Leader \\ 
 \midrule\addlinespace[2.5pt]
@@ -3053,10 +3062,13 @@ Uncertainty & Initially with some certainty, but decreases as the leader's age g
 Instability & Relatively stable & Unstable except when a strongman emerges or constitutional institutions are established \\ 
 Balance of Power & Generally in a better position of power & Initially unclear and challenging to establish a balance \\ 
 \bottomrule
+\end{tabular*}
 
-\end{longtable}
+}
 
-\endgroup
+\end{table}%
+
+\elandscape
 
 \subsubsection*{Illegitimacy}\label{illegitimacy}
 \addcontentsline{toc}{subsubsection}{Illegitimacy}
@@ -3126,8 +3138,8 @@ supporters, leading to potentially longer tenures.
 
 Based on these observations, I propose the following hypothesis:
 
-\textbf{\emph{H1: Political leaders who successfully extend their tenure
-through autocoups are more likely to survive longer compared to
+\textbf{\emph{H4-1: Political leaders who successfully extend their
+tenure through autocoups are more likely to survive longer compared to
 coup-entry leaders.}}
 
 \section{Research Design}\label{research-design-1}
@@ -3226,17 +3238,15 @@ Using the \texttt{survival} package in R
 results for both the Cox Proportional Hazards (Cox PH) model and the
 time-dependent Cox model in Table~\ref{tbl-cox}.
 
-\begingroup
-\fontsize{12.0pt}{14.4pt}\selectfont
-\setlength{\LTpost}{0mm}
-
-\begin{longtable}{lcccccccc}
+\begin{table}
 
 \caption{\label{tbl-cox}Cox models for survival time of different types
 of leaders}
 
-\tabularnewline
+\centering{
 
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccccccc}
 \toprule
  & \multicolumn{4}{c}{\textbf{Cox PH Model}} & \multicolumn{4}{c}{\textbf{Time-dependent Cox Model}} \\ 
 \cmidrule(lr){2-5} \cmidrule(lr){6-9}
@@ -3252,14 +3262,15 @@ of leaders}
 {\bfseries Political stability} & 224 & 104 & 1.00 & 0.053 & 1,590 & 102 & 1.11* & 0.049 \\ 
 {\bfseries Age} & 224 & 104 & 1.01 & 0.010 & 1,590 & 102 & 1.00 & 0.011 \\ 
 \bottomrule
-
-\end{longtable}
-
+\end{tabular*}
 \begin{minipage}{\linewidth}
 \textsuperscript{\textit{1}}*p\textless{}0.1; **p\textless{}0.05; ***p\textless{}0.01\\
 \textsuperscript{\textit{2}}HR = Hazard Ratio, SE = Standard Error\\
 \end{minipage}
-\endgroup
+
+}
+
+\end{table}%
 
 Both the Cox PH model and the time-dependent Cox model analyses revealed
 a statistically significant association between leadership type and the

@@ -519,7 +519,8 @@ coups |>
   clean_names(case = "title") |>
   gt() |>
   tab_options(
-    table.width = pct(90),
+    #data_row.padding.horizontal = px(5),
+    table.width = pct(99),
     column_labels.font.weight = "bold",
     table.layout = "fixed"
               ) |> 
@@ -530,7 +531,8 @@ coups |>
     align = "center",
     columns = 2:3
   ) |> 
-  tab_source_note(source_note = md("*Source: GIC dataset*"))
+  tab_source_note(source_note = md("*Source: GIC dataset*")) |> 
+  as_raw_html()
 ```
 
 These observations indicate that the initiation of coups is highly selective, and
@@ -702,8 +704,9 @@ on the prerequisites for triggering a coup, I consider the expected coup outcome
 as the fundamental determinant of a coup. Based on this discussion, I propose the
 first hypothesis:
 
-> ***H1: The fundamental determinant of a coup attempt is the perceived chance of
-> success. Coup plotters likely require a success threshold of at least 50%.***
+> ***H2-1: The fundamental determinant of a coup attempt is the perceived chance
+> of success. Coup plotters likely require a success threshold of at least
+> 50%.***
 
 This leads to the next question: What factors determine coup success and
 consequently influence the decision to attempt one? The answer lies in
@@ -809,12 +812,10 @@ The susceptibility to coups varies significantly among different types of
 autocratic regimes, with military regimes being the most vulnerable, followed by
 personalist regimes, and dominant-party regimes being the least susceptible.
 
-> ***H2: The susceptibility to coups varies significantly among different types
+> ***H2-2: The susceptibility to coups varies significantly among different types
 > of autocratic regimes, with military regimes being the most vulnerable,
 > followed by personalist regimes, and dominant-party regimes being the least
 > susceptible.***
-
-\newpage
 
 \blandscape
 
@@ -834,10 +835,11 @@ read.csv(here("data/regimes_comparison.csv")) |>
   cols_width(
     1:6 ~ px(100)
   ) |>
-  tab_source_note(source_note = md("*Source: GWF & Author*"))
+  tab_source_note(source_note = md("*Source: GWF & Author*")) |> 
+  as_raw_html()
 ```
 
-\newpage
+\clearpage
 
 ```{r}
 #| label: tbl-regimes
@@ -886,8 +888,8 @@ coup_by_regime <- regimes |>
   filter(!is.na(coup)) |>
   tabyl(regime) |> 
   adorn_totals("row") |> 
-  mutate(num_of_coups = n,
-         percent_of_coups = percent(percent,accuracy = 0.1),
+  mutate(coups = n,
+         `coups(%)` = percent(percent,accuracy = 0.1),
          .keep = "unused") 
 
 coup_by_succeed <- regimes |>
@@ -902,19 +904,20 @@ coup_by_succeed <- regimes |>
 
 coup_regimes <-  coup_by_regime |> 
   left_join(coup_by_succeed) |> 
-  mutate(success_rate = percent(succeeded_coup / num_of_coups, accuracy = 0.1))
+  mutate(success_rate = percent(succeeded_coup / coups, accuracy = 0.1))
 
 regime_total |>
   left_join(coup_regimes, join_by(regime_type == regime)) |>
   mutate(regime_type = str_to_title(regime_type),
-         coup_likelihood = percent(num_of_coups / country_year, accuracy = 0.1)) |>
+         likelihood = percent(coups / country_year, accuracy = 0.1)) |>
   select(-succeeded_coup) |> 
   clean_names(case = "title") |>
-  gt() |>
+  gt() |> 
   tab_options(column_labels.font.weight = "bold",
               table.width = pct(100),
               table.align = "center") |>
-  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*"))
+  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*")) |> 
+  as_raw_html()
 ```
 
 \elandscape
@@ -1208,7 +1211,8 @@ contrast = str_replace(
   tab_footnote(
     footnote = "AME: Average Marginal Effect",
     locations = cells_column_labels(columns = AME)
-  )
+  ) |> 
+  as_raw_html()
 ```
 
 @tbl-mfx1 clarifies the regime effects using Average Marginal Effects (AME) and
@@ -1250,8 +1254,6 @@ as Model 1, albeit with relatively lower coefficients (@tbl-mfx2).
 The differences between Model 1 and Model 2 suggest that while the recency of
 coups matters, the overall history of coups in a country may have a stronger
 influence on future coup attempts.
-
-\clearpage
 
 ```{r}
 #| label: tbl-mfx2
@@ -1318,7 +1320,8 @@ contrast = str_replace(
   tab_footnote(
     footnote = "AME: Average Marginal Effect",
     locations = cells_column_labels(columns = AME)
-  )
+  ) |> 
+  as_raw_html()
 ```
 
 #### Discussion of key findings
@@ -1815,11 +1818,13 @@ read.csv(here("data/autocoup_source.csv")) |>
   clean_names(case = "title") |> 
   gt() |>
   tab_options(column_labels.font.weight = "bold",
+              data_row.padding = px(2),
               table.width = pct(100),
               table.align = "center") |>
   cols_width(
     2 ~ px(200)
-  )
+  ) |> 
+  as_raw_html()
 ```
 
 ```{r}
@@ -1901,8 +1906,6 @@ The primary coding has identified `r nrow(Autocoup)` autocoup cases from 1945 to
 a rich source of information for analysing trends and patterns in autocoup
 attempts across different political contexts.
 
-\clearpage
-
 ```{r}
 #| label: tbl-autocoup_method
 #| tbl-cap: Autocoup methods and success rates (1945-2021)
@@ -1912,7 +1915,7 @@ autocoup_desc |>
   adorn_totals() |> 
   mutate(Success_rate = percent(autocoup_succeeded/autocoup_attempted)) |> 
   clean_names(case = "title") |> 
-  gt() |>
+  gt() |> 
   tab_options(column_labels.font.weight = "bold",
               table.width = pct(100),
               table.align = "center") |>
@@ -1920,7 +1923,8 @@ autocoup_desc |>
     1 ~ px(180),
     2:3 ~ px(140),
     4 ~ px(100)
-  )
+  ) |> 
+  as_raw_html()
 
 #autocoup_desc$autocoup_attempted[1]
 ```
@@ -2659,7 +2663,7 @@ playing field in terms of power dynamics, with coup-entry leaders at a
 significant disadvantage. @tbl-leaders compares the main features between
 autocoup and coup-entry leaders.
 
-\clearpage
+\blandscape
 
 ```{r}
 #| label: tbl-leaders
@@ -2674,12 +2678,14 @@ read.csv(here("data/leader_comparison.csv")) |>
               table.width = pct(100),
               table.align = "center") |>
   cols_width(
-    1 ~ px(100),
-    2:3 ~ px(250)
+    1 ~ px(150),
+    2:3 ~ px(300)
   )
 
 # |> data_color(rows = c(2, 4), colors = "#edede9")
 ```
+
+\elandscape
 
 ##### Illegitimacy {.unnumbered}
 
@@ -2737,7 +2743,7 @@ supporters, leading to potentially longer tenures.
 
 Based on these observations, I propose the following hypothesis:
 
-***H1: Political leaders who successfully extend their tenure through autocoups
+***H4-1: Political leaders who successfully extend their tenure through autocoups
 are more likely to survive longer compared to coup-entry leaders.***
 
 ### Research Design
@@ -2886,7 +2892,7 @@ tbl2 <- model_cox2|>
                          thresholds = c(0.01, 0.05, 0.1),
                          ) |> 
   bold_p(t = 0.05) |> 
-  bold_labels() 
+  bold_labels()
 ```
 
 ```{r}
