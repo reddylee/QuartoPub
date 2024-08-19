@@ -71,12 +71,12 @@ What's new in cliptools 1.5.
 #| results: asis
 model <- lm(mpg ~ wt + cyl + hp + qsec + drat, data = mtcars)
 
-gt_table <- mtcars |> 
+mtcars |> 
   head(20) |> 
   gt() |> 
-  tab_options(data_row.padding = px(15))
-
-gt_table
+  tab_options(
+    data_row.padding = px(10)
+    )
 #cat(gsub("longtable", "tabular", gt::as_latex(gt_table)))
 ```
 
@@ -90,14 +90,6 @@ Elit netus nam semper fames, lectus aliquam rhoncus vel netus magna. Aptent
 nascetur congue rutrum enim molestie lobortis per cursus: torquent: sapien nec!
 Porttitor tortor ridiculus vulputate, euismod justo luctus potenti elementum
 magnis volutpat montes? Na montes?
-
-```{r}
-#| results: asis
-gt_new <- gt_table |> 
-  fmt_markdown()
- 
-cat(gsub("longtable", "tabular", gt::as_latex(gt_new)))
-```
 
 Consectetur massa nam mollis, facilisi aenean potenti hac ut consequat. Eleifend
 auctor nullam ultrices, quis sed magnis, non egestas egestas. Molestie sociis

@@ -46,12 +46,12 @@ include-before-body: title.tex
 execute:
   warning: false
   message: false
+  echo: false
 ---
 
 ```{r}
 #| label: setup
 #| include: false
-format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
 
 pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue)
 ```
@@ -312,7 +312,7 @@ study emphasizes the severe consequences of failed coups as a critical factor fo
 potential perpetrators.
 
 The chapter argues that coup plotters are unlikely to act unless success is
-highly probable. To operationalize this concept, the study leverages regime types
+highly probable. To operationalise this concept, the study leverages regime types
 as a proxy for the balance of power between coup perpetrators and incumbent
 leaders. This approach is based on the understanding that regime types
 fundamentally reflect the distribution of power within ruling groups.
@@ -388,17 +388,16 @@ resilience.
 
 ### Abstract {.unnumbered}
 
-The literature on coup attempts has identified over a hundred potential
-determinants, yet a consensus on their relative importance remains elusive. This
-study proposes a novel approach that prioritizes determinants based on their
+While existing literature on coup attempts has identified over a hundred
+potential determinants, a consensus on their relative importance remains elusive.
+This study proposes a novel approach by prioritizing determinants based on their
 impact on coup success, positing that the expected outcomes of coups are a
-critical factor in their occurrence. Using a double probit model with sample
+critical factor in their occurrence. Employing a double probit model with sample
 selection, I investigate the relationship between regime types and coup attempts,
-focusing on the role of internal power dynamics. Main findings confirm that
-regime type is a crucial determinant of coup likelihood, with military and
-personalist regimes exhibiting significantly higher susceptibility to coups due
-to their weaker institutional frameworks and higher vulnerability. In contrast,
-dominant-party regimes demonstrate a lower propensity for coups.
+with a focus on internal power dynamics. The main findings confirm that regime
+type is a crucial determinant of coup likelihood. Military and personalist
+regimes exhibit significantly higher susceptibility to coups, attributed to their
+weaker institutional frameworks and increased vulnerability.
 
 ***Keywords:** Coups, Power transitions, Regime types,* *Sample selection*
 
@@ -413,8 +412,7 @@ dominant-party regimes demonstrate a lower propensity for coups.
 #|   - "by year frequency"
 #|   - "by country frequency"
 #| layout-ncol: 2
-#| echo: !expr format == "html"
-#| include: !expr format == "html"
+#| include: false
 #load coup data
 
 Coup <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt")
@@ -462,47 +460,49 @@ Coup |>
 
 Coups d'état, defined as "illegal and overt attempts by the military or other
 elites within the state apparatus to unseat the sitting executive" [@powell2011],
-pose a significant threat to political stability and democratic governance
-worldwide. This chapter examines the complex dynamics of coup attempts, their
-success rates, and the factors that influence both their occurrence and outcomes.
+represent a critical threat to constitutional power transitions and political
+stability. The frequency and success of these attempts vary significantly across
+countries and regions, prompting essential questions about **why coups are more
+prevalent in certain contexts and why some coups succeed while others fail**.
 
-The frequency of coups varies significantly across countries and regions. For
-instance, according to Global Instances of Coups dataset (GIC)[@powell2011].in
-Latin America, Bolivia experienced
-`r coups |> filter(country == "Bolivia") |> pull(2)` coups between 1950 and 1984,
-while Argentina saw `r coups |> filter(country == "Argentina") |> pull(2)` coups
-during a similar period. In Africa, Sudan endured
+For instance, according to the Global Instances of Coups dataset (GIC)
+[@powell2011], Latin America has seen notable variation in coup activity: Bolivia
+experienced `r coups |> filter(country == "Bolivia") |> pull(2)` coups between
+1950 and 1984, while Argentina saw
+`r coups |> filter(country == "Argentina") |> pull(2)` coups during a similar
+period. In Africa, Sudan endured
 `r coups |> filter(country == "Sudan") |> pull(2)` coups between 1955 and 2023.
-In contrast, countries like Mexico and South Africa have not experienced any
-coups since 1950. This variability raises a fundamental question: **Why are coups
-more frequent in some countries than others?**
+In stark contrast, countries such as Mexico and South Africa have remained
+coup-free since 1950.
 
-Despite decades of research, scholars have yet to reach a consensus on the key
-determinants of coups. Over 100 potential factors have been proposed, with no
-clear framework for prioritizing the most relevant ones [@gassebner2016]. This
-proliferation of variables presents a critical issue: How can we establish a
-framework that allows scholars to focus on the most relevant factors, rather than
-navigating an ever-expanding list of potential determinants?
+Despite decades of scholarly inquiry and the identification of over 100 potential
+determinants [@gassebner2016], a consensus on the key factors driving coup
+attempts and their outcomes remains elusive. The proliferation of variables
+presents a significant challenge: How can we establish a framework that
+prioritizes the most relevant factors, rather than sifting through an
+ever-expanding list of possibilities?
 
-My analysis reveals a significant oversight in previous research: the exclusive
-focus on pre-coup conditions without adequate consideration of post-coup factors.
-This approach has neglected a critical element in coup dynamics – the expected
-probability of success. Key observations supporting this perspective include:
+This study proposes a different perspective on understanding coup dynamics by
+shifting the focus from pre-coup conditions to the strategic calculations of
+potential coup plotters. Central to this approach is the consideration of the
+expected probability of coup success as a key determinant of coup initiation.
+Several observations support this perspective:
 
--   **The high-stakes nature of coups**: Failed coups often result in severe
-    consequences for perpetrators, including imprisonment, exile, or death.
+-   **The high stakes of coups**: Failed attempts often lead to severe
+    consequences for the perpetrators, including imprisonment, exile, or death.
 
--   **The selectivity in coup attempts**: Despite 491 coup attempts since 1950,
-    they represent only about 4% of over 12,000 country-years in the same period
+-   **Selective coup attempts**: Despite 491 recorded attempts since 1950, these
+    represent only about 4% of over 12,000 country-years during the same period
     (GIC).
 
--   **The satisfactory success rate**: Approximately half of all coup attempts
-    succeed, suggesting careful selection of opportunities by plotters.
+-   **Relatively high success rates**: Approximately half of all coup attempts
+    succeed, suggesting that plotters carefully select opportunities based on
+    their likelihood of success (GIC).
 
 ```{r}
 #| label: tbl-coups
 #| tbl-cap: Top 10 countries with the most coup attempts
-#| echo: !expr format == "html"
+
 
 coups |>
   # add one row which adds up the total
@@ -519,14 +519,8 @@ coups |>
   clean_names(case = "title") |>
   gt() |>
   tab_options(
-    #data_row.padding.horizontal = px(5),
-    table.width = pct(99),
-    column_labels.font.weight = "bold",
-    table.layout = "fixed"
-              ) |> 
-  # cols_width(1 ~ px(120),
-  #            2:4 ~ px(88)
-  # ) |>
+    table.width = pct(99)
+              ) |>
   cols_align(
     align = "center",
     columns = 2:3
@@ -535,34 +529,32 @@ coups |>
   as_raw_html()
 ```
 
-These observations indicate that the initiation of coups is highly selective, and
-the likelihood of a coup occurring depends greatly on its probability of success.
-However, this probability is not directly observable to outsiders, including
-researchers, prior to a coup attempt.
+Given the difficulty in directly observing the probability of coup success, this
+study proposes using regime type as a crucial proxy for predicting coup outcomes.
+The underlying premise is that the balance of power within a regime, which is
+significantly influenced by its type, ultimately shapes the outcomes of coups. By
+analysing power dynamics across various regime types, we can gain more profound
+insights into the structural factors that affect both the likelihood of coup
+attempts and their success.
 
-Given the limitations in directly observing coup success probabilities, I propose
-focusing on regime type as a crucial proxy for coup outcomes. This approach is
-based on the following reasoning: Coup outcomes are ultimately determined by the
-balance of power within a regime, and regime types are classified based on
-control over the military, policy-making authority, and appointment of officials.
-By analysing power dynamics across different regime types, we can gain valuable
-insights into the structural factors shaping coup attempts and their outcomes.
+To address the inherent selection bias in studying coup attempts, this research
+employs a double probit model with sample selection, building on the
+methodological approaches used by @powell2012 and @böhmelt2014. This method
+enables the simultaneous analysis of factors influencing both the initiation and
+success of coups.
 
-To address the selection bias inherent in studying coup attempts, I employ a
-double probit model with sample selection. This approach allows for simultaneous
-analysis of factors influencing both coup initiation and success.
+This study aims to contribute to scholarly discourse and practical efforts in two
+key ways:
 
-Through this comprehensive analysis, I aim to provide a more nuanced
-understanding of the factors driving coup attempts and shaping their outcomes,
-contributing to both scholarly discourse and practical efforts in two key ways:
+-   **Emphasizing the expected chances of success**: By focusing on the
+    probability of success as a driver of coup attempts, this research offers a
+    more targeted approach to understanding coup dynamics, specifically the
+    selective effect of anticipated outcomes on coup initiation.
 
--   **Emphasis on expected chances of success:** By focusing on the probability
-    of success as a driver of coup attempts, I offer a more targeted approach to
-    understanding coup dynamics.
-
--   **Highlighting the significance of regime type**: I demonstrate how regime
-    type influences coup likelihood, even when researchers lack perfect knowledge
-    of internal balance of power.
+-   **Highlighting the significance of regime type**: In the absence of perfect
+    knowledge of internal power balances, this study leverages regime types as a
+    proxy for power structures, shedding light on how these structures influence
+    anticipated coup outcomes.
 
 The remainder of this chapter is organized as follows: Section 2 explores the
 dynamics of coup attempts and their outcomes. Section 3 outlines the research
@@ -822,7 +814,6 @@ personalist regimes, and dominant-party regimes being the least susceptible.
 ```{r}
 #| label: tbl-regimes1
 #| tbl-cap: Main features of different types of regimes 
-#| echo: !expr format == "html"
 
 read.csv(here("data/regimes_comparison.csv")) |> 
   clean_names(case = "title") |> 
@@ -844,7 +835,7 @@ read.csv(here("data/regimes_comparison.csv")) |>
 ```{r}
 #| label: tbl-regimes
 #| tbl-cap: Regime types and coups since 1950 
-#| echo: !expr format == "html"
+
 
 regimes <- REIGN |>
   distinct(reign_cowcode, year, .keep_all = T) |>
@@ -1091,7 +1082,7 @@ $$ {#eq-eq6}
 #| label: tbl-coupmodel
 #| tbl-cap: "Sample Selection Model of Regime Type and Coup Success, 1950-2019"
 #| results: asis
-#| echo: !expr format == "html"
+
 
 model_1 <- coup_model|>
   filter(regime != "other") |>
@@ -1167,14 +1158,14 @@ avg_comparisons(model_1) |>
                           term == "GDP_trend" ~ "Economic trend",
                           term == "GDP_pc" ~ "GDP per capita",
                           term == "violence" ~ "Political violence",
-                          str_detect(contrast, "democracy") ~ "Regime: Democracy",
-                          str_detect(contrast, "military") ~ "Military",
+                          str_detect(contrast, "democracy") ~ "Democracy",
+                          str_detect(contrast, "military") ~  "Military",
                           str_detect(contrast, "monarchy") ~ "Monarchy",
                           str_detect(contrast, "personal") ~ "Personal",
                           TRUE ~ term
                           )) |> 
   mutate(term = factor(term, levels = c(
-  "Regime: Democracy",
+  "Democracy",
   "Military",
   "Monarchy",
   "Personal",
@@ -1193,17 +1184,8 @@ contrast = str_replace(
   rename(AME = Ame) |> 
   gt() |> 
   cols_align(align = "left", columns = Term) |> 
-  tab_style(
-    style = cell_text(indent = px(63)),
-    locations = cells_body(
-      columns = Term,
-      rows = 2:4
-    )
-  ) |> 
   tab_options(
-    table.width = pct(95),
-    # table.font.size = px(14),
-    column_labels.font.weight = "bold"
+    table.width = pct(99)
     ) |> 
   fmt_number(
     decimals = 3          # specify the number of decimal places
@@ -1269,19 +1251,19 @@ avg_comparisons(model_2) |>
          ame = round(ame, 3)) |> 
   select(-estimate) |>
   mutate(term = case_when(term == "coup_dummy" ~ "Previous coups (P)",
-                          term == "time_since_last_coup" ~ "Yrs since coup (P)" ,
-                          term == "coup_dummy*time_since_last_coup" ~ "Interaction term: P * Y",
+                          term == "time_since_last_coup" ~ "Yrs since coup (Y)" ,
+                          term == "coup_dummy*time_since_last_coup" ~ "P * Y",
                           term == "GDP_trend" ~ "Economic trend",
                           term == "GDP_pc" ~ "GDP per capita",
                           term == "violence" ~ "Political violence",
-                          str_detect(contrast, "democracy") ~ "Regime: Democracy",
+                          str_detect(contrast, "democracy") ~ "Democracy",
                           str_detect(contrast, "military") ~ "Military",
                           str_detect(contrast, "monarchy") ~ "Monarchy",
                           str_detect(contrast, "personal") ~ "Personal",
                           TRUE ~ term
                           )) |> 
   mutate(term = factor(term, levels = c(
-  "Regime: Democracy",
+  "Democracy",
   "Military",
   "Monarchy",
   "Personal",
@@ -1290,7 +1272,7 @@ avg_comparisons(model_2) |>
   "Political violence",
   "Previous coups (P)",
   "Yrs since coup (Y)",
-   "Interaction term: P * Y"
+   "P * Y"
 )),
 contrast = str_replace(
     contrast, 
@@ -1302,17 +1284,8 @@ contrast = str_replace(
   rename(AME = Ame) |> 
   gt() |> 
   cols_align(align = "left", columns = Term) |> 
-  tab_style(
-    style = cell_text(indent = px(63)),
-    locations = cells_body(
-      columns = Term,
-      rows = 2:4
-    )
-  ) |> 
   tab_options(
-    table.width = pct(95),
-    # table.font.size = px(14),
-    column_labels.font.weight = "bold"
+    table.width = pct(99)
     ) |> 
   fmt_number(
     decimals = 3          # specify the number of decimal places
@@ -1817,13 +1790,9 @@ qualifications for autocoups.
 read.csv(here("data/autocoup_source.csv")) |> 
   clean_names(case = "title") |> 
   gt() |>
-  tab_options(column_labels.font.weight = "bold",
-              data_row.padding = px(2),
-              table.width = pct(100),
-              table.align = "center") |>
-  cols_width(
-    2 ~ px(200)
-  ) |> 
+  tab_options(
+    table.width = pct(100),
+    table.align = "center") |>
   as_raw_html()
 ```
 
@@ -1888,17 +1857,16 @@ required in-depth research, especially for less documented cases.
 
 ```{r}
 #| label: data_descriptions
-#| echo: !expr format == "html"
 
 country <- Autocoup |> 
   distinct(ccode) |> 
   summarise(count = n())
 
 autocoup_desc <- Autocoup |> 
-  summarise(autocoup_attempted = n(),
-            autocoup_succeeded = sum(autocoup_outcome == "Yes"),
+  summarise(attempted = n(),
+            succeeded = sum(autocoup_outcome == "Yes"),
     .by = autocoup_method) |> 
-  arrange(-autocoup_attempted)
+  arrange(-attempted)
 ```
 
 The primary coding has identified `r nrow(Autocoup)` autocoup cases from 1945 to
@@ -1906,37 +1874,34 @@ The primary coding has identified `r nrow(Autocoup)` autocoup cases from 1945 to
 a rich source of information for analysing trends and patterns in autocoup
 attempts across different political contexts.
 
-```{r}
-#| label: tbl-autocoup_method
-#| tbl-cap: Autocoup methods and success rates (1945-2021)
-#| echo: !expr format == "html"
-
-autocoup_desc |> 
-  adorn_totals() |> 
-  mutate(Success_rate = percent(autocoup_succeeded/autocoup_attempted)) |> 
-  clean_names(case = "title") |> 
-  gt() |> 
-  tab_options(column_labels.font.weight = "bold",
-              table.width = pct(100),
-              table.align = "center") |>
-  cols_width(
-    1 ~ px(180),
-    2:3 ~ px(140),
-    4 ~ px(100)
-  ) |> 
-  as_raw_html()
-
-#autocoup_desc$autocoup_attempted[1]
-```
-
 @tbl-autocoup_method presents a breakdown of the autocoup methods employed by
 leaders:
 
+```{r}
+#| label: tbl-autocoup_method
+#| tbl-cap: Autocoup methods and success rates (1945-2021)
+
+autocoup_desc |> 
+  adorn_totals() |> 
+  mutate(Success_rate = percent(round(succeeded/attempted, 3))) |> 
+  clean_names(case = "title") |> 
+  gt() |> 
+  tab_options(
+    table.width = pct(99)
+    ) |>
+  cols_align(
+    align = "center",
+    columns = 2:3
+  ) |> 
+  tab_source_note(source_note = md("*Source: Autocoup dataset*")) |> 
+  as_raw_html()
+```
+
 The most common autocoup method is "enabling re-election", accounting for
-`r autocoup_desc$autocoup_attempted[1]` events. This is followed by "removing
-term limits altogether" (`r autocoup_desc$autocoup_attempted[2]` cases), and then
-"delaying elections" and "declaring the leader for life" (each with
-`r autocoup_desc$autocoup_attempted[3]` cases).
+`r autocoup_desc$attempted[1]` events. This is followed by "removing term limits
+altogether" (`r autocoup_desc$attempted[2]` cases), and then "delaying elections"
+and "declaring the leader for life" (each with `r autocoup_desc$attempted[3]`
+cases).
 
 The overall success rate of autocoups is 79%, which is significantly higher than
 the approximately 50% success rate of classical coups. This high success rate can
@@ -2498,7 +2463,7 @@ five years.
 #| fig-height: 5
 #| fig-align: center
 #| fig-cap: Survival curves of overstaying and coup-entry leaders
-#| echo: !expr format == "html"
+
 
 # Fit survival curves
 fit <- survfit(Surv(survival_year, status) ~ group, data = survival_cox_ph_model)
@@ -2826,7 +2791,6 @@ model in @tbl-cox.
 
 ```{r}
 #| label: model
-#| echo: !expr format == "html"
 
 Mydata1 <- survival_cox_ph_model |> 
    mutate(group = factor(group, 
@@ -2898,11 +2862,10 @@ tbl2 <- model_cox2|>
 ```{r}
 #| label: tbl-cox
 #| tbl-cap: Cox models for survival time of different types of leaders
-#| echo: !expr format == "html"
+
 
 tbl_merge(list(tbl1, tbl2),
-          tab_spanner = c("**Cox PH Model**", "**Time-dependent Cox Model**")) |> 
-  as_gt()
+          tab_spanner = c("**Cox PH Model**", "**Time-dependent Cox Model**"))
 ```
 
 Both the Cox PH model and the time-dependent Cox model analyses revealed a
@@ -3222,7 +3185,6 @@ dataset and continuing to refine the framework.
 ```{r}
 #| label: references
 #| results: asis
-#| eval: !expr format == "latex"
 #| echo: false
 
 cat("\\newpage
