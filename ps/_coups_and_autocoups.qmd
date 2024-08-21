@@ -1180,14 +1180,6 @@ that differ slightly in their treatment of previous coups: Model 1 incorporates
 the number of previous coups, while Model 2 utilizes the time elapsed since the
 last coup.
 
-#### Selection Model: Coup Attempts
-
-In the selection model (Column 1), military and personalist regimes exhibit
-significant positive coefficients at the 1% level, indicating a higher likelihood
-of experiencing coup attempts compared to dominant-party regimes. This aligns
-with our theoretical expectations regarding internal power struggles within
-military juntas and succession vulnerabilities in personalist regimes.
-
 ```{r}
 #| label: tbl-mfx1
 #| tbl-cap: Average marginal effects of coup attempts (Selection of Model 1)
@@ -1243,41 +1235,50 @@ contrast = str_replace(
   as_raw_html()
 ```
 
-@tbl-mfx1 clarifies the regime effects using Average Marginal Effects (AME) and
-ratio percentages. The military regime's marginal effect of 0.07 indicates that
-the probability of coup attempts in military regimes is 7 percentage points (pp)
-higher than in dominant-party regimes, ceteris paribus. This translates to
-military regimes being about 277.7% more likely to encounter coups than
-dominant-party regimes. Similarly, personalist regimes show a 2.4 pp higher
-probability, about 94% more likely compared to dominant-party regimes.
+#### Selection Model: Coup Attempts
 
-Control variables show effects in expected directions but with weaker magnitudes.
-Stronger economic performance, indicated by higher economic growth trends and GDP
-per capita levels, correlates with a lower risk of coup attempts. Political
-violence shows a positive effect, indicating that higher levels of instability
-increase the likelihood of coups. The positive coefficient for the number of
-previous coups suggests a "copycat" effect from earlier incidents.
+The selection model (Column 1) reveals that military and personalist regimes
+exhibit significant positive coefficients at the 1% level, indicating a higher
+likelihood of experiencing coup attempts compared to dominant-party regimes. This
+aligns with the theoretical expectations regarding internal power struggles
+within military juntas and succession vulnerabilities in personalist regimes.
+
+@tbl-mfx1 presents the Average Marginal Effects (AME) and ratio percentages to
+clarify the regime effects. The military regime's marginal effect of 0.07
+indicates that the probability of coup attempts in military regimes is 7
+percentage points (pp) higher than in dominant-party regimes, ceteris paribus.
+This translates to military regimes being about 277.7% more likely to encounter
+coups than dominant-party regimes. Similarly, personalist regimes show a 2.4 pp
+higher probability, about 94% more likely compared to dominant-party regimes.
+
+The control variables show effects in expected directions but with weaker
+magnitudes. Stronger economic performance, indicated by higher economic growth
+trends and GDP per capita levels, correlates with a lower risk of coup attempts.
+Political violence shows a positive effect, indicating that higher levels of
+instability increase the likelihood of coups. The positive coefficient for the
+number of previous coups suggests a "copycat" effect from earlier incidents.
 
 #### Outcome Model: Coup Success
 
-The outcome model (Columns 2 and 4 in @tbl-coupmodel) reveals determinants of
-coup success. Military regimes demonstrate a higher probability of coup success
-compared to dominant-party regimes, aligning with expectations that military
-regimes face higher coup risks due to their increased chances of success.
-Personalist and monarchical regimes show slight positive effects on coup success,
-but these effects are not statistically significant.
+Turning to the outcome model (Columns 2 and 4 in @tbl-coupmodel), the results
+reveal determinants of coup success. Military regimes demonstrate a higher
+probability of coup success compared to dominant-party regimes, aligning with
+expectations that military regimes face higher coup risks due to their increased
+chances of success. Personalist and monarchical regimes show slight positive
+effects on coup success, but these effects are not statistically significant.
 
-Control variables exhibit different patterns in the outcome model compared to the
-selection model. Both GDP per capita and political violence maintain a weak
+The control variables exhibit different patterns in the outcome model compared to
+the selection model. Both GDP per capita and political violence maintain a weak
 influence, similar to their effects in the selection model. However, the economic
 trend shows a less significant negative effect on coup success.
 
-#### Model Comparison (Model 1 vs Model 2)
+#### Model Comparison (Model 1 versus Model 2)
 
-Model 2 employs years since the last coup instead of the number of previous
-coups, with an interaction term between previous coups (as a binary variable) and
-years since the last coup. Generally, Model 2 shows results in the same direction
-as Model 1, albeit with relatively lower coefficients (@tbl-mfx2).
+Comparing the two models, Model 2 employs years since the last coup instead of
+the number of previous coups, with an interaction term between previous coups (as
+a binary variable) and years since the last coup. Generally, Model 2 shows
+results in the same direction as Model 1, albeit with relatively lower
+coefficients (see @tbl-mfx2).
 
 The differences between Model 1 and Model 2 suggest that while the recency of
 coups matters, the overall history of coups in a country may have a stronger
@@ -1345,7 +1346,7 @@ contrast = str_replace(
 
 #### Discussion of key findings
 
-The $\rho$ values of 0.898 in Model 1 and 0.386 in Model 2, significant at 1% and
+The $ρ$ values of 0.898 in Model 1 and 0.386 in Model 2, significant at 1% and
 10% levels respectively, indicate strong correlation between unobserved factors
 influencing coup attempts and coup success. This supports the appropriateness of
 the sample selection model and underscores the importance of considering both
@@ -1356,60 +1357,95 @@ model effectively captures key aspects of coup dynamics. The observed disparity
 between coup attempt rates and success rates across regimes points towards
 selection bias, further validating the use of the sample selection model.
 
-#### Theoretical Implications
+#### Implications
 
-These results strongly support my theoretical framework, highlighting the crucial
-role of regime structure in determining coup vulnerability. The findings
-underscore that coups are strategic actions undertaken when odds appear
-favourable, rather than random events.
+These results strongly support the theoretical framework outlined in this
+chapter, underscoring the crucial role that regime structure and the expected
+probability of coup success play in determining a regime's vulnerability to
+overthrow. The findings emphasize that coups are strategic actions undertaken
+when the odds appear favourable, rather than random events.
+
+The implications of these findings for real-world politics are significant. Since
+the perceived chances of successful coup execution are so pivotal in coup
+attempts, incumbent leaders - especially those in autocratic regimes - will be
+highly incentivized to focus their efforts on reducing the capabilities of
+potential coup plotters, rather than simply addressing the underlying
+dispositions toward staging a coup.
+
+In practice, this means autocratic leaders are likely to prioritize
+"coup-proofing" strategies, such as handpicking loyal generals and officials over
+competent ones, creating factional divisions within the elite, and removing
+capable or popular military officers and government officials - even if they
+remain loyal. However, this can lead to a vicious cycle.
+
+As the old Chinese proverb states, "A step forward in righteousness is met with
+an even greater rise in opposition." Just when incumbents believe they have
+solved the problem of coup risk, new challenges can emerge. The suppression of
+potential rivals inevitably breeds dissent and grievances, making the disposition
+toward staging a coup even more appealing. While capability is more crucial, the
+disposition for a coup cannot be completely ignored, as severe crackdowns on the
+opposition may ultimately lower the perceived costs of attempting a takeover.
+
+Furthermore, if incumbent leaders devote excessive attention to coup-proofing at
+the expense of economic growth and social development, they are likely to resort
+to increasingly autocratic forms of ruling. This, in turn, can lead to democratic
+backsliding or even outright breakdown, as well as the entrenchment of
+authoritarian and personalistic rule.
+
+In summary, the findings of this study offer critical insights into the complex
+dynamics underlying coup attempts and the strategic calculus of incumbent
+regimes. Navigating these challenges will require a delicate balance between
+addressing the capabilities and dispositions of potential coup plotters, while
+also maintaining a focus on broader governance, economic, and social priorities.
 
 ### Conclusion
 
-This study addresses the lack of consensus in empirical research on coup
+This study aims to address the lack of consensus in empirical research on coup
 predictors by introducing a novel approach that prioritizes determinants based on
-their impact on coup success. By analysing coup success rates, I posit that the
-expected outcomes of coups are critical determinants of their occurrence.
-Employing a double probit model with sample selection, the research investigates
-and confirms a strong and robust relationship between regime types and coup
-attempts.
+their impact on the success of coup attempts. By analyzing coup success rates,
+the research posits that the expected outcomes of coups are critical determinants
+of their occurrence. Employing a double probit model with sample selection, the
+study investigates and confirms a strong and robust relationship between regime
+types and the likelihood of coup attempts.
 
-The main findings reveal that regime type plays a pivotal role in the likelihood
-of coup attempts. Military and personalist regimes, characterized by weaker
-institutional frameworks and higher vulnerability, demonstrate significantly
-higher susceptibility to coups compared to dominant-party regimes. This
-underscores the importance of supporting initiatives that establish regimes with
-constitutional institutions rather than those dependent on military power or
-personal authority, as the latter prove more volatile and coup-prone.
+The key findings reveal that regime type plays a pivotal role in the
+susceptibility to coup challenges. Military and personalist regimes,
+characterized by weaker institutional frameworks and higher vulnerability,
+demonstrate significantly higher susceptibility to coups compared to
+dominant-party regimes. This underscores the importance of supporting initiatives
+that establish regimes with constitutional institutions, rather than those
+dependent on military power or personal authority, as the latter prove more
+volatile and coup-prone.
 
-The research also indicates that stronger economic performance, while not as
-influential as regime type, is associated with a lower risk of coups. This
-suggests that policies promoting economic development can be effective in
-reducing coup risk. Given that regime type is often determined during regime
-formation and is difficult to alter, promoting economic growth might be the most
-viable coup-proofing strategy available to incumbents.
+Additionally, the research indicates that stronger economic performance, while
+not as influential as regime type, is associated with a lower risk of coups. This
+suggests that policies promoting economic development can be an effective means
+of reducing coup risk. Given that regime type is often determined during the
+formative stages of a regime and is difficult to alter, fostering economic growth
+might be the most viable coup-proofing strategy available to incumbent leaders.
 
-However, these findings present a paradox for autocratic leaders, particularly
-dictators and military juntas. While institutionalization of regimes could
-enhance stability and reduce coup risk, few such leaders are willing to implement
-these reforms. This reluctance stems from the potential constraints on their
-power or shortened terms that such changes might entail. Thus, while institutions
-may benefit the regime's longevity, they do not necessarily serve the immediate
-interests of individual leaders.
+However, these findings present a paradox for autocratic rulers, particularly
+dictators and military juntas. While the institutionalization of regimes could
+enhance long-term stability and reduce coup risk, few such leaders are willing to
+implement these reforms. This reluctance stems from the potential constraints on
+their power or shortened terms that such changes might entail. Thus, while
+institutional strengthening may benefit the regime's longevity, it does not
+necessarily serve the immediate interests of individual leaders.
 
 This study opens avenues for further research, including:
 
 -   Investigating the long-term effects of regime types on political stability,
-    including democratization or personalization.
+    including democratization or authoritarian personalization
 
 -   Examining how international factors might influence regime choices and coup
     dynamics when internal factors are too weak to prevent coups.
 
-In conclusion, this chapter provides robust evidence for the critical role of
-regime type in determining coup risk, while also acknowledging the complex
-realities of political power. By illuminating the strategic calculus behind coup
-attempts, it offers valuable insights for scholars seeking to understand
-political instability and policymakers working to promote democratic transitions
-and political stability in diverse global contexts.
+In conclusion, this chapter provides robust empirical evidence for the critical
+role of regime type in determining coup risk, while also acknowledging the
+complex realities of political power dynamics. By illuminating the strategic
+calculus behind coup attempts, it offers valuable insights for scholars seeking
+to understand political instability and policy-makers working to promote
+democratic transitions and political stability in diverse global contexts.
 
 ## Autocoups: Conceptual Clarification and Analysis of Power Extensions by Incumbent Leaders {#sec-chapter3}
 
