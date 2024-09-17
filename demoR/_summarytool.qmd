@@ -1,0 +1,22 @@
+---
+title: Summarytools package
+---
+
+```{r}
+#| label: setup
+
+pacman::p_load(summarytools, tidyverse)
+```
+
+```{r}
+mtcars |> 
+  dfSummary() |> 
+  stview()
+```
+
+```{r}
+Autocoup |> 
+  select(8:13) |> 
+  dfSummary() |> 
+  stview()
+```
