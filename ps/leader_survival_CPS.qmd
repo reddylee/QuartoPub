@@ -1,0 +1,889 @@
+---
+title: "Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-installed and Autocoup Leaders"
+
+
+date: last-modified
+format:
+  aps-pdf: 
+    keep-tex: true
+    header-includes:
+      - \usepackage{sectsty}
+      - \chapterfont{\centering}
+      - \usepackage{lscape}
+      - \newcommand{\blandscape}{\begin{landscape}}
+      - \newcommand{\elandscape}{\end{landscape}}
+
+bibliography: references.bib
+
+abstract: |
+  This study examines the relationship between the methods of power acquisition and the tenure of leaders who ascend to power through unconventional means, with a particular focus on coup-installed and autocoup leaders. The central hypothesis posits that the mode of accession has a profound impact on leadership longevity. Utilizing Cox proportional hazards and time-dependent Cox models, this study provides robust empirical evidence of disparate survival times between these two leader types. The findings reveal that, on average, coup-installed leaders are 2.23 times more likely to be ousted from power than autocoup leaders, all else being equal. These results have far-reaching implications for political stability and democratic processes, suggesting that the perceived low costs and high rewards associated with autocoups may incentivize incumbents to prolong their tenure through this means, potentially contributing to democratic erosion. This research makes a notable contribution to the academic literature by offering nuanced insights into the dynamics of irregular leadership transitions and enhances our understanding of the complex interplay between power acquisition methods and leadership longevity.
+  
+keywords: [Coups, Autocoups, Leadership Survival, Cox Model]
+
+execute:
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+format <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue)
+```
+
+## Introduction
+
+The enduring fascination with the longevity of political leaders has sparked
+extensive research in political science, with scholars seeking to understand why
+some leaders maintain power for decades while others are ousted in a matter of
+months or even days. However, a specific subset of leaders—those who ascend to
+power through coups or extend their tenure through autocoups—has received
+relatively limited attention. Examining the tenures of these leaders is crucial,
+as it sheds light on the dynamics of irregular leadership transitions and their
+implications for political stability and democratic processes.
+
+In contrast to leaders who attain power through conventional means, those who
+rise through irregular channels, such as coups or autocoups, present more complex
+and intriguing cases for study. The Archigos dataset highlights the prevalence of
+irregular power transitions. Between 1945 and 2015, over half of leaders who
+assumed power irregularly also exited irregularly, a rate significantly higher
+than that of leaders who accessed office through regular channels.
+
+Coup-installed and autocoup leaders constitute a substantial portion of these
+irregular cases. The Archigos dataset notes that of 374 leaders who exited
+irregularly, 246 (65.8%) were ousted through coups. Furthermore, research by
+@frantz2016 demonstrates that coup-related exits account for approximately
+one-third of all exits in autocracies, surpassing any other transition type.
+Additionally, the autocoup dataset, introduced by @zhu2024, documents 110
+autocoup attempts between 1945 and 2023, of which 87 were successful.
+
+```{r}
+#| label: data
+#| include: false
+survival_cox_ph_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_ph_model.csv") |> 
+  mutate(survival_year = survival_days / 365)
+
+survival_cox_td_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_td_model.csv")
+
+avg <- survival_cox_ph_model |>
+  summarise(avg=round(mean(survival_year),1),
+            .by = group)
+```
+
+Measuring the tenure of coup-installed and autocoup leaders poses challenges due
+to the inherent irregularity and uncertainty of their positions. Nevertheless, a
+comparative analysis reveals that leaders who extend power through autocoups tend
+to have longer average post-autocoup tenures (approximately `r avg$avg[1]` years)
+compared to coup-installed leaders (approximately `r avg$avg[2]` years),
+suggesting a potential tenure gap of over five years.
+
+```{r}
+#| label: fig-logrank
+#| fig-width: 7
+#| fig-height: 5
+#| fig-align: center
+#| fig-cap: Survival curves of autocoup and coup-installed leaders
+
+
+# Fit survival curves
+fit <- survfit(Surv(survival_year, status) ~ group, data = survival_cox_ph_model)
+# Create log-rank plot (Kaplan-Meier plot)
+ggsurvplot(fit, 
+           data = survival_cox_ph_model, 
+           risk.table = TRUE, 
+           risk.table.height = 0.3, 
+           pval = TRUE,
+           surv.median.line = "hv",
+           break.x.by = 5, 
+           legend.title = "Leader Type",
+           legend.labs = c("Autocoup leaders", "coup-installed leaders"),
+           xlab = "Survival Years",
+           #title = "Survival Curves of overstay and coup-installed leaders",
+           font.title = 12)
+```
+
+A preliminary log-rank test in survival analysis, as illustrated in @fig-logrank,
+demonstrates a statistically significant difference between the tenures of
+autocoup and coup-installed leaders. The survival curve for autocoup leaders
+consistently exceeds that of coup-installed leaders, indicating longer survival
+times and a reduced risk of ouster for autocoup leaders.
+
+This study posits that the method of accession significantly influences
+leadership longevity. Coup-installed leaders likely confront greater challenges
+to their rule, resulting in shorter average tenures compared to autocoup leaders.
+The analysis, employing Cox proportional hazards and time-dependent Cox models,
+supports this hypothesis, demonstrating that autocoup leaders generally
+experience longer tenures than coup-installed leaders.
+
+This research offers two primary contributions to the field. First, it highlights
+an understudied factor in leadership survival analysis: the impact of the method
+of accession to power. The findings suggest that leader survival is influenced
+not only by ruling strategies but also by the initial method of acquiring power.
+Second, by employing survival models, this study provides empirical evidence of
+the significant difference in tenure duration between autocoup and coup-installed
+leaders. This insight may explain the increasing prevalence of tenure extensions
+through autocoups since 2000, as more incumbents observe and potentially emulate
+successful precedents.
+
+The remainder of this article is structured as follows: Section 2 provides a
+comprehensive literature review on political survival, establishing the context
+for this research. Section 3 explores the factors influencing the survival of
+coup and autocoup leaders. Section 4 outlines the methodology and data used,
+including the application of survival models to analyze the determinants of
+leadership longevity. Section 5 presents the analysis findings and a detailed
+discussion of the results. Finally, Section 6 concludes by synthesizing key
+takeaways and exploring their broader implications for political stability and
+democratic processes.
+
+## Literature review
+
+The longevity of political leaders, which varies widely across different regimes,
+countries, and historical periods, has been a longstanding focus of research in
+political science. This field can be divided into two interconnected areas:
+regime survival and individual leader survival, which are distinct but related
+concepts. Regime survival focuses on the endurance of political systems, such as
+monarchies, political parties, or specific ideological structures, while leader
+survival concerns the duration of individual leaders' time in office.
+
+Political survival patterns vary widely across different systems. Parliamentary
+democracies (e.g., Japan, United Kingdom) often experience prolonged periods of
+party dominance coupled with frequent leadership changes. Similarly, communist
+regimes (e.g., China) typically demonstrate enduring party rule with more
+frequent leadership transitions. Presidential systems (e.g., United States) and
+many military regimes tend to exhibit more frequent changes in both ruling party
+or junta and leader.
+
+The existing literature on leader survival is extensive and multifaceted. Some
+studies explore specific mechanisms influencing leadership longevity within
+particular regimes, such as democracies [@svolik2014] or autocracies
+[@davenport2021]. Others aim to develop more generalizable theoretical frameworks
+explaining leader survival across different political systems
+[@buenodemesquita2003]. While a universal theory remains an aspirational goal,
+the complexities of leadership survival across diverse regime types present
+significant challenges.
+
+Power transition mechanisms vary substantially across different types of regimes,
+particularly between democracies and autocracies. Autocratic systems often
+feature closed leadership selection processes, restricted to a narrow pool of
+individuals. While some autocracies may hold elections, significant barriers to
+entry for legitimate challengers typically persist. The opacity of selection
+processes in autocracies makes it difficult to assess genuine levels of public
+support compared to democracies. Conceptualizing selectorates or winning
+coalitions, as proposed by @buenodemesquita2003, becomes problematic in many
+autocratic contexts.
+
+Given these complexities, focusing research on specific regimes or leader types
+may be more fruitful. The study of irregular leaders, such as those who ascend to
+power through coups or extend their tenures through autocoups, offers a
+compelling avenue for research due to the inherent complexities and uncertainties
+surrounding their leadership trajectories.
+
+Two primary perspectives have emerged to explain the dynamics of leader survival.
+The first emphasizes objective factors and resources, such as personal competence
+[@yu2016], societal stability [@arriola2009], economic development [@palmer1999;
+@williams2011], natural resource endowments [@smith2004; @quirozflores2012;
+@wright2013], and external support [@licht2009; @wright2008; @thyne2017]. The
+second focuses on subjective factors and strategies, including political
+policies, responses to opposition, and tactics for consolidating power
+[@gandhi2007; @morrison2009; @escribà-folch2013; @davenport2021].
+
+Coups, a significant aspect of irregular leadership transitions, have received
+considerable scholarly attention. Research has examined coup prevention
+strategies [@powell2017; @sudduth2017; @debruin2020]. Studies have explored the
+impact of coups on leadership and the subsequent actions of coup leaders
+[@sudduth2017, @sudduth2018, @easton2018].
+
+However, a significant gap remains in the literature regarding the comparison of
+leadership survival between coup-installed and autocoup leaders. This study aims
+to address this gap by investigating and comparing the duration of leadership
+survival for these two leader types.
+
+By focusing on the comparison between coup-installed and autocoup leaders, this
+study seeks to contribute to a more nuanced understanding of political survival
+in irregular leadership transitions. This approach may offer valuable insights
+into the complex dynamics of leader longevity across different political
+contexts.
+
+### Survival dynamics of autocoup and coup-installed leaders
+
+Studying leadership survival in political systems is challenging due to the
+opacity and diverse mechanisms of power transitions. These challenges, however,
+underscore the significance of this research, as it illuminates understudied
+dynamics in political leadership. Although the survival of political leaders is
+complex and varied, some patterns do emerge. Leaders of similar types often
+exhibit similar characteristics, allowing for meaningful analysis.
+
+### Key definitions and scope
+
+Before delving into the comparison, it is essential to clarify several key
+terminologies:
+
+-   **Coup and autocoup**: Coup is defined as "illegal and overt attempts by the
+    military or other elites within the state apparatus to unseat the sitting
+    executive" [@powell2011], and autocoup is defined as "the illegitimate
+    extension of an incumbent leader's term in office beyond the originally
+    mandated limits" [@zhu2024]. These definitions provide a clear distinction
+    between the two types of irregular leadership transitions.
+
+-   **Tenure length threshold**: To ensure meaningful analysis, this study
+    focuses on leaders with substantial periods in power, applying a six-month
+    threshold to both autocoup and coup-installed leaders. This criterion filters
+    out ephemeral leadership episodes, allowing for a more robust examination of
+    survival dynamics.
+
+-   **Autocoup leader**: An incumbent leader who successfully employs
+    illegitimate or unconstitutional means to extend their tenure in power. This
+    definition encompasses various methods of power consolidation that circumvent
+    established democratic processes or constitutional limits.
+
+-   **Coup-installed leader**: The individual who assumes power after a
+    successful coup, regardless of their role in the coup itself. This broad
+    definition allows for the inclusion of both coup instigators and those
+    selected to lead post-coup, providing a comprehensive view of leadership
+    dynamics following forceful regime change.
+
+This study focuses on comparing the post-autocoup tenure of autocoup leaders with
+the post-coup tenure of coup-installed leaders. This comparative approach is
+motivated by the relevance and similarity of these leader types in terms of
+illegitimacy, uncertainty, and instability. By examining these parallel yet
+distinct paths to power, we can gain insights into the factors that influence
+leadership longevity in irregular leadership transitions.
+
+### Challenges in power consolidation
+
+Both autocoup and coup-installed leaders confront distinct challenges in
+consolidating their power, primarily stemming from the varying intensity of
+issues related to illegitimacy, uncertainty, and instability. This disparity
+creates an uneven playing field in terms of power dynamics, placing
+coup-installed leaders at a significant disadvantage. @tbl-leaders provides a
+comparative overview of the main features of autocoup and coup-installed leaders,
+highlighting these key differences.
+
+\blandscape
+
+```{r}
+#| label: tbl-leaders
+#| tbl-cap: Main features of autocoup and coup-installed leaders 
+#| echo: false
+#| results: asis
+
+read.csv(here("data/leader_comparison.csv")) |> 
+  clean_names(case = "title") |> 
+  gt() |>
+  tab_options(column_labels.font.weight = "bold",
+              table.width = pct(100),
+              table.align = "center") |>
+  cols_width(
+    1 ~ px(150),
+    2:3 ~ px(300)
+  )
+```
+
+\elandscape
+
+#### Illegitimacy
+
+While both types of leaders suffer from a legitimacy deficit, the nature and
+perception of this deficit differ significantly:
+
+-   **Coup-installed leaders**: Their illegitimacy is blatant and unambiguous,
+    stemming from the overt and often violent seizure of power. This overt act
+    undermines pre-existing norms and institutions, generating immediate domestic
+    and international condemnation.
+
+-   **Autocoup leaders**: In contrast, autocoup leaders employ a more subtle and
+    deceptive strategy, manipulating legal processes and institutions to create a
+    façade of democratic legitimacy. This veneer of legality, while often thin,
+    can provide a degree of cover and buy time for consolidating power.
+
+#### Uncertainty
+
+The irregular paths to power for both types of leaders create uncertainty about
+the longevity of their rule and the mechanisms of their eventual departure.
+However, the levels and sources of this uncertainty differ significantly.
+
+-   **Coup-installed leaders:** These leaders face a trifecta of uncertainties.
+    First, the immediate aftermath of a coup often involves a struggle for power
+    within the junta or ruling coalition, creating ambiguity about who will
+    ultimately consolidate control. Second, the tenure of coup-installed leaders
+    is inherently precarious, subject to internal rivalries, popular uprisings,
+    or counter-coups. Third, the lack of established succession mechanisms
+    further amplifies uncertainty, making it difficult to predict the transfer of
+    power and potentially triggering future instability.
+
+-   **Autocoup leaders:** While not immune to uncertainty, autocoup leaders
+    generally present a clearer picture. The question of who will rule
+    post-autocoup is largely settled, as the incumbent retains power.
+    Furthermore, many autocoup leaders openly aspire to extend their rule
+    indefinitely or incrementally, attempting to establish a sense of permanence.
+    This perceived stability, whether real or manufactured, can contribute to a
+    more predictable political environment, at least in the short term.
+
+#### Instability
+
+The awareness of shaky legitimacy and persistent uncertainty inevitably breeds
+insecurity and a sense of crisis, forcing both autocoup and coup-installed
+leaders to prioritize stabilization measures. However, the nature and intensity
+of these challenges differ:
+
+-   **Coup-installed leaders:** These leaders face the daunting task of rapidly
+    reshaping power dynamics, often resorting to purges and crackdowns to
+    eliminate potential adversaries and consolidate control. This process of
+    dismantling existing structures and building new ones generates significant
+    instability, potentially alienating former allies and triggering resistance
+    from various segments of society. The need to appease powerful actors both
+    domestically and internationally further limits their options, forcing them
+    into compromises that can undermine their authority and long-term stability.
+
+-   **Autocoup leaders:** In contrast, autocoup leaders often benefit from a
+    degree of continuity in regime personnel and institutions. This relative
+    stability allows them to implement changes gradually, minimizing disruptions
+    and mitigating potential backlash. While they may still face opposition, they
+    are less likely to confront immediate and existential threats to their rule,
+    providing them with more time and leverage to consolidate power.
+
+By understanding these contrasting challenges, we can better appreciate the
+relative advantages and disadvantages faced by autocoup and coup-installed
+leaders. This comparative perspective provides a nuanced framework for analyzing
+the strategies these leaders employ to consolidate power and navigate the
+perilous terrain of irregular leadership transitions.
+
+### Empirical evidence and hypothesis
+
+Empirical evidence substantiates the disadvantage faced by coup-installed
+leaders, revealing a complex interplay between historical precedent, power
+consolidation challenges, and leadership longevity. This section presents key
+data points and introduces the central hypothesis guiding this study.
+
+Data analysis shows a significant correlation between the frequency of coup
+attempts in a country and the likelihood of future coups. Notably, over a third
+of coups have occurred in the top ten countries with the most attempts since 1950
+[@powell2011]. This pattern suggests a self-reinforcing cycle of political
+instability, where each successful coup increases the probability of subsequent
+attempts, creating an environment of persistent uncertainty for coup-installed
+leaders.
+
+The disparity in leadership longevity between autocoup and coup-installed leaders
+is starkly illustrated by survival data. As depicted in @fig-logrank, the average
+survival period following an autocoup is approximately five years longer than
+that of coup-installed leaders. This substantial difference in tenure length
+underscores the divergent challenges faced by these two types of leaders in
+maintaining their grip on power.
+
+The distinct challenges faced by autocoup leaders and coup-installed leaders in
+consolidating power create a self-perpetuating cycle that significantly
+influences their tenure length:
+
+-   Coup-installed leaders: Face greater legitimacy challenges and internal
+    instability; Struggle to attract and retain strong support; More vulnerable
+    to internal and external challenges; Shorter average tenures reinforce
+    perception of instability.
+
+-   Autocoup leaders: Often benefit from a veneer of legitimacy and a stronger
+    initial position; Better able to consolidate power and attract supporters;
+    Face less immediate threat of overthrow; Longer average tenures contribute to
+    perception of stability.
+
+This cycle suggests that the initial method of power acquisition or extension has
+far-reaching consequences for a leader's ability to maintain their position over
+time.
+
+Based on these observations and the theoretical framework outlined earlier, I
+propose the following hypothesis:
+
+***H1: Political leaders who successfully extend their tenure through autocoups
+are more likely to survive longer extended tenure compared to coup-installed
+leaders.***
+
+This hypothesis encapsulates the expected outcome of the divergent challenges and
+advantages faced by autocoup and coup-installed leaders. By testing this
+hypothesis, I aim to quantify the impact of the method of power acquisition or
+extension on leadership longevity, contributing to a more nuanced understanding
+of political survival in contexts of irregular transitions.
+
+## Research design
+
+This section employs survival analysis to test the hypothesis that autocoup
+leaders have longer survival times in office compared to coup-installed leaders.
+This study uses Cox models to analyze the survival tenures of autocoup and
+coup-installed leaders, controlling for various factors that may affect their
+time in office.
+
+### Methodology: Survival analysis
+
+Two Cox models will be employed to analyze the survival tenures of coup-installed
+and autocoup leaders:
+
+-   **Cox proportional hazards (PH) model**: This model uses only the variables
+    present at the entry year, without considering changes over time.
+
+-   **Time-dependent Cox model**: This model accounts for variations in
+    time-dependent control variables such as economic performance and political
+    stability.
+
+The Cox model is preferred over the Kaplan-Meier model because it enables the
+estimation of the impact of multiple factors. Although it does not directly
+estimate the duration of tenure, it assesses the hazard rate associated with
+being ousted from power. This approach captures different facets of the same
+phenomenon: as a leader's cumulative hazard of being ousted increases, their
+probability of survival in office decreases.
+
+### Dependent variables[^1]
+
+The dependent variables include survival time and end point status:
+
+-   **Survival time:** Survival time refers to the duration of a leader's tenure,
+    measured in days. For coup-installed leaders, the survival time begins on the
+    day they assume power through a coup. For autocoup leaders, the survival time
+    starts on the expiration date of their original legitimate term. For example,
+    Russia's president Vladimir Putin assumed power in 2000 and, after serving
+    two terms, stepped down in 2008. However, he remained in a powerful position
+    as the prime minister and hand-picked Dmitry Medvedev to succeed him as
+    president, while continuing to control the power behind the scenes. In this
+    case, Putin's survival time begins in 2008, marking the start of his
+    post-autocoup tenure. The survival time concludes on the day the leader
+    finally exits office, applicable to both coup-installed and autocoup leaders.
+
+-   **End point status:** This variable indicates the manner in which the
+    leader's tenure concluded, categorized as follows:
+
+    **0 = Censored:** This status is assigned to leaders who leave office through
+    regular means other than being ousted. This includes leaders transferring
+    power to their designated successors, leaving office as their terms expire,
+    losing in general elections, voluntarily leaving office due to health issues,
+    or dying of natural causes.
+
+    **1 = Ousted:** This status is assigned to leaders who are forced to leave
+    office. This includes leaders resigning under pressure, being ousted by coups
+    or other forces, or being assassinated.
+
+### Key independent variable: leader type
+
+The key independent variable is the leader type, which categorizes leaders into
+two distinct groups:
+
+-   **Group A = Autocoup leader**: Leaders who extend their tenure through
+    autocoups.
+-   **Group B = Coup-installed leader**: Leaders who assume power through coups.
+
+This variable is the primary independent variable of interest, serving as the
+basis for comparing the survival time between these two types of leaders.
+
+The data for both dependent and independent variables are sourced from the
+Archigos dataset [@goemans2009] and PLAD dataset [@bomprezzi2024wedded]. The
+autocoup dataset is introduced by @zhu2024.
+
+### Control variables
+
+The control variables are chosen based on the research of @gassebner2016. They
+analysed 66 factors potentially influencing coups and found that slow economic
+growth, prior coup attempts, and other forms of political violence are
+particularly significant factors. Therefore, we include economic performance,
+political violence, and the number of previous coups as our main control
+variables.
+
+```{r}
+#| label: variables
+#| results: asis
+gdppc <- "-   **Economic Level:** Represented by GDP per capita. This measure provides an
+    indication of the overall economic health and standard of living in a
+    country. We use GDP per capita data (in constant 2017 international 1000
+    dollars, PPP) from the V-Dem dataset by @fariss2022."
+
+ct <- "-   **Economic Performance:** Measured using the current-trend ($CT$) ratio
+    developed by @krishnarajan2019. This ratio compares a country's current GDP
+    per capita to the average GDP per capita over the previous five years. A
+    higher $CT$ ratio indicates stronger economic performance. For a country $i$
+    at year $t$, the $CT$ ratio is calculated as follows:"
+
+glue(gdppc)
+glue(ct)
+```
+
+$$
+    \begin{aligned}
+    CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
+    \end{aligned}
+$$ {#eq-eq6}
+
+-   **Political stability:** This variable captures overall regime stability by
+    including a violence index that encompasses all types of internal and
+    interstate wars and violence. The data for this index is sourced from the
+    variable “actotal” in the Major Episodes of Political Violence dataset
+    [@marshall2005current], with 0 representing the most stable conditions (no
+    violence at all) and 18 representing the most unstable.
+
+-   **Previous coups:** Included in the selection equation as either: a) The
+    number of previous coups in a country (Model 1), or b) The time since the
+    last coup attempt (Model 2 for robustness check).
+
+-   **Population size:** To account for its potential impact on leaders' tenures,
+    we consider the log of the population size. This transformation helps in
+    managing the wide range of population sizes across different countries. The
+    data is sourced from the V-Dem dataset and is evaluated to understand its
+    influence on power transitions. Larger populations may present more
+    governance challenges and potential sources of opposition, thereby affecting
+    the stability and longevity of a leader's tenure.
+
+-   **Leader's age:** The age of the leader is included as an additional variable
+    in the analysis, offering insights into potential correlations with
+    leadership strength. Older leaders may have different experiences, networks,
+    and health considerations that could influence their ability to maintain
+    power. This data is sourced from Archigos and PLAD datasets.
+
+Unlike the analysis of classic coup determinants, which could theoretically occur
+in any given year, I assume that an autocoup happens only once during an
+incumbent leader's tenure, as a successful autocoup negates the need for another
+attempt. However, this assumption does not always reflect reality, as leaders
+might attempt further extensions or try again after a failed attempt. For
+simplicity, I overlook these possibilities in our analysis.
+
+Therefore, in our probit model, the unit of analysis for autocoups is the entire
+tenure of a leader, rather than a country-year. I establish a base year for the
+variables: for leaders who staged an autocoup, we use the year of their first
+attempt as the base year; for leaders who did not attempt to overstay, I use the
+middle year of their tenure as the base year.
+
+## Results and discussion
+
+### Model results
+
+Using the ***surviavl*** package in R [@survival], I present the regression
+results for both the Cox Proportional Hazards model (Cox PH) and the
+time-dependent Cox model in @tbl-cox.
+
+```{r}
+#| label: model
+
+Mydata1 <- survival_cox_ph_model |> 
+   mutate(group = factor(group, 
+                        labels = c("Autocoup leaders", "Coup-installed leaders")))
+
+model_cox1 <- Mydata1 |> 
+  coxph(
+    Surv(survival_days, status) ~ 
+      group + GDP_trend + GDP_pc + pop_log + 
+      polity5 + violence + age,
+    data = _
+  ) 
+
+tbl1 <- model_cox1|> 
+   tbl_regression(exponentiate = T,
+                 conf.int = F,
+                 add_estimate_to_reference_rows = T,
+                 label = list(group ~ "Leader Type",
+                   GDP_trend ~ "GDP Growth Trend",
+                   GDP_pc ~ "GDP per capita",
+                   pop_log ~ "Population: log",
+                   polity5 ~ "Polity 5",
+                   violence ~ "Political stability",
+                   age ~ "Age")) |> 
+  add_n(location = "level") |> 
+  add_nevent(location = "level") |> 
+  add_significance_stars(hide_p = T,
+                         hide_se = F, 
+                         hide_ci = T,
+                         thresholds = c(0.01, 0.05, 0.1),
+                         ) |> 
+  bold_p(t = 0.05) |> 
+  bold_labels() 
+
+Mydata2 <- survival_cox_td_model |> 
+  mutate(group = factor(group, 
+                        labels = c("Autocoup leaders", "Coup-installed leaders")),
+         survt = (tstop - tstart) * 365)
+
+model_cox2 <- Mydata2 |> 
+  coxph(
+    Surv(T1, T2, status) ~ 
+      group + GDP_trend + GDP_pc + pop_log + 
+      polity5 + violence + age + cluster(id),
+    data = _
+  ) 
+tbl2 <- model_cox2|>
+  tbl_regression(exponentiate = T,
+                 conf.int = F,
+                 add_estimate_to_reference_rows = T,
+                 label = list(group ~ "Leader Type",
+                   GDP_trend ~ "GDP Growth Trend",
+                   GDP_pc ~ "GDP per capita",
+                   pop_log ~ "Population: log",
+                   polity5 ~ "Polity 5",
+                   violence ~ "Political stability",
+                   age ~ "Age")) |> 
+  add_n(location = "level") |> 
+  add_nevent(location = "level") |> 
+  add_significance_stars(hide_p = T,
+                         hide_se = F, 
+                         hide_ci = T,
+                         thresholds = c(0.01, 0.05, 0.1),
+                         ) |> 
+  bold_p(t = 0.05) |> 
+  bold_labels()
+```
+
+```{r}
+#| label: tbl-cox
+#| tbl-cap: Cox models for survival time of different types of leaders
+
+
+tbl_merge(list(tbl1, tbl2),
+          tab_spanner = c("**Cox PH Model**", "**Time-dependent Cox Model**"))
+```
+
+Both models showed a statistically significant relationship between leadership
+type and the hazard of removal from power. Since time-dependent Cox model use the
+control variables which change over time, I interpret the main findings based on
+time-dependent model.
+
+Coup-installed leaders were found to have a hazard ratio of 2.23 in the
+time-dependent model compared to autocoup leaders (reference group), assuming all
+other variables in the model are held constant. This suggests that coup-installed
+leaders face a significantly greater risk of removal from power compared to
+autocoup leaders. At any given time during their tenure, coup-installed leaders
+are 2.23 times more likely to be ousted from power compared to autocoup leaders,
+all else being equal in the model.
+
+The control variables perform differently in the two models. Economic level (GDP
+per capita) exhibits statistically significant effects in both models. In the
+time-dependent model, the hazard ratio of 0.95 indicates that for each unit
+increase in GDP per capita (measured in units of \$10,000), the hazard (or risk)
+of being ousted at any given time is reduced by 5%, assuming all other variables
+in the model are held constant.
+
+GDP growth trend demonstrates a more substantial effect in reducing the risk of
+coups. Specifically, a 1 percentage point higher economic growth trend is
+associated with an 80% reduction in the risk of being ousted, although this
+effect is only statistically significant at the 10% level. This suggests a
+possible trend where positive economic performance might mitigate the risk of
+removal from power, but the evidence is not robust enough to confirm this
+conclusively.
+
+Political stability, as measured by the violence index, shows that a 1-point
+increase in the index correlates with an 11% higher risk of being ousted.
+However, this effect is also only statistically significant at the 10% level,
+indicating a weaker but potentially important relationship between increased
+violence and the risk of removal from office.
+
+### Discussion
+
+```{r}
+#| label: fig-coxSurv
+#| fig-cap: Survival curves for Cox Model
+#| fig-subcap: 
+#|  - Cox PH Model
+#|  - Time-dependent Cox Model
+#| layout-ncol: 2
+#| echo: false
+
+testdata1 <- Mydata1 |> 
+  summarise(
+    .by = group,
+    GDP_trend = mean(GDP_trend),
+    GDP_pc = mean(GDP_pc),
+    pop_log = mean(pop_log),
+    polity5 = mean(polity5),
+    violence = mean(violence),
+    age = mean(age)
+  )
+
+model_cox1 |> 
+  survfit(newdata = testdata1) |>
+  ggsurvplot(data = testdata1,
+             xlab = "Days",
+             surv.median.line = "hv",
+             legend.title = "Leader Type",
+             legend.labs = c("Autocoup leaders", "Coup-installed leaders"))
+
+testdata2 <- Mydata2 |> 
+  summarise(
+    .by = group,
+    GDP_trend = mean(GDP_trend),
+    GDP_pc = mean(GDP_pc),
+    pop_log = mean(pop_log),
+    polity5 = mean(polity5),
+    violence = mean(violence),
+    age = mean(age)
+  )
+
+model_cox2 |> 
+  survfit(newdata = testdata2) |>
+  ggsurvplot(data = testdata2,
+             xlab = "Days",
+             surv.median.line = "hv",
+             legend.title = "Leader Type",
+             legend.labs = c("Autocoup leaders", "Coup-installed leaders"))
+```
+
+The survival curves in @fig-coxSurv displays the survival rates for both types of
+leaders, highlighting the differences in their survival curves. Both the Cox PH
+model and the time-dependent Cox model yield similar results. Notably, the
+survival curve for coup-installed leaders has a significantly lower trajectory
+than that of autocoup leaders. The steeper drop at the early stage for
+coup-installed leaders indicates they are more likely to be ousted shortly after
+assuming power. Additionally, the survival curve for coup-installed leaders
+crosses the median survival line much earlier (about 3,000 days) than that of
+autocoup leaders (about 8,500 days). This disparity suggests that autocoup
+leaders tend to remain in power for longer durations than their coup-installed
+counterparts.
+
+```{r}
+#| label: fig-coxHR
+#| fig-cap: Hazard ratios and 95% CIs for Leader Ousting
+#| fig-subcap: 
+#|  - Cox PH Model
+#|  - Time-dependent Cox Model
+#| layout-ncol: 2
+#| echo: false
+
+coxplottidy <- tidy(model_cox1, exponentiate = T, conf.int = T) |>
+  mutate(term = c("Coup-installed leaders",
+                      "GDP Growth Trend",
+                      "GDP per capita",
+                      "Population: log",
+                      "Polity 5",
+                      "Political stability",
+                      "Age"))
+
+coxplottidy |>
+  ggplot(aes(
+    y = term,
+    x = estimate,
+    xmin = conf.low,
+    xmax = conf.high
+  )) +
+  geom_pointrange() +
+  geom_vline(xintercept = 1,
+             linetype = "dashed",
+             color = "skyblue") +
+  labs(x = "Hazard ratios", y = NULL, title = "") +
+  theme_bw() 
+
+coxplottidy <- tidy(model_cox2, exponentiate = T, conf.int = T) |> 
+  mutate(term = c("Coup-installed leaders",
+                      "GDP Growth Trend",
+                      "GDP per capita",
+                      "Population: log",
+                      "Polity 5",
+                      "Political stability",
+                      "Age"))
+
+coxplottidy |>
+  ggplot(aes(
+    y = term,
+    x = estimate,
+    xmin = conf.low,
+    xmax = conf.high
+  )) +
+  geom_pointrange() +
+  geom_vline(xintercept = 1,
+             linetype = "dashed",
+             color = "skyblue") +
+  labs(x = "Hazard ratios", y = "", title = "") +
+  theme_bw() 
+```
+
+@fig-coxHR displays the hazard ratios and corresponding 95% confidence intervals
+for the variables incorporated in the Cox model. Both the Cox Proportional
+Hazards (PH) model and the time-dependent model produce similar plots,
+reinforcing the robustness of the findings. Key points to note include:
+
+-   The closer the hazard ratio (represented by the dots) is to 1, the less
+    impact the variable has on the risk of being ousted. A hazard ratio of 1
+    indicates no effect.
+
+-   The whiskers extending from the dots represent the 95% confidence intervals.
+    If these whiskers cross the vertical blue line at 1, it indicates that the
+    variable is not statistically significant at the 5% level.
+
+-   The hazard ratio for coup-installed leaders is significantly greater than 1
+    and statistically significant at the 5% level. This indicates that
+    coup-installed leaders face a substantially higher risk of being ousted
+    compared to autocoup leaders.
+
+-   Most other variables have hazard ratios close to 1, suggesting that a
+    one-unit increase in these variables does not significantly affect the risk
+    of being ousted.
+
+-   Although the hazard ratio for GDP growth trend is considerably less than 1 in
+    the time-dependent model, indicating a potential protective effect, it is not
+    statistically significant at the 5% level. However, it is statistically
+    significant at the 10% level, suggesting that better economic performance may
+    help to consolidate the rule of the incumbents to some extent, albeit the
+    evidence is not as strong.
+
+### Assessing the proportional hazards assumption
+
+Assessing the proportional hazards assumption is crucial for the validity of the
+Cox model results. To evaluate this, we used the chi-square test based on
+Schoenfeld residuals to determine whether the covariate effects remain constant
+(proportional) over time. Although the Cox PH model violates the proportional
+hazards assumption, our primary analysis relies on the time-dependent Cox model,
+which does not show strong evidence of violating the proportional hazards
+assumption for any covariate. The global p-value of 0.416 is much greater than
+the 5% significance level, indicating that the proportional hazards assumption is
+reasonably met for the time-dependent Cox model.
+
+```{r}
+#| label: robust_test
+#| include: false
+test <- cox.zph(model_cox2)
+```
+
+## Conclusion
+
+This study explores the survival durations of political leaders who come to power
+through unconventional means, specifically focusing on coups and autocoups. Based
+on the hypothesis that the mode of accession affects leader tenure, I use
+survival analysis techniques, including the Cox proportional hazards model and a
+time-dependent Cox model, to investigate this phenomenon. The findings suggest
+that autocoup leaders tend to have longer tenures than coup-installed leaders.
+
+Empirical analysis reveals a significant disparity in tenure length: leaders who
+assume power via autocoup remain in office for an average of 11 years, compared
+to just 5.6 years for those installed by coups. Moreover, the time-dependent Cox
+model indicates that coup-installed leaders are 2.23 times more likely to be
+ousted from power at any given time compared to their autocoup counterparts, all
+other factors being equal. These findings underscore the importance of
+understanding the autocoup as a mechanism through which leaders extend their rule
+by manipulating legal frameworks and weakening institutional constraints.
+
+The implications of these findings are profound. The relative ease and potential
+rewards of an autocoup could incentivize more leaders to resort to this method of
+power retention, particularly in fragile democracies or transitioning regimes.
+Consequently, democratic backsliding may become more prevalent, as autocoups
+erode democratic institutions and undermine constitutional norms.
+
+This study contributes significantly to the literature on political leadership
+survival by showing that the mode of accession has a substantial impact on leader
+tenure, an aspect that has received limited attention in previous research.
+Methodologically, this work advances the field by applying robust survival
+analysis techniques, including both Cox models, to provide a nuanced
+understanding of the dynamics that influence leadership stability.
+
+However, the study is not without limitations. The analysis relies on an autocoup
+dataset that was collected and coded by the author, a relatively novel concept in
+the academic sphere. As the understanding and recognition of "autocoup" as a term
+continue to evolve, future research should refine and expand the dataset.
+Incorporating additional cases and cross-referencing with other forms of
+irregular leadership transitions would contribute to a more comprehensive view of
+political survival under such conditions.
+
+In conclusion, this study highlights the need for more refined approaches to
+studying political tenure and irregular power retention. By offering valuable
+insights into the dynamics of political stability and the risks associated with
+non-democratic leadership transitions, this research emphasizes the importance of
+continued investigation into the complex relationships between power, legitimacy,
+and survival in political leadership.
+
+```{r}
+#| label: references
+#| results: asis
+cat("\\newpage
+## References")
+```
+
+[^1]: The dataset used in this article is publicly available and can be accessed
+    at: <https://github.com/reddylee/Datasets>.

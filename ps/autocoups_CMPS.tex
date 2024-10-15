@@ -1,0 +1,1682 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  12pt,
+]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+    \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{xcolor}
+\usepackage[top=30mm,left=1in,right=1in,bottom=25mm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage{multirow}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Autocoups Redefined: A Clarification of Concept and Introduction of A Novel Dataset},
+  pdfkeywords={Coups, Autocoups, Political Leadership, Power
+Transitions},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Autocoups Redefined: A Clarification of Concept and Introduction
+of A Novel Dataset}
+\author{}
+\date{2024-10-15}
+
+\begin{document}
+
+
+\def\spacingset#1{\renewcommand{\baselinestretch}%
+{#1}\small\normalsize} \spacingset{1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\date{2024-10-15}
+\title{\bf Autocoups Redefined: A Clarification of Concept and
+Introduction of A Novel Dataset}
+\author{
+}
+
+\maketitle
+
+\bigskip
+\bigskip
+\begin{abstract}
+This article provides a critical reexamination of autocoups, an
+under-explored phenomenon in which incumbent leaders manipulate
+institutions to extend their tenure. By distinctly separating autocoups
+from the broader and more ambiguous concepts of self-coups or executive
+takeovers, the research introduces a refined and more nuanced definition
+of autocoups. Building on this clarified conceptual framework, the study
+unveils a novel dataset of autocoup events from 1945 to 2023, greatly
+enhancing the empirical foundation for future research. A robust
+mixed-methods approach is employed, combining three types of qualitative
+case studies that offer in-depth insights into the dynamics of
+autocoups, alongside a comprehensive quantitative analysis of the
+determinants influencing both autocoup attempts and their outcomes. This
+rigorous empirical inquiry not only underscores the utility and
+versatility of the new dataset but also makes a significant contribution
+to the existing body of literature.
+\end{abstract}
+
+\noindent%
+{\it Keywords:} Coups, Autocoups, Political Leadership, Power
+Transitions
+\vfill
+
+\newpage
+\spacingset{1.9} % DON'T change the spacing!
+
+\setstretch{1.618}
+\subsection{Introduction}\label{introduction}
+
+While the study of irregular leadership transitions has predominantly
+focused on coups due to their frequency and significant impact, another
+form---the incumbent leader's refusal to relinquish power---has received
+comparatively less attention despite its importance. Recent decades,
+particularly since the end of the Cold War, have witnessed a decline in
+classic coups and a concomitant rise in this incumbent retention or
+overstay type of irregular leadership transition
+(\citeproc{ref-ginsburg2010evasion}{Ginsburg, Melton, and Elkins 2010};
+\citeproc{ref-baturo2014}{Baturo 2014};
+\citeproc{ref-versteeg2020law}{Versteeg et al. 2020}).
+
+This research aims to redefine and clarify this type of irregular
+leadership transition, where leaders overstay their mandated term
+limits, as an \textbf{\emph{autocoup}}. Although analyses related to
+autocoups are not uncommon, the existing literature exhibits several
+notable shortcomings:
+
+\begin{itemize}
+\item
+  \textbf{Terminological ambiguity:} The use of terms like
+  ``self-coups'', ``autocoups'', ``autogolpes'', ``incumbent
+  takeovers'', ``executive aggrandizement'', ``overstay'', and
+  ``continuismo'' in different literature lacks clear, universally
+  accepted definitions, leading to confusion and inconsistent
+  application (\citeproc{ref-marsteintredet2019}{Marsteintredet and
+  Malamud 2019}; \citeproc{ref-baturo2022}{Baturo and Tolstrup 2022}).
+  This terminological ambiguity hinders accurate analysis and comparison
+  across studies
+\item
+  \textbf{Limited dataset:} Due to the conceptual ambiguity surrounding
+  autocoups, data collection remains in its nascent stages compared to
+  the rich datasets available for classic coups.
+\item
+  \textbf{Methodological gaps:} The study of autocoups has been hindered
+  by a limited dataset, resulting in a reliance on in-depth case studies
+  (\citeproc{ref-cameron1998}{Maxwell A. Cameron 1998b};
+  \citeproc{ref-antonio2021}{Antonio 2021};
+  \citeproc{ref-pion-berlin2022}{Pion-Berlin, Bruneau, and Goetze 2022})
+  to explore this phenomenon. Notably, quantitative analysis has been
+  underutilized in this field, with few studies employing statistical
+  methods to examine autocoups.
+\end{itemize}
+
+More importantly, analyses of autocoups are often not integrated with
+those of classic coups, despite their interconnected nature. As a
+distinct category of coup, autocoups lack a clear and differentiated
+definition in relation to traditional coups. Classic coups are typically
+defined as the complete removal of incumbent leaders, with a focus on
+the termination of their tenure. In contrast, autocoups often focus more
+on incumbent leaders consolidating power by seizing control from other
+state institutions, rather than on extending their tenure. As a result,
+coups and autocoups are frequently analysed in isolation. This
+separation has led to a dearth of comparative analyses, hindering a more
+comprehensive understanding of the complex dynamics between these two
+types of irregular leadership transitions.
+
+Examining autocoups, particularly in conjunction with classic coups, is
+essential for several compelling reasons. Firstly, both coups and
+autocoups represent significant and frequent means of irregular
+leadership transitions, underscoring the need for a comprehensive
+understanding of these phenomena. Secondly, autocoups, much like coups,
+have a profoundly detrimental impact on governance, as they undermine
+the rule of law, erode institutional capacity, and contribute to
+democratic backsliding or the personalization of authoritarian power.
+Thirdly, successful autocoups, akin to successful coups, create a
+precedent that increases the likelihood of future irregular power
+transitions, thereby perpetuating a cycle of instability. For instance,
+since 1945, a striking 62\% of leaders who extended their terms through
+autocoups in non-democratic countries ultimately met a tumultuous end,
+either being ousted or assassinated while in office
+(\citeproc{ref-baturo2019}{Baturo 2019}). Lastly, failed autocoups,
+similar to failed coups, often precipitate instability, inciting
+widespread protests, violence, and even civil wars, which can have
+far-reaching and devastating consequences for the affected country and
+its citizens.
+
+This chapter addresses these gaps by focusing on autocoups, aiming to
+clarify terminology, refine concepts and definitions, enhance data
+collection, and explore determinants through empirical analysis,
+contributing in three key areas:
+
+\begin{itemize}
+\item
+  \textbf{Conceptual clarification:} The term autocoup will be redefined
+  and clarified, with a focus on power extension.
+\item
+  \textbf{Data collection:} A new dataset of autocoups since 1945 will
+  be introduced based on this refined definition.
+\item
+  \textbf{Empirical analysis:} Utilizing this dataset, a quantitative
+  analysis of the factors influencing leaders' decisions to attempt
+  autocoups will be conducted.
+\end{itemize}
+
+The structure of this chapter is as follows: Section 2 will review
+definitions related to power expansions and extensions, leading to a
+precise definition of autocoups. Section 3 will present the new autocoup
+dataset. Sections 4 and 5 will explore the determinants of autocoup
+attempts through case studies and demonstrate the application of the
+dataset in empirical analysis. The conclusion will summarize key
+findings and suggest directions for future research.
+
+\subsection{Autocoups: A literature review and clarification of
+definitions}\label{autocoups-a-literature-review-and-clarification-of-definitions}
+
+A significant limitation in the study of irregular leadership transition
+is the conspicuous lack of integration between research on autocoups and
+classic coups. Despite both coups and autocoups being crucial mechanisms
+of irregular leadership change, the existing literature has largely
+treated these two phenomena in isolation, neglecting to explore their
+interconnectedness and the nuanced dynamics that govern their
+occurrence.
+
+This separation is attributable to two primary factors. Firstly,
+previous research has often overlooked autocoups as a distinct form of
+irregular leadership transition. Secondly, a persistent conceptual
+ambiguity has hindered the development of a clear and consistent
+definition and categorization of autocoups.
+
+Classic coups are typically characterized by the abrupt and
+comprehensive removal of incumbent leaders, focusing on the swift
+termination of their tenure. In contrast, autocoups are often defined as
+events wherein incumbent leaders consolidate their authority by
+systematically usurping power from other state institutions, rather than
+merely extending their own tenure.
+
+The absence of a clear, differentiated definition of autocoups in
+relation to their classic counterparts has exacerbated this divide.
+While classic coups have been extensively studied and well-defined,
+autocoups remain a distinct yet under-explored category. This
+definitional ambiguity has resulted in a dearth of comparative analyses
+that could illuminate the complex interplay between these two forms of
+power subversion.
+
+Integrating the study of autocoups with that of classic coups is crucial
+for bridging this analytical gap. Such an approach would offer a more
+nuanced and comprehensive perspective on the various mechanisms by which
+political power can be subverted or consolidated. By examining these
+phenomena in tandem, researchers can better understand the full spectrum
+of irregular power transitions, from outright removal to internal power
+grabs, providing valuable insights into the nature of political
+instability and regime change.
+
+To strengthen the analysis of autocoups, a crucial first step is to
+establish a clear and consistent terminology, followed by a refinement
+of the definition of autocoup to mitigate ambiguity and clarify its
+distinct characteristics.
+
+\subsubsection{Terminology}\label{terminology}
+
+The most prevalent term in autocoup literature is ``self-coup,'' or
+``autogolpe'' in Spanish (\citeproc{ref-przeworski2000}{Przeworski et
+al. 2000}; \citeproc{ref-cameron1998a}{Maxwell A. Cameron 1998a};
+\citeproc{ref-bermeo2016}{Bermeo 2016}; \citeproc{ref-helmke2017}{Helmke
+2017}; \citeproc{ref-marsteintredet2019}{Marsteintredet and Malamud
+2019}). This term gained academic prominence following Peruvian
+President Alberto Fujimori's actions in 1992, when he dissolved
+Congress, temporarily suspended the constitution, and ruled by decree
+(\citeproc{ref-mauceri1995}{Mauceri 1995};
+\citeproc{ref-cameron1998}{Maxwell A. Cameron 1998b}). However, as
+Marsteintredet and Malamud (\citeproc{ref-marsteintredet2019}{2019})
+astutely points out, the term ``self-coup'' can be misleading, as it
+implies a coup against oneself, which is inaccurate since the action
+typically targets other state institutions or apparatus.
+
+Another approach to describing coups staged by incumbents involves using
+terms with adjectives or modifiers, such as ``presidential coup,''
+``executive coup,'' ``constitutional coup,'' ``electoral coup,''
+``judicial coup,'' ``slow-motion coup,'' ``soft coup,'' and
+``parliamentary coup'' (\citeproc{ref-marsteintredet2019}{Marsteintredet
+and Malamud 2019}). While these terms can be useful in specific
+instances, their proliferation often creates more confusion than
+clarity. Most of these terms focus on the specific methods employed by
+coup perpetrators but fail to clearly identify the perpetrator,
+necessitating further explanation. Moreover, many of these methods could
+be employed either by or against executive leaders, further muddying the
+waters.
+
+A third alternative involves terms like ``incumbent takeover,''
+``executive takeover,'' or ``overstay.'' Incumbent takeover refers to
+``an event perpetuated by a ruling executive that significantly reduces
+the formal and/or informal constraints on his/her power''
+(\citeproc{ref-baturo2022}{Baturo and Tolstrup 2022, 374}), building on
+earlier research by (\citeproc{ref-svolik2014}{Svolik 2014}). Meanwhile,
+overstay is defined as ``staying longer than the maximum term as it
+stood when the candidate originally came into office''
+(\citeproc{ref-ginsburg2011evasion}{Ginsburg, Melton, and Elkins 2011,
+1844}). These terms effectively identify the perpetrator (the incumbent)
+and/or the nature of the event (overstaying/extending power). However,
+they fall short in highlighting the illegality or illegitimacy of these
+actions. Consequently, they cannot serve as a direct counterpart to
+``coup,'' which clearly denotes the illegality of leadership ousters,
+while ``takeover'' or ``overstay'' diminish the severity of the act.
+
+Given that these terms often lack precision, focusing on specific
+methods rather than the core act of power usurpation, this study
+proposes ``autocoup'' as the most suitable term for this phenomenon.
+Unlike other terms, `autocoup' clearly identifies the perpetrator and
+the illegitimate nature of the power grab, distinguishing it from
+classic coups while maintaining a parallel structure in terminology.
+
+\subsubsection{Definition}\label{definition}
+
+While precise terminology is undoubtedly crucial, another issue arises
+with previous definitions of autocoups: what is the primary
+emphasis---power expansion, power extension, or a combination of the
+two?
+
+Definitions of power expansion and power extension within the field of
+political science can often be ambiguous or overlapping, presenting a
+potential source of confusion. To ensure greater clarity in the study of
+autocoups, it is necessary to distinguish these two distinct conceptual
+frameworks more clearly:
+
+\begin{itemize}
+\item
+  \textbf{Power expansion:} This refers to the process by which an
+  incumbent leader acquires additional authority or control over state
+  apparatuses beyond their original mandate. This may involve
+  centralizing power, reducing checks and balances, or encroaching on
+  the authority of other branches such as the legislature or judiciary.
+\item
+  \textbf{Power extension:} This describes situations where a leader
+  prolongs their tenure beyond the originally mandated term in office,
+  often through constitutional amendments, cancellation of elections, or
+  other means of circumventing term limits.
+\end{itemize}
+
+Existing definitions of autocoups or related concepts often suffer from
+ambiguity between power expansion and extension, or they focus more on
+power expansion, which has several drawbacks.
+
+Firstly, defining autocoups primarily in terms of power expansion does
+not align well with the traditional definition of a coup. A classical
+coup is clearly focused on the ouster of the current leader, not merely
+a limitation or restriction on their power. Using the same logic, a more
+appropriate definition of an autocoup should prioritize the tenure
+extension of executive leadership. Power restrictions on incumbents
+would not be coded as a coup as long as they remain in office.
+Similarly, an executive leader acquiring more power from other branches
+could be coded as power aggrandizement but not an autocoup, as long as
+they step down when their term expires.
+
+Secondly, emphasizing power expansion in autocoups often neglects the
+ultimate purpose of incumbents. It is irrational for an incumbent to
+expand executive power only to pass the powerful role to future leaders.
+Although the term ``self-coup'' gained prominence from the 1992 Fujimori
+case in Peru, which initially involved seizing power from other
+institutions, it is important to note that Fujimori ultimately extended
+his term limits through constitutional amendments. The 1993 Constitution
+allowed Fujimori to run for a second term, which he won in April 1995.
+Shortly after Fujimori began his second term, his supporters in Congress
+passed a law of ``authentic interpretation'' that effectively allowed
+him to run for another term in 2000, which he won amid suspicions and
+rumors. However, he did not survive the third term; in 2000, facing
+charges of corruption and human rights abuses, Fujimori fled Peru and
+took refuge in Japan (\citeproc{ref-ezrow2019}{Ezrow 2019}).
+
+Thirdly, measuring the extent of power expansion to qualify as an
+autocoup can be challenging. As Maxwell A. Cameron
+(\citeproc{ref-cameron1998a}{1998a}) defined, a self-coup is ``a
+temporary suspension of the constitution and dissolution of congress by
+the executive, who rules by decree until new legislative elections and a
+referendum can be held to ratify a political system with broader
+executive power'' (p.~220). However, defining ``broader executive
+power'' is inherently problematic and disputable.
+
+Therefore, this study argues that a more accurate definition of
+autocoups should prioritize power extension as its core characteristic.
+This approach is straightforward and easy to identify in practice. In
+most cases, autocoups involving power extension also involve power
+expansions as their prerequisite and foreshadowing.
+
+Based on these criteria, I define \textbf{an autocoup as the
+illegitimate extension of an incumbent leader's term in office beyond
+the originally mandated limits through unconstitutional means}. This
+definition emphasizes the core characteristic of power extension while
+acknowledging the potential for power expansion as a related phenomenon:
+
+\begin{itemize}
+\item
+  \textbf{Leadership Focus}: This definition refers to the actual
+  leaders of the country, regardless of their official titles.
+  Typically, this would be the president; however, in some cases, such
+  as in Germany, the primary leader is the premier, as the president
+  serves as a nominal head of state.
+\item
+  \textbf{Primary Characteristic}: While the primary characteristic of
+  an autocoup is extending the term in office, this definition does not
+  exclude instances of power expansion. Both aspects can coexist, but
+  the extension of the term is the central element.
+\item
+  \textbf{Illegitimacy}: Autocoups, by their nature, subvert legal norms
+  and established leadership transfer mechanisms. No matter how
+  legitimate they claim to be, their illegitimacy is not beyond a
+  reasonable doubt as long as the incumbents are the direct
+  beneficiaries. This critical aspect will be explored further in
+  Section 3.
+\end{itemize}
+
+By clarifying these definitions, this study aims to provide a more
+precise and consistent framework for understanding and analysing
+autocoups, thereby enhancing the clarity and rigor of research in this
+field.
+
+\subsection{Introduction to the autocoup
+dataset}\label{introduction-to-the-autocoup-dataset}
+
+\subsubsection{Defining the scope}\label{defining-the-scope}
+
+Classifying political events as autocoups often involves addressing
+borderline cases. To maintain consistency and avoid ambiguity, this
+study adopts a broad coding approach: All instances of incumbents
+extending their original mandated term in office are coded as autocoups,
+regardless of the apparent legality of the extension.
+
+This approach is justified because truly legitimate amendments to power
+transition institutions should apply only to subsequent leaders, not the
+incumbent. Even when extension procedures appear legal, the legitimacy
+is questionable when the incumbent is the direct beneficiary.
+
+\subsubsection{Classifying autocoups}\label{sec-classify}
+
+To maintain consistency, autocoups are categorized based on several key
+factors.
+
+\begin{itemize}
+\item
+  \textbf{Methods employed}: Specific strategies used by incumbents
+  (e.g., constitutional amendments, election cancellation).
+\item
+  \textbf{Degree of legality}: Extent of deviation from established
+  legal norms.
+\item
+  \textbf{Duration of extension}: Length of time the incumbent remains
+  in office beyond designated term limits.
+\item
+  \textbf{Outcomes}: Whether the autocoup attempt succeeds or fails.
+\end{itemize}
+
+This study primarily focuses on the methods employed, while coding for
+other aspects when information is available.
+
+\paragraph{Evasion of term limits}\label{evasion-of-term-limits}
+
+Evasion of term limits is a common tactic employed in autocoups.
+Incumbents often resort to seemingly legal manoeuvres to extend their
+hold on power. These manoeuvres primarily involve manipulating
+constitutional provisions through various means. The incumbents may
+pressure legislative bodies (congress) or judicial institutions (Supreme
+Court) to reinterpret existing term limits, amend the constitution to
+extend terms, or even replace the constitution altogether. This might
+also involve popular vote through referendums, or a combination of these
+approaches. The extension can range from a single term to indefinite
+rule.
+
+These manoeuvres primarily involve manipulating constitutional
+provisions through various means.
+
+\begin{itemize}
+\item
+  \textbf{Changing term length:} Incumbents might lengthen the official
+  term duration (e.g., from 4 to 6 years) to stay in office longer, even
+  if the number of allowed terms remains unchanged. Examples, in the
+  dataset, include Presidents Dacko (CAR, 1962), Kayibanda (Rwanda,
+  1973), and Pinochet (Chile, 1988).
+\item
+  \textbf{Enabling re-election:} This approach involves incumbents
+  modifying legal or constitutional frameworks to permit themselves to
+  run for leadership again, despite initial restrictions. These
+  restrictions might include prohibitions on re-election, bans on
+  immediate re-election, or term limits that the incumbents have already
+  reached. An illustrative example is President Menem of Argentina in
+  1993, who leveraged this tactic to extend his tenure.
+\item
+  \textbf{Removing term limits altogether:} This approach was
+  implemented by President Paul Biya of Cameroon in 2008. Biya, who had
+  been in power since 1982, successfully pushed for a constitutional
+  amendment that abolished presidential term limits. This change allowed
+  him to run for re-election indefinitely, effectively opening the
+  possibility for him to rule for life.
+\item
+  \textbf{Declaring} \textbf{leader for life:} This differs from
+  removing term limits as the leader still faces elections (although
+  potentially rigged or uncontested). An example is Indonesia's
+  President Sukarno, who attempted to declare himself president for life
+  in 1963 (ultimately unsuccessful).
+\end{itemize}
+
+These methods are often used in combination. Initially, the duration of
+a term is extended, followed by amendments to allow re-election, then
+the removal of term limits, and finally, the declaration of the leader
+for life. For example, Haitian President François Duvalier amended the
+constitution in 1961 to permit immediate re-election and then declared
+himself president for life in 1964.
+
+\paragraph{Election manipulation or
+rigging}\label{election-manipulation-or-rigging}
+
+Election manipulation or rigging is the second most commonly used tactic
+to extend an incumbent's tenure.
+
+\begin{itemize}
+\item
+  \textbf{Delaying or removing elections:} Delaying or removing
+  scheduled elections without legitimate justification is a frequent
+  method used by incumbents to maintain power. For instance, Chadian
+  President François Tombalbaye delayed general elections until 1969
+  after assuming power in 1960. Similarly, Angolan President José
+  Eduardo dos Santos suspended elections throughout his rule from 1979
+  to 2017.
+\item
+  \textbf{Refusing unfavourable election results:} Incumbents may refuse
+  to accept unfavourable election results and attempt to overturn them
+  through illegitimate means. For example, President Donald Trump of the
+  United States refused to accept the results of the 2020 election and
+  tried to overturn them.
+\item
+  \textbf{Rigging elections:} Winning elections with an extraordinarily
+  high percentage of votes is highly questionable. This study will code
+  elections where the incumbent wins more than 90\% of the vote as
+  autocoups. For instance, President Teodoro Obiang of Equatorial Guinea
+  has consistently won elections with over 95\% of the vote in
+  multi-party elections since 1996, indicating election rigging.
+\item
+  \textbf{Excluding opposition in elections:} Manipulating the electoral
+  process by excluding opposition parties or candidates from
+  participation, effectively creating a one-candidate race, clearly
+  signifies an autocoup.
+\end{itemize}
+
+\paragraph{Figurehead Installation}\label{figurehead-installation}
+
+One strategy employed by incumbents to evade term limits is to install a
+trusted associate as a figurehead, allowing the incumbent to maintain de
+facto control while formally relinquishing office. This can be achieved
+through the creation of seemingly subordinate positions, which in
+reality serve as conduits for the incumbent's continued influence.
+
+A notable example of this tactic is the 2008 Russian presidential
+transition. Confronted with constitutional term limits, President
+Vladimir Putin hand-picked Dmitry Medvedev to succeed him as president.
+Following Medvedev's election, he appointed Putin as Prime Minister,
+ostensibly reversing their roles. However, most observers and analysts
+concur that Putin continued to wield significant behind-the-scenes
+influence, effectively rendering Medvedev a proxy leader.
+
+\paragraph{Reassigning supreme authority to a new
+role}\label{reassigning-supreme-authority-to-a-new-role}
+
+This tactic involves an incumbent leader manipulating the constitution
+or legal framework to create a new position of power, or elevate an
+existing one, before stepping down from their current role. They then
+strategically take on this new position, effectively retaining
+significant control despite appearing to relinquish power. For example,
+in 2017, Recep Tayyip Erdoğan, the Prime Minister of Turkey, spearheaded
+a constitutional referendum that transitioned the country from a
+parliamentary system to a presidential one. This new system concentrated
+significant executive power in the presidency. Following the
+referendum's approval, Erdoğan successfully ran for the newly
+established presidency, effectively retaining control under a different
+title.
+
+\paragraph{One-time arrangement for current
+leaders}\label{one-time-arrangement-for-current-leaders}
+
+This strategy involves special arrangements that extend the term or
+tenure of current leaders without altering the underlying institutions.
+For example, Lebanon extended President Émile Lahoud's term by three
+years in 2004 through a one-time arrangement.
+
+\subsubsection{Data coding}\label{data-coding}
+
+The autocoup dataset is built upon existing studies and datasets,
+ensuring a comprehensive and reliable foundation. Table~\ref{tbl-source}
+outlines the main sources used for coding the autocoup dataset.
+
+The Archigos dataset (\citeproc{ref-goemans2009}{Goemans, Gleditsch, and
+Chiozza 2009}) and the Political Leaders' Affiliation Database (PLAD)
+(\citeproc{ref-bomprezzi2024wedded}{Bomprezzi et al. 2024}) provide
+comprehensive data on all leaders from 1875 to 2023, although our coding
+only includes autocoups since 1945. These datasets are invaluable for
+identifying actual rulers, distinguishing them from nominal heads of
+state.
+
+The Incumbent Takeover dataset (\citeproc{ref-baturo2022}{Baturo and
+Tolstrup 2022}) integrates data from 11 related datasets, offering a
+broad spectrum of cases where leaders significantly reduced constraints
+on their power. This dataset includes both power expansions and
+extensions, necessitating cross-referencing with Archigos to verify
+qualifications for autocoups.
+
+\begin{longtable}[]{@{}llrr@{}}
+
+\caption{\label{tbl-source}Main Data Sources for Coding the Autocoup
+Dataset}
+
+\tabularnewline
+
+\toprule\noalign{}
+Dataset & Authors & Coverage & Obervations \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Archigos & Goemans et al (2009) & 1875-2015 & 3409 \\
+PLAD & Bomprezzi et al. (2024) & 1989-2023 & 1334 \\
+Incumbent Takeover & Baturo and Tolstrup (2022) & 1913-2019 & 279 \\
+
+\end{longtable}
+
+In total, 110 observations were coded, with 95 overlapping with the
+candidate data from Incumbent Takeover. The remaining 15 events were
+newly coded by the author through verification with other sources such
+as Archigos, PLAD and news reports.
+
+The main deviation from the Incumbent Takeover dataset arises from
+excluding power expansions that do not involve attempts to extend
+tenure.
+
+The dataset encompasses a total of 14 variables along with the
+\emph{notes} field.
+
+\begin{itemize}
+\item
+  \textbf{Country identification:} Country code (\emph{ccode}) and
+  country name (\emph{country}) from Correlates of War project
+  (\citeproc{ref-stinnett2002}{Stinnett et al. 2002}).
+\item
+  \textbf{Leader information:} Name of the de facto leader
+  (\emph{leader\_name},coded following Archigos and PLAD datasets).
+\item
+  \textbf{Timeline variables:} Date the leader assumed power
+  (\emph{entry\_date}), date the leader left office(\emph{exit\_date}),
+  date of the significant event marking the autocoup
+  (\emph{autocoup\_date}), and Start date of the leader's additional
+  term acquired through the autocoup (\emph{extending\_date}).
+\item
+  \textbf{Power transition methods:} Categorical variable for how the
+  leader entered power (\emph{entry\_method}), categorical variable for
+  how the leader exited power (\emph{exit\_method}), dummy variable
+  indicating regular (1) or irregular (0) entry (\emph{entry\_regular}),
+  and dummy variable indicating regular (1) or irregular (0) exit
+  (\emph{exit\_regular}).
+\item
+  \textbf{Autocoup details:} Key variable capturing methods used to
+  extend power (\emph{autocoup\_method}) and outcome of the autocoup
+  attempt (\emph{autocoup\_outcome}, ``fail and lose power'', ``fail but
+  complete original tenure'', or ``successful''). For successful coups,
+  the additional term length can be calculated from the difference
+  between \emph{exit\_date} and \emph{extending\_date}.
+\item
+  \textbf{Data source:} Identifies the dataset source used for coding
+  (\emph{source}).
+\item
+  \textbf{Additional notes:} Provides context for exceptional cases
+  (\emph{notes}).
+\end{itemize}
+
+There are a few coding challenges and decisions worth mention. For cases
+where extensions happen incrementally, the \emph{autocoup\_date}
+reflects a significant event marking the extension, such as a
+legislative vote or successful referendum. In cases where a leader
+undertook multiple autocoup attempts, details are recorded in the notes
+field. Care was taken to differentiate between cases of power expansion
+and actual attempts to extend tenure, which required cross-referencing
+multiple sources. Determining the success or failure of an autocoup
+attempt often required in-depth research, especially for less documented
+cases.
+
+\subsubsection{Data descriptions}\label{data-descriptions}
+
+The primary coding has identified 110 autocoup cases from 1945 to 2023,
+involving 73 countries. This comprehensive dataset provides a rich
+source of information for analysing trends and patterns in autocoup
+attempts across different political contexts.
+
+Table~\ref{tbl-autocoup_method} presents a breakdown of the autocoup
+methods employed by leaders:
+
+\begin{table}
+
+\caption{\label{tbl-autocoup_method}Autocoup methods and success rates
+(1945-2021)}
+
+\centering{
+
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{0.99\linewidth}{@{\extracolsep{\fill}}lccr}
+\toprule
+Autocoup Method & Attempted & Succeeded & Success Rate \\ 
+\midrule\addlinespace[2.5pt]
+Enabling re-election & 46 & 33 & 71.7\% \\ 
+Removing term limits & 14 & 14 & 100.0\% \\ 
+Delaying elections & 9 & 9 & 100.0\% \\ 
+Leader for life & 9 & 9 & 100.0\% \\ 
+Changing term length & 7 & 5 & 71.4\% \\ 
+Figurehead & 6 & 5 & 83.3\% \\ 
+One-time arrangement & 5 & 4 & 80.0\% \\ 
+Refusing election results & 4 & 1 & 25.0\% \\ 
+Reassigning power role & 4 & 2 & 50.0\% \\ 
+Rigging elections & 3 & 2 & 66.7\% \\ 
+Cancelling elections & 3 & 3 & 100.0\% \\ 
+Total & 110 & 87 & 79.1\% \\ 
+\bottomrule
+\end{tabular*}
+\begin{minipage}{\linewidth}
+\emph{Source: Autocoup dataset}\\
+\end{minipage}
+
+}
+
+\end{table}%
+
+The most common autocoup method is ``enabling re-election'', accounting
+for 46 events. This is followed by ``removing term limits'' (14 cases),
+and then ``delaying elections'' and ``declaring the leader for life''
+(each with 9 cases).
+
+Autocoups have a success rate of 79\%, compared to the 50\% success rate
+of classical coups. This high success rate can be attributed to several
+factors:
+
+\begin{itemize}
+\item
+  Incumbent Advantage: Leaders already in power have access to resources
+  and institutional mechanisms that can be leveraged to their advantage.
+\item
+  Gradual Implementation: Unlike sudden coups, autocoups can be
+  implemented gradually, allowing leaders to build support and
+  legitimacy over time.
+\item
+  Legal Facade: Many autocoup methods operate within a veneer of
+  legality, making them harder to oppose openly.
+\item
+  Control of State Apparatus: Incumbents often have significant control
+  over state institutions, which can be used to facilitate their
+  autocoup attempts.
+\end{itemize}
+
+However, success rates vary significantly across different methods.
+
+\begin{itemize}
+\item
+  \textbf{100\% success rate}: Removing term limits, delaying elections,
+  declaring the leader for life, and cancelling elections all have
+  perfect success rates. This suggests that once these processes are set
+  in motion, they are difficult to reverse.
+\item
+  \textbf{Lower success rates:} Refusing to accept election results has
+  the lowest success rate, with only 1 out of 4 attempts succeeding.
+  Although the sample size is limited (only 4 cases in total), this
+  trend might suggest several factors at play. These include greater
+  democratic resilience in systems where general elections are regularly
+  held, heightened international scrutiny and pressure in response to
+  blatant manipulation of election results, and stronger domestic
+  opposition to such overt power grabs.
+\end{itemize}
+
+\subsection{Determinants of autocoup attempts: Case
+studies}\label{determinants-of-autocoup-attempts-case-studies}
+
+\subsubsection{High frequency and success rate of autocoups in
+post-communist
+regimes}\label{high-frequency-and-success-rate-of-autocoups-in-post-communist-regimes}
+
+Our dataset shows a high frequency and success rate of autocoups in
+post-communist countries. These nations, formerly communist regimes
+prior to the collapse of the Soviet Union, have largely evolved into
+`hybrid regimes' (\citeproc{ref-nurumov2019}{Nurumov and Vashchanka
+2019}), with only a few retaining their communist status. The data
+documents 12 cases of autocoups aimed at prolonging incumbency in these
+countries, with only two attempts failing. Examination of these cases
+highlights several distinctive characteristics:
+
+\begin{itemize}
+\item
+  \textbf{Inherited authoritarian systems}: Despite most of these 12
+  countries transitioning from communist to non-communist governments
+  (with the exception of China), they retained many authoritarian
+  systems from their communist past.
+\item
+  \textbf{Continuity of former elites}: The transitions did not result
+  in the removal or overthrow of previous ruling groups. Instead, former
+  communist elites often maintained their positions of power.
+\item
+  \textbf{Subverted democratic processes}: While general elections and
+  term limits were introduced in most of these countries, the legacy of
+  former communist regimes frequently led to the circumvention of term
+  limits and manipulation of elections
+  (\citeproc{ref-nurumov2019}{Nurumov and Vashchanka 2019}).
+\end{itemize}
+
+\paragraph{Case 1: Lifelong ruler--Alexander Lukashenko in
+Belarus}\label{case-1-lifelong-ruleralexander-lukashenko-in-belarus}
+
+Alexander Lukashenko, a former member of the Supreme Soviet of the
+Byelorussian Soviet Socialist Republic, became the head of the interim
+anti-corruption committee of the Supreme Council of Belarus following
+the dissolution of the Soviet Union. Elected as Belarus's first
+president in 1994, he has maintained this position ever since.
+Initially, the 1994 constitution limited presidents to two successive
+terms. However, Lukashenko removed this restriction in 2004.
+International monitors have not regarded Belarusian elections as free
+and fair since his initial victory. Despite significant protests,
+Lukashenko has consistently claimed to win with a high vote share, often
+exceeding 80\% in each election. This pattern is evident across all five
+Central Asian countries of the former Soviet Union, where
+post-dissolution leaders were typically high officials or heads of the
+former Soviet republics who continued their leadership in the
+presidency.
+
+\paragraph{Case 2: Transferring power to a handpicked
+successor--Nursultan Nazarbayev in
+Kazakhstan}\label{case-2-transferring-power-to-a-handpicked-successornursultan-nazarbayev-in-kazakhstan}
+
+Nursultan Nazarbayev served as the first president of Kazakhstan from
+1991 until 2019. Prior to the dissolution of the Soviet Union, he held
+de facto leadership as the First Secretary of the Communist Party of
+Kazakhstan. Following independence, he was elected as the first
+president and retained office until 2019 through various means,
+including resetting term limits due to the implementation of new
+constitutions. Notably, Nazarbayev did not officially eliminate term
+limits but instead created an exemption for the ``First President''
+(\citeproc{ref-nurumov2019}{Nurumov and Vashchanka 2019}). Unlike
+Lukashenko, who remains the incumbent of Belarus, Nazarbayev transferred
+the presidency to a designated successor, Kassym-Jomart Tokayev, in
+2019. However, he retained significant influence as the Chairman of the
+Security Council of Kazakhstan until 2022.
+
+\subsubsection{Autocoups for immediate re-election: Cases of Latin
+America}\label{autocoups-for-immediate-re-election-cases-of-latin-america}
+
+Latin America has a long-standing tradition of maintaining term limit
+conventions. Simón Bolívar, the founding father of Bolivia, was
+initially a strong advocate for term limits, stating in 1819, ``Nothing
+is as dangerous as allowing the same citizen to remain in power for a
+long time\ldots{} That's the origin of usurpation and tyranny''
+(\citeproc{ref-ginsburg2019}{Ginsburg and Elkins 2019, 38}). Although
+Bolívar eventually modified his stance, arguing in his 1826 Constitution
+Assembly speech that ``a president for life with the right to choose the
+successor is the most sublime inspiration for the republican order,''
+term limits became a convention in Latin America. Approximately 81\% of
+Latin American constitutions between independence and 1985 imposed some
+form of term limits on the presidency
+(\citeproc{ref-marsteintredet2019a}{Marsteintredet 2019}).
+
+An analysis of cases in Latin American countries reveals two notable
+patterns.
+
+\paragraph{Often successful at breaking non-re-election or non-immediate
+re-election
+restrictions}\label{often-successful-at-breaking-non-re-election-or-non-immediate-re-election-restrictions}
+
+Unlike other presidential systems where two terms are more common,
+non-re-election or non-immediate re-election used to be prevalent in
+Latin America. According to Marsteintredet
+(\citeproc{ref-marsteintredet2019a}{2019}), non-consecutive re-election
+was mandated in about 64.9\% of all constitutions between independence
+and 1985, while 5.9\% banned re-election entirely.
+
+However, adherence to these conventions has varied across the region.
+Since Mexico introduced non-re-election institutions in 1911 at the
+start of the Mexican Revolution, they have remained inviolate
+(\citeproc{ref-klesner2019}{Klesner 2019}). Similarly, Panama and
+Uruguay have never altered their re-election rules, and Costa Rica has
+only experienced a brief period (1897-1913) permitting immediate
+presidential re-election since prohibiting it in 1859
+(\citeproc{ref-marsteintredet2019a}{Marsteintredet 2019}). In many other
+countries, however, constitutions have been frequently amended or
+violated.
+
+The pursuit of re-election or consecutive re-election, therefore, has
+been a significant trigger for autocoups aimed at power extension in
+this region. Our research documents 32 autocoup cases, with over 50\%
+(17 cases) attempting to enable re-election or immediate re-election,
+and about 59\% (10 cases out of 17) being successful.
+
+Unlike those who attempt to overstay in office indefinitely, many Latin
+American leaders exit after their second term expires. Examples include
+President Fernando Henrique Cardoso of Brazil (1995-2003), President
+Danilo Medina of the Dominican Republic (2012-2020), and President Juan
+Orlando Hernández of Honduras (2014-2022)
+(\citeproc{ref-ginsburg2019}{Ginsburg and Elkins 2019};
+\citeproc{ref-marsteintredet2019a}{Marsteintredet 2019};
+\citeproc{ref-landau2019}{Landau, Roznai, and Dixon 2019};
+\citeproc{ref-baturo2019}{Baturo 2019}; \citeproc{ref-neto2019}{Neto and
+Acácio 2019}).
+
+\paragraph{Failing to further extend
+tenure}\label{failing-to-further-extend-tenure}
+
+This trend does not imply that none of these leaders attempted further
+extensions, but rather that most accepted their unsuccessful outcomes
+without abusing their power to manipulate the process. While autocoups
+aimed at securing one additional term are often successful, attempts to
+overstay beyond this are frequently unsuccessful.
+
+In contrast to the previous examples, two contrasting cases illustrate
+the varied outcomes of term limit challenges:
+
+\begin{itemize}
+\item
+  \textbf{Unsuccessful extension -- Carlos Menem (Argentina)}: President
+  Menem successfully extended his tenure by one term through a 1994
+  constitutional amendment allowing one executive re-election. He was
+  subsequently re-elected in 1995. However, his attempt to reset his
+  term count, arguing that his first term (1988-1995) should not count
+  as it was under previous constitutions, was unanimously rejected by
+  the Supreme Court in March 1999 (\citeproc{ref-llanos2019}{Llanos
+  2019}). A similar scenario unfolded with President Álvaro Uribe of
+  Colombia (2002-2010) (\citeproc{ref-baturo2019}{Baturo 2019}).
+\item
+  \textbf{Successful extension -- Daniel Ortega (Nicaragua)}: In
+  contrast, Daniel Ortega, the incumbent president of Nicaragua,
+  successfully extended his presidency. In 2009, the Supreme Court of
+  Justice of Nicaragua permitted his re-election in 2011. Subsequently,
+  in 2014, the National Assembly of Nicaragua approved constitutional
+  amendments abolishing presidential term limits, allowing Ortega to run
+  for an unlimited number of five-year terms. As a result, he has held
+  the presidency since 2007 (\citeproc{ref-close2019}{Close 2019}).
+\end{itemize}
+
+\subsubsection{As common as classical coups: Cases of African
+countries}\label{as-common-as-classical-coups-cases-of-african-countries}
+
+Classical coups have been prevalent in Africa, accounting for
+approximately 45\% of all global coups (219 out of 491 cases) since
+1950, involving 45 out of 54 African countries (GIC dataset). While
+autocoups are less frequent compared to traditional coups, they maintain
+a significant presence in Africa. Among 110 documented autocoup cases
+globally, 46\% (51 cases) occurred in Africa, involving 36 countries.
+Notably, the success rate of autocoups in Africa is over 84\% (43 out of
+51 attempts), which surpasses both the success rate of classical coups
+in the region (roughly 50\%) and the global average success rate of
+autocoups (79\%).
+
+Identifying a clear pattern of autocoups in Africa is challenging,
+mirroring the complexity observed with classical coups. Various factors
+have been proposed to explain this phenomenon:
+
+\begin{itemize}
+\item
+  \textbf{Natural Resources}: Countries rich in natural resources,
+  particularly oil or diamonds, may see leaders more likely to attempt
+  and succeed in extending their terms (\citeproc{ref-posner}{Posner and
+  Young, n.d.}; \citeproc{ref-cheeseman2015}{Cheeseman 2015};
+  \citeproc{ref-cheeseman2019a}{Cheeseman and Klaas 2019}).
+\item
+  \textbf{Quality of democracy}: The quality of democracy is a critical
+  factor influencing respect for term limits
+  (\citeproc{ref-reyntjens2016}{Reyntjens 2016}).
+\item
+  \textbf{International influence}: International aid or donor influence
+  can play a significant role in discouraging attempts at power
+  extension (\citeproc{ref-brown2001}{Brown 2001};
+  \citeproc{ref-tangri2010}{Tangri and Mwenda 2010}).
+\item
+  \textbf{Organized opposition and party unity}: The extent of organized
+  opposition and the president's ability to enforce unity within the
+  ruling party are crucial factors
+  (\citeproc{ref-cheeseman2019}{Cheeseman 2019}).
+\end{itemize}
+
+Utilizing the Africa Executive Term Limits (AETL) dataset, Cassani
+(\citeproc{ref-cassani2020}{2020}) highlights human rights abuses and
+the desire for impunity as main drivers for incumbents to cling to
+power. The more authoritarian a leader, the more likely they are to
+attempt to break term limits and overstay in office. A leader's ability
+to secure the loyalty of the armed forces through public investment
+increases the chances of success in overstaying.
+
+Despite both coups and autocoups being prevalent, there has been a
+noticeable shift since the end of the Cold War in 1991: Traditional
+coups have decreased in frequency while autocoups have become more
+prevalent.
+
+This trend can be partially attributed to the introduction of
+multi-party elections in Africa in the 1990s, which also brought in term
+limits for executives (\citeproc{ref-cassani2020}{Cassani 2020};
+\citeproc{ref-cheeseman2019}{Cheeseman 2019}). Before 1991, personal or
+military rule was more common, and term limits were less frequent.
+Post-1991, with more term limits introduced, challenges to these limits
+have increased. However, it is crucial to note that this increase in
+challenges does not necessarily imply that violations are more common
+than adherence to term limits, because total power transitions have
+increased compared to the past.
+
+\subsection{Empirical analysis: An example of utilizing the autocoup
+dataset}\label{empirical-analysis-an-example-of-utilizing-the-autocoup-dataset}
+
+The autocoup dataset opens up opportunities for quantitative analysis
+that extend beyond traditional case studies. This section presents a
+clear example of how to effectively leverage this dataset. To examine
+the factors driving autocoup attempts, I employ a probit regression
+model, demonstrating its applicability for investigating the
+determinants of such events. This example highlights the dataset's
+potential for robust empirical inquiry and provides a foundation for
+future research on the conditions that influence autocoup attempts.
+
+\subsubsection{Dependent variables}\label{dependent-variables}
+
+\begin{itemize}
+\item
+  \textbf{Autocoup attempt}: Binary variable indicating whether an
+  autocoup attempt occurred (1) or not (0) during the tenure of an
+  incumbent leader.
+\item
+  \textbf{Autocoup success}: Binary variable indicating whether an
+  autocoup attempt was successful (1) or failed (0), conditional on an
+  autocoup attempt occurring.
+\end{itemize}
+
+\subsubsection{Key independent variable: regime
+type}\label{key-independent-variable-regime-type}
+
+I categorize regime types following Geddes, Wright, and Frantz
+(\citeproc{ref-geddes2014}{2014}) (GWF), focusing on military,
+personalist, and dominant-party regimes, with democracies and monarchies
+included for comparison. Descriptive statistics for regime types are
+presented in Table~\ref{tbl-regimes}.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+
+\caption{\label{tbl-regimes}Regime types since 1950}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Regime Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Country Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Share
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\midrule\noalign{}
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{1.0000} + 4\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\emph{Source: REIGN Datasets}
+\end{minipage}} \\
+\bottomrule\noalign{}
+\endlastfoot
+Democracy & 5303 & 46.7\% \\
+Dominant-Party & 2569 & 22.6\% \\
+Personal & 1477 & 13.0\% \\
+Monarchy & 1056 & 9.3\% \\
+Military & 638 & 5.6\% \\
+Other & 322 & 2.8\% \\
+Total & 11365 & 100.0\% \\
+
+\end{longtable}
+
+\subsubsection{Control variables}\label{control-variables}
+
+The control variables are chosen based on the research of Gassebner,
+Gutmann, and Voigt (\citeproc{ref-gassebner2016}{2016}). They analysed
+66 factors potentially influencing coups and found that slow economic
+growth, prior coup attempts, and other forms of political violence are
+particularly significant factors. Therefore, we include economic
+performance, political violence, and the number of previous coups as our
+main control variables.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Economic Level:} Represented by GDP per capita. This measure
+  provides an indication of the overall economic health and standard of
+  living in a country. We use GDP per capita data (in constant 2017
+  international 1000 dollars, PPP) from the V-Dem dataset by Fariss et
+  al. (\citeproc{ref-fariss2022}{2022}).
+\item
+  \textbf{Economic Performance:} Measured using the current-trend
+  (\(CT\)) ratio developed by Krishnarajan
+  (\citeproc{ref-krishnarajan2019}{2019}). This ratio compares a
+  country's current GDP per capita to the average GDP per capita over
+  the previous five years. A higher \(CT\) ratio indicates stronger
+  economic performance. For a country \(i\) at year \(t\), the \(CT\)
+  ratio is calculated as follows:
+\end{itemize}
+
+\begin{equation}\phantomsection\label{eq-eq6}{
+    \begin{aligned}
+    CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
+    \end{aligned}
+}\end{equation}
+
+\begin{itemize}
+\item
+  \textbf{Political stability:} This variable captures overall regime
+  stability by including a violence index that encompasses all types of
+  internal and interstate wars and violence. The data for this index is
+  sourced from the variable ``actotal'' in the Major Episodes of
+  Political Violence dataset
+  (\citeproc{ref-marshall2005current}{Marshall 2005}), with 0
+  representing the most stable conditions (no violence at all) and 18
+  representing the most unstable.
+\item
+  \textbf{Previous coups:} Included in the selection equation as either:
+  a) The number of previous coups in a country (Model 1), or b) The time
+  since the last coup attempt (Model 2 for robustness check).
+\item
+  \textbf{Population size:} To account for its potential impact on
+  leaders' tenures, we consider the log of the population size. This
+  transformation helps in managing the wide range of population sizes
+  across different countries. The data is sourced from the V-Dem dataset
+  and is evaluated to understand its influence on power transitions.
+  Larger populations may present more governance challenges and
+  potential sources of opposition, thereby affecting the stability and
+  longevity of a leader's tenure.
+\item
+  \textbf{Leader's age:} The age of the leader is included as an
+  additional variable in the analysis, offering insights into potential
+  correlations with leadership strength. Older leaders may have
+  different experiences, networks, and health considerations that could
+  influence their ability to maintain power. This data is sourced from
+  Archigos and PLAD datasets.
+\end{itemize}
+
+Unlike the analysis of classic coup determinants, which could
+theoretically occur in any given year, I assume that an autocoup happens
+only once during an incumbent leader's tenure, as a successful autocoup
+negates the need for another attempt. However, this assumption does not
+always reflect reality, as leaders might attempt further extensions or
+try again after a failed attempt. For simplicity, I overlook these
+possibilities in our analysis.
+
+Therefore, in our probit model, the unit of analysis for autocoups is
+the entire tenure of a leader, rather than a country-year. I establish a
+base year for the variables: for leaders who staged an autocoup, we use
+the year of their first attempt as the base year; for leaders who did
+not attempt to overstay, I use the middle year of their tenure as the
+base year.
+
+\subsubsection{Results and discussions}\label{results-and-discussions}
+
+\begin{table}
+
+\caption{\label{tbl-autocoupmodel}Determinants of autocoup attempts and
+success (1945-2018)}
+
+\centering{
+
+\begin{tabular}{@{\extracolsep{50pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Autocoup Attempts & Autocoup Outcome \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ Constant & $-$1.674$^{***}$ & $-$0.888 \\ 
+  & (0.624) & (1.935) \\ 
+  & & \\ 
+ Regime: Dominant-party & 0.070 & 0.672$^{*}$ \\ 
+  & (0.145) & (0.402) \\ 
+  & & \\ 
+ \hspace{1.6cm}Military & $-$0.255 & 0.615 \\ 
+  & (0.189) & (0.541) \\ 
+  & & \\ 
+ \hspace{1.6cm}Personalist & 0.737$^{***}$ & 1.609$^{***}$ \\ 
+  & (0.157) & (0.448) \\ 
+  & & \\ 
+ GDP per capita & $-$0.009 & 0.064 \\ 
+  & (0.011) & (0.045) \\ 
+  & & \\ 
+ Economic trend & 0.653 & 0.197 \\ 
+  & (0.533) & (1.772) \\ 
+  & & \\ 
+ Political stability & $-$0.044 & 0.126 \\ 
+  & (0.036) & (0.130) \\ 
+  & & \\ 
+ Age & $-$0.001 & 0.004 \\ 
+  & (0.001) & (0.017) \\ 
+  & & \\ 
+ Population(log) & $-$0.048 & 0.029 \\ 
+  & (0.042) & (0.144) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 1,028 & 102 \\ 
+Log Likelihood & $-$308.494 & $-$43.651 \\ 
+Akaike Inf. Crit. & 634.988 & 105.302 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular}
+
+}
+
+\end{table}%
+
+Table~\ref{tbl-autocoupmodel} summarizes the findings from the probit
+regression models based on our analysis of the determinants of autocoup
+attempts and their success.
+
+Model 1, which examines autocoup attempts, reveals only one significant
+predictor besides the constant term. Among the regime types, personalist
+regimes significantly increase the likelihood of autocoup attempts, all
+else being equal. This suggests that leaders in personalist regimes are
+more prone to attempt to extend their power through autocoups compared
+to leaders in democratic regimes (reference regime). Leaders in
+dominant-party and military regimes, however, show no significant
+difference in the likelihood of attempting an autocoup compared to
+democratic leaders.
+
+The model for autocoup success (Model 2) shows similar dynamics.
+Personalist regimes again have a strong positive and significant effect
+on the success of autocoups compared to democratic leaders.
+Dominant-party regimes also show a positive and marginally significant
+effect. However, a detailed examination reveals that about half of the
+successful autocoups in dominant-party regimes (9 out of 20) exhibit a
+personalist style, such as ``party-personal-military'' regimes.
+
+This outcome is logical since personalist leaders are typically much
+more powerful than other types of leaders, making them more inclined and
+capable of overstaying in power.
+
+Other factors play an insignificant role in determining the attempts and
+outcomes of autocoups. This aligns with our conclusions on the
+determinants of classic coups. Both coups and autocoups are
+significantly affected by power dynamics. As power transitions involve
+the struggle between seizing and maintaining power, the balance of power
+status quo inevitably matters in both coups and autocoups. This also
+explains the high success rate of autocoups. Compared to power
+challengers, incumbents are in an obviously advantageous position.
+Incumbent leaders can use state power to their benefit, which is
+difficult to counteract. Even the abuse of power is often unchecked
+under a powerful leader's rule.
+
+The empirical analysis of autocoups yields significant implications for
+real-world politics. In particular, the high overall success rate of
+autocoups highlights the vulnerability of democratic institutions to
+gradual erosion by incumbent leaders. The threshold for ousting or
+impeaching an incumbent leader through constitutional means is
+exceptionally high, with success often requiring more than a simple
+majority and substantial support across various sectors. Resorting to
+illegal means, such as a coup, presents even greater challenges due to
+high costs, severe consequences, and a low likelihood of success.
+
+Conversely, political dynamics, whether in democracies or autocracies,
+tend to favour incumbents even when they act unconstitutionally.
+Incumbents can leverage state resources to achieve their political
+ambitions, benefiting from a high probability of success and minimal
+consequences in case of failure. This asymmetry in power and risk
+creates a concerning scenario: for incumbents who do not respect
+constitutional institutions, the opportunity to launch an autocoup
+appears sufficiently low-risk to warrant an attempt.
+
+\subsection{Conclusion}\label{conclusion}
+
+This study conducts a thorough and comprehensive analysis of autocoups,
+with a specific focus on political events where incumbent leaders
+illegitimately extend their tenure in power. By refining the existing
+definition and distinguishing autocoups from related concepts such as
+``self-coups'', ``autogolpes'', and ``executive takeovers'', this
+research introduces a novel dataset that catalogues autocoups from 1945
+to 2023. This refined definition and the accompanying dataset enable the
+study to broaden its analysis of irregular leadership transitions. While
+traditional analyses often concentrate on the abrupt termination of
+tenure through coups, this research expands the scope to include the
+irregular extension of tenure through autocoups. This approach provides
+a more comprehensive and nuanced understanding of the phenomenon,
+highlighting the various mechanisms by which incumbent leaders can
+subvert democratic processes to maintain their power.
+
+The findings reveal that personalist regimes are significantly more
+likely to experience autocoup attempts and succeed in these attempts
+compared to democracies. Dominant-party systems, often exhibiting
+personalist characteristics, also show an association with successful
+autocoups. While regime type significantly influences autocoups, other
+factors appear less impactful, mirroring classic coups where the balance
+of power is a more essential determinant. The high success rate of
+autocoups can be attributed to the inherent advantages incumbents
+possess, such as control over or abuse of state power and the difficulty
+of removing or impeaching them through legal or illegal means.
+
+However, several limitations warrant consideration for future research.
+Firstly, the definition of an autocoup requires further commentary and
+discussion to gain wider acceptance in the academic community. Despite
+efforts to maintain objectivity, some coding decisions may involve
+subjective judgments, particularly in borderline cases. Secondly, due to
+the nature of autocoups, which are less frequent than classic coups (491
+coups versus 110 autocoups during the same period), the quantitative
+analysis cannot be conducted as a country-year variable as in coup
+studies. This raises the issue of choosing an appropriate base year for
+the analysis, which requires further discussion and potentially
+sensitivity analyses.
+
+Despite these limitations, this research significantly enhances our
+understanding of the mechanisms and motivations behind autocoups,
+contributing to the literature on political stability and democratic
+resilience. The findings highlight the vulnerability of political
+systems, particularly democracies, to erosion from within by incumbent
+leaders.
+
+Future studies could build on this work by employing the dataset to
+explore more nuanced power dynamics or examine the long-term impacts of
+these events on political systems. Particularly fruitful areas for
+investigation include the relationship between autocoups and democratic
+backsliding, democratic breakdown, and the personalization of power.
+Additionally, comparative analyses between autocoups and traditional
+coups could yield insights into the evolving nature of power
+consolidation strategies in different political contexts.
+
+In conclusion, this study enhances our understanding of autocoups by
+clarifying terminology, refining definitions, and providing a
+comprehensive dataset. Future research could explore the relationship
+between autocoups and democratic backsliding, democratic breakdown, and
+the personalization of power.
+
+\newpage
+
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-antonio2021}
+Antonio, Robert J. 2021. {``Democracy and Capitalism in the Interregnum:
+Trump{'}s Failed Self-Coup and After.''} \emph{Critical Sociology} 48
+(6): 937--65. \url{https://doi.org/10.1177/08969205211049499}.
+
+\bibitem[\citeproctext]{ref-baturo2014}
+Baturo, Alexander. 2014. {``Democracy, Dictatorship, and Term Limits.''}
+\url{https://doi.org/10.3998/mpub.4772634}.
+
+\bibitem[\citeproctext]{ref-baturo2019}
+---------. 2019. {``Continuismo in Comparison.''} In, 75--100. Oxford
+University Press.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0005}.
+
+\bibitem[\citeproctext]{ref-baturo2022}
+Baturo, Alexander, and Jakob Tolstrup. 2022. {``Incumbent Takeovers.''}
+\emph{Journal of Peace Research} 60 (2): 373--86.
+\url{https://doi.org/10.1177/00223433221075183}.
+
+\bibitem[\citeproctext]{ref-bermeo2016}
+Bermeo, Nancy. 2016. {``On Democratic Backsliding.''} \emph{Journal of
+Democracy} 27 (1): 5--19. \url{https://doi.org/10.1353/jod.2016.0012}.
+
+\bibitem[\citeproctext]{ref-bomprezzi2024wedded}
+Bomprezzi, Pietro, Axel Dreher, Andreas Fuchs, Teresa Hailer, Andreas
+Kammerlander, Lennart Kaplan, Silvia Marchesi, Tania Masi, Charlotte
+Robert, and Kerstin Unfried. 2024. {``Wedded to Prosperity? Informal
+Influence and Regional Favoritism.''} Discussion Paper. CEPR.
+
+\bibitem[\citeproctext]{ref-brown2001}
+Brown, Stephen. 2001. {``Authoritarian Leaders and Multiparty Elections
+in Africa: How Foreign Donors Help to Keep Kenya's Daniel Arap Moi in
+Power.''} \emph{Third World Quarterly} 22 (5): 725--39.
+\url{https://doi.org/10.1080/01436590120084575}.
+
+\bibitem[\citeproctext]{ref-cameron1998a}
+Cameron, Maxwell A. 1998a. {``Latin American Autogolpes : Dangerous
+Undertows in the Third Wave of Democratisation.''} \emph{Third World
+Quarterly} 19 (2): 219--39.
+\url{https://doi.org/10.1080/01436599814433}.
+
+\bibitem[\citeproctext]{ref-cameron1998}
+Cameron, Maxwell A. 1998b. {``Self-Coups: Peru, Guatemala, and
+Russia.''} \emph{Journal of Democracy} 9 (1): 125--39.
+\url{https://doi.org/10.1353/jod.1998.0003}.
+
+\bibitem[\citeproctext]{ref-cassani2020}
+Cassani, Andrea. 2020. {``Autocratisation by Term Limits Manipulation in
+Sub-Saharan Africa.''} \emph{Africa Spectrum} 55 (3): 228--50.
+\url{https://doi.org/10.1177/0002039720964218}.
+
+\bibitem[\citeproctext]{ref-cheeseman2015}
+Cheeseman, Nic. 2015. {``Democracy in Africa,''} March.
+\url{https://doi.org/10.1017/cbo9781139030892}.
+
+\bibitem[\citeproctext]{ref-cheeseman2019}
+---------. 2019. {``Should I Stay or Should I Go? Term Limits,
+Elections, and Political Change in Kenya, Uganda, and Zambia.''} In,
+311--38. Oxford University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0016}.
+
+\bibitem[\citeproctext]{ref-cheeseman2019a}
+Cheeseman, Nic, and Brian Klaas. 2019. \emph{How to Rig an Election}.
+Yale University Press. \url{https://doi.org/10.12987/9780300235210}.
+
+\bibitem[\citeproctext]{ref-close2019}
+Close, David. 2019. {``Presidential Term Limits in Nicaragua.''} In,
+159--78. Oxford University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0009}.
+
+\bibitem[\citeproctext]{ref-ezrow2019}
+Ezrow, Natasha. 2019. {``Term Limits and Succession in Dictatorships.''}
+In, 269--88. Oxford University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0014}.
+
+\bibitem[\citeproctext]{ref-fariss2022}
+Fariss, Christopher J., Therese Anders, Jonathan N. Markowitz, and
+Miriam Barnum. 2022. {``New Estimates of Over 500 Years of Historic GDP
+and Population Data.''} \emph{Journal of Conflict Resolution} 66 (3):
+553--91. \url{https://doi.org/10.1177/00220027211054432}.
+
+\bibitem[\citeproctext]{ref-gassebner2016}
+Gassebner, Martin, Jerg Gutmann, and Stefan Voigt. 2016. {``When to
+Expect a Coup d{'}état? An Extreme Bounds Analysis of Coup
+Determinants.''} \emph{Public Choice} 169 (3-4): 293--313.
+\url{https://doi.org/10.1007/s11127-016-0365-0}.
+
+\bibitem[\citeproctext]{ref-geddes2014}
+Geddes, Barbara, Joseph Wright, and Erica Frantz. 2014. {``Autocratic
+Breakdown and Regime Transitions: A New Data Set.''} \emph{Perspectives
+on Politics} 12 (2): 313--31.
+\url{https://doi.org/10.1017/s1537592714000851}.
+
+\bibitem[\citeproctext]{ref-ginsburg2019}
+Ginsburg, Tom, and Zachary Elkins. 2019. {``One Size Does Not Fit
+All.''} In, 37--52. Oxford University Press.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0003}.
+
+\bibitem[\citeproctext]{ref-ginsburg2010evasion}
+Ginsburg, Tom, James Melton, and Zachary Elkins. 2010. {``On the Evasion
+of Executive Term Limits.''} \emph{Wm. \& Mary L. Rev.} 52: 1807.
+
+\bibitem[\citeproctext]{ref-ginsburg2011evasion}
+---------. 2011. {``On the Evasion of Executive Term Limits.''}
+\emph{William and Mary Law Review} 52: 1807.
+
+\bibitem[\citeproctext]{ref-goemans2009}
+Goemans, Henk E., Kristian Skrede Gleditsch, and Giacomo Chiozza. 2009.
+{``Introducing Archigos: A Dataset of Political Leaders.''}
+\emph{Journal of Peace Research} 46 (2): 269--83.
+\url{https://doi.org/10.1177/0022343308100719}.
+
+\bibitem[\citeproctext]{ref-helmke2017}
+Helmke, Gretchen. 2017. {``Institutions on the Edge,''} January.
+\url{https://doi.org/10.1017/9781139031738}.
+
+\bibitem[\citeproctext]{ref-klesner2019}
+Klesner, Joseph L. 2019. {``The Politics of Presidential Term Limits in
+Mexico.''} In, 141--58. Oxford University Press.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0008}.
+
+\bibitem[\citeproctext]{ref-krishnarajan2019}
+Krishnarajan, Suthan. 2019. {``Economic Crisis, Natural Resources, and
+Irregular Leader Removal in Autocracies.''} \emph{International Studies
+Quarterly} 63 (3): 726--41. \url{https://doi.org/10.1093/isq/sqz006}.
+
+\bibitem[\citeproctext]{ref-landau2019}
+Landau, David, Yaniv Roznai, and Rosalind Dixon. 2019. {``Term Limits
+and the Unconstitutional Constitutional Amendment Doctrine.''} In,
+53--74. Oxford University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0004}.
+
+\bibitem[\citeproctext]{ref-llanos2019}
+Llanos, Mariana. 2019. {``The Politics of Presidential Term Limits in
+Argentina.''} In, 473--94. Oxford University Press.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0023}.
+
+\bibitem[\citeproctext]{ref-marshall2005current}
+Marshall, Monty G. 2005. {``Current Status of the World's Major Episodes
+of Political Violence.''} \emph{Report to Political Instability Task
+Force.(3 February)}.
+
+\bibitem[\citeproctext]{ref-marsteintredet2019a}
+Marsteintredet, Leiv. 2019. {``Presidential Term Limits in Latin
+America: {\emph{C}}.1820{\textendash}1985.''} In, 103--22. Oxford
+University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0006}.
+
+\bibitem[\citeproctext]{ref-marsteintredet2019}
+Marsteintredet, Leiv, and Andrés Malamud. 2019. {``Coup with Adjectives:
+Conceptual Stretching or Innovation in Comparative Research?''}
+\emph{Political Studies} 68 (4): 1014--35.
+\url{https://doi.org/10.1177/0032321719888857}.
+
+\bibitem[\citeproctext]{ref-mauceri1995}
+Mauceri, Philip. 1995. {``State Reform, Coalitions, and The Neoliberal
+{\emph{Autogolpe}} in Peru.''} \emph{Latin American Research Review} 30
+(1): 7--37. \url{https://doi.org/10.1017/s0023879100017155}.
+
+\bibitem[\citeproctext]{ref-neto2019}
+Neto, Octavio Amorim, and Igor P. Acácio. 2019. {``Presidential Term
+Limits as a Credible-Commitment Mechanism.''} In, 123--40. Oxford
+University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0007}.
+
+\bibitem[\citeproctext]{ref-nurumov2019}
+Nurumov, Dmitry, and Vasil Vashchanka. 2019. {``Presidential Terms in
+Kazakhstan.''} In, 221--46. Oxford University PressOxford.
+\url{https://doi.org/10.1093/oso/9780198837404.003.0012}.
+
+\bibitem[\citeproctext]{ref-pion-berlin2022}
+Pion-Berlin, David, Thomas Bruneau, and Richard B. Goetze. 2022. {``The
+Trump Self-Coup Attempt: Comparisons and Civil{\textendash}Military
+Relations.''} \emph{Government and Opposition} 58 (4): 789--806.
+\url{https://doi.org/10.1017/gov.2022.13}.
+
+\bibitem[\citeproctext]{ref-posner}
+Posner, Daniel N., and Daniel J. Young. n.d. {``Term Limits: Leadership,
+Political Competition and the Transfer of Power.''} In, 260--78.
+Cambridge University Press.
+\url{https://doi.org/10.1017/9781316562888.011}.
+
+\bibitem[\citeproctext]{ref-przeworski2000}
+Przeworski, Adam, Michael E. Alvarez, Jose Antonio Cheibub, and Fernando
+Limongi. 2000. {``Democracy and Development,''} August.
+\url{https://doi.org/10.1017/cbo9780511804946}.
+
+\bibitem[\citeproctext]{ref-reyntjens2016}
+Reyntjens, Filip. 2016. {``A New Look at the Evidence.''} \emph{Journal
+of Democracy} 27 (3): 61--68.
+\url{https://doi.org/10.1353/jod.2016.0044}.
+
+\bibitem[\citeproctext]{ref-stinnett2002}
+Stinnett, Douglas M., Jaroslav Tir, Paul F. Diehl, Philip Schafer, and
+Charles Gochman. 2002. {``The Correlates of War (Cow) Project Direct
+Contiguity Data, Version 3.0.''} \emph{Conflict Management and Peace
+Science} 19 (2): 59--67.
+\url{https://doi.org/10.1177/073889420201900203}.
+
+\bibitem[\citeproctext]{ref-svolik2014}
+Svolik, Milan W. 2014. {``Which Democracies Will Last? Coups, Incumbent
+Takeovers, and the Dynamic of Democratic Consolidation.''} \emph{British
+Journal of Political Science} 45 (4): 715--38.
+\url{https://doi.org/10.1017/s0007123413000550}.
+
+\bibitem[\citeproctext]{ref-tangri2010}
+Tangri, Roger, and Andrew M. Mwenda. 2010. {``President Museveni and the
+Politics of Presidential Tenure in Uganda.''} \emph{Journal of
+Contemporary African Studies} 28 (1): 31--49.
+\url{https://doi.org/10.1080/02589000903542574}.
+
+\bibitem[\citeproctext]{ref-versteeg2020law}
+Versteeg, Mila, Timothy Horley, Anne Meng, Mauricio Guim, and Marilyn
+Guirguis. 2020. {``The Law and Politics of Presidential Term Limit
+Evasion.''} \emph{Colum. L. Rev.} 120: 173.
+
+\end{CSLReferences}
+
+
+
+
+\end{document}
