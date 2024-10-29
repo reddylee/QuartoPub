@@ -1,0 +1,16 @@
+```{r}
+library(tidyverse)
+library(nycflights13)
+library(skimr)
+```
+
+```{r}
+skim(nycflights13::flights) |> 
+  view()
+```
+
+```{r}
+starwars |> 
+  select(name, hair_color) |> 
+  filter(hair_color  %in% c("black", "brown", "white")) 
+```
