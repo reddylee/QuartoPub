@@ -4,49 +4,49 @@
     "href": "demoR/gganimate.html",
     "title": "Animations plot with gganimate",
     "section": "",
-    "text": "Codelibrary(tidyverse)\nlibrary(gganimate)\nlibrary(babynames)\nlibrary(gapminder)\nlibrary(viridis)\nlibrary(RColorBrewer)"
+    "text": "library(tidyverse)\nlibrary(gganimate)\nlibrary(babynames)\nlibrary(gapminder)\nlibrary(viridis)\nlibrary(RColorBrewer)"
   },
   {
     "objectID": "demoR/gganimate.html#setup",
     "href": "demoR/gganimate.html#setup",
     "title": "Animations plot with gganimate",
     "section": "",
-    "text": "Codelibrary(tidyverse)\nlibrary(gganimate)\nlibrary(babynames)\nlibrary(gapminder)\nlibrary(viridis)\nlibrary(RColorBrewer)"
+    "text": "library(tidyverse)\nlibrary(gganimate)\nlibrary(babynames)\nlibrary(gapminder)\nlibrary(viridis)\nlibrary(RColorBrewer)"
   },
   {
     "objectID": "demoR/gganimate.html#baby-names",
     "href": "demoR/gganimate.html#baby-names",
     "title": "Animations plot with gganimate",
-    "section": "\n2 Baby names",
-    "text": "2 Baby names\n\nCodebabynames |&gt; \n  filter(name %in% c(\"Ashley\", \"Amanda\", \"Jessica\", \"Sarah\", \"Emily\"),\n         sex == \"M\") |&gt;\n  ggplot(aes(x = year, y = n, color = name, group = name)) +\n  geom_line(linewidth = 1.5) +\n  theme_bw() +\n  scale_color_viridis(discrete = TRUE) +\n  labs(title = \"Popularity of names over time\",\n       x = \"Year\",\n       y = \"Number of babies\",\n       color = \"Names\") +\n  theme(plot.title = element_text(size = 10,\n                                  colour = \"skyblue\")) +\n  transition_reveal(year)"
+    "section": "Baby names",
+    "text": "Baby names\n\nbabynames |&gt; \n  filter(name %in% c(\"Ashley\", \"Amanda\", \"Jessica\", \"Sarah\", \"Emily\"),\n         sex == \"M\") |&gt;\n  ggplot(aes(x = year, y = n, color = name, group = name)) +\n  geom_line(linewidth = 1.5) +\n  theme_bw() +\n  scale_color_viridis(discrete = TRUE) +\n  labs(title = \"Popularity of names over time\",\n       x = \"Year\",\n       y = \"Number of babies\",\n       color = \"Names\") +\n  theme(plot.title = element_text(size = 10,\n                                  colour = \"skyblue\")) +\n  transition_reveal(year)"
   },
   {
     "objectID": "demoR/gganimate.html#life-expectancy-scatter-plot",
     "href": "demoR/gganimate.html#life-expectancy-scatter-plot",
     "title": "Animations plot with gganimate",
-    "section": "\n3 Life expectancy: scatter plot",
-    "text": "3 Life expectancy: scatter plot\n\nCodegapminder |&gt; \n  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +\n  geom_point(alpha = 0.7) +\n  scale_x_log10() +\n  theme_bw() +\n  labs(title = \"Year: {frame_time}\",\n       x = \"GDP per capita\",\n       y = \"Life expectancy\",\n       size = \"Population\",\n       color = \"Continent\") +\n  theme(plot.title = element_text(size = 60,\n                                  hjust = 0.5,\n                                  colour = \"skyblue\")) +\n  transition_time(year)"
+    "section": "Life expectancy: scatter plot",
+    "text": "Life expectancy: scatter plot\n\ngapminder |&gt; \n  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +\n  geom_point(alpha = 0.7) +\n  scale_x_log10() +\n  theme_bw() +\n  labs(title = \"Year: {frame_time}\",\n       x = \"GDP per capita\",\n       y = \"Life expectancy\",\n       size = \"Population\",\n       color = \"Continent\") +\n  theme(plot.title = element_text(size = 60,\n                                  hjust = 0.5,\n                                  colour = \"skyblue\")) +\n  transition_time(year)"
   },
   {
     "objectID": "demoR/gganimate.html#life-expectancy-scatter-plot-with-facet",
     "href": "demoR/gganimate.html#life-expectancy-scatter-plot-with-facet",
     "title": "Animations plot with gganimate",
-    "section": "\n4 Life expectancy: scatter plot with facet",
-    "text": "4 Life expectancy: scatter plot with facet\n\nCodegapminder |&gt; \n  filter(continent != \"Oceania\") |&gt; \n  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +\n  geom_point(alpha = 0.7,\n             show.legend = F) +\n  scale_color_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw() +\n  labs(title = \"Year: {frame_time}\",\n       x = \"GDP per capita\",\n       y = \"Life expectancy\",\n       size = \"Population\",\n       color = \"Continent\") +\n  theme(plot.title = element_text(size = 60,\n                                  hjust = 0.5,\n                                  colour = \"skyblue\")) +\n  transition_time(year)"
+    "section": "Life expectancy: scatter plot with facet",
+    "text": "Life expectancy: scatter plot with facet\n\ngapminder |&gt; \n  filter(continent != \"Oceania\") |&gt; \n  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +\n  geom_point(alpha = 0.7,\n             show.legend = F) +\n  scale_color_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw() +\n  labs(title = \"Year: {frame_time}\",\n       x = \"GDP per capita\",\n       y = \"Life expectancy\",\n       size = \"Population\",\n       color = \"Continent\") +\n  theme(plot.title = element_text(size = 60,\n                                  hjust = 0.5,\n                                  colour = \"skyblue\")) +\n  transition_time(year)"
   },
   {
     "objectID": "demoR/gganimate.html#life-expectancy-barplot",
     "href": "demoR/gganimate.html#life-expectancy-barplot",
     "title": "Animations plot with gganimate",
-    "section": "\n5 Life expectancy: Barplot",
-    "text": "5 Life expectancy: Barplot\n\nCodeChickWeight |&gt; \n   ggplot(aes(x = factor(Diet), y = weight, fill = Diet)) +\n  geom_bar(stat = \"identity\") +\n  theme_bw() +\n  scale_fill_brewer(palette = \"Set2\") +\n  labs(title = \"Time: {frame_time}\",\n       x = \"Diet\",\n       y = \"Weight\") +\n  theme(plot.title = element_text(size = 20,\n                                  #hjust = 0.5,\n                                  colour = \"skyblue\")) +\n  transition_states(Time)"
+    "section": "Life expectancy: Barplot",
+    "text": "Life expectancy: Barplot\n\nChickWeight |&gt; \n   ggplot(aes(x = factor(Diet), y = weight, fill = Diet)) +\n  geom_bar(stat = \"identity\") +\n  theme_bw() +\n  scale_fill_brewer(palette = \"Set2\") +\n  labs(title = \"Time: {frame_time}\",\n       x = \"Diet\",\n       y = \"Weight\") +\n  theme(plot.title = element_text(size = 20,\n                                  #hjust = 0.5,\n                                  colour = \"skyblue\")) +\n  transition_states(Time)"
   },
   {
     "objectID": "demoR/gganimate.html#save-at-gif",
     "href": "demoR/gganimate.html#save-at-gif",
     "title": "Animations plot with gganimate",
-    "section": "\n6 Save at gif",
-    "text": "6 Save at gif\n\nCodeanim_save(\"gganimate.gif\")"
+    "section": "Save at gif",
+    "text": "Save at gif\n\nanim_save(\"gganimate.gif\")"
   },
   {
     "objectID": "demoR/stargazer.html",
@@ -782,5 +782,82 @@
     "title": "DuckDB in R",
     "section": "Footnotes",
     "text": "Footnotes\n\nPlease go to upper right corner to view the source code.↩︎"
+  },
+  {
+    "objectID": "demoR/test.html",
+    "href": "demoR/test.html",
+    "title": "test",
+    "section": "",
+    "text": "In this section, we discuss the immediate effects…"
+  },
+  {
+    "objectID": "demoR/test.html#sec-impact",
+    "href": "demoR/test.html#sec-impact",
+    "title": "test",
+    "section": "",
+    "text": "In this section, we discuss the immediate effects…"
+  },
+  {
+    "objectID": "demoR/test.html#sec-longterm",
+    "href": "demoR/test.html#sec-longterm",
+    "title": "test",
+    "section": "Longer-Term Effects",
+    "text": "Longer-Term Effects\nThis section examines the effects three years after the event.\nAs discussed in Section Section 1, autocoups have an immediate impact on democratization.\nAs discussed in Section Section 1.1, autocoups have an immediate impact on democratization."
+  },
+  {
+    "objectID": "demoR/pie_chart.html",
+    "href": "demoR/pie_chart.html",
+    "title": "Pie charts with R",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(modeldata)\nview(penguins)"
+  },
+  {
+    "objectID": "demoR/pie_chart.html#setup",
+    "href": "demoR/pie_chart.html#setup",
+    "title": "Pie charts with R",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(modeldata)\nview(penguins)"
+  },
+  {
+    "objectID": "demoR/pie_chart.html#bar-chat-for-comparison",
+    "href": "demoR/pie_chart.html#bar-chat-for-comparison",
+    "title": "Pie charts with R",
+    "section": "Bar chat for comparison",
+    "text": "Bar chat for comparison\n\npenguins |&gt; \n  ggplot(aes(x = species,\n             fill = species)) +\n  geom_bar(show.legend = F) +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(x = \"Species\",\n       y = NULL)+\n  theme_minimal()"
+  },
+  {
+    "objectID": "demoR/pie_chart.html#obtain-counts-for-penguin-species",
+    "href": "demoR/pie_chart.html#obtain-counts-for-penguin-species",
+    "title": "Pie charts with R",
+    "section": "Obtain counts for penguin species",
+    "text": "Obtain counts for penguin species\n\npen_sum &lt;- penguins |&gt;\n  count(species) |&gt;\n  arrange(desc(n))\npen_sum\n\n# A tibble: 3 × 2\n  species       n\n  &lt;fct&gt;     &lt;int&gt;\n1 Adelie      152\n2 Gentoo      124\n3 Chinstrap    68"
+  },
+  {
+    "objectID": "demoR/pie_chart.html#a-stacked-bar-chart",
+    "href": "demoR/pie_chart.html#a-stacked-bar-chart",
+    "title": "Pie charts with R",
+    "section": "A stacked bar chart",
+    "text": "A stacked bar chart\n\npen_sum |&gt; \n  ggplot(aes(x = \"\",\n             y = n,\n             fill = species)) +\n  geom_col() +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(fill = \"Species\",\n       x = NULL,\n       y = NULL) +\n  theme_minimal()"
+  },
+  {
+    "objectID": "demoR/pie_chart.html#a-basic-pie-chart",
+    "href": "demoR/pie_chart.html#a-basic-pie-chart",
+    "title": "Pie charts with R",
+    "section": "A basic pie chart",
+    "text": "A basic pie chart\n\npen_sum |&gt; \n  ggplot(aes(x = \"\",\n             y = n,\n             fill = species)) +\n  geom_col() +\n  coord_polar(\"y\") +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(fill = \"Species\",\n       x = NULL,\n       y = NULL) +\n  theme_minimal()"
+  },
+  {
+    "objectID": "demoR/pie_chart.html#adding-labels-to-the-pie-chart",
+    "href": "demoR/pie_chart.html#adding-labels-to-the-pie-chart",
+    "title": "Pie charts with R",
+    "section": "Adding labels to the pie chart",
+    "text": "Adding labels to the pie chart\n\npen_sum |&gt; \n  ggplot(aes(x = \"\",\n             y = n,\n             fill = species)) +\n  geom_col() +\n  coord_polar(\"y\") +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(fill = \"Species\",\n       x = NULL,\n       y = NULL) +\n  theme_minimal() \n\n\n\n\n\n\n\n\n\npen_sum |&gt; \n  ggplot(aes(x = \"\",\n             y = n,\n             fill = species)) +\n  geom_col() +\n  geom_text(aes(label = paste0(round(n/sum(n)*100, 1), \"%\")),\n            position = position_stack(vjust = 0.5)) +\n  coord_polar(\"y\") +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(fill = \"Species\",\n       x = NULL,\n       y = NULL) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\nlibrary(ggrepel)\n\npen_sum |&gt; \n  ggplot(aes(x = \"\",\n             y = n,\n             fill = species)) +\n  geom_col(width = 1) +\n  geom_label_repel(aes(label = paste0(round(n/sum(n)*100, 1), \"%\")),\n                   position = position_stack(vjust = 0.5),\n                   force_pull = 0.5,\n                   show.legend = FALSE) +\n  coord_polar(\"y\") +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(fill = \"Species\",\n       x = NULL,\n       y = NULL) +\n  theme_minimal()\n\n\n\n\n\n\n\n\n\npen_sum |&gt; \n  ggplot(aes(x = \"\",\n             y = n,\n             fill = species)) +\n  geom_col() +\n  geom_label(aes(label = paste0(round(n/sum(n)*100, 1), \"%\")),\n             position = position_stack(vjust = 0.5)) +\n  coord_polar(\"y\") +\n  scale_fill_brewer(palette = \"Dark2\") +\n  labs(fill = \"Species\",\n       x = NULL,\n       y = NULL) +\n  theme_minimal()"
+  },
+  {
+    "objectID": "demoR/Untitled.html",
+    "href": "demoR/Untitled.html",
+    "title": "Untitled",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(mlbench)\nlibrary(gtExtras)\n\nLoading required package: gt\n\n\n\nmtcars |&gt;\n  ggplot(aes(x = wt, y = mpg)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\n\n\n Back to top"
   }
 ]

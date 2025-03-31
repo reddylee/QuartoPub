@@ -8,3 +8,123 @@ format:
     code-tools: true
 categories: [logit, model]
 ---
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(mlbench)
+library(gtExtras)
+```
+
+```{r}
+data("PimaIndiansDiabetes", package = "mlbench")
+
+
+glm(diabetes ~ glucose,
+  data = PimaIndiansDiabetes,
+  family = binomial
+) |>
+  summary()
+```
+
+```{r}
+PimaIndiansDiabetes |>
+  head(10) |>
+  gt() |>
+  gt_theme_pff() |>
+  tab_header(
+    title = "PimaIndiansDiabetes Dataset"
+  ) |>
+  data_color(
+    columns = diabetes,
+    colors = scales::col_factor(
+      palette = c("#f5c5bd", "#cbf5bd"),
+      domain = c("neg", "pos")
+    )
+  )
+```
+
+```{r}
+age_data <- PimaIndiansDiabetes |>
+  mutate(age_group = case_when(
+    age < 30 ~ "Young adult",
+    age <= 50 ~ "Middle-aged",
+    TRUE ~ "Older adult"
+  )) |>
+  mutate(age_group = factor(age_group, levels = c("Young adult", "Middle-aged", "Older adult"))) |>
+  select(age_group, diabetes)
+```
+
+```{r}
+model_2 <- glm(diabetes ~ age_group,
+  data = age_data,
+  family = binomial
+)
+
+summary(model_2)
+```
+
+```{r}
+# 加载必要的包
+library(ggplot2)
+
+# 创建示例数据
+set.seed(123) # 设置随机种子以确保结果可重复
+x <- rnorm(100) # 生成100个随机数作为x轴数据
+y <- 2 * x + rnorm(100) # 生成与x相关的y轴数据，并加入一些噪声
+
+# 创建数据框
+data <- data.frame(x = x, y = y)
+
+# 使用ggplot2绘制散点图
+ggplot(data, aes(x = x, y = y)) +
+  # 设置点的颜色、大小和透明度
+  geom_point(color = "blue", size = 3, alpha = 0.6) +
+  # 添加标题和轴标签
+  labs(title = "散点图示例", x = "X轴", y = "Y轴") +
+  theme_minimal() # 使用简洁的主题
+```
+
+```{r}
+# 使用R内置的mtcars数据集
+data(mtcars)
+
+# 查看数据集的前几行
+head(mtcars)
+
+# 使用ggplot2绘制散点图
+library(ggplot2)
+
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = "red", size = 3, alpha = 0.8) + # 设置点的颜色、大小和透明度
+  labs(
+    title = "车重 vs 燃油效率",
+    x = "车重 (吨)",
+    y = "每加仑行驶英里数 (mpg)"
+  ) + # 添加标题和轴标签
+  theme_minimal() # 使用简洁的主题
+```
+
+```{r}
+model_3 <- glm(diabetes ~ glucose + age,
+  data = PimaIndiansDiabetes,
+  family = binomial
+)
+
+summary(model_3)
+```
+
+```{r}
+mtcars |>
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point()
+```
+
+```{r}
+model_4 <- glm(diabetes ~ glucose + age + glucose:age,
+  data = PimaIndiansDiabetes,
+  family = binomial
+)
+
+summary(model_4)
+```

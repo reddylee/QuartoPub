@@ -1,0 +1,17 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(mlbench)
+library(gtExtras)
+```
+
+```{r}
+mtcars |>
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point()
+```

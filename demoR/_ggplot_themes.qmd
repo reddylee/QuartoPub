@@ -1,0 +1,19 @@
+```{r}
+library(tidyverse)
+```
+
+https://youtu.be/185exr5W9jQ?si=G3VEdHdqBzP-HxEU
+
+```{r}
+mtcars |> 
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  ggtitle("Weight vs MPG") +
+  theme_minimal() +
+  theme(plot.title = 
+          element_text(family = "Comic Sans Ms",
+                       color = "skyblue",
+                       face = "bold.italic",
+                       size = 18))
+        
+```

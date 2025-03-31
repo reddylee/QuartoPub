@@ -74,15 +74,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -173,9 +175,6 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -769,7 +768,7 @@ countries and why some coups succeed while others fail}.
 For instance, according to the Global Instances of Coups dataset
 (\citeproc{ref-powell2011}{Powell and Thyne 2011}) (GIC), Latin America
 and Africa have seen notable variation in coup activity. Bolivia
-experienced 23 coups between 1950 and 1984, and Argentina saw 20 coups
+experienced 24 coups between 1950 and 1984, and Argentina saw 20 coups
 during a similar period. In Africa, Sudan endured 17 coups between 1955
 and 2023. In stark contrast, countries such as Mexico and South Africa
 have remained coup-free since 1950.
@@ -808,36 +807,22 @@ observations:
   likelihood of success.
 \end{itemize}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
-  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
-  >{\centering\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\begin{longtable}[]{@{}lccr@{}}
 
 \caption{\label{tbl-coups}Top 10 countries with the most coup attempts}
 
 \tabularnewline
 
 \toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Country
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Coup Attempted
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Coup Succeeded
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Success Rate
-\end{minipage} \\
+Country & Coup Attempted & Coup Succeeded & Success Rate \\
 \midrule\noalign{}
 \endhead
 \midrule\noalign{}
-\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{1.0000} + 6\tabcolsep}@{}}{%
-\begin{minipage}[t]{\linewidth}\raggedright
-\emph{Source: GIC dataset}
-\end{minipage}} \\
+\multicolumn{4}{@{}l@{}}{%
+{Source: GIC dataset}} \\
 \bottomrule\noalign{}
 \endlastfoot
-Bolivia & 23 & 11 & 47.8\% \\
+Bolivia & 24 & 11 & 45.8\% \\
 Argentina & 20 & 7 & 35.0\% \\
 Sudan & 17 & 6 & 35.3\% \\
 Haiti & 13 & 9 & 69.2\% \\
@@ -848,7 +833,7 @@ Thailand & 12 & 8 & 66.7\% \\
 Ecuador & 11 & 5 & 45.5\% \\
 Burundi & 11 & 5 & 45.5\% \\
 Guatemala & 10 & 5 & 50.0\% \\
-Total & 491 & 245 & 49.9\% \\
+Total & 493 & 246 & 49.9\% \\
 
 \end{longtable}
 
@@ -1255,13 +1240,7 @@ regimes being the least susceptible.}}
 
 \blandscape
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\begin{longtable}[]{@{}llllll@{}}
 
 \caption{\label{tbl-regimes1}Characteristics of Different Regime Types}
 
@@ -1273,8 +1252,8 @@ Stability & Examples \\
 \midrule\noalign{}
 \endhead
 \midrule\noalign{}
-\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{1.0000} + 10\tabcolsep}@{}}{%
-\emph{Source: GWF \& Author}} \\
+\multicolumn{6}{@{}l@{}}{%
+{Source: GWF \& Author}} \\
 \bottomrule\noalign{}
 \endlastfoot
 Military & Junta & Unclear & May have significant influence & Low &
@@ -1290,51 +1269,29 @@ party & High & Mexico (PRI), China (CPC) \\
 
 \clearpage
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\begin{longtable}[]{@{}lrrrrrr@{}}
 
 \caption{\label{tbl-regimes}Regime types and coups since 1950}
 
 \tabularnewline
 
 \toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Regime Type
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Country Year
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Share
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Coups
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Coups Percent
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Success Rate
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
-Likelihood
-\end{minipage} \\
+Regime Type & Country Year & Share & Coups & Coups Percent & Success
+Rate & Likelihood \\
 \midrule\noalign{}
 \endhead
 \midrule\noalign{}
-\multicolumn{7}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{1.0000} + 12\tabcolsep}@{}}{%
-\begin{minipage}[t]{\linewidth}\raggedright
-\emph{Source: REIGN and GIC Datasets}
-\end{minipage}} \\
+\multicolumn{7}{@{}l@{}}{%
+{Source: REIGN and GIC Datasets}} \\
 \bottomrule\noalign{}
 \endlastfoot
-Democracy & 5312 & 46.7\% & 122 & 24.8\% & 51.6\% & 2.3\% \\
-Dominant-Party & 2569 & 22.6\% & 82 & 16.7\% & 53.7\% & 3.2\% \\
-Personal & 1476 & 13.0\% & 113 & 23.0\% & 44.2\% & 7.7\% \\
+Democracy & 5312 & 46.7\% & 124 & 25.2\% & 51.6\% & 2.3\% \\
+Dominant-Party & 2569 & 22.6\% & 82 & 16.6\% & 53.7\% & 3.2\% \\
+Personal & 1476 & 13.0\% & 113 & 22.9\% & 44.2\% & 7.7\% \\
 Monarchy & 1056 & 9.3\% & 25 & 5.1\% & 56.0\% & 2.4\% \\
-Military & 638 & 5.6\% & 110 & 22.4\% & 48.2\% & 17.2\% \\
+Military & 638 & 5.6\% & 110 & 22.3\% & 48.2\% & 17.2\% \\
 Other & 322 & 2.8\% & 39 & 7.9\% & 53.8\% & 12.1\% \\
-Total & 11373 & 100.0\% & 491 & 100.0\% & 49.9\% & 4.3\% \\
+Total & 11373 & 100.0\% & 493 & 100.0\% & 49.9\% & 4.3\% \\
 
 \end{longtable}
 
@@ -1516,10 +1473,9 @@ main control variables.
   stability by including a violence index that encompasses all types of
   internal and interstate wars and violence. The data for this index is
   sourced from the variable ``actotal'' in the Major Episodes of
-  Political Violence dataset
-  (\citeproc{ref-marshall2005current}{Marshall 2005}), with 0
-  representing the most stable conditions (no violence at all) and 18
-  representing the most unstable.
+  Political Violence dataset (\citeproc{ref-marshall2005current}{Monty
+  G. Marshall 2005}), with 0 representing the most stable conditions (no
+  violence at all) and 18 representing the most unstable.
 \item
   \textbf{Previous coups:} Included in the selection equation as either:
   a) The number of previous coups in a country (Model 1), or b) The time
@@ -1535,57 +1491,47 @@ Coup Success, 1950-2019}
 
 \centering{
 
-\begingroup 
-\small 
-\begin{tabular}{@{\extracolsep{7pt}}lcccc} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
-\\[-1.8ex] & \multicolumn{2}{c}{Model 1} & \multicolumn{2}{c}{Model 2} \\ 
- & Coup Attempts & Coup Outcome & Coup Attempts & Coup Outcome \\ 
-\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+ & Coup Attempts & Coup Outcome \\ 
+\\[-1.8ex] & (1) & (2)\\ 
 \hline \\[-1.8ex] 
- Constant & $-$1.774$^{***}$ & $-$1.803$^{***}$ & $-$1.663$^{***}$ & $-$0.654 \\ 
-  & (0.058) & (0.360) & (0.088) & (0.518) \\ 
-  & & & & \\ 
- Regime: Democracy & 0.056 & 0.068 & 0.043 & 0.042 \\ 
-  & (0.072) & (0.121) & (0.075) & (0.192) \\ 
-  & & & & \\ 
- \hspace{1.6cm}Military & 0.687$^{***}$ & 0.596$^{***}$ & 0.345$^{***}$ & 0.247 \\ 
-  & (0.084) & (0.170) & (0.091) & (0.229) \\ 
-  & & & & \\ 
- \hspace{1.6cm}Monarchy & 0.282$^{**}$ & 0.178 & 0.233$^{*}$ & 0.088 \\ 
-  & (0.118) & (0.201) & (0.123) & (0.310) \\ 
-  & & & & \\ 
- \hspace{1.6cm}Personalist & 0.319$^{***}$ & 0.128 & 0.134$^{*}$ & $-$0.145 \\ 
-  & (0.075) & (0.170) & (0.080) & (0.205) \\ 
-  & & & & \\ 
- Economic trend & $-$0.015$^{***}$ & $-$0.004 & $-$0.014$^{***}$ & 0.009 \\ 
-  & (0.002) & (0.007) & (0.002) & (0.008) \\ 
-  & & & & \\ 
- GDP per capita & $-$0.028$^{***}$ & $-$0.028$^{***}$ & $-$0.016$^{***}$ & $-$0.016 \\ 
-  & (0.003) & (0.006) & (0.003) & (0.010) \\ 
-  & & & & \\ 
- Political violence & 0.033$^{**}$ & 0.033$^{*}$ & 0.038$^{***}$ & 0.025 \\ 
-  & (0.013) & (0.020) & (0.013) & (0.031) \\ 
-  & & & & \\ 
- Previous coups (P) & 0.030$^{***}$ &  & 0.448$^{***}$ &  \\ 
-  & (0.010) &  & (0.086) &  \\ 
-  & & & & \\ 
- Yrs since coup (Y) &  &  & $-$0.018$^{***}$ &  \\ 
-  &  &  & (0.004) &  \\ 
-  & & & & \\ 
- Interaction term: P * Y &  &  & $-$0.013$^{***}$ &  \\ 
-  &  &  & (0.005) &  \\ 
-  & & & & \\ 
+ Constant & $-$1.868$^{***}$ & $-$1.014$^{*}$ \\ 
+  & (0.062) & (0.526) \\ 
+  & & \\ 
+ Regime: Democracy & $-$0.046 & 0.014 \\ 
+  & (0.073) & (0.174) \\ 
+  & & \\ 
+ \hspace{1.6cm}Military & 0.561$^{***}$ & 0.363 \\ 
+  & (0.086) & (0.228) \\ 
+  & & \\ 
+ \hspace{1.6cm}Monarchy & 0.299$^{**}$ & 0.087 \\ 
+  & (0.119) & (0.282) \\ 
+  & & \\ 
+ \hspace{1.6cm}Personalist & 0.241$^{***}$ & $-$0.089 \\ 
+  & (0.076) & (0.199) \\ 
+  & & \\ 
+ Economic trend & $-$0.020$^{***}$ & 0.006 \\ 
+  & (0.003) & (0.011) \\ 
+  & & \\ 
+ GDP per capita & $-$0.026$^{***}$ & $-$0.021$^{**}$ \\ 
+  & (0.003) & (0.010) \\ 
+  & & \\ 
+ Political violence & 0.027$^{**}$ & 0.024 \\ 
+  & (0.013) & (0.028) \\ 
+  & & \\ 
+ No. of Previous coups & 0.079$^{***}$ &  \\ 
+  & (0.010) &  \\ 
+  & & \\ 
 \hline \\[-1.8ex] 
-Observations & 9,606 & 9,606 & 9,606 & 9,606 \\ 
-Log Likelihood & $-$1,663.683 & $-$1,663.683 & $-$1,598.656 & $-$1,598.656 \\ 
-$\rho$ & 0.898$^{***}$  (0.158) & 0.898$^{***}$  (0.158) & 0.386$^{*}$  (0.234) & 0.386$^{*}$  (0.234) \\ 
+Observations & 9,641 & 9,641 \\ 
+Log Likelihood & $-$1,631.677 & $-$1,631.677 \\ 
+$\rho$ & 0.564$^{**}$  (0.235) & 0.564$^{**}$  (0.235) \\ 
 \hline 
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
-\end{tabular} 
-\endgroup
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular}
 
 }
 
@@ -1617,14 +1563,14 @@ Term & Contrast & AME{\textsuperscript{1}} & Ratio Percent \\
 {\textsuperscript{1}} AME: Average Marginal Effect} \\
 \bottomrule\noalign{}
 \endlastfoot
-Democracy & mean(democracy - dominant-party) & 0.003 & 13.040 \\
-Military & mean(military - dominant-party) & 0.070 & 277.730 \\
-Monarchy & mean(monarchy - dominant-party) & 0.020 & 80.280 \\
-Personal & mean(personal - dominant-party) & 0.024 & 93.980 \\
-Economic trend & mean(+1) & −0.001 & −2.850 \\
-GDP per capita & mean(+1) & −0.002 & −5.400 \\
-Political violence & mean(+1) & 0.003 & 6.550 \\
-Previous coups & mean(+1) & 0.002 & 5.930 \\
+Democracy & mean(democracy - dominant-party) & −0.003 & −9.160 \\
+Military & mean(military - dominant-party) & 0.055 & 186.030 \\
+Monarchy & mean(monarchy - dominant-party) & 0.024 & 80.120 \\
+Personal & mean(personal - dominant-party) & 0.018 & 61.570 \\
+Economic trend & mean(+1) & −0.001 & −3.760 \\
+GDP per capita & mean(+1) & −0.002 & −4.870 \\
+Political violence & mean(+1) & 0.002 & 5.270 \\
+Previous coups & mean(+1) & 0.006 & 15.930 \\
 
 \end{longtable}
 
@@ -1703,15 +1649,13 @@ Term & Contrast & AME{\textsuperscript{1}} & Ratio Percent \\
 {\textsuperscript{1}} AME: Average Marginal Effect} \\
 \bottomrule\noalign{}
 \endlastfoot
-Democracy & mean(democracy - dominant-party) & 0.003 & 8.920 \\
-Military & mean(military - dominant-party) & 0.028 & 91.630 \\
-Monarchy & mean(monarchy - dominant-party) & 0.018 & 56.730 \\
-Personal & mean(personal - dominant-party) & 0.009 & 30.080 \\
-Economic trend & mean(+1) & −0.001 & −2.530 \\
-GDP per capita & mean(+1) & −0.001 & −2.890 \\
-Political violence & mean(+1) & 0.003 & 7.330 \\
-Previous coups (P) & mean(1 - 0) & 0.023 & 92.090 \\
-Yrs since coup (Y) & mean(+1) & −0.002 & −5.050 \\
+Democracy & mean(democracy - dominant-party) & 0.006 & 24.940 \\
+Military & mean(military - dominant-party) & 0.077 & 339.370 \\
+Monarchy & mean(monarchy - dominant-party) & 0.017 & 73.480 \\
+Personal & mean(personal - dominant-party) & 0.027 & 117.520 \\
+Economic trend & mean(+1) & −0.002 & −4.450 \\
+GDP per capita & mean(+1) & −0.002 & −5.990 \\
+Political violence & mean(+1) & 0.003 & 6.860 \\
 
 \end{longtable}
 
@@ -2087,7 +2031,7 @@ Unlike other terms, `autocoup' clearly identifies the perpetrator and
 the illegitimate nature of the power grab, distinguishing it from
 classic coups while maintaining a parallel structure in terminology.
 
-\subsection{Definition}\label{definition}
+\subsection{Definition}\label{sec-definition}
 
 While precise terminology is undoubtedly crucial, another issue arises
 with previous definitions of autocoups: what is the primary
@@ -2161,9 +2105,9 @@ expansions as their prerequisite and foreshadowing.
 
 Based on these criteria, I define \textbf{an autocoup as the
 illegitimate extension of an incumbent leader's term in office beyond
-the originally mandated limits through unconstitutional means}. This
-definition emphasizes the core characteristic of power extension while
-acknowledging the potential for power expansion as a related phenomenon:
+the originally mandated limits}. This definition emphasizes the core
+characteristic of power extension while acknowledging the potential for
+power expansion as a related phenomenon:
 
 \begin{itemize}
 \item
@@ -2870,37 +2814,37 @@ success (1945-2018)}
  & Autocoup Attempts & Autocoup Outcome \\ 
 \\[-1.8ex] & (1) & (2)\\ 
 \hline \\[-1.8ex] 
- Constant & $-$1.674$^{***}$ & $-$0.888 \\ 
-  & (0.624) & (1.935) \\ 
+ Constant & $-$2.418$^{***}$ & $-$1.857 \\ 
+  & (0.871) & (2.834) \\ 
   & & \\ 
- Regime: Dominant-party & 0.070 & 0.672$^{*}$ \\ 
-  & (0.145) & (0.402) \\ 
+ Regime: Dominant-party & 0.088 & 0.707$^{*}$ \\ 
+  & (0.146) & (0.404) \\ 
   & & \\ 
- \hspace{1.6cm}Military & $-$0.255 & 0.615 \\ 
-  & (0.189) & (0.541) \\ 
+ \hspace{1.6cm}Military & $-$0.237 & 0.638 \\ 
+  & (0.190) & (0.543) \\ 
   & & \\ 
- \hspace{1.6cm}Personalist & 0.737$^{***}$ & 1.609$^{***}$ \\ 
-  & (0.157) & (0.448) \\ 
+ \hspace{1.6cm}Personalist & 0.794$^{***}$ & 1.652$^{***}$ \\ 
+  & (0.157) & (0.449) \\ 
   & & \\ 
- GDP per capita & $-$0.009 & 0.064 \\ 
+ GDP per capita & $-$0.009 & 0.062 \\ 
   & (0.011) & (0.045) \\ 
   & & \\ 
- Economic trend & 0.653 & 0.197 \\ 
-  & (0.533) & (1.772) \\ 
+ Economic trend & 1.346$^{*}$ & 1.182 \\ 
+  & (0.804) & (2.796) \\ 
   & & \\ 
- Political stability & $-$0.044 & 0.126 \\ 
-  & (0.036) & (0.130) \\ 
+ Political stability & $-$0.037 & 0.115 \\ 
+  & (0.035) & (0.125) \\ 
   & & \\ 
  Age & $-$0.001 & 0.004 \\ 
   & (0.001) & (0.017) \\ 
   & & \\ 
- Population(log) & $-$0.048 & 0.029 \\ 
+ Population(log) & $-$0.046 & 0.021 \\ 
   & (0.042) & (0.144) \\ 
   & & \\ 
 \hline \\[-1.8ex] 
-Observations & 1,028 & 102 \\ 
-Log Likelihood & $-$308.494 & $-$43.651 \\ 
-Akaike Inf. Crit. & 634.988 & 105.302 \\ 
+Observations & 1,031 & 103 \\ 
+Log Likelihood & $-$308.469 & $-$43.164 \\ 
+Akaike Inf. Crit. & 634.938 & 104.328 \\ 
 \hline 
 \hline \\[-1.8ex] 
 \textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
@@ -3030,7 +2974,7 @@ between autocoups and democratic backsliding, democratic breakdown, and
 the personalization of power.
 
 \chapter{Power Acquisition and Leadership Survival: A Comparative
-Analysis of coup-installed and Autocoup
+Analysis of Coup-installed and Autocoup
 Leaders}\label{power-acquisition-and-leadership-survival-a-comparative-analysis-of-coup-installed-and-autocoup-leaders}
 
 \section*{Abstract}\label{abstract-3}
@@ -3094,15 +3038,15 @@ Measuring the tenure of coup-installed and autocoup leaders poses
 challenges due to the inherent irregularity and uncertainty of their
 positions. Nevertheless, a comparative analysis reveals that leaders who
 extend power through autocoups tend to have longer average post-autocoup
-tenures (approximately 11 years) compared to coup-installed leaders
-(approximately 5.7 years), suggesting a potential tenure gap of over
+tenures (approximately 4.6 years) compared to coup-installed leaders
+(approximately 11.3 years), suggesting a potential tenure gap of over
 five years.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics{_coups_and_autocoups_files/figure-pdf/fig-logrank-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{_coups_and_autocoups_files/figure-pdf/fig-logrank-1.pdf}}
 
 }
 
@@ -3591,14 +3535,14 @@ of leaders}
 \textbf{Characteristic} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1,2}} & \textbf{SE}\textsuperscript{\textit{2}} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1,2}} & \textbf{SE}\textsuperscript{\textit{2}} \\ 
 \midrule\addlinespace[2.5pt]
 {\bfseries Leader Type} &  &  &  &  &  &  &  &  \\ 
-    Autocoup leaders & 76 & 31 & 1.00 & — & 737 & 29 & 1.00 & — \\ 
-    Coup-installed leaders & 148 & 73 & 2.71*** & 0.252 & 853 & 73 & 2.23*** & 0.246 \\ 
-{\bfseries GDP Growth Trend} & 224 & 104 & 1.94 & 1.08 & 1,590 & 102 & 0.20* & 0.981 \\ 
-{\bfseries GDP per capita} & 224 & 104 & 0.97* & 0.020 & 1,590 & 102 & 0.95** & 0.023 \\ 
-{\bfseries Population: log} & 224 & 104 & 0.98 & 0.083 & 1,590 & 102 & 0.90 & 0.079 \\ 
-{\bfseries Polity 5} & 224 & 104 & 0.99 & 0.025 & 1,590 & 102 & 1.01 & 0.023 \\ 
-{\bfseries Political stability} & 224 & 104 & 1.00 & 0.053 & 1,590 & 102 & 1.11* & 0.049 \\ 
-{\bfseries Age} & 224 & 104 & 1.01 & 0.010 & 1,590 & 102 & 1.00 & 0.011 \\ 
+    Autocoup leaders & 73 & 30 & 1.00 & — & 51 & 25 & 1.00 & — \\ 
+    Coup-installed leaders & 164 & 164 & 9.00*** & 0.238 & 167 & 167 & 1.88*** & 0.270 \\ 
+{\bfseries GDP Growth Trend} & 237 & 194 & 0.22 & 1.18 & 218 & 192 & 1.00 & 1.26 \\ 
+{\bfseries GDP per capita} & 237 & 194 & 0.99 & 0.011 & 218 & 192 & 0.93*** & 0.036 \\ 
+{\bfseries Population: log} & 237 & 194 & 1.13* & 0.065 & 218 & 192 & 1.12** & 0.065 \\ 
+{\bfseries Polity 5} & 237 & 194 & 0.99 & 0.013 & 218 & 192 & 0.96*** & 0.015 \\ 
+{\bfseries Political stability} & 237 & 194 & 1.05 & 0.042 & 218 & 192 & 1.12*** & 0.048 \\ 
+{\bfseries Age} & 237 & 194 & 1.03*** & 0.008 & 218 & 192 & 1.02*** & 0.007 \\ 
 \bottomrule
 \end{tabular*}
 \begin{minipage}{\linewidth}
@@ -3655,7 +3599,7 @@ removal from office.
 
 \centering{
 
-\includegraphics{_coups_and_autocoups_files/figure-pdf/fig-coxSurv-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{_coups_and_autocoups_files/figure-pdf/fig-coxSurv-1.pdf}}
 
 }
 
@@ -3667,7 +3611,7 @@ removal from office.
 
 \centering{
 
-\includegraphics{_coups_and_autocoups_files/figure-pdf/fig-coxSurv-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{_coups_and_autocoups_files/figure-pdf/fig-coxSurv-2.pdf}}
 
 }
 
@@ -3698,7 +3642,7 @@ their coup-installed counterparts.
 
 \centering{
 
-\includegraphics{_coups_and_autocoups_files/figure-pdf/fig-coxHR-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{_coups_and_autocoups_files/figure-pdf/fig-coxHR-1.pdf}}
 
 }
 
@@ -3710,7 +3654,7 @@ their coup-installed counterparts.
 
 \centering{
 
-\includegraphics{_coups_and_autocoups_files/figure-pdf/fig-coxHR-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{_coups_and_autocoups_files/figure-pdf/fig-coxHR-2.pdf}}
 
 }
 
@@ -3821,6 +3765,608 @@ and the risks associated with non-democratic leadership transitions,
 this research emphasizes the importance of continued investigation into
 the complex relationships between power, legitimacy, and survival in
 political leadership.
+
+\chapter{Coups, Autocoups, and
+Democracy}\label{coups-autocoups-and-democracy}
+
+\section{Abstract}\label{abstract-4}
+
+This chapter examines the impact of coups and autocoups on democracy.
+While extensive research has explored how coups influence democratic
+governance, far less attention has been given to autocoups. Unlike
+coups, which can lead to democratic backsliding, authoritarian
+entrenchment, or even democratic transition, autocoups are more
+consistently associated with the consolidation of authoritarian rule.
+
+Using data from a widely recognized coup dataset along with a newly
+compiled dataset on autocoups, this study employs a fixed-effects model
+to assess their effects on democracy, as measured by the Polity Index.
+The results indicate that both coups and autocoups lead to a decline in
+democratic levels. However, coups have a greater immediate negative
+impact. Notably, three years after these events, democracies affected by
+coups tend to show significant recovery, whereas those experiencing
+autocoups exhibit no meaningful improvement.
+
+These findings support the hypothesis that compared to coups, autocoups
+pose a more persistent threat to democracy. This also helps explain the
+continuous decline in global democratic levels over the past 18 years,
+as reported by Freedom House in its 2024 assessment.
+
+\section{Introduction}\label{introduction-4}
+
+In the preceding chapters, I clarified the definition of an autocoup,
+introduced a novel dataset on autocoups, conducted empirical analyses on
+the determinants of autocoup attempts, and compared the post-event
+survival times of leaders established through coups versus autocoup
+leaders. A natural follow-up question emerges: What are the broader
+impacts of autocoups? Specifically, from a political science
+perspective, how do autocoups affect the process of democratization?
+
+As previously noted, due to the absence of a widely recognized dataset
+on autocoups, most existing discussions on their impact have relied on
+case studies (\citeproc{ref-baturo}{Baturo and Elgie, n.d.};
+\citeproc{ref-baturo2022}{Baturo and Tolstrup 2022}). To move beyond
+case-specific analyses and adopt a more systematic and comparative
+approach, this chapter aims to pioneer empirical research on the
+democratic consequences of autocoups. The first objective of this
+chapter, therefore, is to examine whether autocoups reinforce
+authoritarianism, promote democratization, or have no significant effect
+on political regimes.
+
+Given the conceptual and empirical connections between coups and
+autocoups, another key objective is to compare their respective effects
+on democratization. While both events disrupt existing political orders,
+their immediate and long-term consequences may vary significantly.
+Understanding these distinctions is essential for evaluating their
+broader implications.
+
+To address these questions, this study leverages data from a widely
+recognized coup dataset alongside a newly compiled dataset on autocoups.
+Employing a fixed-effects model, it evaluates their effects on
+democracy, as measured by the Polity Index. The findings reveal that
+both coups and autocoups lead to an immediate decline in democratic
+levels. However, coups have a more pronounced negative short-term
+impact. Notably, three years after these events, democracies affected by
+coups tend to show significant recovery, whereas those experiencing
+autocoups exhibit no meaningful improvement.
+
+This study offers two significant contributions to the field of
+political science. First, it provides the inaugural empirical analysis
+of the impact of autocoups on democratization, effectively addressing a
+critical gap in the existing literature. Second, by directly comparing
+the effects of coups and autocoups, this research highlights autocoups
+as a distinct phenomenon that demands increased scholarly inquiry and
+policy focus.
+
+The remainder of this chapter is structured as follows: Section 2
+analyzes the impact of autocoups on democratization, by comparing the
+effects with traditional coups. Section 3 outlines the research design,
+methodology, and variables used in this study. Section 4 presents and
+interprets the empirical findings, followed by a discussion of their
+implications. Finally, Section 5 concludes by summarizing the key
+results and exploring their significance for understanding and
+mitigating the occurrence of autocoups.
+
+\section{Impact of autocoups on political
+change}\label{impact-of-autocoups-on-political-change}
+
+According to the definition in Section~\ref{sec-definition}, an autocoup
+refers to an incumbent leader extending their tenure in power beyond the
+originally mandated limits, whether through legal or illegal means.
+While the leader may assume a different title or position, the
+individual in power remains unchanged. Therefore, unlike traditional
+coups, an autocoup does not result in real leadership turnover, elite
+restructuring, or regime change. In other words, the fundamental ruling
+structure remains intact.
+
+This distinction has important implications. Since regime change rarely
+occurs following an autocoup, its impact on politics cannot be assessed
+using conventional methods. Typically, studies on coups and
+democratization measure their effects by estimating the probability of
+regime transition---either from autocracy to democracy or vice
+versa---as seen in previous research on coup outcomes
+(\citeproc{ref-thyne2014}{C. L. Thyne and Powell 2014};
+\citeproc{ref-derpanopoulos2016}{Derpanopoulos et al. 2016};
+\citeproc{ref-miller2016}{Miller 2016}). However, this approach is not
+suitable for autocoups, as they do not directly trigger regime
+transfers.
+
+Although autocoups rarely lead to formal regime change, this does not
+mean they have no impact on political dynamics. In fact, they inevitably
+shape political trajectories in various ways and, on occasion, can even
+lead to significant transformations. Therefore, a more appropriate
+method for assessing the political impact of autocoups is to analyze
+democratic indices, such as those measured by Polity5
+(\citeproc{ref-p1}{Monty G. Marshall and Gurr 2020}). The Polity Score,
+ranging from -10 (full autocracy) to +10 (full democracy), captures
+gradual shifts in political regime characteristics rather than abrupt
+transitions. Thus, even if an autocoup does not result in a formal
+regime change, subtle shifts in political openness and institutional
+constraints can still be assessed by examining variations in Polity
+scores before and after the event. This approach has also been employed
+in previous studies (\citeproc{ref-dahl2023}{Dahl and Gleditsch 2023}).
+
+Although autocoups may not lead to significant regime change, their
+impact on democratization should not be overlooked. However, their
+influence differs from that of traditional coups in at least two key
+ways.
+
+\subsection{\texorpdfstring{\textbf{The pre-emptive effects of autocoups
+on political
+dynamics}}{The pre-emptive effects of autocoups on political dynamics}}\label{the-pre-emptive-effects-of-autocoups-on-political-dynamics}
+
+First and foremost, unlike coups, which are marked by clear, decisive
+events---such as the removal of a leader---autocoups typically unfold
+gradually, through incremental steps rather than a singular, dramatic
+event. Incumbent leaders seeking to extend their tenure often lay the
+groundwork well in advance before executing their final move to remain
+in power. To reduce resistance and opposition, they engage in extensive
+preparation, which may include purging officials, suppressing political
+opposition, cracking down on dissent and protests, and restricting press
+freedom. Without such measures, an autocoup might face strong internal
+resistance, and in the worst case, provoke a backlash that not only
+derails the leader's attempt to extend their rule but also results in
+their immediate removal from office.
+
+However, once an incumbent successfully secures an extension of their
+rule, continued repression is not always necessary. On the contrary,
+some leaders relax political pressure to ease internal dissent and
+mitigate opposition from external actors. This adaptive approach helps
+maintain stability after the autocoup is complete.
+
+As a result, the primary impact of autocoups on political change is
+often reflected in shifts in political scores before the final stage of
+the autocoup is enacted. Once the process is completed, further shifts
+may be minimal. In contrast, coup plotters, unlike incumbents, lack the
+ability to influence political institutions beforehand, meaning their
+impact on politics is often felt in the aftermath rather than before the
+event.
+
+This distinction is evident in empirical cases of autocoups.
+
+One of the most frequently cited examples of an autocoup is Peru's 1992
+case, in which President Alberto Fujimori dissolved Congress,
+temporarily suspended the 1979 Constitution, and ruled by decree until
+November of that year, when a \emph{Democratic Constituent Congress} was
+elected to draft a new constitution (\citeproc{ref-cameron1998}{Maxwell
+A. Cameron 1998b}). However, these moves did not immediately grant
+Fujimori a longer tenure in office.
+
+Under the 1979 Peruvian Constitution, immediate presidential re-election
+was prohibited. To bypass this restriction, Fujimori initiated a
+constitutional overhaul, leading to the adoption of a new constitution
+in 1993, which permitted re-election. Consequently, he secured a second
+term in 1995 (\citeproc{ref-baturo2019}{Baturo 2019}).
+
+An analysis of Peru's Polity5 scores during this process reflects these
+political changes. Upon taking office in 1990, Peru's Polity score was
+8, remaining unchanged in 1991. However, a dramatic shift occurred in
+1992, when Fujimori dissolved Congress, causing the Polity score to
+plummet from 8 to -4. Interestingly, when he formally extended his rule
+by amending the constitution in 1993, the score rebounded slightly to
+-1. This -1 score remained unchanged throughout Fujimori's tenure until
+2000, indicating a lack of further institutional transformation after
+the constitutional amendment.
+
+A similar pattern emerges in Belarus under Alexander Lukashenko. Upon
+assuming office as president in 1994, Belarus had a Polity5 score of 8.
+However, in 1995, when Lukashenko moved to hold a referendum---defying
+opposition in the Supreme Council and threatening to suspend its
+activities---the score dropped sharply to 0. Following the 1996
+referendum, which extended his term by two additional years, Lukashenko
+officially overstayed his tenure. Consequently, the Polity5 score
+further declined to -7 in 1996, where it has remained ever since,
+despite two additional term extensions (\citeproc{ref-ash2014}{Ash
+2014}; \citeproc{ref-baturo}{Baturo and Elgie, n.d.}).
+
+These cases illustrate a broader pattern: the impact of autocoups on
+political change is often reflected before the final stage of the
+autocoup is enacted, whereas the impact of coups tends to materialize
+afterwards, as have been fully discussed by previous studies.
+
+Based on this analysis, I propose the first hypothesis:
+
+\begin{quote}
+\emph{H1}: Autocoups primarily shape political change in advance,
+whereas coups typically drive political change only after they are
+executed.
+\end{quote}
+
+\subsection{\texorpdfstring{\textbf{The singular nature of
+autocoups}}{The singular nature of autocoups}}\label{the-singular-nature-of-autocoups}
+
+Secondly, in contrast to the ambiguous nature of coups
+(\citeproc{ref-dahl2023}{Dahl and Gleditsch 2023}), the impact of
+autocoups on political change rarely contributes to democratization.
+
+The influence of coups on democratization has been extensively examined
+in existing literature. Some scholars argue that coups---and even the
+mere threat of them---can act as catalysts for democratization. One
+argument suggests that coups deliver a political ``shock'' that may
+create opportunities for liberalization that would not have otherwise
+materialized (\citeproc{ref-thyne2014}{C. L. Thyne and Powell 2014}). In
+a critical examination, Derpanopoulos et al.
+(\citeproc{ref-derpanopoulos2016}{2016}) questioned the role of coups in
+promoting democracy, engaging in multiple rounds of debate with Miller
+(\citeproc{ref-miller2016}{2016}). More recently, Dahl and Gleditsch
+(\citeproc{ref-dahl2023}{2023}) further explored this ongoing
+discussion, arguing that both democratic and autocratic transitions are
+likely to follow a coup, with popular mobilization playing a decisive
+role in shaping post-coup trajectories.
+
+A frequently cited example of a ``pro-democracy coup'' occurred in
+February 2010, when Nigerien troops ousted President Mamadou Tandja
+after he extended his rule autocratically. The Supreme Council for the
+Restoration of Democracy (CSRD) took control, pledging democratic
+reforms. Their actions were widely celebrated, with both citizens and
+political opposition viewing the coup as an opportunity to restore
+democracy. The CSRD fulfilled its commitment by overseeing free and fair
+elections in 2011, resulting in Mahamadou Issoufou assuming the
+presidency (\citeproc{ref-miller2016}{Miller 2016}).
+
+While the debate on the democratic consequences of coups remains
+ongoing, it is evident that their impact is not uniform. In contrast,
+autocoups almost never lead to democratic transitions, nor do they even
+marginally enhance political freedoms. This stems from the intrinsic
+nature of autocoups, which disrupt the established process of political
+leadership transition, particularly term limits.
+
+Term limits are constitutional provisions that restrict the maximum
+duration a leader can remain in office. They play a crucial role in both
+democracies and autocracies by preventing the excessive concentration of
+power and ensuring political stability. In democracies, term limits
+promote accountability, leadership renewal, and reduce the risks of
+corruption and authoritarian entrenchment. In autocracies, when
+enforced, they can curb indefinite rule, mitigate succession crises, and
+provide rare opportunities for political transitions. However, without
+term limits, leaders can entrench themselves in power, undermining
+institutions and hindering political progress.
+
+As shown in Table~\ref{tbl-autocoup_method} in Chapter 3, autocoups are
+executed through either façade legal mechanisms or blatantly illegal
+methods. This includes amending or disregarding term limits, delaying or
+cancelling elections, rigging electoral outcomes, or outright refusing
+to accept election results. While many autocoups maintain a veneer of
+legality, their defining characteristic is the violation of term limits,
+which are intended as safeguards against prolonged and unchecked rule.
+
+As previously discussed, before an incumbent leader formally overstays
+their term, they often inflict significant damage on political
+institutions. Furthermore, to secure their prolonged rule, they are
+unlikely to fully restore political freedoms even if they temporarily
+ease political repression once they have consolidated power.
+
+Case studies from Peru and Belarus illustrate how autocoups lead to a
+decline in Polity scores, reflecting democratic backsliding. However,
+most autocoups occur in already autocratic regimes where Polity scores
+are low. This aligns with trends observed in coups, which also primarily
+occur in autocracies.
+
+For instance, in China's 2018 constitutional amendment, Xi Jinping
+abolished presidential term limits, effectively allowing himself to
+remain in power indefinitely\footnote{\textbf{BBC News,} ``China's Xi
+  Allowed to Remain `President for Life' as Term Limits Removed,''
+  \emph{BBC News}, March 11, 2018,
+  \url{https://www.bbc.co.uk/news/world-asia-china-43361276}, accessed
+  March 14, 2025.}. However, China's Polity score remained unchanged at
+-7 before and after the amendment. This pattern is common in autocratic
+regimes with Polity scores below -6, as they already lack significant
+democratic features, leaving little room for further decline.
+
+While most autocoups occur in low-Polity-score countries, some have
+taken place in relatively democratic settings, where the Polity score
+remains stable despite term limit extensions. This is particularly
+evident in Latin America, where presidents have amended ``no immediate
+re-election'' rules to allow for a second consecutive term, but
+voluntarily stepped down afterwards. Examples include: Argentina (1993),
+Polity score remained at 7; Brazil (1997), Polity score remained at 8,
+Colombia (2004), Polity score remained at 7. In these cases, leaders
+extended their tenure within a structured political framework without
+further dismantling democratic institutions
+(\citeproc{ref-baturo2019}{Baturo 2019}).
+
+Across all cases---whether in Peru, Belarus, China, Argentina, Brazil,
+or Colombia---there is no instance where a Polity score increased
+following an autocoup. In the autocoup dataset which I introduced in
+Chapter 3, only four cases---Guinea-Bissau (1988), Burkina Faso (1997),
+Congo-Brazzaville (2001), and Lebanon (2004)---saw minor increases in
+Polity scores, but the changes were insignificant.
+
+Thus, unlike some coup leaders who justify their actions by claiming to
+restore democracy (as seen in Niger's 2010 case), leaders who execute
+autocoups lack any democratic justification. If their true intention
+were to advance democracy, they would transfer power peacefully rather
+than violate term limits.
+
+Based on this analysis, I propose the second hypothesis:
+
+\begin{quote}
+\emph{H2}: Autocoups are more likely to entrench autocracy than coups.
+\end{quote}
+
+\section{Methodology and variables}\label{methodology-and-variables}
+
+\subsection{Methodology}\label{methodology}
+
+As discussed earlier, autocoups are less likely to result in full regime
+transitions---either from democracy to autocracy or vice versa.
+Therefore, it is inappropriate to assess their effects solely based on
+regime transitions or changes that cross a critical threshold. Instead,
+this study examines political changes through fluctuations in Polity5
+scores.
+
+Unlike coup analysis, which primarily focuses on post-event effects,
+this study examines both pre-event and post-event impacts of autocoups.
+Specifically, pre-event effects are measured by the change in Polity5
+scores three years before the autocoup compared to the year of the
+autocoup, expressed as:
+
+\(Polity_t - Polity_{t-3}\)
+
+Post-event effects are measured by the change in Polity5 scores three
+years after the autocoup compared to the year of the autocoup, expressed
+as:
+
+\(Polity_{t+3} - Polity_t\)
+
+The three-year window is chosen for two key reasons. Pre-event political
+changes typically occur incrementally, as incumbents consolidate power
+gradually over several years rather than through a single, abrupt
+action. Post-event analysis focuses on medium-term effects rather than
+short-term shocks, as autocoups rarely trigger immediate regime
+transitions and instead reinforce existing political structures.
+Short-term fluctuations may be too minor to capture meaningful
+institutional change empirically.
+
+To estimate how political institutions change before and after
+autocoups, I employ a linear model with country-case fixed effects. For
+pre-event effects, I analyze attempted autocoups, since before the
+event, no one knows whether the autocoup will succeed or fail.
+
+For post-event effects, I analyze only successful autocoups for three
+reasons: The majority of autocoups succeed (87 out of 110 cases); failed
+autocoups tend to produce immediate political shocks, rather than
+medium- or long-term effects; failed autocoups are often followed by
+major disruptive events, such as coups, insurrections, or mass protests,
+making it difficult to isolate their impact. For example, in Niger's
+case, a failed autocoup in 2009 was followed by a coup in 2010, creating
+overlapping political effects. In contrast, successful autocoups provide
+a clearer analytical framework, as their effects are less entangled with
+other disruptions, allowing for a more systematic assessment of
+institutional change.
+
+\subsection{Variables}\label{variables-1}
+
+This study uses a global sample of all country-year data from 1950 to
+2020, applying a linear model to examine the effects of autocoups on
+political change. The dependent variable is the change in Polity scores,
+while the main independent variable is autocoups. The dataset includes
+approximately 7,500 observations.
+
+The dependent variable measures political change using three-year
+differences in Polity scores. Model 1 (Pre-event effects):
+\(Polity_t − Polity_{t − 3}\). Model 2 (Post-event effects):
+\(Polity_{t+3} - Polity_t\).
+
+The Polity score ranges from -10 (full autocracy) to 10 (full
+democracy). Some values in the dataset, such as -66, -77, and -88,
+represent transitional regimes or special periods. To prevent excessive
+data loss, I replace these values with the closest valid Polity scores.
+This approach ensures that the model captures all changes in Polity
+scores, rather than focusing solely on transitions that cross a
+democratic threshold.
+
+The main independent variable is autocoups, as introduced in Chapter 3.
+The dataset includes110 attempted autocoups (used for pre-event
+analysis) and 87 successful autocoups (used for post-event analysis).
+For pre-event analysis, the autocoup variable is binary, where: 1
+indicates the presence of an attempted autocoup and 0 indicates no
+autocoup event.
+
+For post-event analysis, I apply decay functions to account for both
+immediate and delayed effects, following the methodology of Dahl and
+Gleditsch (\citeproc{ref-dahl2023}{2023}). To assess the persistence of
+autocoup effects, I consider a half-life specification of five years,
+analysing the impact from the autocoup year (\(y_t\)) to four years
+after (\(y_{t+4}\)).
+
+I also include traditional coups as a secondary independent variable for
+two reasons. Comparative significance: It is essential to compare the
+effects of autocoups and coups. Overlapping events: In many cases, coups
+and autocoups are interconnected, as autocoups can trigger coups.
+Distinguishing their effects is necessary for a clear empirical
+analysis.
+
+As in previous chapters, I use the coup dataset from Powell and Thyne
+(\citeproc{ref-powell2011}{2011}). To maintain consistency, I apply the
+same methodological approach to coups as to autocoups: Binary coding for
+pre-event effects and decay function coding for post-event effects.
+
+Control variables include economic performance, political stability, and
+population size, all of which have been analysed in previous chapters.
+Additionally, I incorporate two dummy variables. The first,
+\textbf{``\textbf{non\_democracy},''} accounts for regime type,
+recognizing that non-democratic regimes with Polity scores below -6 have
+limited room for further decline, while democracies with scores above 6
+are less likely to experience significant increases. The second,
+\textbf{``\textbf{cold\_war},''} follows the approach used in prior
+studies on the impact of coups on democratization
+(\citeproc{ref-thyne2014}{C. L. Thyne and Powell 2014};
+\citeproc{ref-derpanopoulos2016}{Derpanopoulos et al. 2016};
+\citeproc{ref-dahl2023}{Dahl and Gleditsch 2023}) and accounts for the
+Cold War period. This variable captures the observable trend of
+declining Polity scores from the 1960s to 1990, followed by an upward
+shift after 1990.
+
+\section{Results and discussion}\label{results-and-discussion-2}
+
+\begin{table}
+
+\caption{\label{tbl-demomodel}The Impact of Autocoups on
+Democratization}
+
+\centering{
+
+\begin{tabular}{@{\extracolsep{30pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{Dependent variable: Differences of Polity scores} \\ 
+\cline{2-5} 
+\\[-1.8ex] & \multicolumn{2}{c}{Pre-event effects} & \multicolumn{2}{c}{Post-event effects} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ Autocoup & $-$0.449$^{*}$ & $-$1.526$^{***}$ & $-$0.207 & $-$0.330$^{**}$ \\ 
+  & (0.244) & (0.290) & (0.150) & (0.166) \\ 
+  & & & & \\ 
+ Coup & 0.013 & $-$1.272$^{***}$ & 0.483$^{***}$ & 0.715$^{***}$ \\ 
+  & (0.130) & (0.153) & (0.077) & (0.105) \\ 
+  & & & & \\ 
+ GDP per Capita & $-$0.008$^{*}$ & $-$0.010$^{**}$ & $-$0.010$^{**}$ & $-$0.010$^{**}$ \\ 
+  & (0.004) & (0.005) & (0.005) & (0.005) \\ 
+  & & & & \\ 
+ Economic Trend & $-$0.381 & $-$0.881$^{**}$ & $-$0.537 & $-$0.619 \\ 
+  & (0.366) & (0.437) & (0.439) & (0.438) \\ 
+  & & & & \\ 
+ Log Population & 0.678$^{***}$ & 0.999$^{***}$ & 1.157$^{***}$ & 1.147$^{***}$ \\ 
+  & (0.101) & (0.121) & (0.122) & (0.121) \\ 
+  & & & & \\ 
+ Political Violence & 0.021 & 0.034 & 0.026 & 0.027 \\ 
+  & (0.020) & (0.023) & (0.023) & (0.023) \\ 
+  & & & & \\ 
+ Non-Democracy & 1.681$^{***}$ & 2.451$^{***}$ & 2.412$^{***}$ & 2.431$^{***}$ \\ 
+  & (0.088) & (0.105) & (0.105) & (0.105) \\ 
+  & & & & \\ 
+ Cold War & $-$0.236$^{***}$ & $-$0.245$^{**}$ & $-$0.228$^{**}$ & $-$0.239$^{**}$ \\ 
+  & (0.088) & (0.105) & (0.105) & (0.105) \\ 
+  & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 8,859 & 8,695 & 8,695 & 8,695 \\ 
+R$^{2}$ & 0.048 & 0.082 & 0.075 & 0.076 \\ 
+Adjusted R$^{2}$ & 0.029 & 0.063 & 0.056 & 0.057 \\ 
+F Statistic & 55.230$^{***}$ & 94.525$^{***}$ & 86.739$^{***}$ & 88.093$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular}
+
+}
+
+\end{table}%
+
+\subsection{Pre-event effects}\label{pre-event-effects}
+
+Initially, I analyse the trajectory of Polity scores leading up to these
+events. As presented in Table Table~\ref{tbl-demomodel}, models (1) and
+(2) display the empirical results for pre-event effects, examining
+changes over two years (model 1) and three years (model 2) prior to the
+event. Consistent with the first hypothesis, Polity scores exhibit a
+significanttbl\_demo\_model decline in the 2--3 years preceding an
+autocoup. Notably, this downward trend is both more pronounced and
+statistically significant for autocoups compared to traditional coups.
+
+Model (1) examines the pre-event changes, specifically the difference
+between Polity scores at time \(t-1\) and \(t-3\)
+(\(Polity_{t-1} - Polity_{t-3}\)). The results reveal a statistically
+significant decrease in Polity scores prior to autocoups. On average,
+Polity scores decline by 0.45 in the two years before an autocoup,
+holding other factors constant. In contrast, no significant changes are
+observed before traditional coups, indicating that pre-coup periods do
+not measurably affect democratization levels.
+
+Model (2) assesses the cumulative impact from three years prior to the
+event year, calculated as \(Polity_{t} - Polity_{t-3}\). As previously
+discussed, the year of an autocoup or coup witnesses a substantial shock
+to political institutions. Consequently, both types of events result in
+a decline in Polity scores relative to three years earlier. However, the
+negative effect of autocoups is more severe. Polity scores decline by an
+average of 1.53 in the three years leading up to an autocoup, compared
+to 1.27 for coups, all else being equal. This disparity reinforces our
+hypothesis that autocoups have a more detrimental pre-event effect on
+democratic institutions as incumbents overextend their legitimate
+tenure.
+
+\subsection{Post-event effects}\label{post-event-effects}
+
+Models (3) and (4) present the empirical results for post-event effects,
+analysing changes in Polity scores following attempted (Model 3) and
+successful (Model 4) autocoups.
+
+Model (3) examines the impact of attempted autocoups. The results
+indicate that attempted autocoups do not have a statistically
+significant effect on Polity scores. This contrasts with coup attempts,
+which lead to an average increase of 0.48 in Polity scores over three
+years, all else being equal.
+
+Model (4) evaluates the impact of successful autocoups. In contrast to
+attempted autocoups, successful autocoups demonstrate a significant
+negative effect on Polity scores, with an average decline of 0.33 over
+three years, holding other factors constant. Conversely, successful
+coups continue to exhibit positive effects on democratization, resulting
+in an average increase of 0.72.
+
+These findings yield several key insights. First, while both successful
+and attempted coups influence Polity scores, only successful autocoups
+produce statistically significant effects---and exclusively in a
+negative direction. Second, the impact of coups on democratization is
+more nuanced. Although post-coup Polity scores may improve, the pre-coup
+period often involves significant democratic backsliding. My models
+indicate that, on average, the democratic gains following a coup fail to
+offset the losses incurred before it.
+
+\subsection{Effects of control
+variables}\label{effects-of-control-variables}
+
+To ensure robust results, I incorporated several control variables into
+the models. While economic trends and political violence do not exhibit
+statistically significant effects on Polity scores, other factors
+warrant further discussion.
+
+The impact of the Cold War is relatively straightforward. As outlined in
+the research design section, global democracy experienced a general
+decline during the Cold War period. Consistent with this trend, all four
+models indicate that the Cold War era is associated with an average
+decrease of 0.23 in Polity scores.
+
+The effects of GDP per capita, population size, and regime type,
+however, present a more complex pattern. Counterintuitively, higher GDP
+per capita correlates with lower Polity scores, whereas non-democratic
+regimes and larger populations correspond with positive changes in
+Polity scores. This pattern may be explained by considering baseline
+differences between democracies and non-democracies. In established
+democracies, Polity scores are already high, leaving limited room for
+further increases. These countries also tend to have higher GDP per
+capita and lower birth rates, further reinforcing stability in their
+democratic scores. In contrast, non-democracies start from lower Polity
+scores, providing greater potential for upward movement. Given that
+authoritarian regimes often exhibit weaker economic performance and
+higher population growth rates, their Polity scores may increase as they
+undergo political transitions or reforms.
+
+Taken together, these results support both hypotheses. First, the
+primary effects of autocoups on Polity scores manifest before the events
+occur. Second, whereas coups have ambiguous consequences for
+democratization, the effects of autocoups are
+unidirectional---consistently negative.
+
+\section{Summary}\label{summary-3}
+
+However, there is a significant difference between these two cases.
+Prior to Fujimori's autocoup in 1992, Peru was a democratic country, but
+the autocoup led to its backsliding into an autocratic regime. China, by
+contrast, has remained an authoritarian state both before and after Xi
+Jinping's constitutional amendment.
+
+That is to say, either the current regime is an authoritirian country,
+or it is an immature democracy. They have to consolidate their power by
+ways like suppress political opponents, disidents, popular protests,
+even press freedom. Otherwise, the backfire from within or opponents
+might not only fail their attempts to extension, but also even oust them
+immediately from the office. Therefore, the incumbents have to make good
+preparation in case the adversary outcomes would not happen.
+
+This has two important implications. First of all, although autocoups
+could occur in many types of regimes including democracies, the Polity
+index is relatively in a low level.
 
 \chapter{Conclusion}\label{conclusion}
 
@@ -3984,6 +4530,12 @@ Arriola, Leonardo R. 2009. {``Patronage and Political Stability in
 Africa.''} \emph{Comparative Political Studies} 42 (10): 1339--62.
 \url{https://doi.org/10.1177/0010414009332126}.
 
+\bibitem[\citeproctext]{ref-ash2014}
+Ash, Konstantin. 2014. {``The Election Trap: The Cycle of Post-Electoral
+Repression and Opposition Fragmentation in Lukashenko's Belarus.''}
+\emph{Democratization} 22 (6): 1030--53.
+\url{https://doi.org/10.1080/13510347.2014.899585}.
+
 \bibitem[\citeproctext]{ref-baturo2014}
 Baturo, Alexander. 2014. {``Democracy, Dictatorship, and Term Limits.''}
 \url{https://doi.org/10.3998/mpub.4772634}.
@@ -3992,6 +4544,10 @@ Baturo, Alexander. 2014. {``Democracy, Dictatorship, and Term Limits.''}
 ---------. 2019. {``Continuismo in Comparison.''} In, 75--100. Oxford
 University Press.
 \url{https://doi.org/10.1093/oso/9780198837404.003.0005}.
+
+\bibitem[\citeproctext]{ref-baturo}
+Baturo, Alexander, and Robert Elgie. n.d. {``The Politics of
+Presidential Term Limits.''}
 
 \bibitem[\citeproctext]{ref-baturo2022}
 Baturo, Alexander, and Jakob Tolstrup. 2022. {``Incumbent Takeovers.''}
@@ -4066,6 +4622,13 @@ Close, David. 2019. {``Presidential Term Limits in Nicaragua.''} In,
 159--78. Oxford University PressOxford.
 \url{https://doi.org/10.1093/oso/9780198837404.003.0009}.
 
+\bibitem[\citeproctext]{ref-dahl2023}
+Dahl, Marianne, and Kristian Skrede Gleditsch. 2023. {``Clouds with
+Silver Linings: How Mobilization Shapes the Impact of Coups on
+Democratization.''} \emph{European Journal of International Relations},
+January, 135406612211432.
+\url{https://doi.org/10.1177/13540661221143213}.
+
 \bibitem[\citeproctext]{ref-davenport2021}
 Davenport, Christian, Babak RezaeeDaryakenari, and Reed M Wood. 2021.
 {``Tenure Through Tyranny? Repression, Dissent, and Leader Removal in
@@ -4077,6 +4640,11 @@ Global Security Studies} 7 (1).
 De Bruin, Erica. 2020. {``Preventing Coups d{'}état.''} In, 1--12.
 Cornell University Press.
 \url{https://doi.org/10.7591/cornell/9781501751912.003.0001}.
+
+\bibitem[\citeproctext]{ref-derpanopoulos2016}
+Derpanopoulos, George, Erica Frantz, Barbara Geddes, and Joseph Wright.
+2016. {``Are Coups Good for Democracy?''} \emph{Research \& Politics} 3
+(1): 205316801663083. \url{https://doi.org/10.1177/2053168016630837}.
 
 \bibitem[\citeproctext]{ref-easton2018}
 Easton, Malcolm R, and Randolph M Siverson. 2018. {``Leader Survival and
@@ -4186,6 +4754,11 @@ Marshall, Monty G. 2005. {``Current Status of the World's Major Episodes
 of Political Violence.''} \emph{Report to Political Instability Task
 Force.(3 February)}.
 
+\bibitem[\citeproctext]{ref-p1}
+Marshall, Monty G., and Ted Robert Gurr. 2020. {``Polity v Project,
+Political Regime Characteristics and Transitions, 1800-2018.''} Center
+for Systemic Peace.
+
 \bibitem[\citeproctext]{ref-marsteintredet2019a}
 Marsteintredet, Leiv. 2019. {``Presidential Term Limits in Latin
 America: {\emph{C}}.1820{\textendash}1985.''} In, 103--22. Oxford
@@ -4207,6 +4780,11 @@ Mauceri, Philip. 1995. {``State Reform, Coalitions, and The Neoliberal
 Mechkova, Valeriya, Anna Lührmann, and Staffan I. Lindberg. 2017. {``How
 Much Democratic Backsliding?''} \emph{Journal of Democracy} 28 (4):
 162--69. \url{https://doi.org/10.1353/jod.2017.0075}.
+
+\bibitem[\citeproctext]{ref-miller2016}
+Miller, Michael K. 2016. {``Reanalysis: Are Coups Good for Democracy?''}
+\emph{Research \& Politics} 3 (4): 205316801668190.
+\url{https://doi.org/10.1177/2053168016681908}.
 
 \bibitem[\citeproctext]{ref-morrison2009}
 Morrison, Kevin M. 2009. {``Oil, Nontax Revenue, and the
@@ -4322,6 +4900,12 @@ Contemporary African Studies} 28 (1): 31--49.
 \bibitem[\citeproctext]{ref-survival}
 Therneau, Terry M. 2024. {``A Package for Survival Analysis in r.''}
 \url{https://CRAN.R-project.org/package=survival}.
+
+\bibitem[\citeproctext]{ref-thyne2014}
+Thyne, Clayton L., and Jonathan M. Powell. 2014. {``Coup d{'}état or
+Coup d'Autocracy? How Coups Impact Democratization, 1950-2008.''}
+\emph{Foreign Policy Analysis}, April, n/a--.
+\url{https://doi.org/10.1111/fpa.12046}.
 
 \bibitem[\citeproctext]{ref-thyne2017}
 Thyne, Clayton, Powell, Sarah Parrott, and Emily VanMeter. 2017. {``Even

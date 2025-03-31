@@ -1,0 +1,138 @@
+---
+title: Pie charts with R
+date: 2024-12-10
+date-modified: last-modified
+format: 
+  aps-html:
+    code-tools: true
+categories: [charts, package]
+---
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(modeldata)
+view(penguins)
+```
+
+## Bar chat for comparison
+
+```{r}
+penguins |> 
+  ggplot(aes(x = species,
+             fill = species)) +
+  geom_bar(show.legend = F) +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(x = "Species",
+       y = NULL)+
+  theme_minimal()
+```
+
+## Obtain counts for penguin species
+
+```{r}
+pen_sum <- penguins |>
+  count(species) |>
+  arrange(desc(n))
+pen_sum
+```
+
+## A stacked bar chart
+
+```{r}
+pen_sum |> 
+  ggplot(aes(x = "",
+             y = n,
+             fill = species)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(fill = "Species",
+       x = NULL,
+       y = NULL) +
+  theme_minimal() 
+```
+
+## A basic pie chart
+
+```{r}
+pen_sum |> 
+  ggplot(aes(x = "",
+             y = n,
+             fill = species)) +
+  geom_col() +
+  coord_polar("y") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(fill = "Species",
+       x = NULL,
+       y = NULL) +
+  theme_minimal() 
+```
+
+## Adding labels to the pie chart
+
+```{r}
+pen_sum |> 
+  ggplot(aes(x = "",
+             y = n,
+             fill = species)) +
+  geom_col() +
+  coord_polar("y") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(fill = "Species",
+       x = NULL,
+       y = NULL) +
+  theme_minimal() 
+```
+
+```{r}
+pen_sum |> 
+  ggplot(aes(x = "",
+             y = n,
+             fill = species)) +
+  geom_col() +
+  geom_text(aes(label = paste0(round(n/sum(n)*100, 1), "%")),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar("y") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(fill = "Species",
+       x = NULL,
+       y = NULL) +
+  theme_minimal()
+```
+
+```{r}
+library(ggrepel)
+
+pen_sum |> 
+  ggplot(aes(x = "",
+             y = n,
+             fill = species)) +
+  geom_col(width = 1) +
+  geom_label_repel(aes(label = paste0(round(n/sum(n)*100, 1), "%")),
+                   position = position_stack(vjust = 0.5),
+                   force_pull = 0.5,
+                   show.legend = FALSE) +
+  coord_polar("y") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(fill = "Species",
+       x = NULL,
+       y = NULL) +
+  theme_minimal()
+```
+
+```{r}
+pen_sum |> 
+  ggplot(aes(x = "",
+             y = n,
+             fill = species)) +
+  geom_col() +
+  geom_label(aes(label = paste0(round(n/sum(n)*100, 1), "%")),
+             position = position_stack(vjust = 0.5)) +
+  coord_polar("y") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(fill = "Species",
+       x = NULL,
+       y = NULL) +
+  theme_minimal()
+```

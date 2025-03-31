@@ -53,7 +53,7 @@ execute:
 #| label: setup
 #| include: false
 
-pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue)
+pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue, plm)
 ```
 
 ## Acknowledgements {.unnumbered}
@@ -502,7 +502,7 @@ internal power struggles characteristic of these regimes.
 #|   - "by country frequency"
 #| layout-ncol: 2
 #| include: false
-#load coup data
+# load coup data
 
 Coup <- fread("https://www.uky.edu/~clthyn2/coup_data/powell_thyne_coups_final.txt")
 
@@ -518,32 +518,38 @@ coups <- Coup |>
 
 
 
-Coup |> 
-  summarise(counts = n(),
-            .by = year) |> 
-  arrange(desc(counts)) |> 
+Coup |>
+  summarise(
+    counts = n(),
+    .by = year
+  ) |>
+  arrange(desc(counts)) |>
   head(15) |>
-  clean_names(case = "title") |> 
-  gt() |> 
+  clean_names(case = "title") |>
+  gt() |>
   tab_options(
     table.width = pct(95),
-    column_labels.font.weight = "bold") |>
+    column_labels.font.weight = "bold"
+  ) |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 
-Coup |> 
-  summarise(counts = n(),
-            .by = country) |> 
-  arrange(desc(counts)) |> 
+Coup |>
+  summarise(
+    counts = n(),
+    .by = country
+  ) |>
+  arrange(desc(counts)) |>
   head(15) |>
-  clean_names(case = "title") |> 
-  gt() |> 
+  clean_names(case = "title") |>
+  gt() |>
   cols_align(
     align = "right",
     columns = 2
   ) |>
   tab_options(
     table.width = pct(95),
-    column_labels.font.weight = "bold") |>
+    column_labels.font.weight = "bold"
+  ) |>
   tab_source_note(source_note = md("***Source: GIC dataset***"))
 ```
 
@@ -599,25 +605,25 @@ substantiated by several key observations:
 coups |>
   # add one row which adds up the total
   arrange(desc(`Coup attempted`)) |>
-  head(11) |> 
+  head(11) |>
   add_row(
     country = "Total",
     `Coup attempted` = sum(coups[, 2]),
     `Coup succeeded` = sum(coups[, 3])
   ) |>
-  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`, 
-                                accuracy = 0.1
-                                )) |>   
+  mutate(Success_rate = percent(`Coup succeeded` / `Coup attempted`,
+    accuracy = 0.1
+  )) |>
   clean_names(case = "title") |>
   gt() |>
   tab_options(
     table.width = pct(99)
-              ) |>
+  ) |>
   cols_align(
     align = "center",
     columns = 2:3
-  ) |> 
-  tab_source_note(source_note = md("*Source: GIC dataset*")) |> 
+  ) |>
+  tab_source_note(source_note = md("*Source: GIC dataset*")) |>
   as_raw_html()
 ```
 
@@ -959,20 +965,21 @@ hypothesis:
 
 ```{r}
 #| label: tbl-regimes1
-#| tbl-cap: Characteristics of Different Regime Types 
+#| tbl-cap: Characteristics of Different Regime Types
 
-read.csv(here("data/regimes_comparison.csv")) |> 
-  clean_names(case = "title") |> 
-  gt() |> 
-  tab_options(column_labels.font.weight = "bold",
-              table.width = pct(100),
-              table.align = "center",
-              page.orientation = "landscape"
-              ) |>
+read.csv(here("data/regimes_comparison.csv")) |>
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    table.width = pct(100),
+    table.align = "center",
+    page.orientation = "landscape"
+  ) |>
   cols_width(
     1:6 ~ px(100)
   ) |>
-  tab_source_note(source_note = md("*Source: GWF & Author*")) |> 
+  tab_source_note(source_note = md("*Source: GWF & Author*")) |>
   as_raw_html()
 ```
 
@@ -980,7 +987,7 @@ read.csv(here("data/regimes_comparison.csv")) |>
 
 ```{r}
 #| label: tbl-regimes
-#| tbl-cap: Regime types and coups since 1950 
+#| tbl-cap: Regime types and coups since 1950
 
 
 regimes <- REIGN |>
@@ -1006,14 +1013,16 @@ regimes <- REIGN |>
 coup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/coup_model.csv")
 
 regime_total <- coup_model |>
-  select(regime_type = regime) |> 
-  tabyl(regime_type) |> 
-  arrange(-n) |> 
-  adorn_totals("row") |> 
-  mutate(country_year =n,
-         share = percent(percent),
-         .keep = "unused") 
-  
+  select(regime_type = regime) |>
+  tabyl(regime_type) |>
+  arrange(-n) |>
+  adorn_totals("row") |>
+  mutate(
+    country_year = n,
+    share = percent(percent),
+    .keep = "unused"
+  )
+
 
 coup1 <- Coup |>
   select(country, ccode, year, coup)
@@ -1023,37 +1032,45 @@ coup_by_regime <- regimes |>
   full_join(coup1, by = join_by(ccode, year)) |>
   mutate(regime = na.locf(regime_type, .by = ccode)) |>
   filter(!is.na(coup)) |>
-  tabyl(regime) |> 
-  adorn_totals("row") |> 
-  mutate(coups = n,
-         `coups(%)` = percent(percent,accuracy = 0.1),
-         .keep = "unused") 
+  tabyl(regime) |>
+  adorn_totals("row") |>
+  mutate(
+    coups = n,
+    `coups(%)` = percent(percent, accuracy = 0.1),
+    .keep = "unused"
+  )
 
 coup_by_succeed <- regimes |>
   select(ccode = reign_cowcode, extended_country_name, year, regime_type) |>
   full_join(coup1, by = join_by(ccode, year)) |>
   mutate(regime = na.locf(regime_type, .by = ccode)) |>
-  filter(!is.na(coup),
-         coup == 2) |>
-  tabyl(regime) |> 
-  adorn_totals("row") |> 
-  select(regime, succeeded_coup = n) 
+  filter(
+    !is.na(coup),
+    coup == 2
+  ) |>
+  tabyl(regime) |>
+  adorn_totals("row") |>
+  select(regime, succeeded_coup = n)
 
-coup_regimes <-  coup_by_regime |> 
-  left_join(coup_by_succeed) |> 
+coup_regimes <- coup_by_regime |>
+  left_join(coup_by_succeed) |>
   mutate(success_rate = percent(succeeded_coup / coups, accuracy = 0.1))
 
 regime_total |>
   left_join(coup_regimes, join_by(regime_type == regime)) |>
-  mutate(regime_type = str_to_title(regime_type),
-         likelihood = percent(coups / country_year, accuracy = 0.1)) |>
-  select(-succeeded_coup) |> 
+  mutate(
+    regime_type = str_to_title(regime_type),
+    likelihood = percent(coups / country_year, accuracy = 0.1)
+  ) |>
+  select(-succeeded_coup) |>
   clean_names(case = "title") |>
-  gt() |> 
-  tab_options(column_labels.font.weight = "bold",
-              table.width = pct(100),
-              table.align = "center") |>
-  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*")) |> 
+  gt() |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    table.width = pct(100),
+    table.align = "center"
+  ) |>
+  tab_source_note(source_note = md("*Source: REIGN and GIC Datasets*")) |>
   as_raw_html()
 ```
 
@@ -1229,14 +1246,21 @@ $$ {#eq-eq6}
 #| results: asis
 
 
-model_1 <- coup_model|>
+model_1 <- coup_model |>
   filter(regime != "other") |>
-  select(coup, regime, GDP_trend, GDP_pc, violence, coup_dummy = pre_coups) |> 
-  mutate(regime = fct_relevel(regime, "dominant-party")) |> 
+  select(coup, regime, GDP_trend, GDP_pc, violence, coup_dummy = pre_coups, time_since_last_coup) |>
+  mutate(regime = fct_relevel(regime, "dominant-party")) |>
   selection(coup > 0 ~ regime + GDP_trend + GDP_pc + violence + coup_dummy,
-            coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
-            #method = "2step",
-            data = _) 
+    coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
+    # method = "2step",
+    data = _
+  )
+
+# coup_model |>
+#   drop_na() |>
+#   view()
+#
+# summary(model_1)
 
 model_1_selection <- model_1
 model_1_selection$param$index$betaO <- model_1$param$index$betaS
@@ -1244,31 +1268,34 @@ model_1_selection$param$index$betaS <- model_1$param$index$betaO
 
 model_2 <- coup_model |>
   filter(regime != "other") |>
-  select(Coup = coup, regime, GDP_trend, GDP_pc, violence, coup_dummy, time_since_last_coup) |> 
-  mutate(regime = fct_relevel(regime, "dominant-party")) |> 
-  selection(Coup > 0 ~ regime + GDP_trend + GDP_pc + violence + coup_dummy*time_since_last_coup,
-            Coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
-            data = _) 
+  select(Coup = coup, regime, GDP_trend, GDP_pc, violence, coup_dummy, time_since_last_coup) |>
+  mutate(regime = fct_relevel(regime, "dominant-party")) |>
+  selection(Coup > 0 ~ regime + GDP_trend + GDP_pc + violence,
+    Coup > 1 ~ regime + GDP_trend + GDP_pc + violence,
+    data = _
+  )
 
-model_2_selection <- model_2
-model_2_selection$param$index$betaO <- model_2$param$index$betaS
-model_2_selection$param$index$betaS <- model_2$param$index$betaO
+# summary(model_2)
 
-stargazer(model_1_selection, model_1, model_2_selection, model_2,
-          #type = "text",
-          float = F,
-          header = F,
-          dep.var.caption = "",
-          dep.var.labels = c("Model 1", "Model 2"),
-          multicolumn = T,
-          dep.var.labels.include = T, 
-          column.labels = c("Coup Attempts", "Coup Outcome","Coup Attempts", "Coup Outcome"),
-          intercept.bottom = F,
-          covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "Previous coups (P)", "Yrs since coup (Y)", "Interaction term: P * Y"),
-          summary.logical = F,
-          column.sep.width = "7pt",
-          font.size = "small"
-          )
+
+# model_2_selection <- model_2
+# model_2_selection$param$index$betaO <- model_2$param$index$betaS
+# model_2_selection$param$index$betaS <- model_2$param$index$betaO
+
+stargazer(model_1_selection, model_1,
+  # model_2_selection, model_2,
+  # type = "text",
+  float = F,
+  header = F,
+  dep.var.caption = "",
+  dep.var.labels = c("Model 1", "Model 2"),
+  multicolumn = T,
+  dep.var.labels.include = F,
+  column.labels = c("Coup Attempts", "Coup Outcome", "Coup Attempts", "Coup Outcome"),
+  intercept.bottom = F,
+  covariate.labels = c("Constant", "Regime: Democracy", "\\hspace{1.6cm}Military", "\\hspace{1.6cm}Monarchy", "\\hspace{1.6cm}Personalist", "Economic trend", "GDP per capita", "Political violence", "No. of Previous coups", "Yrs since coup (Y)", "Interaction term: P * Y"),
+  summary.logical = F
+)
 ```
 
 The double probit model with sample selection, estimated using the
@@ -1284,53 +1311,58 @@ last coup.
 #| tbl-cap: Average marginal effects of coup attempts (Selection of Model 1)
 #| echo: false
 
-avg_comparisons(model_1) |> 
-  select(1:3) |> 
+avg_comparisons(model_1) |>
+  select(1:3) |>
   select(1:2, ame = estimate) |>
-  cbind(avg_comparisons(model_1, comparison = "ratio") |> select(3)) |> 
-  mutate('ratio(%)' = round((estimate - 1) * 100, 2),
-         ame = round(ame, 3)) |> 
+  cbind(avg_comparisons(model_1, comparison = "ratio") |> select(3)) |>
+  mutate(
+    "ratio(%)" = round((estimate - 1) * 100, 2),
+    ame = round(ame, 3)
+  ) |>
   select(-estimate) |>
-  mutate(term = case_when(term == "coup_dummy" ~ "Previous coups",
-                          term == "GDP_trend" ~ "Economic trend",
-                          term == "GDP_pc" ~ "GDP per capita",
-                          term == "violence" ~ "Political violence",
-                          str_detect(contrast, "democracy") ~ "Democracy",
-                          str_detect(contrast, "military") ~  "Military",
-                          str_detect(contrast, "monarchy") ~ "Monarchy",
-                          str_detect(contrast, "personal") ~ "Personal",
-                          TRUE ~ term
-                          )) |> 
-  mutate(term = factor(term, levels = c(
-  "Democracy",
-  "Military",
-  "Monarchy",
-  "Personal",
-  "Economic trend",
-  "GDP per capita",
-  "Political violence",
-  "Previous coups"
-)),
-contrast = str_replace(
-    contrast, 
-    "mean\\((.+?)\\) - mean\\((.+?)\\)", 
-    "mean(\\1 - \\2)"
-  )) |> 
-  arrange(term) |> 
+  mutate(term = case_when(
+    term == "coup_dummy" ~ "Previous coups",
+    term == "GDP_trend" ~ "Economic trend",
+    term == "GDP_pc" ~ "GDP per capita",
+    term == "violence" ~ "Political violence",
+    str_detect(contrast, "democracy") ~ "Democracy",
+    str_detect(contrast, "military") ~ "Military",
+    str_detect(contrast, "monarchy") ~ "Monarchy",
+    str_detect(contrast, "personal") ~ "Personal",
+    TRUE ~ term
+  )) |>
+  mutate(
+    term = factor(term, levels = c(
+      "Democracy",
+      "Military",
+      "Monarchy",
+      "Personal",
+      "Economic trend",
+      "GDP per capita",
+      "Political violence",
+      "Previous coups"
+    )),
+    contrast = str_replace(
+      contrast,
+      "mean\\((.+?)\\) - mean\\((.+?)\\)",
+      "mean(\\1 - \\2)"
+    )
+  ) |>
+  arrange(term) |>
   clean_names(case = "title") |>
-  rename(AME = Ame) |> 
-  gt() |> 
-  cols_align(align = "left", columns = Term) |> 
+  rename(AME = Ame) |>
+  gt() |>
+  cols_align(align = "left", columns = Term) |>
   tab_options(
     table.width = pct(99)
-    ) |> 
+  ) |>
   fmt_number(
-    decimals = 3          # specify the number of decimal places
-  ) |> 
+    decimals = 3 # specify the number of decimal places
+  ) |>
   tab_footnote(
     footnote = "AME: Average Marginal Effect",
     locations = cells_column_labels(columns = AME)
-  ) |> 
+  ) |>
   as_raw_html()
 ```
 
@@ -1389,57 +1421,62 @@ influence on future coup attempts.
 #| echo: false
 
 
-avg_comparisons(model_2) |> 
-  select(1:3) |> 
+avg_comparisons(model_2) |>
+  select(1:3) |>
   select(1:2, ame = estimate) |>
-  cbind(avg_comparisons(model_2, comparison = "ratio") |> select(3)) |> 
-  mutate('ratio(%)' = round((estimate - 1) * 100, 2),
-         ame = round(ame, 3)) |> 
+  cbind(avg_comparisons(model_2, comparison = "ratio") |> select(3)) |>
+  mutate(
+    "ratio(%)" = round((estimate - 1) * 100, 2),
+    ame = round(ame, 3)
+  ) |>
   select(-estimate) |>
-  mutate(term = case_when(term == "coup_dummy" ~ "Previous coups (P)",
-                          term == "time_since_last_coup" ~ "Yrs since coup (Y)" ,
-                          term == "coup_dummy*time_since_last_coup" ~ "P * Y",
-                          term == "GDP_trend" ~ "Economic trend",
-                          term == "GDP_pc" ~ "GDP per capita",
-                          term == "violence" ~ "Political violence",
-                          str_detect(contrast, "democracy") ~ "Democracy",
-                          str_detect(contrast, "military") ~ "Military",
-                          str_detect(contrast, "monarchy") ~ "Monarchy",
-                          str_detect(contrast, "personal") ~ "Personal",
-                          TRUE ~ term
-                          )) |> 
-  mutate(term = factor(term, levels = c(
-  "Democracy",
-  "Military",
-  "Monarchy",
-  "Personal",
-  "Economic trend",
-  "GDP per capita",
-  "Political violence",
-  "Previous coups (P)",
-  "Yrs since coup (Y)",
-   "P * Y"
-)),
-contrast = str_replace(
-    contrast, 
-    "mean\\((.+?)\\) - mean\\((.+?)\\)", 
-    "mean(\\1 - \\2)"
-  )) |> 
-  arrange(term) |> 
+  mutate(term = case_when(
+    term == "coup_dummy" ~ "Previous coups (P)",
+    term == "time_since_last_coup" ~ "Yrs since coup (Y)",
+    term == "coup_dummy*time_since_last_coup" ~ "P * Y",
+    term == "GDP_trend" ~ "Economic trend",
+    term == "GDP_pc" ~ "GDP per capita",
+    term == "violence" ~ "Political violence",
+    str_detect(contrast, "democracy") ~ "Democracy",
+    str_detect(contrast, "military") ~ "Military",
+    str_detect(contrast, "monarchy") ~ "Monarchy",
+    str_detect(contrast, "personal") ~ "Personal",
+    TRUE ~ term
+  )) |>
+  mutate(
+    term = factor(term, levels = c(
+      "Democracy",
+      "Military",
+      "Monarchy",
+      "Personal",
+      "Economic trend",
+      "GDP per capita",
+      "Political violence",
+      "Previous coups (P)",
+      "Yrs since coup (Y)",
+      "P * Y"
+    )),
+    contrast = str_replace(
+      contrast,
+      "mean\\((.+?)\\) - mean\\((.+?)\\)",
+      "mean(\\1 - \\2)"
+    )
+  ) |>
+  arrange(term) |>
   clean_names(case = "title") |>
-  rename(AME = Ame) |> 
-  gt() |> 
-  cols_align(align = "left", columns = Term) |> 
+  rename(AME = Ame) |>
+  gt() |>
+  cols_align(align = "left", columns = Term) |>
   tab_options(
     table.width = pct(99)
-    ) |> 
+  ) |>
   fmt_number(
-    decimals = 3          # specify the number of decimal places
-  ) |> 
+    decimals = 3 # specify the number of decimal places
+  ) |>
   tab_footnote(
     footnote = "AME: Average Marginal Effect",
     locations = cells_column_labels(columns = AME)
-  ) |> 
+  ) |>
   as_raw_html()
 ```
 
@@ -1751,7 +1788,7 @@ identifies the perpetrator and the illegitimate nature of the power grab,
 distinguishing it from classic coups while maintaining a parallel structure in
 terminology.
 
-#### Definition
+#### Definition {#sec-definition}
 
 While precise terminology is undoubtedly crucial, another issue arises with
 previous definitions of autocoups: what is the primary emphasis—power expansion,
@@ -2004,12 +2041,13 @@ qualifications for autocoups.
 #| echo: false
 #| results: asis
 
-read.csv(here("data/autocoup_source.csv")) |> 
-  clean_names(case = "title") |> 
+read.csv(here("data/autocoup_source.csv")) |>
+  clean_names(case = "title") |>
   gt() |>
   tab_options(
     table.width = pct(100),
-    table.align = "center") |>
+    table.align = "center"
+  ) |>
   as_raw_html()
 ```
 
@@ -2075,14 +2113,16 @@ required in-depth research, especially for less documented cases.
 ```{r}
 #| label: data_descriptions
 
-country <- Autocoup |> 
-  distinct(ccode) |> 
+country <- Autocoup |>
+  distinct(ccode) |>
   summarise(count = n())
 
-autocoup_desc <- Autocoup |> 
-  summarise(attempted = n(),
-            succeeded = sum(autocoup_outcome == "Yes"),
-    .by = autocoup_method) |> 
+autocoup_desc <- Autocoup |>
+  summarise(
+    attempted = n(),
+    succeeded = sum(autocoup_outcome == "Yes"),
+    .by = autocoup_method
+  ) |>
   arrange(-attempted)
 ```
 
@@ -2098,18 +2138,18 @@ leaders:
 #| label: tbl-autocoup_method
 #| tbl-cap: Autocoup methods and success rates (1945-2021)
 
-autocoup_desc |> 
-  adorn_totals() |> 
-  mutate(Success_rate = percent(round(succeeded/attempted, 3))) |> 
-  clean_names(case = "title") |> 
-  gt() |> 
+autocoup_desc |>
+  adorn_totals() |>
+  mutate(Success_rate = percent(round(succeeded / attempted, 3))) |>
+  clean_names(case = "title") |>
+  gt() |>
   tab_options(
     table.width = pct(99)
-    ) |>
+  ) |>
   cols_align(
     align = "center",
     columns = 2:3
-  ) |> 
+  ) |>
   tab_source_note(source_note = md("*Source: Autocoup dataset*"))
 ```
 
@@ -2209,26 +2249,32 @@ the Security Council of Kazakhstan until 2022.
 #| include: false
 
 library(countrycode)
-latin <- codelist |> 
-  filter(region == "Latin America & Caribbean") |> 
+latin <- codelist |>
+  filter(region == "Latin America & Caribbean") |>
   select(region, cown) |>
-  drop_na() |> 
+  drop_na() |>
   pull(cown)
 
 Autocoup |>
   filter(ccode %in% latin) |>
-  summarise(count = n(),
-            .by = country) |>
+  summarise(
+    count = n(),
+    .by = country
+  ) |>
   adorn_totals()
 Autocoup |>
   filter(ccode %in% latin) |>
-  summarise(count = n(),
-            .by = autocoup_method) |>
+  summarise(
+    count = n(),
+    .by = autocoup_method
+  ) |>
   adorn_totals()
 Autocoup |>
   filter(ccode %in% latin) |>
-  summarise(count = n(),
-            .by = c(autocoup_method,autocoup_outcome)) |>
+  summarise(
+    count = n(),
+    .by = c(autocoup_method, autocoup_outcome)
+  ) |>
   adorn_totals()
 ```
 
@@ -2311,29 +2357,35 @@ outcomes of term limit challenges:
 #| label: africa
 #| include: false
 
-africa <- codelist |> 
-  filter(continent == "Africa") |> 
+africa <- codelist |>
+  filter(continent == "Africa") |>
   select(continent, cown) |>
-  drop_na() |> 
+  drop_na() |>
   pull(cown)
 
 Autocoup |>
   filter(ccode %in% africa) |>
-  summarise(count = n(),
-            .by = country) |>
+  summarise(
+    count = n(),
+    .by = country
+  ) |>
   adorn_totals()
 Autocoup |>
   filter(ccode %in% africa) |>
   distinct(country)
 Autocoup |>
   filter(ccode %in% africa) |>
-  summarise(count = n(),
-            .by = autocoup_method) |>
+  summarise(
+    count = n(),
+    .by = autocoup_method
+  ) |>
   adorn_totals()
 Autocoup |>
-  #filter(ccode %in% africa) |>
-  summarise(count = n(),
-            .by = autocoup_outcome) |>
+  # filter(ccode %in% africa) |>
+  summarise(
+    count = n(),
+    .by = autocoup_outcome
+  ) |>
   adorn_totals()
 ```
 
@@ -2449,42 +2501,48 @@ middle year of their tenure as the base year.
 autocoup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_model.csv")
 
 
-model_attempt <- autocoup_model |> 
-  filter(!regime %in% c("monarchy", "other")) |> 
+model_attempt <- autocoup_model |>
+  filter(!regime %in% c("monarchy", "other")) |>
   mutate(regime = fct_relevel(regime, "presidential")) |>
-  glm(autocoup_attempt ~ regime + GDP_pc + GDP_trend + violence + age + pop_log, 
-      family = binomial(link = "probit"),
-      data = _)
+  glm(autocoup_attempt ~ regime + GDP_pc + GDP_trend + violence + age + pop_log,
+    family = binomial(link = "probit"),
+    data = _
+  )
 
-model_success <- autocoup_model |> 
-  filter(!regime  %in% c("monarchy", "other")) |> 
-  mutate(regime = fct_relevel(regime, "presidential"),
-         autocoup_outcome = factor(autocoup_outcome)) |>
-  filter(autocoup_attempt == 1) |> 
-  glm(autocoup_outcome ~ regime + GDP_pc + GDP_trend + violence + age + pop_log, 
-      family = binomial(link = "probit"),
-      data = _)
+model_success <- autocoup_model |>
+  filter(!regime %in% c("monarchy", "other")) |>
+  mutate(
+    regime = fct_relevel(regime, "presidential"),
+    autocoup_outcome = factor(autocoup_outcome)
+  ) |>
+  filter(autocoup_attempt == 1) |>
+  glm(autocoup_outcome ~ regime + GDP_pc + GDP_trend + violence + age + pop_log,
+    family = binomial(link = "probit"),
+    data = _
+  )
 
-stargazer(model_attempt, model_success, 
-          header = F,
-          float = F,
-          column.labels = c("Autocoup Attempts", "Autocoup Outcome"),
-          intercept.bottom = F,
-          covariate.labels = c("Constant",
-                               "Regime: Dominant-party",
-                               "\\hspace{1.6cm}Military",
-                               "\\hspace{1.6cm}Personalist",
-                               "GDP per capita",
-                               "Economic trend",
-                               "Political stability",
-                               "Age",
-                               "Population(log)"),
-          dep.var.caption = "",
-          dep.var.labels.include = F,
-          summary.logical = T,
-          column.sep.width = "50pt"
-          )
-#view(autocoup_model)
+stargazer(model_attempt, model_success,
+  header = F,
+  float = F,
+  column.labels = c("Autocoup Attempts", "Autocoup Outcome"),
+  intercept.bottom = F,
+  covariate.labels = c(
+    "Constant",
+    "Regime: Dominant-party",
+    "\\hspace{1.6cm}Military",
+    "\\hspace{1.6cm}Personalist",
+    "GDP per capita",
+    "Economic trend",
+    "Political stability",
+    "Age",
+    "Population(log)"
+  ),
+  dep.var.caption = "",
+  dep.var.labels.include = F,
+  summary.logical = T,
+  column.sep.width = "50pt"
+)
+# view(autocoup_model)
 ```
 
 @tbl-autocoupmodel summarizes the findings from the probit regression models
@@ -2648,14 +2706,16 @@ successful.
 ```{r}
 #| label: data
 #| include: false
-survival_cox_ph_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_ph_model.csv") |> 
+survival_cox_ph_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_ph_model.csv") |>
   mutate(survival_year = survival_days / 365)
 
 survival_cox_td_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_td_model.csv")
 
 avg <- survival_cox_ph_model |>
-  summarise(avg=round(mean(survival_year),1),
-            .by = group)
+  summarise(
+    avg = round(mean(survival_year), 1),
+    .by = group
+  )
 ```
 
 Measuring the tenure of coup-installed and autocoup leaders poses challenges due
@@ -2676,18 +2736,19 @@ suggesting a potential tenure gap of over five years.
 # Fit survival curves
 fit <- survfit(Surv(survival_year, status) ~ group, data = survival_cox_ph_model)
 # Create log-rank plot (Kaplan-Meier plot)
-ggsurvplot(fit, 
-           data = survival_cox_ph_model, 
-           risk.table = TRUE, 
-           risk.table.height = 0.3, 
-           pval = TRUE,
-           surv.median.line = "hv",
-           break.x.by = 5, 
-           legend.title = "Leader Type",
-           legend.labs = c("Autocoup leaders", "coup-installed leaders"),
-           xlab = "Survival Years",
-           #title = "Survival Curves of overstay and coup-installed leaders",
-           font.title = 12)
+ggsurvplot(fit,
+  data = survival_cox_ph_model,
+  risk.table = TRUE,
+  risk.table.height = 0.3,
+  pval = TRUE,
+  surv.median.line = "hv",
+  break.x.by = 5,
+  legend.title = "Leader Type",
+  legend.labs = c("Autocoup leaders", "coup-installed leaders"),
+  xlab = "Survival Years",
+  # title = "Survival Curves of overstay and coup-installed leaders",
+  font.title = 12
+)
 ```
 
 A preliminary log-rank test in survival analysis, as illustrated in @fig-logrank,
@@ -2847,16 +2908,18 @@ highlighting these key differences.
 
 ```{r}
 #| label: tbl-leaders
-#| tbl-cap: Main features of autocoup and coup-installed leaders 
+#| tbl-cap: Main features of autocoup and coup-installed leaders
 #| echo: false
 #| results: asis
 
-read.csv(here("data/leader_comparison.csv")) |> 
-  clean_names(case = "title") |> 
+read.csv(here("data/leader_comparison.csv")) |>
+  clean_names(case = "title") |>
   gt() |>
-  tab_options(column_labels.font.weight = "bold",
-              table.width = pct(100),
-              table.align = "center") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    table.width = pct(100),
+    table.align = "center"
+  ) |>
   cols_width(
     1 ~ px(150),
     2:3 ~ px(300)
@@ -3071,70 +3134,84 @@ time-dependent Cox model in @tbl-cox.
 ```{r}
 #| label: model
 
-Mydata1 <- survival_cox_ph_model |> 
-   mutate(group = factor(group, 
-                        labels = c("Autocoup leaders", "Coup-installed leaders")))
+Mydata1 <- survival_cox_ph_model |>
+  mutate(group = factor(group,
+    labels = c("Autocoup leaders", "Coup-installed leaders")
+  ))
 
-model_cox1 <- Mydata1 |> 
+model_cox1 <- Mydata1 |>
   coxph(
-    Surv(survival_days, status) ~ 
-      group + GDP_trend + GDP_pc + pop_log + 
+    Surv(survival_days, status) ~
+      group + GDP_trend + GDP_pc + pop_log +
       polity5 + violence + age,
     data = _
-  ) 
+  )
 
-tbl1 <- model_cox1|> 
-   tbl_regression(exponentiate = T,
-                 conf.int = F,
-                 add_estimate_to_reference_rows = T,
-                 label = list(group ~ "Leader Type",
-                   GDP_trend ~ "GDP Growth Trend",
-                   GDP_pc ~ "GDP per capita",
-                   pop_log ~ "Population: log",
-                   polity5 ~ "Polity 5",
-                   violence ~ "Political stability",
-                   age ~ "Age")) |> 
-  add_n(location = "level") |> 
-  add_nevent(location = "level") |> 
-  add_significance_stars(hide_p = T,
-                         hide_se = F, 
-                         hide_ci = T,
-                         thresholds = c(0.01, 0.05, 0.1),
-                         ) |> 
-  bold_p(t = 0.05) |> 
-  bold_labels() 
+tbl1 <- model_cox1 |>
+  tbl_regression(
+    exponentiate = T,
+    conf.int = F,
+    add_estimate_to_reference_rows = T,
+    label = list(
+      group ~ "Leader Type",
+      GDP_trend ~ "GDP Growth Trend",
+      GDP_pc ~ "GDP per capita",
+      pop_log ~ "Population: log",
+      polity5 ~ "Polity 5",
+      violence ~ "Political stability",
+      age ~ "Age"
+    )
+  ) |>
+  add_n(location = "level") |>
+  add_nevent(location = "level") |>
+  add_significance_stars(
+    hide_p = T,
+    hide_se = F,
+    hide_ci = T,
+    thresholds = c(0.01, 0.05, 0.1),
+  ) |>
+  bold_p(t = 0.05) |>
+  bold_labels()
 
-Mydata2 <- survival_cox_td_model |> 
-  mutate(group = factor(group, 
-                        labels = c("Autocoup leaders", "Coup-installed leaders")),
-         survt = (tstop - tstart) * 365)
+Mydata2 <- survival_cox_td_model |>
+  mutate(
+    group = factor(group,
+      labels = c("Autocoup leaders", "Coup-installed leaders")
+    ),
+    survt = (tstop - tstart) * 365
+  )
 
-model_cox2 <- Mydata2 |> 
+model_cox2 <- Mydata2 |>
   coxph(
-    Surv(T1, T2, status) ~ 
-      group + GDP_trend + GDP_pc + pop_log + 
+    Surv(T1, T2, status) ~
+      group + GDP_trend + GDP_pc + pop_log +
       polity5 + violence + age + cluster(id),
     data = _
-  ) 
-tbl2 <- model_cox2|>
-  tbl_regression(exponentiate = T,
-                 conf.int = F,
-                 add_estimate_to_reference_rows = T,
-                 label = list(group ~ "Leader Type",
-                   GDP_trend ~ "GDP Growth Trend",
-                   GDP_pc ~ "GDP per capita",
-                   pop_log ~ "Population: log",
-                   polity5 ~ "Polity 5",
-                   violence ~ "Political stability",
-                   age ~ "Age")) |> 
-  add_n(location = "level") |> 
-  add_nevent(location = "level") |> 
-  add_significance_stars(hide_p = T,
-                         hide_se = F, 
-                         hide_ci = T,
-                         thresholds = c(0.01, 0.05, 0.1),
-                         ) |> 
-  bold_p(t = 0.05) |> 
+  )
+tbl2 <- model_cox2 |>
+  tbl_regression(
+    exponentiate = T,
+    conf.int = F,
+    add_estimate_to_reference_rows = T,
+    label = list(
+      group ~ "Leader Type",
+      GDP_trend ~ "GDP Growth Trend",
+      GDP_pc ~ "GDP per capita",
+      pop_log ~ "Population: log",
+      polity5 ~ "Polity 5",
+      violence ~ "Political stability",
+      age ~ "Age"
+    )
+  ) |>
+  add_n(location = "level") |>
+  add_nevent(location = "level") |>
+  add_significance_stars(
+    hide_p = T,
+    hide_se = F,
+    hide_ci = T,
+    thresholds = c(0.01, 0.05, 0.1),
+  ) |>
+  bold_p(t = 0.05) |>
   bold_labels()
 ```
 
@@ -3144,7 +3221,8 @@ tbl2 <- model_cox2|>
 
 
 tbl_merge(list(tbl1, tbl2),
-          tab_spanner = c("**Cox PH Model**", "**Time-dependent Cox Model**"))
+  tab_spanner = c("**Cox PH Model**", "**Time-dependent Cox Model**")
+)
 ```
 
 Both models showed a statistically significant relationship between leadership
@@ -3186,13 +3264,13 @@ violence and the risk of removal from office.
 ```{r}
 #| label: fig-coxSurv
 #| fig-cap: Survival curves for Cox Model
-#| fig-subcap: 
+#| fig-subcap:
 #|  - Cox PH Model
 #|  - Time-dependent Cox Model
 #| layout-ncol: 2
 #| echo: false
 
-testdata1 <- Mydata1 |> 
+testdata1 <- Mydata1 |>
   summarise(
     .by = group,
     GDP_trend = mean(GDP_trend),
@@ -3203,15 +3281,17 @@ testdata1 <- Mydata1 |>
     age = mean(age)
   )
 
-model_cox1 |> 
+model_cox1 |>
   survfit(newdata = testdata1) |>
-  ggsurvplot(data = testdata1,
-             xlab = "Days",
-             surv.median.line = "hv",
-             legend.title = "Leader Type",
-             legend.labs = c("Autocoup leaders", "Coup-installed leaders"))
+  ggsurvplot(
+    data = testdata1,
+    xlab = "Days",
+    surv.median.line = "hv",
+    legend.title = "Leader Type",
+    legend.labs = c("Autocoup leaders", "Coup-installed leaders")
+  )
 
-testdata2 <- Mydata2 |> 
+testdata2 <- Mydata2 |>
   summarise(
     .by = group,
     GDP_trend = mean(GDP_trend),
@@ -3222,13 +3302,15 @@ testdata2 <- Mydata2 |>
     age = mean(age)
   )
 
-model_cox2 |> 
+model_cox2 |>
   survfit(newdata = testdata2) |>
-  ggsurvplot(data = testdata2,
-             xlab = "Days",
-             surv.median.line = "hv",
-             legend.title = "Leader Type",
-             legend.labs = c("Autocoup leaders", "Coup-installed leaders"))
+  ggsurvplot(
+    data = testdata2,
+    xlab = "Days",
+    surv.median.line = "hv",
+    legend.title = "Leader Type",
+    legend.labs = c("Autocoup leaders", "Coup-installed leaders")
+  )
 ```
 
 The survival curves in @fig-coxSurv displays the survival rates for both types of
@@ -3246,20 +3328,22 @@ counterparts.
 ```{r}
 #| label: fig-coxHR
 #| fig-cap: Hazard ratios and 95% CIs for Leader Ousting
-#| fig-subcap: 
+#| fig-subcap:
 #|  - Cox PH Model
 #|  - Time-dependent Cox Model
 #| layout-ncol: 2
 #| echo: false
 
 coxplottidy <- tidy(model_cox1, exponentiate = T, conf.int = T) |>
-  mutate(term = c("Coup-installed leaders",
-                      "GDP Growth Trend",
-                      "GDP per capita",
-                      "Population: log",
-                      "Polity 5",
-                      "Political stability",
-                      "Age"))
+  mutate(term = c(
+    "Coup-installed leaders",
+    "GDP Growth Trend",
+    "GDP per capita",
+    "Population: log",
+    "Polity 5",
+    "Political stability",
+    "Age"
+  ))
 
 coxplottidy |>
   ggplot(aes(
@@ -3269,20 +3353,24 @@ coxplottidy |>
     xmax = conf.high
   )) +
   geom_pointrange() +
-  geom_vline(xintercept = 1,
-             linetype = "dashed",
-             color = "skyblue") +
+  geom_vline(
+    xintercept = 1,
+    linetype = "dashed",
+    color = "skyblue"
+  ) +
   labs(x = "Hazard ratios", y = NULL, title = "") +
-  theme_bw() 
+  theme_bw()
 
-coxplottidy <- tidy(model_cox2, exponentiate = T, conf.int = T) |> 
-  mutate(term = c("Coup-installed leaders",
-                      "GDP Growth Trend",
-                      "GDP per capita",
-                      "Population: log",
-                      "Polity 5",
-                      "Political stability",
-                      "Age"))
+coxplottidy <- tidy(model_cox2, exponentiate = T, conf.int = T) |>
+  mutate(term = c(
+    "Coup-installed leaders",
+    "GDP Growth Trend",
+    "GDP per capita",
+    "Population: log",
+    "Polity 5",
+    "Political stability",
+    "Age"
+  ))
 
 coxplottidy |>
   ggplot(aes(
@@ -3292,11 +3380,13 @@ coxplottidy |>
     xmax = conf.high
   )) +
   geom_pointrange() +
-  geom_vline(xintercept = 1,
-             linetype = "dashed",
-             color = "skyblue") +
+  geom_vline(
+    xintercept = 1,
+    linetype = "dashed",
+    color = "skyblue"
+  ) +
   labs(x = "Hazard ratios", y = "", title = "") +
-  theme_bw() 
+  theme_bw()
 ```
 
 @fig-coxHR displays the hazard ratios and corresponding 95% confidence intervals
@@ -3392,6 +3482,537 @@ non-democratic leadership transitions, this research emphasizes the importance o
 continued investigation into the complex relationships between power, legitimacy,
 and survival in political leadership.
 
+## Coups, Autocoups, and Democracy
+
+### Abstract
+
+This chapter examines the impact of coups and autocoups on democracy. While
+extensive research has explored how coups influence democratic governance, far
+less attention has been given to autocoups. Unlike coups, which can lead to
+democratic backsliding, authoritarian entrenchment, or even democratic
+transition, autocoups are more consistently associated with the consolidation of
+authoritarian rule.
+
+Using data from a widely recognized coup dataset along with a newly compiled
+dataset on autocoups, this study employs a fixed-effects model to assess their
+effects on democracy, as measured by the Polity Index. The results indicate that
+both coups and autocoups lead to a decline in democratic levels. However, coups
+have a greater immediate negative impact. Notably, three years after these
+events, democracies affected by coups tend to show significant recovery, whereas
+those experiencing autocoups exhibit no meaningful improvement.
+
+These findings support the hypothesis that compared to coups, autocoups pose a
+more persistent threat to democracy. This also helps explain the continuous
+decline in global democratic levels over the past 18 years, as reported by
+Freedom House in its 2024 assessment.
+
+### Introduction
+
+In the preceding chapters, I clarified the definition of an autocoup, introduced
+a novel dataset on autocoups, conducted empirical analyses on the determinants of
+autocoup attempts, and compared the post-event survival times of leaders
+established through coups versus autocoup leaders. A natural follow-up question
+emerges: What are the broader impacts of autocoups? Specifically, from a
+political science perspective, how do autocoups affect the process of
+democratization?
+
+As previously noted, due to the absence of a widely recognized dataset on
+autocoups, most existing discussions on their impact have relied on case studies
+[@baturo; @baturo2022]. To move beyond case-specific analyses and adopt a more
+systematic and comparative approach, this chapter aims to pioneer empirical
+research on the democratic consequences of autocoups. The first objective of this
+chapter, therefore, is to examine whether autocoups reinforce authoritarianism,
+promote democratization, or have no significant effect on political regimes.
+
+Given the conceptual and empirical connections between coups and autocoups,
+another key objective is to compare their respective effects on democratization.
+While both events disrupt existing political orders, their immediate and
+long-term consequences may vary significantly. Understanding these distinctions
+is essential for evaluating their broader implications.
+
+To address these questions, this study leverages data from a widely recognized
+coup dataset alongside a newly compiled dataset on autocoups. Employing a
+fixed-effects model, it evaluates their effects on democracy, as measured by the
+Polity Index. The findings reveal that both coups and autocoups lead to an
+immediate decline in democratic levels. However, coups have a more pronounced
+negative short-term impact. Notably, three years after these events, democracies
+affected by coups tend to show significant recovery, whereas those experiencing
+autocoups exhibit no meaningful improvement.
+
+This study offers two significant contributions to the field of political
+science. First, it provides the inaugural empirical analysis of the impact of
+autocoups on democratization, effectively addressing a critical gap in the
+existing literature. Second, by directly comparing the effects of coups and
+autocoups, this research highlights autocoups as a distinct phenomenon that
+demands increased scholarly inquiry and policy focus.
+
+The remainder of this chapter is structured as follows: Section 2 analyzes the
+impact of autocoups on democratization, by comparing the effects with traditional
+coups. Section 3 outlines the research design, methodology, and variables used in
+this study. Section 4 presents and interprets the empirical findings, followed by
+a discussion of their implications. Finally, Section 5 concludes by summarizing
+the key results and exploring their significance for understanding and mitigating
+the occurrence of autocoups.
+
+### Impact of autocoups on political change
+
+According to the definition in @sec-definition, an autocoup refers to an
+incumbent leader extending their tenure in power beyond the originally mandated
+limits, whether through legal or illegal means. While the leader may assume a
+different title or position, the individual in power remains unchanged.
+Therefore, unlike traditional coups, an autocoup does not result in real
+leadership turnover, elite restructuring, or regime change. In other words, the
+fundamental ruling structure remains intact.
+
+This distinction has important implications. Since regime change rarely occurs
+following an autocoup, its impact on politics cannot be assessed using
+conventional methods. Typically, studies on coups and democratization measure
+their effects by estimating the probability of regime transition—either from
+autocracy to democracy or vice versa—as seen in previous research on coup
+outcomes [@thyne2014; @derpanopoulos2016; @miller2016]. However, this approach is
+not suitable for autocoups, as they do not directly trigger regime transfers.
+
+Although autocoups rarely lead to formal regime change, this does not mean they
+have no impact on political dynamics. In fact, they inevitably shape political
+trajectories in various ways and, on occasion, can even lead to significant
+transformations. Therefore, a more appropriate method for assessing the political
+impact of autocoups is to analyze democratic indices, such as those measured by
+Polity5 [@p1]. The Polity Score, ranging from -10 (full autocracy) to +10 (full
+democracy), captures gradual shifts in political regime characteristics rather
+than abrupt transitions. Thus, even if an autocoup does not result in a formal
+regime change, subtle shifts in political openness and institutional constraints
+can still be assessed by examining variations in Polity scores before and after
+the event. This approach has also been employed in previous studies [@dahl2023].
+
+Although autocoups may not lead to significant regime change, their impact on
+democratization should not be overlooked. However, their influence differs from
+that of traditional coups in at least two key ways.
+
+#### **The pre-emptive effects of autocoups on political dynamics**
+
+First and foremost, unlike coups, which are marked by clear, decisive events—such
+as the removal of a leader—autocoups typically unfold gradually, through
+incremental steps rather than a singular, dramatic event. Incumbent leaders
+seeking to extend their tenure often lay the groundwork well in advance before
+executing their final move to remain in power. To reduce resistance and
+opposition, they engage in extensive preparation, which may include purging
+officials, suppressing political opposition, cracking down on dissent and
+protests, and restricting press freedom. Without such measures, an autocoup might
+face strong internal resistance, and in the worst case, provoke a backlash that
+not only derails the leader’s attempt to extend their rule but also results in
+their immediate removal from office.
+
+However, once an incumbent successfully secures an extension of their rule,
+continued repression is not always necessary. On the contrary, some leaders relax
+political pressure to ease internal dissent and mitigate opposition from external
+actors. This adaptive approach helps maintain stability after the autocoup is
+complete.
+
+As a result, the primary impact of autocoups on political change is often
+reflected in shifts in political scores before the final stage of the autocoup is
+enacted. Once the process is completed, further shifts may be minimal. In
+contrast, coup plotters, unlike incumbents, lack the ability to influence
+political institutions beforehand, meaning their impact on politics is often felt
+in the aftermath rather than before the event.
+
+This distinction is evident in empirical cases of autocoups.
+
+One of the most frequently cited examples of an autocoup is Peru’s 1992 case, in
+which President Alberto Fujimori dissolved Congress, temporarily suspended the
+1979 Constitution, and ruled by decree until November of that year, when a
+*Democratic Constituent Congress* was elected to draft a new constitution
+[@cameron1998]. However, these moves did not immediately grant Fujimori a longer
+tenure in office.
+
+Under the 1979 Peruvian Constitution, immediate presidential re-election was
+prohibited. To bypass this restriction, Fujimori initiated a constitutional
+overhaul, leading to the adoption of a new constitution in 1993, which permitted
+re-election. Consequently, he secured a second term in 1995 [@baturo2019].
+
+An analysis of Peru’s Polity5 scores during this process reflects these political
+changes. Upon taking office in 1990, Peru’s Polity score was 8, remaining
+unchanged in 1991. However, a dramatic shift occurred in 1992, when Fujimori
+dissolved Congress, causing the Polity score to plummet from 8 to -4.
+Interestingly, when he formally extended his rule by amending the constitution in
+1993, the score rebounded slightly to -1. This -1 score remained unchanged
+throughout Fujimori’s tenure until 2000, indicating a lack of further
+institutional transformation after the constitutional amendment.
+
+A similar pattern emerges in Belarus under Alexander Lukashenko. Upon assuming
+office as president in 1994, Belarus had a Polity5 score of 8. However, in 1995,
+when Lukashenko moved to hold a referendum—defying opposition in the Supreme
+Council and threatening to suspend its activities—the score dropped sharply to 0.
+Following the 1996 referendum, which extended his term by two additional years,
+Lukashenko officially overstayed his tenure. Consequently, the Polity5 score
+further declined to -7 in 1996, where it has remained ever since, despite two
+additional term extensions [@ash2014; @baturo].
+
+These cases illustrate a broader pattern: the impact of autocoups on political
+change is often reflected before the final stage of the autocoup is enacted,
+whereas the impact of coups tends to materialize afterwards, as have been fully
+discussed by previous studies.
+
+Based on this analysis, I propose the first hypothesis:
+
+> *H1*: Autocoups primarily shape political change in advance, whereas coups
+> typically drive political change only after they are executed.
+
+#### **The singular nature of autocoups**
+
+Secondly, in contrast to the ambiguous nature of coups [@dahl2023], the impact of
+autocoups on political change rarely contributes to democratization.
+
+The influence of coups on democratization has been extensively examined in
+existing literature. Some scholars argue that coups—and even the mere threat of
+them—can act as catalysts for democratization. One argument suggests that coups
+deliver a political "shock" that may create opportunities for liberalization that
+would not have otherwise materialized [@thyne2014]. In a critical examination,
+@derpanopoulos2016 questioned the role of coups in promoting democracy, engaging
+in multiple rounds of debate with @miller2016. More recently, @dahl2023 further
+explored this ongoing discussion, arguing that both democratic and autocratic
+transitions are likely to follow a coup, with popular mobilization playing a
+decisive role in shaping post-coup trajectories.
+
+A frequently cited example of a “pro-democracy coup” occurred in February 2010,
+when Nigerien troops ousted President Mamadou Tandja after he extended his rule
+autocratically. The Supreme Council for the Restoration of Democracy (CSRD) took
+control, pledging democratic reforms. Their actions were widely celebrated, with
+both citizens and political opposition viewing the coup as an opportunity to
+restore democracy. The CSRD fulfilled its commitment by overseeing free and fair
+elections in 2011, resulting in Mahamadou Issoufou assuming the presidency
+[@miller2016].
+
+While the debate on the democratic consequences of coups remains ongoing, it is
+evident that their impact is not uniform. In contrast, autocoups almost never
+lead to democratic transitions, nor do they even marginally enhance political
+freedoms. This stems from the intrinsic nature of autocoups, which disrupt the
+established process of political leadership transition, particularly term limits.
+
+Term limits are constitutional provisions that restrict the maximum duration a
+leader can remain in office. They play a crucial role in both democracies and
+autocracies by preventing the excessive concentration of power and ensuring
+political stability. In democracies, term limits promote accountability,
+leadership renewal, and reduce the risks of corruption and authoritarian
+entrenchment. In autocracies, when enforced, they can curb indefinite rule,
+mitigate succession crises, and provide rare opportunities for political
+transitions. However, without term limits, leaders can entrench themselves in
+power, undermining institutions and hindering political progress.
+
+As shown in @tbl-autocoup_method in Chapter 3, autocoups are executed through
+either façade legal mechanisms or blatantly illegal methods. This includes
+amending or disregarding term limits, delaying or cancelling elections, rigging
+electoral outcomes, or outright refusing to accept election results. While many
+autocoups maintain a veneer of legality, their defining characteristic is the
+violation of term limits, which are intended as safeguards against prolonged and
+unchecked rule.
+
+As previously discussed, before an incumbent leader formally overstays their
+term, they often inflict significant damage on political institutions.
+Furthermore, to secure their prolonged rule, they are unlikely to fully restore
+political freedoms even if they temporarily ease political repression once they
+have consolidated power.
+
+Case studies from Peru and Belarus illustrate how autocoups lead to a decline in
+Polity scores, reflecting democratic backsliding. However, most autocoups occur
+in already autocratic regimes where Polity scores are low. This aligns with
+trends observed in coups, which also primarily occur in autocracies.
+
+For instance, in China’s 2018 constitutional amendment, Xi Jinping abolished
+presidential term limits, effectively allowing himself to remain in power
+indefinitely[^1]. However, China’s Polity score remained unchanged at -7 before
+and after the amendment. This pattern is common in autocratic regimes with Polity
+scores below -6, as they already lack significant democratic features, leaving
+little room for further decline.
+
+While most autocoups occur in low-Polity-score countries, some have taken place
+in relatively democratic settings, where the Polity score remains stable despite
+term limit extensions. This is particularly evident in Latin America, where
+presidents have amended "no immediate re-election" rules to allow for a second
+consecutive term, but voluntarily stepped down afterwards. Examples include:
+Argentina (1993), Polity score remained at 7; Brazil (1997), Polity score
+remained at 8, Colombia (2004), Polity score remained at 7. In these cases,
+leaders extended their tenure within a structured political framework without
+further dismantling democratic institutions [@baturo2019].
+
+Across all cases—whether in Peru, Belarus, China, Argentina, Brazil, or
+Colombia—there is no instance where a Polity score increased following an
+autocoup. In the autocoup dataset which I introduced in Chapter 3, only four
+cases—Guinea-Bissau (1988), Burkina Faso (1997), Congo-Brazzaville (2001), and
+Lebanon (2004)—saw minor increases in Polity scores, but the changes were
+insignificant.
+
+Thus, unlike some coup leaders who justify their actions by claiming to restore
+democracy (as seen in Niger’s 2010 case), leaders who execute autocoups lack any
+democratic justification. If their true intention were to advance democracy, they
+would transfer power peacefully rather than violate term limits.
+
+Based on this analysis, I propose the second hypothesis:
+
+> *H2*: Autocoups are more likely to entrench autocracy than coups.
+
+### Methodology and variables
+
+#### Methodology
+
+As discussed earlier, autocoups are less likely to result in full regime
+transitions—either from democracy to autocracy or vice versa. Therefore, it is
+inappropriate to assess their effects solely based on regime transitions or
+changes that cross a critical threshold. Instead, this study examines political
+changes through fluctuations in Polity5 scores.
+
+Unlike coup analysis, which primarily focuses on post-event effects, this study
+examines both pre-event and post-event impacts of autocoups. Specifically,
+pre-event effects are measured by the change in Polity5 scores three years before
+the autocoup compared to the year of the autocoup, expressed as:
+
+$Polity_t - Polity_{t-3}$
+
+Post-event effects are measured by the change in Polity5 scores three years after
+the autocoup compared to the year of the autocoup, expressed as:
+
+$Polity_{t+3} - Polity_t$
+
+The three-year window is chosen for two key reasons. Pre-event political changes
+typically occur incrementally, as incumbents consolidate power gradually over
+several years rather than through a single, abrupt action. Post-event analysis
+focuses on medium-term effects rather than short-term shocks, as autocoups rarely
+trigger immediate regime transitions and instead reinforce existing political
+structures. Short-term fluctuations may be too minor to capture meaningful
+institutional change empirically.
+
+To estimate how political institutions change before and after autocoups, I
+employ a linear model with country-case fixed effects. For pre-event effects, I
+analyze attempted autocoups, since before the event, no one knows whether the
+autocoup will succeed or fail.
+
+For post-event effects, I analyze only successful autocoups for three reasons:
+The majority of autocoups succeed (87 out of 110 cases); failed autocoups tend to
+produce immediate political shocks, rather than medium- or long-term effects;
+failed autocoups are often followed by major disruptive events, such as coups,
+insurrections, or mass protests, making it difficult to isolate their impact. For
+example, in Niger's case, a failed autocoup in 2009 was followed by a coup in
+2010, creating overlapping political effects. In contrast, successful autocoups
+provide a clearer analytical framework, as their effects are less entangled with
+other disruptions, allowing for a more systematic assessment of institutional
+change.
+
+#### Variables
+
+This study uses a global sample of all country-year data from 1950 to 2020,
+applying a linear model to examine the effects of autocoups on political change.
+The dependent variable is the change in Polity scores, while the main independent
+variable is autocoups. The dataset includes approximately 7,500 observations.
+
+The dependent variable measures political change using three-year differences in
+Polity scores. Model 1 (Pre-event effects): $Polity_t − Polity_{t − 3}$. Model 2
+(Post-event effects): $Polity_{t+3} - Polity_t$.
+
+The Polity score ranges from -10 (full autocracy) to 10 (full democracy). Some
+values in the dataset, such as -66, -77, and -88, represent transitional regimes
+or special periods. To prevent excessive data loss, I replace these values with
+the closest valid Polity scores. This approach ensures that the model captures
+all changes in Polity scores, rather than focusing solely on transitions that
+cross a democratic threshold.
+
+The main independent variable is autocoups, as introduced in Chapter 3. The
+dataset includes110 attempted autocoups (used for pre-event analysis) and 87
+successful autocoups (used for post-event analysis). For pre-event analysis, the
+autocoup variable is binary, where: 1 indicates the presence of an attempted
+autocoup and 0 indicates no autocoup event.
+
+For post-event analysis, I apply decay functions to account for both immediate
+and delayed effects, following the methodology of @dahl2023. To assess the
+persistence of autocoup effects, I consider a half-life specification of five
+years, analysing the impact from the autocoup year ($y_t$) to four years after
+($y_{t+4}$).
+
+I also include traditional coups as a secondary independent variable for two
+reasons. Comparative significance: It is essential to compare the effects of
+autocoups and coups. Overlapping events: In many cases, coups and autocoups are
+interconnected, as autocoups can trigger coups. Distinguishing their effects is
+necessary for a clear empirical analysis.
+
+As in previous chapters, I use the coup dataset from @powell2011. To maintain
+consistency, I apply the same methodological approach to coups as to autocoups:
+Binary coding for pre-event effects and decay function coding for post-event
+effects.
+
+Control variables include economic performance, political stability, and
+population size, all of which have been analysed in previous chapters.
+Additionally, I incorporate two dummy variables. The first,
+**"**non_democracy**,"** accounts for regime type, recognizing that
+non-democratic regimes with Polity scores below -6 have limited room for further
+decline, while democracies with scores above 6 are less likely to experience
+significant increases. The second, **"**cold_war**,"** follows the approach used
+in prior studies on the impact of coups on democratization [@thyne2014;
+@derpanopoulos2016; @dahl2023] and accounts for the Cold War period. This
+variable captures the observable trend of declining Polity scores from the 1960s
+to 1990, followed by an upward shift after 1990.
+
+### Results and discussion
+
+```{r}
+#| label: coup_autocoup_data
+coup_autocoup <- read.csv("https://raw.githubusercontent.com/reddylee/Datasets/refs/heads/main/coup_autocoup.csv")
+```
+
+```{r}
+#| label: tbl-demomodel
+#| tbl-cap: "The Impact of Autocoups on Democratization"
+#| results: asis
+
+demo_model1 <- plm(
+  Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Attemp = diff2, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3)
+)
+
+demo_model2 <- plm(
+  Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Attemp = diff3, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3)
+)
+
+demo_model3 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_effect, Coup = coup_effect)
+)
+
+demo_model4 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect)
+)
+
+stargazer(demo_model1, demo_model2, demo_model3, demo_model4,
+  #type = "text",
+  float = F,
+  header = F,
+  dep.var.caption = "Dependent variable: Differences of Polity scores",
+  dep.var.labels = c("Pre-event effects", "Post-event effects"),
+  covariate.labels = c(
+    "Autocoup", "Coup", "GDP per Capita",
+    "Economic Trend", "Log Population", "Political Violence",
+    "Non-Democracy", "Cold War"
+  ),
+  summary.logical = F,
+  column.sep.width = "30pt",
+  #font.size = "footnotesize",
+  df = F
+)
+```
+
+#### Pre-event effects
+
+Initially, I analyse the trajectory of Polity scores leading up to these events.
+As presented in Table @tbl-demomodel, models (1) and (2) display the empirical
+results for pre-event effects, examining changes over two years (model 1) and
+three years (model 2) prior to the event. Consistent with the first hypothesis,
+Polity scores exhibit a significanttbl_demo_model decline in the 2–3 years
+preceding an autocoup. Notably, this downward trend is both more pronounced and
+statistically significant for autocoups compared to traditional coups.
+
+Model (1) examines the pre-event changes, specifically the difference between
+Polity scores at time $t-1$ and $t-3$ ($Polity_{t-1} - Polity_{t-3}$). The
+results reveal a statistically significant decrease in Polity scores prior to
+autocoups. On average, Polity scores decline by 0.45 in the two years before an
+autocoup, holding other factors constant. In contrast, no significant changes are
+observed before traditional coups, indicating that pre-coup periods do not
+measurably affect democratization levels.
+
+Model (2) assesses the cumulative impact from three years prior to the event
+year, calculated as $Polity_{t} - Polity_{t-3}$. As previously discussed, the
+year of an autocoup or coup witnesses a substantial shock to political
+institutions. Consequently, both types of events result in a decline in Polity
+scores relative to three years earlier. However, the negative effect of autocoups
+is more severe. Polity scores decline by an average of 1.53 in the three years
+leading up to an autocoup, compared to 1.27 for coups, all else being equal. This
+disparity reinforces our hypothesis that autocoups have a more detrimental
+pre-event effect on democratic institutions as incumbents overextend their
+legitimate tenure.
+
+#### Post-event effects
+
+Models (3) and (4) present the empirical results for post-event effects,
+analysing changes in Polity scores following attempted (Model 3) and successful
+(Model 4) autocoups.
+
+Model (3) examines the impact of attempted autocoups. The results indicate that
+attempted autocoups do not have a statistically significant effect on Polity
+scores. This contrasts with coup attempts, which lead to an average increase of
+0.48 in Polity scores over three years, all else being equal.
+
+Model (4) evaluates the impact of successful autocoups. In contrast to attempted
+autocoups, successful autocoups demonstrate a significant negative effect on
+Polity scores, with an average decline of 0.33 over three years, holding other
+factors constant. Conversely, successful coups continue to exhibit positive
+effects on democratization, resulting in an average increase of 0.72.
+
+These findings yield several key insights. First, while both successful and
+attempted coups influence Polity scores, only successful autocoups produce
+statistically significant effects—and exclusively in a negative direction.
+Second, the impact of coups on democratization is more nuanced. Although
+post-coup Polity scores may improve, the pre-coup period often involves
+significant democratic backsliding. My models indicate that, on average, the
+democratic gains following a coup fail to offset the losses incurred before it.
+
+#### Effects of control variables
+
+To ensure robust results, I incorporated several control variables into the
+models. While economic trends and political violence do not exhibit statistically
+significant effects on Polity scores, other factors warrant further discussion.
+
+The impact of the Cold War is relatively straightforward. As outlined in the
+research design section, global democracy experienced a general decline during
+the Cold War period. Consistent with this trend, all four models indicate that
+the Cold War era is associated with an average decrease of 0.23 in Polity scores.
+
+The effects of GDP per capita, population size, and regime type, however, present
+a more complex pattern. Counterintuitively, higher GDP per capita correlates with
+lower Polity scores, whereas non-democratic regimes and larger populations
+correspond with positive changes in Polity scores. This pattern may be explained
+by considering baseline differences between democracies and non-democracies. In
+established democracies, Polity scores are already high, leaving limited room for
+further increases. These countries also tend to have higher GDP per capita and
+lower birth rates, further reinforcing stability in their democratic scores. In
+contrast, non-democracies start from lower Polity scores, providing greater
+potential for upward movement. Given that authoritarian regimes often exhibit
+weaker economic performance and higher population growth rates, their Polity
+scores may increase as they undergo political transitions or reforms.
+
+Taken together, these results support both hypotheses. First, the primary effects
+of autocoups on Polity scores manifest before the events occur. Second, whereas
+coups have ambiguous consequences for democratization, the effects of autocoups
+are unidirectional—consistently negative.
+
+### Summary
+
+However, there is a significant difference between these two cases. Prior to
+Fujimori’s autocoup in 1992, Peru was a democratic country, but the autocoup led
+to its backsliding into an autocratic regime. China, by contrast, has remained an
+authoritarian state both before and after Xi Jinping’s constitutional amendment.
+
+That is to say, either the current regime is an authoritirian country, or it is
+an immature democracy. They have to consolidate their power by ways like suppress
+political opponents, disidents, popular protests, even press freedom. Otherwise,
+the backfire from within or opponents might not only fail their attempts to
+extension, but also even oust them immediately from the office. Therefore, the
+incumbents have to make good preparation in case the adversary outcomes would not
+happen.
+
+This has two important implications. First of all, although autocoups could occur
+in many types of regimes including democracies, the Polity index is relatively in
+a low level.
+
 ## Conclusion
 
 ### Main findings
@@ -3456,7 +4077,7 @@ logical explanations for several political trends:
     role in encouraging adherence to constitutional processes of power
     transition. For instance, after the general election in Venezuela on July 29,
     2024, at least nine Latin American countries rejected the election results
-    and called for dialogue[^1]. Although this pressure might not be effective in
+    and called for dialogue[^2]. Although this pressure might not be effective in
     every case, it showcases the potential influence of the international
     community in discouraging future autocoup attempts.
 
@@ -3547,7 +4168,12 @@ dataset and continue refining the framework.
         model, incorporating variables that account for time-dependent effects in
         survival analysis.
 
-[^1]: While the world waited for the outcome, nine Latin American countries
+[^1]: **BBC News,** "China's Xi Allowed to Remain 'President for Life' as Term
+    Limits Removed," *BBC News*, March 11, 2018,
+    <https://www.bbc.co.uk/news/world-asia-china-43361276>, accessed March 14,
+    2025.
+
+[^2]: While the world waited for the outcome, nine Latin American countries
     released a joint statement urging transparency and recognition of the voters’
     will. The nine countries are Argentina, Costa Rica, the Dominican Republic,
     Ecuador, Guatemala, Panama, Paraguay, Peru, and Uruguay. On the morning after
