@@ -3039,7 +3039,7 @@ challenges due to the inherent irregularity and uncertainty of their
 positions. Nevertheless, a comparative analysis reveals that leaders who
 extend power through autocoups tend to have longer average post-autocoup
 tenures (approximately 4.6 years) compared to coup-installed leaders
-(approximately 11.3 years), suggesting a potential tenure gap of over
+(approximately 11.7 years), suggesting a potential tenure gap of over
 five years.
 
 \begin{figure}
@@ -3535,14 +3535,14 @@ of leaders}
 \textbf{Characteristic} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1,2}} & \textbf{SE}\textsuperscript{\textit{2}} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1,2}} & \textbf{SE}\textsuperscript{\textit{2}} \\ 
 \midrule\addlinespace[2.5pt]
 {\bfseries Leader Type} &  &  &  &  &  &  &  &  \\ 
-    Autocoup leaders & 73 & 30 & 1.00 & — & 51 & 25 & 1.00 & — \\ 
-    Coup-installed leaders & 164 & 164 & 9.00*** & 0.238 & 167 & 167 & 1.88*** & 0.270 \\ 
-{\bfseries GDP Growth Trend} & 237 & 194 & 0.22 & 1.18 & 218 & 192 & 1.00 & 1.26 \\ 
-{\bfseries GDP per capita} & 237 & 194 & 0.99 & 0.011 & 218 & 192 & 0.93*** & 0.036 \\ 
-{\bfseries Population: log} & 237 & 194 & 1.13* & 0.065 & 218 & 192 & 1.12** & 0.065 \\ 
-{\bfseries Polity 5} & 237 & 194 & 0.99 & 0.013 & 218 & 192 & 0.96*** & 0.015 \\ 
-{\bfseries Political stability} & 237 & 194 & 1.05 & 0.042 & 218 & 192 & 1.12*** & 0.048 \\ 
-{\bfseries Age} & 237 & 194 & 1.03*** & 0.008 & 218 & 192 & 1.02*** & 0.007 \\ 
+    Autocoup leaders & 67 & 30 & 1.00 & — & 50 & 25 & 1.00 & — \\ 
+    Coup-installed leaders & 163 & 163 & 8.38*** & 0.240 & 167 & 167 & 1.87*** & 0.269 \\ 
+{\bfseries GDP Growth Trend} & 230 & 193 & 0.20 & 1.18 & 217 & 192 & 1.02 & 1.26 \\ 
+{\bfseries GDP per capita} & 230 & 193 & 0.99 & 0.011 & 217 & 192 & 0.93*** & 0.036 \\ 
+{\bfseries Population: log} & 230 & 193 & 1.13* & 0.064 & 217 & 192 & 1.12** & 0.065 \\ 
+{\bfseries Polity 5} & 230 & 193 & 0.99 & 0.013 & 217 & 192 & 0.96*** & 0.015 \\ 
+{\bfseries Political stability} & 230 & 193 & 1.05 & 0.042 & 217 & 192 & 1.12*** & 0.048 \\ 
+{\bfseries Age} & 230 & 193 & 1.03*** & 0.008 & 217 & 192 & 1.02*** & 0.007 \\ 
 \bottomrule
 \end{tabular*}
 \begin{minipage}{\linewidth}
@@ -4200,10 +4200,21 @@ shift after 1990.
 
 \section{Results and discussion}\label{results-and-discussion-2}
 
+\subsection{Pre-event effects}\label{pre-event-effects}
+
+Initially, I analyse the trajectory of Polity scores leading up to these
+events. As presented in Table~\ref{tbl-demomodel}, columns 1 and 2
+display the empirical results for pre-event effects, examining changes
+over two years (model 1) and three years (model 2) prior to the event.
+Consistent with the first hypothesis, Polity scores exhibit a
+significant decline in the 2--3 years preceding an autocoup. Notably,
+this downward trend is both more pronounced and statistically
+significant for autocoups compared to traditional coups.
+
 \begin{table}
 
 \caption{\label{tbl-demomodel}The Impact of Autocoups on
-Democratization}
+Democratization(1950--2020): OLS with country-fixed effects}
 
 \centering{
 
@@ -4253,18 +4264,7 @@ F Statistic & 55.230$^{***}$ & 94.525$^{***}$ & 86.739$^{***}$ & 88.093$^{***}$ 
 
 \end{table}%
 
-\subsection{Pre-event effects}\label{pre-event-effects}
-
-Initially, I analyse the trajectory of Polity scores leading up to these
-events. As presented in Table Table~\ref{tbl-demomodel}, models (1) and
-(2) display the empirical results for pre-event effects, examining
-changes over two years (model 1) and three years (model 2) prior to the
-event. Consistent with the first hypothesis, Polity scores exhibit a
-significanttbl\_demo\_model decline in the 2--3 years preceding an
-autocoup. Notably, this downward trend is both more pronounced and
-statistically significant for autocoups compared to traditional coups.
-
-Model (1) examines the pre-event changes, specifically the difference
+Column 1 examines the pre-event changes, specifically the difference
 between Polity scores at time \(t-1\) and \(t-3\)
 (\(Polity_{t-1} - Polity_{t-3}\)). The results reveal a statistically
 significant decrease in Polity scores prior to autocoups. On average,
@@ -4273,7 +4273,7 @@ holding other factors constant. In contrast, no significant changes are
 observed before traditional coups, indicating that pre-coup periods do
 not measurably affect democratization levels.
 
-Model (2) assesses the cumulative impact from three years prior to the
+Column 2 assesses the cumulative impact from three years prior to the
 event year, calculated as \(Polity_{t} - Polity_{t-3}\). As previously
 discussed, the year of an autocoup or coup witnesses a substantial shock
 to political institutions. Consequently, both types of events result in
@@ -4287,17 +4287,17 @@ tenure.
 
 \subsection{Post-event effects}\label{post-event-effects}
 
-Models (3) and (4) present the empirical results for post-event effects,
-analysing changes in Polity scores following attempted (Model 3) and
-successful (Model 4) autocoups.
+Columns 3 and 4 present the empirical results for post-event effects,
+analysing changes in Polity scores following attempted (column 3) and
+successful (column 4) autocoups.
 
-Model (3) examines the impact of attempted autocoups. The results
+Column 3 examines the impact of attempted autocoups. The results
 indicate that attempted autocoups do not have a statistically
 significant effect on Polity scores. This contrasts with coup attempts,
 which lead to an average increase of 0.48 in Polity scores over three
 years, all else being equal.
 
-Model (4) evaluates the impact of successful autocoups. In contrast to
+Column 4 evaluates the impact of successful autocoups. In contrast to
 attempted autocoups, successful autocoups demonstrate a significant
 negative effect on Polity scores, with an average decline of 0.33 over
 three years, holding other factors constant. Conversely, successful
@@ -4328,7 +4328,7 @@ models indicate that the Cold War era is associated with an average
 decrease of 0.23 in Polity scores.
 
 The effects of GDP per capita, population size, and regime type,
-however, present a more complex pattern. Counterintuitively, higher GDP
+however, present a more complex pattern. Counter-intuitively, higher GDP
 per capita correlates with lower Polity scores, whereas non-democratic
 regimes and larger populations correspond with positive changes in
 Polity scores. This pattern may be explained by considering baseline
@@ -4347,6 +4347,140 @@ primary effects of autocoups on Polity scores manifest before the events
 occur. Second, whereas coups have ambiguous consequences for
 democratization, the effects of autocoups are
 unidirectional---consistently negative.
+
+\subsection{Robustness tests}\label{robustness-tests}
+
+To assess the sensitivity of my key findings to model specifications, I
+conduct a series of robustness tests. The results indicate that the
+findings remain consistent across these variations.
+
+First, I compare the effects of autocoups over a period ranging from one
+to five years after the event. The results show that the effects of
+coups are positive and statistically significant throughout all five
+years, with a general trend of increasing magnitude as time progresses.
+In contrast, the effects of autocoups are negative across all five years
+but reach statistical significance only three years after the event.
+This finding aligns with the earlier hypothesis: autocoups never
+contribute to an increase in Polity scores.
+
+\begin{table}
+
+\caption{\label{tbl-demomodel1}The Impact of Autocoups on
+Democratization: one to five years}
+
+\centering{
+
+\begin{tabular}{@{\extracolsep{30pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{5}{c}{Dependent variable: Differences of Polity scores} \\ 
+\cline{2-6} 
+\\[-1.8ex] & \multicolumn{5}{c}{Years after the event} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4) & (5)\\ 
+\hline \\[-1.8ex] 
+ Autocoup & $-$0.119 & $-$0.175 & $-$0.330$^{**}$ & $-$0.296 & $-$0.325 \\ 
+  & (0.100) & (0.139) & (0.166) & (0.189) & (0.205) \\ 
+  & & & & & \\ 
+ Coup & 0.192$^{***}$ & 0.436$^{***}$ & 0.715$^{***}$ & 0.778$^{***}$ & 0.860$^{***}$ \\ 
+  & (0.064) & (0.088) & (0.105) & (0.117) & (0.128) \\ 
+  & & & & & \\ 
+ GDP per Capita & $-$0.004 & $-$0.008$^{**}$ & $-$0.010$^{**}$ & $-$0.011$^{*}$ & $-$0.011$^{*}$ \\ 
+  & (0.003) & (0.004) & (0.005) & (0.006) & (0.006) \\ 
+  & & & & & \\ 
+ Economic Trend & $-$0.107 & $-$0.318 & $-$0.619 & $-$0.795 & $-$0.738 \\ 
+  & (0.262) & (0.366) & (0.438) & (0.493) & (0.540) \\ 
+  & & & & & \\ 
+ Log Population & 0.333$^{***}$ & 0.711$^{***}$ & 1.147$^{***}$ & 1.599$^{***}$ & 2.051$^{***}$ \\ 
+  & (0.072) & (0.101) & (0.121) & (0.138) & (0.153) \\ 
+  & & & & & \\ 
+ Political Violence & 0.007 & 0.017 & 0.027 & 0.038 & 0.056$^{*}$ \\ 
+  & (0.014) & (0.020) & (0.023) & (0.026) & (0.029) \\ 
+  & & & & & \\ 
+ Non-Democracy & 0.881$^{***}$ & 1.685$^{***}$ & 2.431$^{***}$ & 3.168$^{***}$ & 3.803$^{***}$ \\ 
+  & (0.063) & (0.087) & (0.105) & (0.118) & (0.130) \\ 
+  & & & & & \\ 
+ Cold War & $-$0.163$^{**}$ & $-$0.237$^{***}$ & $-$0.239$^{**}$ & $-$0.194 & $-$0.110 \\ 
+  & (0.064) & (0.088) & (0.105) & (0.118) & (0.129) \\ 
+  & & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 9,030 & 8,863 & 8,695 & 8,527 & 8,360 \\ 
+R$^{2}$ & 0.026 & 0.051 & 0.076 & 0.101 & 0.121 \\ 
+Adjusted R$^{2}$ & 0.007 & 0.032 & 0.057 & 0.082 & 0.103 \\ 
+F Statistic & 29.791$^{***}$ & 58.212$^{***}$ & 88.093$^{***}$ & 117.056$^{***}$ & 141.494$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular}
+
+}
+
+\end{table}%
+
+Second, I modify the treatment of autocoups by replacing the decay
+effects with a dummy variable that differentiates between attempted and
+successful autocoups. As expected, this adjustment does not alter the
+core results, though it leads to differences in regression coefficients.
+
+\begin{table}
+
+\caption{\label{tbl-demomodel2}The Impact of Autocoups on
+Democratization: Dummy autocoups}
+
+\centering{
+
+\begin{tabular}{@{\extracolsep{30pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{Dependent variable: Differences of Polity scores} \\ 
+\cline{2-5} 
+\\[-1.8ex] & \multicolumn{2}{c}{Attempted} & \multicolumn{2}{c}{Succeeded} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ Autocoup & $-$0.142 & $-$0.400 & $-$0.338 & $-$0.640$^{**}$ \\ 
+  & (0.244) & (0.291) & (0.269) & (0.321) \\ 
+  & & & & \\ 
+ Coup & 0.672$^{***}$ & 0.937$^{***}$ & 0.845$^{***}$ & 1.384$^{***}$ \\ 
+  & (0.126) & (0.150) & (0.171) & (0.203) \\ 
+  & & & & \\ 
+ GDP per Capita & $-$0.008$^{*}$ & $-$0.010$^{**}$ & $-$0.008$^{**}$ & $-$0.010$^{**}$ \\ 
+  & (0.004) & (0.005) & (0.004) & (0.005) \\ 
+  & & & & \\ 
+ Economic Trend & $-$0.254 & $-$0.537 & $-$0.318 & $-$0.619 \\ 
+  & (0.366) & (0.439) & (0.366) & (0.438) \\ 
+  & & & & \\ 
+ Log Population & 0.725$^{***}$ & 1.157$^{***}$ & 0.711$^{***}$ & 1.147$^{***}$ \\ 
+  & (0.101) & (0.122) & (0.101) & (0.121) \\ 
+  & & & & \\ 
+ Political Violence & 0.015 & 0.026 & 0.017 & 0.027 \\ 
+  & (0.020) & (0.023) & (0.020) & (0.023) \\ 
+  & & & & \\ 
+ Non-Democracy & 1.672$^{***}$ & 2.412$^{***}$ & 1.685$^{***}$ & 2.431$^{***}$ \\ 
+  & (0.087) & (0.105) & (0.087) & (0.105) \\ 
+  & & & & \\ 
+ Cold War & $-$0.230$^{***}$ & $-$0.228$^{**}$ & $-$0.237$^{***}$ & $-$0.239$^{**}$ \\ 
+  & (0.088) & (0.105) & (0.088) & (0.105) \\ 
+  & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 8,863 & 8,695 & 8,863 & 8,695 \\ 
+R$^{2}$ & 0.051 & 0.075 & 0.051 & 0.076 \\ 
+Adjusted R$^{2}$ & 0.032 & 0.056 & 0.032 & 0.057 \\ 
+F Statistic & 58.555$^{***}$ & 86.739$^{***}$ & 58.212$^{***}$ & 88.093$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular}
+
+}
+
+\end{table}%
+
+Upon comparing Columns 3 and 4 in Table~\ref{tbl-demomodel2} and
+Table~\ref{tbl-demomodel}, it is evident that substituting the decay
+factor for autocoups and coups with a dummy variable significantly
+doubles the estimated effects. This finding is consistent with
+expectations, as the decay factor distributes the influence of events
+over the subsequent four years, whereas the event dummy captures their
+impact solely in the year of occurrence.
 
 \section{Summary}\label{summary-3}
 

@@ -3851,6 +3851,16 @@ to 1990, followed by an upward shift after 1990.
 
 ### Results and discussion
 
+#### Pre-event effects
+
+Initially, I analyse the trajectory of Polity scores leading up to these events.
+As presented in @tbl-demomodel, columns 1 and 2 display the empirical results for
+pre-event effects, examining changes over two years (model 1) and three years
+(model 2) prior to the event. Consistent with the first hypothesis, Polity scores
+exhibit a significant decline in the 2–3 years preceding an autocoup. Notably,
+this downward trend is both more pronounced and statistically significant for
+autocoups compared to traditional coups.
+
 ```{r}
 #| label: coup_autocoup_data
 coup_autocoup <- read.csv("https://raw.githubusercontent.com/reddylee/Datasets/refs/heads/main/coup_autocoup.csv")
@@ -3858,7 +3868,7 @@ coup_autocoup <- read.csv("https://raw.githubusercontent.com/reddylee/Datasets/r
 
 ```{r}
 #| label: tbl-demomodel
-#| tbl-cap: "The Impact of Autocoups on Democratization"
+#| tbl-cap: "The Impact of Autocoups on Democratization(1950–2020): OLS with country-fixed effects"
 #| results: asis
 
 demo_model1 <- plm(
@@ -3911,17 +3921,7 @@ stargazer(demo_model1, demo_model2, demo_model3, demo_model4,
 )
 ```
 
-#### Pre-event effects
-
-Initially, I analyse the trajectory of Polity scores leading up to these events.
-As presented in Table @tbl-demomodel, models (1) and (2) display the empirical
-results for pre-event effects, examining changes over two years (model 1) and
-three years (model 2) prior to the event. Consistent with the first hypothesis,
-Polity scores exhibit a significanttbl_demo_model decline in the 2–3 years
-preceding an autocoup. Notably, this downward trend is both more pronounced and
-statistically significant for autocoups compared to traditional coups.
-
-Model (1) examines the pre-event changes, specifically the difference between
+Column 1 examines the pre-event changes, specifically the difference between
 Polity scores at time $t-1$ and $t-3$ ($Polity_{t-1} - Polity_{t-3}$). The
 results reveal a statistically significant decrease in Polity scores prior to
 autocoups. On average, Polity scores decline by 0.45 in the two years before an
@@ -3929,29 +3929,28 @@ autocoup, holding other factors constant. In contrast, no significant changes ar
 observed before traditional coups, indicating that pre-coup periods do not
 measurably affect democratization levels.
 
-Model (2) assesses the cumulative impact from three years prior to the event
-year, calculated as $Polity_{t} - Polity_{t-3}$. As previously discussed, the
-year of an autocoup or coup witnesses a substantial shock to political
-institutions. Consequently, both types of events result in a decline in Polity
-scores relative to three years earlier. However, the negative effect of autocoups
-is more severe. Polity scores decline by an average of 1.53 in the three years
-leading up to an autocoup, compared to 1.27 for coups, all else being equal. This
-disparity reinforces our hypothesis that autocoups have a more detrimental
-pre-event effect on democratic institutions as incumbents overextend their
-legitimate tenure.
+Column 2 assesses the cumulative impact from three years prior to the event year,
+calculated as $Polity_{t} - Polity_{t-3}$. As previously discussed, the year of
+an autocoup or coup witnesses a substantial shock to political institutions.
+Consequently, both types of events result in a decline in Polity scores relative
+to three years earlier. However, the negative effect of autocoups is more severe.
+Polity scores decline by an average of 1.53 in the three years leading up to an
+autocoup, compared to 1.27 for coups, all else being equal. This disparity
+reinforces our hypothesis that autocoups have a more detrimental pre-event effect
+on democratic institutions as incumbents overextend their legitimate tenure.
 
 #### Post-event effects
 
-Models (3) and (4) present the empirical results for post-event effects,
-analysing changes in Polity scores following attempted (Model 3) and successful
-(Model 4) autocoups.
+Columns 3 and 4 present the empirical results for post-event effects, analysing
+changes in Polity scores following attempted (column 3) and successful (column 4)
+autocoups.
 
-Model (3) examines the impact of attempted autocoups. The results indicate that
+Column 3 examines the impact of attempted autocoups. The results indicate that
 attempted autocoups do not have a statistically significant effect on Polity
 scores. This contrasts with coup attempts, which lead to an average increase of
 0.48 in Polity scores over three years, all else being equal.
 
-Model (4) evaluates the impact of successful autocoups. In contrast to attempted
+Column 4 evaluates the impact of successful autocoups. In contrast to attempted
 autocoups, successful autocoups demonstrate a significant negative effect on
 Polity scores, with an average decline of 0.33 over three years, holding other
 factors constant. Conversely, successful coups continue to exhibit positive
@@ -3977,8 +3976,8 @@ the Cold War period. Consistent with this trend, all four models indicate that
 the Cold War era is associated with an average decrease of 0.23 in Polity scores.
 
 The effects of GDP per capita, population size, and regime type, however, present
-a more complex pattern. Counterintuitively, higher GDP per capita correlates with
-lower Polity scores, whereas non-democratic regimes and larger populations
+a more complex pattern. Counter-intuitively, higher GDP per capita correlates
+with lower Polity scores, whereas non-democratic regimes and larger populations
 correspond with positive changes in Polity scores. This pattern may be explained
 by considering baseline differences between democracies and non-democracies. In
 established democracies, Polity scores are already high, leaving limited room for
@@ -3993,6 +3992,148 @@ Taken together, these results support both hypotheses. First, the primary effect
 of autocoups on Polity scores manifest before the events occur. Second, whereas
 coups have ambiguous consequences for democratization, the effects of autocoups
 are unidirectional—consistently negative.
+
+#### Robustness tests
+
+To assess the sensitivity of my key findings to model specifications, I conduct a
+series of robustness tests. The results indicate that the findings remain
+consistent across these variations.
+
+First, I compare the effects of autocoups over a period ranging from one to five
+years after the event. The results show that the effects of coups are positive
+and statistically significant throughout all five years, with a general trend of
+increasing magnitude as time progresses. In contrast, the effects of autocoups
+are negative across all five years but reach statistical significance only three
+years after the event. This finding aligns with the earlier hypothesis: autocoups
+never contribute to an increase in Polity scores.
+
+```{r}
+#| label: tbl-demomodel1
+#| tbl-cap: "The Impact of Autocoups on Democratization: one to five years"
+#| results: asis
+
+demo_model1 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff1, Autocoup = autocoup_seffect, Coup = coup_seffect)
+)
+
+demo_model2 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff2, Autocoup = autocoup_seffect, Coup = coup_seffect)
+)
+
+demo_model3 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect)
+)
+
+demo_model4 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff4, Autocoup = autocoup_seffect, Coup = coup_seffect)
+)
+
+demo_model5 <- plm(
+  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeed = diff5, Autocoup = autocoup_seffect, Coup = coup_seffect)
+)
+
+stargazer(demo_model1, demo_model2, demo_model3, demo_model4, demo_model5,
+  #type = "text",
+  float = F,
+  header = F,
+  dep.var.caption = "Dependent variable: Differences of Polity scores",
+  dep.var.labels = "Years after the event",
+  covariate.labels = c(
+    "Autocoup", "Coup", "GDP per Capita",
+    "Economic Trend", "Log Population", "Political Violence",
+    "Non-Democracy", "Cold War"
+  ),
+  summary.logical = F,
+  column.sep.width = "30pt",
+  #font.size = "footnotesize",
+  df = F
+)
+```
+
+Second, I modify the treatment of autocoups by replacing the decay effects with a
+dummy variable that differentiates between attempted and successful autocoups. As
+expected, this adjustment does not alter the core results, though it leads to
+differences in regression coefficients.
+
+```{r}
+#| label: tbl-demomodel2
+#| tbl-cap: "The Impact of Autocoups on Democratization: Dummy autocoups"
+#| results: asis
+
+demo_model1 <- plm(
+  Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Attempted = diff2, Autocoup = autocoup_attemp, Coup = coup_attemp)
+)
+demo_model2 <- plm(
+  Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Attempted = diff3, Autocoup = autocoup_attemp, Coup = coup_attemp)
+)
+
+demo_model3 <- plm(
+  Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeeded = diff2, Autocoup = autocoup_succeed, Coup = coup_succeed)
+)
+demo_model4 <- plm(
+  Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = coup_autocoup |> rename(Succeeded = diff3, Autocoup = autocoup_succeed, Coup = coup_succeed)
+)
+
+
+stargazer(demo_model1, demo_model2, demo_model3, demo_model4,
+  #type = "text",
+  float = F,
+  header = F,
+  dep.var.caption = "Dependent variable: Differences of Polity scores",
+  covariate.labels = c(
+    "Autocoup", "Coup", "GDP per Capita",
+    "Economic Trend", "Log Population", "Political Violence",
+    "Non-Democracy", "Cold War"
+  ),
+  summary.logical = F,
+  column.sep.width = "30pt",
+  #font.size = "footnotesize",
+  df = F
+)
+```
+
+Upon comparing Columns 3 and 4 in @tbl-demomodel2 and @tbl-demomodel, it is
+evident that substituting the decay factor for autocoups and coups with a dummy
+variable significantly doubles the estimated effects. This finding is consistent
+with expectations, as the decay factor distributes the influence of events over
+the subsequent four years, whereas the event dummy captures their impact solely
+in the year of occurrence.
 
 ### Summary
 
