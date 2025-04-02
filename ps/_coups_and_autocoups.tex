@@ -3769,28 +3769,31 @@ political leadership.
 \chapter{Coups, Autocoups, and
 Democracy}\label{coups-autocoups-and-democracy}
 
-\section{Abstract}\label{abstract-4}
+\section*{Abstract}\label{abstract-4}
+\addcontentsline{toc}{section}{Abstract}
 
-This chapter examines the impact of coups and autocoups on democracy.
-While extensive research has explored how coups influence democratic
-governance, far less attention has been given to autocoups. Unlike
-coups, which can lead to democratic backsliding, authoritarian
-entrenchment, or even democratic transition, autocoups are more
-consistently associated with the consolidation of authoritarian rule.
+This chapter explores the impact of autocoups on political institutions,
+drawing comparisons with traditional coups through an analysis of
+changes in Polity scores. I contend that, first, incumbent leaders
+frequently consolidate power by undermining established institutions in
+anticipation of an autocoup, resulting in a decline in Polity scores
+even prior to the event. Second, unlike coups, which produce mixed
+outcomes regarding democratization, autocoups almost invariably lead to
+democratic backsliding or authoritarian entrenchment, as they are
+specifically designed to dismantle institutional checks, enabling
+leaders to maintain power for significantly longer periods than those
+installed via coups.
 
-Using data from a widely recognized coup dataset along with a newly
-compiled dataset on autocoups, this study employs a fixed-effects model
-to assess their effects on democracy, as measured by the Polity Index.
-The results indicate that both coups and autocoups lead to a decline in
-democratic levels. However, coups have a greater immediate negative
-impact. Notably, three years after these events, democracies affected by
-coups tend to show significant recovery, whereas those experiencing
-autocoups exhibit no meaningful improvement.
-
-These findings support the hypothesis that compared to coups, autocoups
-pose a more persistent threat to democracy. This also helps explain the
-continuous decline in global democratic levels over the past 18 years,
-as reported by Freedom House in its 2024 assessment.
+Employing a country-fixed effects model and utilizing datasets on both
+autocoups and coups, this study reveals that Polity scores decline both
+preceding and following an autocoup, while coups tend to trigger an
+immediate decrease that may allow for some degree of democratic recovery
+over time. These findings underscore the divergent political
+trajectories associated with coups and autocoups. This research not only
+addresses a critical gap in the empirical analysis of autocoups but also
+significantly raises awareness within academic and policy-making circles
+regarding their potential adverse effects, including democratic
+backsliding and further authoritarian deterioration.
 
 \section{Introduction}\label{introduction-4}
 
@@ -4214,7 +4217,7 @@ significant for autocoups compared to traditional coups.
 \begin{table}
 
 \caption{\label{tbl-demomodel}The Impact of Autocoups on
-Democratization(1950--2020): OLS with country-fixed effects}
+Democratization(1950--2018): OLS with country-fixed effects}
 
 \centering{
 
@@ -4370,7 +4373,7 @@ Democratization: one to five years}
 
 \centering{
 
-\begin{tabular}{@{\extracolsep{30pt}}lccccc} 
+\begin{tabular}{@{\extracolsep{10pt}}lccccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
  & \multicolumn{5}{c}{Dependent variable: Differences of Polity scores} \\ 
@@ -4416,11 +4419,6 @@ F Statistic & 29.791$^{***}$ & 58.212$^{***}$ & 88.093$^{***}$ & 117.056$^{***}$
 
 \end{table}%
 
-Second, I modify the treatment of autocoups by replacing the decay
-effects with a dummy variable that differentiates between attempted and
-successful autocoups. As expected, this adjustment does not alter the
-core results, though it leads to differences in regression coefficients.
-
 \begin{table}
 
 \caption{\label{tbl-demomodel2}The Impact of Autocoups on
@@ -4428,7 +4426,7 @@ Democratization: Dummy autocoups}
 
 \centering{
 
-\begin{tabular}{@{\extracolsep{30pt}}lcccc} 
+\begin{tabular}{@{\extracolsep{20pt}}lcccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
  & \multicolumn{4}{c}{Dependent variable: Differences of Polity scores} \\ 
@@ -4436,35 +4434,44 @@ Democratization: Dummy autocoups}
 \\[-1.8ex] & \multicolumn{2}{c}{Attempted} & \multicolumn{2}{c}{Succeeded} \\ 
 \\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
 \hline \\[-1.8ex] 
- Autocoup & $-$0.142 & $-$0.400 & $-$0.338 & $-$0.640$^{**}$ \\ 
-  & (0.244) & (0.291) & (0.269) & (0.321) \\ 
+ Autocoup & $-$0.109 & $-$0.344 & $-$0.310 & $-$0.608$^{*}$ \\ 
+  & (0.239) & (0.285) & (0.264) & (0.315) \\ 
   & & & & \\ 
- Coup & 0.672$^{***}$ & 0.937$^{***}$ & 0.845$^{***}$ & 1.384$^{***}$ \\ 
-  & (0.126) & (0.150) & (0.171) & (0.203) \\ 
+ Coup & 0.684$^{***}$ & 0.796$^{***}$ & 0.938$^{***}$ & 1.299$^{***}$ \\ 
+  & (0.126) & (0.150) & (0.172) & (0.204) \\ 
   & & & & \\ 
- GDP per Capita & $-$0.008$^{*}$ & $-$0.010$^{**}$ & $-$0.008$^{**}$ & $-$0.010$^{**}$ \\ 
+ GDP per Capita & $-$0.007$^{*}$ & $-$0.009$^{*}$ & $-$0.007$^{*}$ & $-$0.009$^{*}$ \\ 
   & (0.004) & (0.005) & (0.004) & (0.005) \\ 
   & & & & \\ 
- Economic Trend & $-$0.254 & $-$0.537 & $-$0.318 & $-$0.619 \\ 
-  & (0.366) & (0.439) & (0.366) & (0.438) \\ 
+ Economic Trend & $-$0.207 & $-$0.630 & $-$0.264 & $-$0.688 \\ 
+  & (0.369) & (0.442) & (0.368) & (0.441) \\ 
   & & & & \\ 
- Log Population & 0.725$^{***}$ & 1.157$^{***}$ & 0.711$^{***}$ & 1.147$^{***}$ \\ 
-  & (0.101) & (0.122) & (0.101) & (0.121) \\ 
+ Log Population & 0.676$^{***}$ & 1.081$^{***}$ & 0.664$^{***}$ & 1.074$^{***}$ \\ 
+  & (0.100) & (0.121) & (0.100) & (0.120) \\ 
   & & & & \\ 
- Political Violence & 0.015 & 0.026 & 0.017 & 0.027 \\ 
-  & (0.020) & (0.023) & (0.020) & (0.023) \\ 
+ Political Violence & 0.010 & 0.027 & 0.010 & 0.027 \\ 
+  & (0.020) & (0.024) & (0.020) & (0.024) \\ 
   & & & & \\ 
- Non-Democracy & 1.672$^{***}$ & 2.412$^{***}$ & 1.685$^{***}$ & 2.431$^{***}$ \\ 
-  & (0.087) & (0.105) & (0.087) & (0.105) \\ 
+ Regime: Dominant-party & 1.192$^{***}$ & 1.753$^{***}$ & 1.195$^{***}$ & 1.760$^{***}$ \\ 
+  & (0.111) & (0.133) & (0.111) & (0.133) \\ 
   & & & & \\ 
- Cold War & $-$0.230$^{***}$ & $-$0.228$^{**}$ & $-$0.237$^{***}$ & $-$0.239$^{**}$ \\ 
+ \hspace{1.5cm} Military & 2.649$^{***}$ & 3.670$^{***}$ & 2.671$^{***}$ & 3.695$^{***}$ \\ 
+  & (0.125) & (0.150) & (0.125) & (0.149) \\ 
+  & & & & \\ 
+ \hspace{1.5cm} Monarchy & 1.727$^{***}$ & 2.653$^{***}$ & 1.718$^{***}$ & 2.640$^{***}$ \\ 
+  & (0.237) & (0.285) & (0.237) & (0.285) \\ 
+  & & & & \\ 
+ \hspace{1.5cm} Personal & 1.310$^{***}$ & 2.017$^{***}$ & 1.332$^{***}$ & 2.045$^{***}$ \\ 
+  & (0.119) & (0.143) & (0.119) & (0.143) \\ 
+  & & & & \\ 
+ Cold War & $-$0.216$^{**}$ & $-$0.217$^{**}$ & $-$0.222$^{**}$ & $-$0.225$^{**}$ \\ 
   & (0.088) & (0.105) & (0.088) & (0.105) \\ 
   & & & & \\ 
 \hline \\[-1.8ex] 
-Observations & 8,863 & 8,695 & 8,863 & 8,695 \\ 
-R$^{2}$ & 0.051 & 0.075 & 0.051 & 0.076 \\ 
-Adjusted R$^{2}$ & 0.032 & 0.056 & 0.032 & 0.057 \\ 
-F Statistic & 58.555$^{***}$ & 86.739$^{***}$ & 58.212$^{***}$ & 88.093$^{***}$ \\ 
+Observations & 8,600 & 8,436 & 8,600 & 8,436 \\ 
+R$^{2}$ & 0.065 & 0.091 & 0.065 & 0.092 \\ 
+Adjusted R$^{2}$ & 0.045 & 0.071 & 0.045 & 0.073 \\ 
+F Statistic & 53.103$^{***}$ & 74.882$^{***}$ & 53.271$^{***}$ & 76.382$^{***}$ \\ 
 \hline 
 \hline \\[-1.8ex] 
 \textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
@@ -4474,33 +4481,92 @@ F Statistic & 58.555$^{***}$ & 86.739$^{***}$ & 58.212$^{***}$ & 88.093$^{***}$ 
 
 \end{table}%
 
-Upon comparing Columns 3 and 4 in Table~\ref{tbl-demomodel2} and
-Table~\ref{tbl-demomodel}, it is evident that substituting the decay
+Second, I refine the treatment of autocoups by replacing the decay
+effects of autocoups with a dummy variable that distinguishes between
+attempted and successful autocoups. Additionally, I disaggregate the
+`Non-democracy' category into specific regime types---democracy,
+dominant-party, military, monarchy, and personal---consistent with the
+analysis of coup determinants, setting democracy as the reference
+category.
+
+Columns 1 and 2 in Table~\ref{tbl-demomodel2} examine the effects of
+attempted autocoups, measured two and three years after the event,
+respectively, while Columns 3 and 4 focus on successful autocoups. As in
+previous models, these adjustments do not alter the core findings across
+all four models. However, while they lead to differences in regression
+coefficients, the results consistently show that Polity scores decline
+following autocoups in all models, in contrast to the increase observed
+after coups.
+
+Comparing Columns 3 and 4 in Table~\ref{tbl-demomodel2} and
+Table~\ref{tbl-demomodel}, it becomes evident that replacing the decay
 factor for autocoups and coups with a dummy variable significantly
-doubles the estimated effects. This finding is consistent with
-expectations, as the decay factor distributes the influence of events
-over the subsequent four years, whereas the event dummy captures their
-impact solely in the year of occurrence.
+amplifies the estimated effects---nearly doubling them. This result
+aligns with expectations, as the decay factor distributes the influence
+of events over subsequent years, whereas the event dummy captures their
+impact exclusively in the year of occurrence.
+
+Furthermore, Table~\ref{tbl-demomodel2} reveals distinct regime-specific
+variations. Military regimes exhibit the largest increase in Polity
+scores, followed by monarchies and personalist regimes, with
+dominant-party regimes showing the smallest but still statistically
+significant positive effect compared to democracies. This finding
+corroborates the results in Chapter 2, which indicate that military and
+personalist regimes are more prone to coups. The analysis in this
+chapter proves that Polity scores increase significantly following
+coups.
 
 \section{Summary}\label{summary-3}
 
-However, there is a significant difference between these two cases.
-Prior to Fujimori's autocoup in 1992, Peru was a democratic country, but
-the autocoup led to its backsliding into an autocratic regime. China, by
-contrast, has remained an authoritarian state both before and after Xi
-Jinping's constitutional amendment.
+This chapter examines the impact of autocoups on political institutions,
+particularly in contrast to coups, by analysing their effects on changes
+in Polity scores. It tests two central hypotheses: first, that unlike
+coups, the effects of autocoups on Polity scores manifest primarily
+before the event, indicating that leaders consolidate power in
+anticipation of their autocoups; and second, that while coups produce
+ambiguous effects---sometimes leading to democratization and other times
+reinforcing authoritarianism, as suggested by previous
+literature---autocoups consistently result in democratic backsliding or
+authoritarian entrenchment.
 
-That is to say, either the current regime is an authoritirian country,
-or it is an immature democracy. They have to consolidate their power by
-ways like suppress political opponents, disidents, popular protests,
-even press freedom. Otherwise, the backfire from within or opponents
-might not only fail their attempts to extension, but also even oust them
-immediately from the office. Therefore, the incumbents have to make good
-preparation in case the adversary outcomes would not happen.
+To evaluate these hypotheses, the chapter employs multiple robustness
+checks, including varying time horizons, alternative model
+specifications, and different variable treatments. A key finding is that
+Polity scores begin to decline in the years leading up to an autocoup,
+underscoring a pre-emptive process of authorization. In contrast, coups
+initially cause a sharp drop in Polity scores due to the shock of
+leadership change, but over time, scores often rise, suggesting that in
+some cases, coups can contribute to an improvement in the level of
+democracy. These findings highlight the fundamentally different
+political trajectories triggered by coups and autocoups.
 
-This has two important implications. First of all, although autocoups
-could occur in many types of regimes including democracies, the Polity
-index is relatively in a low level.
+The implications of these results are significant for both academic
+research and political practice. While coups have long been a focal
+point of democratization studies, this chapter argues that autocoups
+demand equal, if not greater, attention due to their systematic role in
+reversing democratic progress. Unlike coups, which can sometimes serve
+as catalysts for political reform, autocoups almost always reinforce
+authoritarianism, weakening institutions and eroding democratic
+governance. This underscores the urgent need for scholars and
+policy-makers to closely monitor the conditions that enable autocoups
+and their broader consequences for democratic stability.
+
+Methodologically, this chapter contributes to the study of political
+transitions by demonstrating the importance of pre-event trends in
+analysing regime change. It also highlights the necessity of
+distinguishing between different types of irregular power transitions
+when assessing their long-term effects. While the findings reinforce the
+study's core arguments, they also raise questions for future
+research---particularly regarding leader survival. As shown in Chapter
+4, autocoup leaders tend to survive in power for nearly 11 years on
+average, while coup-installed leaders last only about 5 years. This
+suggests that coups and autocoups not only differ in their immediate
+effects but also have distinct long-term political consequences.
+
+In conclusion, this chapter strengthens the argument that autocoups are
+a critical yet under-explored mechanism of authoritarian survival, one
+that warrants further investigation to fully understand its implications
+for global democratization and authoritarian resilience.
 
 \chapter{Conclusion}\label{conclusion}
 
