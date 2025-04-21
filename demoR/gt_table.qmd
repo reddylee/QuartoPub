@@ -10,3 +10,31 @@ iris |>
   gt() |>
   tab_source_note("Source: Iris dataset")
 ```
+
+```{r}
+mtcars |>
+  gt() |>
+  tab_header(
+    title = "Miles per Gallon",
+    subtitle = "A dataset of car mileage"
+  ) |>
+  tab_source_note("Source: mtcars dataset")
+```
+
+```{r}
+#| creat a figure with ggplot2
+
+
+library(tidyverse)
+
+mtcars |>
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(
+    title = "Miles per Gallon vs Weight",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) + # add colors
+  geom_point(aes(color = factor(cyl)), size = 3) +
+  theme_minimal()
+```
