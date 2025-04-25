@@ -1792,19 +1792,31 @@ From this analysis, the following hypothesis is proposed:
 > dominant-party regimes, while military regimes are the least prone—relative to
 > democracies.***
 
-### Empirical analysis: An example of utilizing the autocoup dataset
+### Research design
 
-The autocoup dataset enables quantitative analyses beyond traditional case
-studies. This section provides a straightforward example of how to utilize this
-dataset effectively. To analyze the determinants of autocoup attempts, I employ a
-probit regression model. This approach differs from the double probit model with
-sample selection used in [Chapter @sec-chapter2] for coup attempts and success
-analyses. Instead, I use two separate probit models. Due to the high probability
-of success in autocoups, they do not exhibit the typical sample selection
-characteristics that necessitated the use of a sample selection model in our
-earlier analysis of traditional coups.
+#### Methodology {.unnumbered}
 
-#### Dependent variables
+Given the binary nature of the dependent variable—whether an autocoup is staged
+or not—this section initially employs a probit regression model to analyse the
+determinants of autocoup attempts. This approach enables the identification of
+statistically significant factors influencing the likelihood of such events, as
+well as the direction and magnitude of their effects.
+
+However, since the dataset comprises over 5,000 observations with only
+approximately 100 instances of autocoups, the dependent variable qualifies as a
+rare event. Standard maximum likelihood estimation methods such as probit or
+logit may underestimate the probability of occurrence in such cases. To address
+this issue and ensure more reliable inference, the analysis additionally applies
+Firth’s Bias-Reduced Penalised Maximum Likelihood Estimation, as proposed by
+@firth1993David.
+
+#### Data and variables {.unnumbered}
+
+The data ranges from 1945 to 2023. However, due the data matching issue, there
+are data truncating and the actual data ranges from 1945 to 2018. The data covers
+XXX observations, with 100 events of autocoups.
+
+##### Dependent variables {.unnumbered}
 
 -   **Autocoup attempt**: Binary variable indicating whether an autocoup attempt
     occurred (1) or not (0) during the tenure of an incumbent leader.
@@ -1813,7 +1825,7 @@ earlier analysis of traditional coups.
     was successful (1) or failed (0), conditional on an autocoup attempt
     occurring.
 
-#### Independent variables
+##### Independent variables {.unnumbered}
 
 The selection of independent variables are consistent with the coup analysis in
 [Chapter @sec-chapter2], plus the population size and the leader's age.
