@@ -53,7 +53,7 @@ execute:
 #| label: setup
 #| include: false
 
-pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue, plm)
+pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue, plm, brglm2)
 ```
 
 ## Acknowledgements {.unnumbered}
@@ -1614,14 +1614,22 @@ understanding and mitigating the risks of autocoups.
 ### Dynamics of autocoup attempts
 
 Much like traditional coup attempts, autocoups are driven by two fundamental
-factors: the disposition of incumbent leaders—that is, their motivations and
-willingness to act—and their capability, meaning the resources and opportunities
-available to them. This section explores the complex dynamics underpinning
-autocoup attempts by examining the motivations of incumbents, the factors
-influencing success, and the role of regime type in shaping a state’s
-susceptibility to such actions.
+factors: the disposition of incumbent leaders—namely, their motivations and
+willingness to act—and their capability, referring to the resources and
+opportunities available to them. However, autocoups exhibit two notable features
+that distinguish them from classical coups. First, whereas coups predominantly
+occur in autocracies [@thyne2014], approximately one-third of recorded autocoups
+have taken place in democracies, as documented in Chapter 2. Second, while the
+success rate of traditional coups hovers around 50%, more than 80% of autocoup
+attempts have succeeded, according to the autocoup dataset introduced in Chapter
+2. These distinctions suggest that the disposition and capability dynamics
+underpinning autocoups differ substantially from those governing traditional
+coups. This section examines the complex dynamics of autocoup attempts, focusing
+particularly on how the motivations of incumbents, the factors influencing
+success, and the institutional structures of regime types shape a state's
+vulnerability to such actions.
 
-#### Motivations and capability for autocoups {.unnumbered}
+#### Motivations for autocoups {.unnumbered}
 
 Incumbent leaders seeking to extend their tenure may be motivated by a variety of
 considerations, which can broadly be categorised into three principal domains:
@@ -1650,91 +1658,71 @@ fear retaliation upon stepping down. In such cases, extending one’s rule is no
 only about ambition but also about survival—shielding oneself from legal or
 political retribution.
 
-While motivations may trigger an incumbent’s decision to attempt an autocoup, it
+#### Power dynamics and autocoups {.unnumbered}
+
+While motivations may spark an incumbent’s decision to initiate an autocoup, it
 is often the capability to execute and sustain such an action that proves more
-decisive. These capabilities can be broadly categorised into several domains:
-control over the military, internal elite support, public approval, and foreign
-backing. Among these, the most critical determinant is undoubtedly the stance of
-the armed forces. Whether the military supports the incumbent—or at the very
-least, refrains from obstructing their actions—can determine the success or
-failure of an autocoup.
+decisive. The relatively high frequency and strikingly high success rate of
+autocoups—over 80%, compared to around 50% for traditional coups—suggest that
+incumbents enjoy structural advantages when seeking to extend their tenure. These
+advantages are not confined to autocracies but are also observable in
+democracies, highlighting that the resources and institutional leverage available
+to incumbents vary significantly across regimes.
 
-Control over the military is a pivotal factor in deterring resistance or
-opposition forces to tenure extension. If the armed forces remain loyal to the
-executive, opposition efforts are more likely to be contained or neutralised.
-Conversely, if senior military officers openly oppose the autocoup or adopt a
-neutral stance in the face of strong public or institutional resistance, the
-likelihood of failure increases substantially. In such cases, the absence of
-military backing renders the incumbent vulnerable, often making the attempt
-unsustainable.
+This observation necessitates a closer examination of state power
+structures—particularly the distribution of control over the armed forces.
+Military allegiance is a critical determinant of autocoup success. If the armed
+forces remain loyal to the incumbent, opposition—whether from civil society, the
+judiciary, or the legislature—can be neutralised or marginalised. Conversely,
+open defiance by military leaders or a refusal to intervene on behalf of the
+executive can render an autocoup untenable.
 
-#### Regime types and balance of power {.unnumbered}
+However, it would be reductive to assume that nominal authority as
+commander-in-chief translates into uncontested control. Just as it is simplistic
+to attribute the occurrence of traditional coups solely to military power
+[@singh2016], it is equally misleading to presume that incumbents uniformly wield
+the loyalty of the armed forces. Formal titles belie the often complex and
+fragile relationships that underpin military loyalty.
 
-This section raises a central question: given that incumbent leaders often serve
-as commander-in-chief of a nation’s armed forces, does this significantly
-increase their likelihood of success should they attempt to extend their tenure
-beyond constitutional limits? And if so, why do the majority of incumbents
-refrain from launching autocoups? Evidently, not all incumbents pursue such
-extensions, and among those who do, success is far from assured. As documented in
-Chapter 2, only 109 autocoup attempts have been recorded since 1945, of which 87
-were successful. To understand this variation, it is essential to examine the
-underlying power dynamics and institutional constraints associated with different
-regime types.
+In autocratic contexts, the military may not adhere to constitutional norms, but
+nor is it inherently loyal to the head of state. Executives rely on military
+officers to implement commands, yet those officers may possess their own
+ambitions or rival loyalties. For example, in 1971, Ugandan President Milton
+Obote attempted to dismiss General Idi Amin. In response, Amin capitalised on his
+influence within the armed forces to stage a successful coup, ousting Obote
+[@sudduth2017].
 
-Just as it is reductive to attribute the occurrence of traditional coups solely
-to military power [@singh2016], so too would it be misleading to assume that
-nominal command over the armed forces equates to absolute control in the context
-of autocoups. Although incumbent leaders are formally designated as the
-commander-in-chief, this does not imply unconditional loyalty from the military.
-The reality is often far more complex, and one of the most significant factors in
-this complexity is the nature of the regime itself.
-
-In stable democracies, such as the United States, the military pledges allegiance
-to the constitution rather than to any individual political leader. This
-institutional loyalty serves as a bulwark against executive overreach. For
-instance, following the 2020 U.S. presidential election, Chairman of the Joint
-Chiefs of Staff General Mark Milley explicitly reaffirmed the military’s
-commitment to constitutional principles, stating:
+In contrast, consolidated democracies typically institutionalise military
+allegiance to the constitution rather than to individual officeholders. In the
+United States, following the 2020 presidential election, General Mark Milley,
+Chairman of the Joint Chiefs of Staff, publicly reaffirmed the military’s
+commitment to constitutional principles:
 
 > “We are unique among militaries. We do not take an oath to a king or a queen, a
 > tyrant or a dictator. We do not take an oath to an individual. We take an oath
-> to the Constitution.”\
+> to the Constitution.”
 >
 > — (US Army Museum, 12 November 2020[^1])
 
-In transitional or weak democracies, attempts to extend tenure may entail greater
-risks. A case in point is Niger in 2009, where President Mamadou Tandja sought to
-amend the constitution to enable a third term. His actions provoked strong
-opposition, culminating in a military coup that ousted him in February 2010
-[@miller2016]. A similar event occurred in Honduras the same year, when President
-Manuel Zelaya proposed a constitutional amendment to permit immediate
-re-election. He too was subsequently removed by the military
-[@muñoz-portillo2019].
+In hybrid or fragile democracies, attempts to extend executive tenure can carry
+higher risks. For example, in Niger (2009), President Mamadou Tandja’s efforts to
+amend the constitution and secure a third term provoked a military coup in 2010
+[@miller2016]. Similarly, in Honduras (2009), President Manuel Zelaya was removed
+from office by the military after attempting to modify the constitution to allow
+immediate re-election [@muñoz-portillo2019].
 
-In autocracies, the dynamics become more opaque. While the military may not be
-loyal to a constitution, neither is it guaranteed to be loyal to the head of
-state. Incumbents depend on military officers to execute commands, and these
-officers may harbour their own ambitions or loyalties. For example, Ugandan
-President Milton Obote attempted to marginalise General Idi Amin in 1971. In
-response, Amin leveraged his military influence to stage a coup, removing Obote
-from power [@sudduth2017].
+#### Regime types and autocoups {.unnumbered}
 
-Given such complexities, a more fruitful analytical approach involves assessing
-the overall balance of power within a regime. Yet, directly observing this
-balance is often impractical for researchers. Consequently, this chapter adopts
-regime type as a proxy for underlying power structures—an approach consistent
-with broader scholarly efforts to understand institutional variation in
-leadership stability and irregular power transitions.
+Given these complexities, a more effective analytical strategy involves assessing
+the broader balance of power within political systems. Direct observation of this
+balance is inherently difficult, so this study employs regime type as a proxy—a
+method consistent with established approaches in comparative politics. Regime
+types reflect the institutional architecture of power distribution, especially
+regarding authority over military command, political appointments, and
+policy-making.
 
-Among the various factors shaping power dynamics, regime type is both
-theoretically significant and empirically observable. Regime types reflect the
-distribution of power across state institutions and are indicative of how
-authority is allocated for critical functions such as military command,
-appointments, and policy formulation. These structural characteristics, in turn,
-shape the incentives and opportunities for incumbents to pursue tenure extension.
-
-Building on the typology established by @geddes2014, the following
-classifications of authoritarian regimes are particularly instructive:
+Drawing on the classification by @geddes2014, autocratic regimes can be divided
+as follows:
 
 **Military regimes** are governed by a junta, typically composed of senior
 military officers who collectively determine leadership and policy. Examples
@@ -1752,45 +1740,63 @@ with the leader operating within, or as the head of, that organisation. Prominen
 examples include the PRI in Mexico, CCM in Tanzania, and Leninist parties in
 Eastern Europe [@geddes1999].
 
-It is reasonable to hypothesise that autocratic leaders are more likely to
-attempt autocoups than their democratic counterparts, as they command more
-extensive institutional control, particularly over the military. In democracies,
-even where intentions exist, autocoup attempts typically fail—either due to
-military resistance, as in Trump’s case, or outright military intervention, as
-seen in Niger and Honduras.
+Among these, personalist regimes are particularly conducive to autocoups. The
+concentration of power reduces institutional resistance, and loyalty from the
+armed forces is often cultivated through personal patronage. Military regimes,
+though rooted in armed power, frequently experience internal instability, making
+them more vulnerable to traditional coups than to autocoups. Dominant-party
+regimes are more ambiguous: while the leader may be constrained by party
+structures, exceptionally strong party leaders may nonetheless initiate
+autocoups—as evidenced by Xi Jinping (2018), operating under dominant-party
+regimes.
 
-Within autocracies, personalist regimes appear especially conducive to autocoups.
-The concentration of power in a single figure reduces institutional resistance,
-and control over the military apparatus is often more direct. By contrast,
-military regimes, despite their armed foundation, are prone to internal
-fragmentation. The absence of a clear final authority often leads to traditional
-coups rather than tenure-extending autocoups. Dominant-party regimes present a
-more mixed picture. While the party controls the military, an exceptionally
-powerful party leader may still orchestrate an autocoup, as seen with Vladimir
-Putin in Russia (2008, 2020) and Xi Jinping in China (2018)—both classified under
-the dominant-party model by @geddes2014.
+Monarchies, though classified as autocracies, typically render autocoups
+irrelevant, as monarchs usually serve for life by design.
 
-Monarchies are another form of autocracy, but since monarchs typically hold
-office for life by design, the concept of tenure extension is inapplicable.
+An important clarification arises at this point: why would leaders in personalist
+regimes feel compelled to extend their tenure, given the extensive authority they
+already wield? The answer lies in the distinction between the scope of power and
+its duration. While personalist rulers often exercise substantial control over
+state institutions, many originally assume office through constitutional or legal
+means and must incrementally consolidate power. In this context, autocoups serve
+as formal mechanisms to institutionalise their dominance, converting de facto
+authority into de jure permanence. This dynamic is exemplified by the multiple
+tenure extensions pursued by Vladimir Putin and Alexander Lukashenko.
 
-One may nonetheless ask: why would a dictator in a personalist regime need to
-extend their tenure, given they already wield extensive power? The answer lies in
-the distinction between the scope of authority and the duration of tenure.
-Personalist regimes are characterised by unconstrained executive power, but this
-does not necessarily imply indefinite rule. Moreover, many personalist
-leaders—especially those who initially rose to power through constitutional
-means—must consolidate authority over time. This often occurs through purges,
-repression, and gradual weakening of other state institutions. The autocoup,
-then, serves as a mechanism for legalising or perpetuating an already de facto
-concentration of power. The trajectories of Putin (2008 and 2020) and Lukashenko
-(2004 and 2022) exemplify this pattern.
+In post-Soviet Russia, President Boris Yeltsin oversaw the transformation of a
+parliamentary system into a personalist regime. However, Yeltsin himself did not
+overstay his term; instead, he selected Vladimir Putin as his successor. Upon
+assuming office in 2000, Putin progressively extended his rule and has remained
+in power since, utilising constitutional amendments and legal manoeuvres to
+circumvent term limits.
+
+Similarly, in Belarus, Alexander Lukashenko was elected president in 1994 under a
+party-based regime. Within a year, he dismantled the existing political structure
+and established a personalist system. Since then, Lukashenko has remained in
+power through successive extensions of his tenure, further entrenching his
+authority over time.
+
+In democracies, autocoups exclusively occur in presidential systems. This
+reflects the institutional leverage enjoyed by presidents, who are directly
+elected, often command the armed forces, and may override or bypass legislative
+decisions. Prime ministers in parliamentary systems, by contrast, are more
+constrained. They are typically beholden to legislative confidence and may be
+dismissed via no-confidence votes. Military command is often institutionally
+separated from their authority. Consequently, prime ministers face more frequent
+leadership turnover and fewer opportunities to extend their terms. For example,
+in the UK, three prime ministers served in 2022; in Japan, there have been 36
+prime ministers since 1945—an average of one every two years. By contrast, only
+14 presidents have served in the United States over the same period, reflecting
+greater institutional stability. Given these distinctions, presidential systems
+provide a more conducive environment for autocoups—even in established
+democracies—due to their centralised executive authority and command over the
+military.
 
 From this analysis, the following hypothesis is proposed:
 
-> **H2-1: *The likelihood of autocoup attempts varies markedly across regime
-> types, with personalist regimes being the most susceptible, followed by
-> dominant-party regimes, while military regimes are the least prone—relative to
-> democracies.***
+> **H2-1: *The likelihood of autocoup attempts varies significantly by regime
+> type, with personalist autocracies and presidential democracies being the most
+> susceptible, relative to other regime types.***
 
 ### Research design
 
@@ -1812,37 +1818,71 @@ Firth’s Bias-Reduced Penalised Maximum Likelihood Estimation, as proposed by
 
 #### Data and variables {.unnumbered}
 
-The data ranges from 1945 to 2023. However, due the data matching issue, there
-are data truncating and the actual data ranges from 1945 to 2018. The data covers
-XXX observations, with 100 events of autocoups.
+The principal dataset, covering autocoups and regime types, spans the period from
+1945 to 2023. However, due to issues in data matching, there is some truncation,
+and the actual range of usable data extends from 1945 to 2018. The dataset
+encompasses approximately 6,000 observations, of which around 100 are instances
+of autocoup attempts.
 
-##### Dependent variables {.unnumbered}
+##### Dependent variable {.unnumbered}
 
--   **Autocoup attempt**: Binary variable indicating whether an autocoup attempt
-    occurred (1) or not (0) during the tenure of an incumbent leader.
+The analysis utilises the autocoup dataset introduced in Chapter 2. This dataset
+covers the period from 1945 to 2023 and records information on 107 autocoup
+attempts. Descriptive statistics for these attempts, along with regime
+classifications, are presented in Chapter 2.
 
--   **Autocoup success**: Binary variable indicating whether an autocoup attempt
-    was successful (1) or failed (0), conditional on an autocoup attempt
-    occurring.
+**Autocoup attempt**: A binary variable indicating whether an autocoup attempt
+occurred (coded as 1) or did not occur (coded as 0) in each country-year
+observation.
 
 ##### Independent variables {.unnumbered}
 
-The selection of independent variables are consistent with the coup analysis in
-[Chapter @sec-chapter2], plus the population size and the leader's age.
+As discussed, regime type constitutes the primary explanatory focus of the model.
+Regimes are categorised according to the typology developed by @geddes2014 (GWF
+dataset), distinguishing between military, personalist, and dominant-party
+regimes, with democracies serving as the reference category.
 
--   **Population size:** To account for its potential impact on leaders' tenures,
-    we consider the log of the population size. This transformation helps in
-    managing the wide range of population sizes across different countries. The
-    data is sourced from the V-Dem dataset and is evaluated to understand its
-    influence on power transitions. Larger populations may present more
-    governance challenges and potential sources of opposition, thereby affecting
-    the stability and longevity of a leader's tenure.
+Control variables are selected based on previous research into coup determinants,
+predominantly encompassing factors such as economic performance, political
+violence, and tenure in office. In addition, population size and a Cold War dummy
+variable are included as further controls.
 
--   **Leader's age:** The age of the leader is included as an additional variable
-    in the analysis, offering insights into potential correlations with
-    leadership strength. Older leaders may have different experiences, networks,
-    and health considerations that could influence their ability to maintain
-    power. This data is sourced from Archigos and PLAD datasets.
+**Economic Level:** Measured by GDP per capita, representing the general economic
+wellbeing of a country. Data are sourced from the V-Dem dataset by @fariss2022,
+expressed in constant 2017 international dollars (PPP, per thousand).
+
+**Economic Performance:** Assessed through the current-trend ($CT$) ratio, as
+developed by @krishnarajan2019. This metric compares a country’s current GDP per
+capita with the average GDP per capita over the preceding five years. A higher
+$CT$ ratio signifies stronger economic growth. Formally:
+
+$$
+    \begin{aligned}
+    CT_{i,t} = {GDP/cap_{i,t} \over {1 \over 5} {\sum_{k=1}^5GDP/cap_{i,t-k}}}
+    \end{aligned}
+$$
+
+**Political stability:** Captured by a violence index reflecting the incidence of
+internal and interstate conflict, derived from the “actotal” variable in the
+Major Episodes of Political Violence dataset [@marshall2005current]. Scores range
+from 0 (complete stability) to 18 (maximum instability).
+
+**Days in office (log):** This variable records the natural logarithm of an
+incumbent leader’s cumulative days in office in each year. Longer tenure is
+posited to facilitate power consolidation, thereby making autocoup attempts more
+feasible. Data are drawn from the Archigos dataset [@goemans2009] and the
+Political Leaders' Affiliation Database (PLAD) [@bomprezzi2024wedded].
+
+**Population size:** The natural logarithm of national population is included to
+control for the potential impact of population size on leadership stability.
+Larger populations may pose greater governance challenges and amplify opposition.
+Population data are sourced from the V-Dem dataset.
+
+**Cold War:** Following the approach of prior studies [@thyne2014;
+@derpanopoulos2016; @dahl2023], a dummy variable, Cold War, is included to
+capture differences across historical periods. This variable reflects the
+relative scarcity of autocoup events between the 1960s and 1990, with a notable
+increase thereafter.
 
 Unlike the analysis of coup determinants, which could theoretically occur in any
 given year, I assume that an autocoup happens only once during an incumbent
@@ -1867,26 +1907,38 @@ middle year of their tenure as the base year.
 
 autocoup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_model.csv")
 
+model_logit <- glm(
+  autocoup_attempt ~ regime_autocoup + GDP_pc + GDP_trend + log(cumulative_days_in_office) + violence + factor(cold_war) + polity5,
+  family = binomial,
+  data = autocoup_model |>
+    mutate(regime_autocoup = relevel(factor(regime_autocoup), ref = "military"))
+)
+summary(model_logit)
 
-model_attempt <- autocoup_model |>
-  filter(!regime %in% c("monarchy", "other")) |>
-  mutate(regime = fct_relevel(regime, "presidential")) |>
-  glm(autocoup_attempt ~ regime + GDP_pc + GDP_trend + violence + age + pop_log,
-    family = binomial(link = "probit"),
-    data = _
-  )
+model_logit <- glm(
+  autocoup_attempt ~ regime_autocoup + GDP_pc + GDP_trend + violence + pop_log + log(cumulative_days_in_office) + factor(cold_war),
+  family = binomial,
+  data = autocoup_model |>
+    mutate(regime_autocoup = relevel(factor(regime_autocoup), ref = "presidential"))
+)
 
-model_success <- autocoup_model |>
-  filter(!regime %in% c("monarchy", "other")) |>
-  mutate(
-    regime = fct_relevel(regime, "presidential"),
-    autocoup_outcome = factor(autocoup_outcome)
-  ) |>
-  filter(autocoup_attempt == 1) |>
-  glm(autocoup_outcome ~ regime + GDP_pc + GDP_trend + violence + age + pop_log,
-    family = binomial(link = "probit"),
-    data = _
-  )
+model_brg <- glm(
+  autocoup_attempt ~ regime_autocoup + GDP_pc + GDP_trend + violence + pop_log + log(cumulative_days_in_office) + factor(cold_war),
+  family = binomial(link = "logit"),
+  method = "brglmFit",
+  data = autocoup_model |>
+    mutate(regime_autocoup = relevel(factor(regime_autocoup), ref = "presidential"))
+)
+
+summary(model_brg)
+
+
+
+stargazer(model_logit, model_brg,
+  warning = FALSE,
+  header = FALSE,
+  type = "text"
+)
 
 stargazer(model_attempt, model_success,
   header = F,
@@ -1910,6 +1962,11 @@ stargazer(model_attempt, model_success,
   column.sep.width = "50pt"
 )
 # view(autocoup_model)
+
+autocoup_model |>
+  select(regime_autocoup) |>
+  tabyl(regime_autocoup)
+distinct(regime_autocoup, .keep_all = TRUE)
 ```
 
 @tbl-autocoupmodel summarizes the findings from the probit regression models
