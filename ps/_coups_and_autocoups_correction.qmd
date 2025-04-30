@@ -1525,19 +1525,21 @@ in different regime types and political contexts.
 
 ### Abstract {.unnumbered}
 
-This chapter investigates the determinants of autocoup attempts in order to
-better understand the political dynamics underpinning tenure extensions by
-incumbent leaders. Employing a probit regression model, the analysis explores the
-relationship between regime type and the likelihood of autocoup occurrence, with
-particular attention to the balance of power between incumbents and institutional
-constraints or potential challengers from within the state apparatus.
-
-The findings indicate that regime type constitutes a significant predictor of
-autocoup attempts. In particular, personalist regimes are shown to be
-substantially more likely than dominant-party regimes to engage in autocoups,
-controlling for other factors. This increased propensity is attributed to the
-weaker institutional constraints, greater executive dominance, and heightened
-intra-elite rivalries that typify personalist rule.
+This chapter investigates the determinants of autocoup attempts, seeking to
+enhance understanding of the political dynamics underpinning tenure extensions by
+incumbent leaders. Addressing a gap in the literature, the study employs a
+quantitative approach, utilising a bias-reduced logit model to explore the
+relationship between regime type and the likelihood of autocoup occurrence.
+Particular attention is paid to how regime type reflects the structural balance
+of power between incumbents and potential institutional constraints or elite
+challengers. The findings indicate that regime type is a significant predictor of
+autocoup attempts. Specifically, personalist autocracies and presidential
+democracies are shown to be substantially more likely to experience autocoups
+compared to dominant party regimes. This increased propensity is discussed in
+relation to the varying degrees of institutional constraints and power
+configurations characteristic of different regime types, offering insights into
+the structural conditions that facilitate or constrain such irregular power
+consolidations.
 
 ***Keywords:** Autocoups, Coup, Regime types, Tenure Extension, Authoritarianism*
 
@@ -1794,7 +1796,7 @@ military.
 
 From this analysis, the following hypothesis is proposed:
 
-> **H2-1: *The likelihood of autocoup attempts varies significantly by regime
+> **H3-1: *The likelihood of autocoup attempts varies significantly by regime
 > type, with personalist autocracies and presidential democracies being the most
 > susceptible, relative to other regime types.***
 
@@ -1803,7 +1805,7 @@ From this analysis, the following hypothesis is proposed:
 #### Methodology {.unnumbered}
 
 Given the binary nature of the dependent variable—whether an autocoup is staged
-or not—this section initially employs a probit regression model to analyse the
+or not—this section initially employs a logit regression model to analyse the
 determinants of autocoup attempts. This approach enables the identification of
 statistically significant factors influencing the likelihood of such events, as
 well as the direction and magnitude of their effects.
@@ -1813,8 +1815,8 @@ approximately 100 instances of autocoups, the dependent variable qualifies as a
 rare event. Standard maximum likelihood estimation methods such as probit or
 logit may underestimate the probability of occurrence in such cases. To address
 this issue and ensure more reliable inference, the analysis additionally applies
-Firth’s Bias-Reduced Penalised Maximum Likelihood Estimation, as proposed by
-@firth1993David.
+Firth’s Bias-Reduced Penalised Maximum Likelihood Estimation (Bias-Reduced
+Logit), as proposed by @firth1993David.
 
 #### Data and variables {.unnumbered}
 
@@ -1884,141 +1886,227 @@ capture differences across historical periods. This variable reflects the
 relative scarcity of autocoup events between the 1960s and 1990, with a notable
 increase thereafter.
 
-Unlike the analysis of coup determinants, which could theoretically occur in any
-given year, I assume that an autocoup happens only once during an incumbent
-leader's tenure, as a successful autocoup negates the need for another attempt.
-However, this assumption does not always reflect reality, as leaders might
-attempt further extensions or try again after a failed attempt. For simplicity, I
-overlook these possibilities in our analysis.
-
-Therefore, in our probit model, the unit of analysis for autocoups is the entire
-tenure of a leader, rather than a country-year. I establish a base year for the
-variables: for leaders who staged an autocoup, we use the year of their first
-attempt as the base year; for leaders who did not attempt to overstay, I use the
-middle year of their tenure as the base year.
-
-#### Results and discussions
+#### Results and discussions {.unnumbered}
 
 ```{r}
 #| label: tbl-autocoupmodel
-#| tbl-cap: "Determinants of autocoup attempts and success (1945-2018)"
+#| tbl-cap: "Determinants of autocoup attempts(1945-2018)"
 #| results: asis
 #| echo: false
 
-autocoup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_model.csv")
+autocoup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_model.csv") |>
+  mutate(
+    regime = case_when(
+      regime == "personal" ~ "Personal",
+      regime == "dominant-party" ~ "Dominant Party",
+      regime == "presidential" ~ "Presidential Democracy",
+      regime == "military" ~ "Military",
+      regime == "parliamentary" ~ "Parliamentary Democracy",
+      TRUE ~ "Other"
+    ),
+    regime = factor(regime,
+      levels = c("Dominant Party", "Personal", "Presidential Democracy", "Military", "Parliamentary Democracy", "Other")
+    ),
+  )
+
+common_labels <- list(
+  "(Intercept)" ~ "Constant",
+  regime ~ "Regime Type",
+  GDP_pc ~ "GDP per capita",
+  GDP_trend ~ "GDP growth trend",
+  violence ~ "Political stability",
+  pop_log ~ "Log of Population",
+  polity5 ~ "Polity 5 scores",
+  "log(cumulative_days_in_office)" ~ "Log of days in office",
+  "factor(cold_war)" ~ "Cold war"
+)
+
+model_formula <- autocoup_attempt ~ regime + GDP_pc + GDP_trend + violence + pop_log +
+  polity5 + log(cumulative_days_in_office) + factor(cold_war)
 
 model_logit <- glm(
-  autocoup_attempt ~ regime_autocoup + GDP_pc + GDP_trend + log(cumulative_days_in_office) + violence + factor(cold_war) + polity5,
+  model_formula,
   family = binomial,
-  data = autocoup_model |>
-    mutate(regime_autocoup = relevel(factor(regime_autocoup), ref = "military"))
-)
-summary(model_logit)
+  data = autocoup_model
+) |>
+  tbl_regression(
+    label = common_labels,
+    show_single_row = "factor(cold_war)",
+    conf.int = F,
+    intercept = T
+  ) |>
+  add_significance_stars(hide_p = TRUE) |>
+  modify_column_hide(columns = std.error)
 
-model_logit <- glm(
-  autocoup_attempt ~ regime_autocoup + GDP_pc + GDP_trend + violence + pop_log + log(cumulative_days_in_office) + factor(cold_war),
+
+model_logit_od <- glm(
+  model_formula,
   family = binomial,
-  data = autocoup_model |>
-    mutate(regime_autocoup = relevel(factor(regime_autocoup), ref = "presidential"))
-)
+  data = autocoup_model
+) |>
+  tbl_regression(
+    exponentiate = TRUE,
+    label = common_labels,
+    show_single_row = "factor(cold_war)",
+    conf.int = F,
+    intercept = T
+  ) |>
+  add_significance_stars(hide_p = TRUE) |>
+  modify_column_hide(columns = std.error)
+
 
 model_brg <- glm(
-  autocoup_attempt ~ regime_autocoup + GDP_pc + GDP_trend + violence + pop_log + log(cumulative_days_in_office) + factor(cold_war),
+  model_formula,
   family = binomial(link = "logit"),
   method = "brglmFit",
-  data = autocoup_model |>
-    mutate(regime_autocoup = relevel(factor(regime_autocoup), ref = "presidential"))
-)
+  data = autocoup_model
+) |>
+  tbl_regression(
+    label = common_labels,
+    show_single_row = "factor(cold_war)",
+    conf.int = F,
+    intercept = T
+  ) |>
+  add_significance_stars(hide_p = TRUE) |>
+  modify_column_hide(columns = std.error)
 
-summary(model_brg)
+model_brg_od <- glm(
+  model_formula,
+  family = binomial(link = "logit"),
+  method = "brglmFit",
+  data = autocoup_model
+) |>
+  tbl_regression(
+    exponentiate = TRUE,
+    label = common_labels,
+    show_single_row = "factor(cold_war)",
+    conf.int = F,
+    intercept = T
+  ) |>
+  add_significance_stars(hide_p = TRUE) |>
+  modify_column_hide(columns = std.error)
 
-
-
-stargazer(model_logit, model_brg,
-  warning = FALSE,
-  header = FALSE,
-  type = "text"
-)
-
-stargazer(model_attempt, model_success,
-  header = F,
-  float = F,
-  column.labels = c("Autocoup Attempts", "Autocoup Outcome"),
-  intercept.bottom = F,
-  covariate.labels = c(
-    "Constant",
-    "Regime: Dominant-party",
-    "\\hspace{1.6cm}Military",
-    "\\hspace{1.6cm}Personalist",
-    "GDP per capita",
-    "Economic trend",
-    "Political stability",
-    "Age",
-    "Population(log)"
-  ),
-  dep.var.caption = "",
-  dep.var.labels.include = F,
-  summary.logical = T,
-  column.sep.width = "50pt"
-)
-# view(autocoup_model)
-
-autocoup_model |>
-  select(regime_autocoup) |>
-  tabyl(regime_autocoup)
-distinct(regime_autocoup, .keep_all = TRUE)
+tbl_merge(
+  tbls = list(model_logit, model_logit_od, model_brg, model_brg_od),
+  tab_spanner = c("Standard Logit", "Standard Logit", "Bias-reduced Logit", "Bias-reduced Logit")
+) |> 
+  as_gt() |> 
+  tab_options(
+    table.font.size = px(14),
+    data_row.padding = px(18)
+  )
 ```
 
-@tbl-autocoupmodel summarizes the findings from the probit regression models
-based on our analysis of the determinants of autocoup attempts and their success.
+This analysis utilizes a logistic regression model to examine the factors
+influencing the likelihood of autocoup attempts. Given the nature of the
+dependent variable (a binary outcome, autocoup attempt occurring or not) and
+potentially rare events in certain categories, a bias-reduced logit model is
+employed alongside the standard logit model. The bias-reduced logit approach is
+generally considered more appropriate when dealing with datasets where the
+outcome of interest is infrequent, as it helps to mitigate potential biases in
+the coefficient estimates that can arise in standard maximum likelihood
+estimation. Therefore, the following discussion of the results will primarily
+focus on the estimates obtained from the bias-reduced logit model, presenting the
+findings in terms of Odds Ratios (ORs) for ease of interpretation. Odds Ratios
+provide a more intuitive understanding of the relationship between predictors and
+the likelihood of the outcome compared to log odds.
 
-Model 1, which examines autocoup attempts, reveals only one significant predictor
-besides the constant term. Among the regime types, personalist regimes
-significantly increase the likelihood of autocoup attempts, all else being equal.
-This suggests that leaders in personalist regimes are more prone to attempt to
-extend their power through autocoups compared to leaders in democratic regimes
-(reference regime). Leaders in dominant-party and military regimes, however, show
-no significant difference in the likelihood of attempting an autocoup compared to
-democratic leaders.
+The results from the bias-reduced logit model are presented in
+@tbl-autocoupmodel. The primary hypothesis posits that the likelihood of autocoup
+attempts varies significantly by regime type, with personalist autocracies and
+presidential democracies being particularly susceptible relative to other regime
+types. The model uses "Dominant Party" regimes as the reference category.
 
-The model for autocoup success (Model 2) shows similar dynamics. Personalist
-regimes again have a strong positive and significant effect on the success of
-autocoups compared to democratic leaders. Dominant-party regimes also show a
-positive and marginally significant effect. However, a detailed examination
-reveals that about half of the successful autocoups in dominant-party regimes (9
-out of 20) exhibit a personalist style, such as "party-personal-military"
-regimes.
+Examining the regime type variables, I find strong support for aspects of the
+hypothesis. Relative to dominant party regimes, personalist autocracies have an
+estimated odds ratio of 2.99, which is statistically significant ( $p<0.001$ ).
+This indicates that the odds of an autocoup attempt are approximately 3 times
+higher in personalist autocracies compared to dominant party regimes, holding all
+other variables constant. Presidential democracies also show a significantly
+increased likelihood of autocoup attempts, with an estimated odds ratio of 4.06 (
+$p<0.01$ ) compared to dominant party regimes. This suggests that the odds of an
+autocoup attempt are roughly 4 times higher in presidential democracies than in
+dominant party regimes, ceteris paribus.
 
-This outcome is logical since personalist leaders are typically much more
-powerful than other types of leaders, making them more inclined and capable of
-overstaying in power.
+Comparing these to other regime types included in the model, military regimes
+have an OR of 1.70, which is not statistically significant. Parliamentary
+democracies show a decreased, though not statistically significant, odds of
+autocoup ( $OR = 0.21$ ). "Other" regime types also have a non-significant
+decreased odds ( $OR = 0.51$ ).
 
-Other factors play an insignificant role in determining the attempts and outcomes
-of autocoups. This aligns with our conclusions on the determinants of classic
-coups. Both coups and autocoups are significantly affected by power dynamics. As
-power transitions involve the struggle between seizing and maintaining power, the
-balance of power status quo inevitably matters in both coups and autocoups. This
-also explains the high success rate of autocoups. Compared to power challengers,
-incumbents are in an obviously advantageous position. Incumbent leaders can use
-state power to their benefit, which is difficult to counteract. Even the abuse of
-power is often unchecked under a powerful leader's rule.
+These findings strongly support the assertion that both personalist autocracies
+and presidential democracies face a substantially higher risk of autocoup
+attempts compared to dominant party regimes. The odds ratios for personalist
+autocracies (2.99) and presidential democracies (4.06) are notably larger than
+those for military, parliamentary democracy, and other regime types, providing
+evidence that these two regime types are indeed more susceptible. This lends
+considerable support to hypothesis.
 
-The empirical analysis of autocoups yields significant implications for
-real-world politics. In particular, the high overall success rate of autocoups
-highlights the vulnerability of democratic institutions to gradual erosion by
-incumbent leaders. The threshold for ousting or impeaching an incumbent leader
-through constitutional means is exceptionally high, with success often requiring
-more than a simple majority and substantial support across various sectors.
-Resorting to illegal means, such as a coup, presents even greater challenges due
-to high costs, severe consequences, and a low likelihood of success.
+Turning to the control variables in the bias-reduced logit model, several show
+significant associations with autocoup attempts. A higher GDP per capita is
+associated with a slightly lower, statistically significant, odds of autocoup (
+$OR = 0.97$, $p<0.05$ ). The log of Polity 5 scores, a measure of democracy, is
+also associated with a decreased odds of autocoup ( $OR = 0.93$, $p<0.05$ ),
+suggesting that more democratic regimes are less likely to experience autocoups.
+The Cold War variable is associated with a significantly lower odds of autocoup
+attempts ( $OR = 0.60$, $p<0.05$ ), indicating that the period of the Cold War
+saw a reduced likelihood of such events. Other variables, such as GDP growth
+trend, political stability, log of population, and log of days in office, do not
+show statistically significant relationships with the likelihood of autocoup
+attempts in this model.
 
-Conversely, political dynamics, whether in democracies or autocracies, tend to
-favour incumbents even when they act unconstitutionally. Incumbents can leverage
-state resources to achieve their political ambitions, benefiting from a high
-probability of success and minimal consequences in case of failure. This
-asymmetry in power and risk creates a concerning scenario: for incumbents who do
-not respect constitutional institutions, the opportunity to launch an autocoup
-appears sufficiently low-risk to warrant an attempt.
+In summary, the bias-reduced logit model reveals that regime type is a crucial
+determinant of autocoup attempts. Consistent with the hypothesis, personalist
+autocracies and presidential democracies exhibit a significantly higher
+likelihood of experiencing autocoup attempts compared to dominant party regimes,
+and appear more vulnerable than other regime types examined. This highlights the
+particular fragility within these political systems concerning attempts by
+incumbents to extend their tenures through extra-constitutional means. The
+analysis also confirms the importance of economic development (GDP per capita),
+level of democracy (Polity 5 scores), and the historical context of the Cold War
+in influencing the probability of autocoup attempts.
+
+### Summary
+
+This chapter presents a quantitative investigation into the determinants of
+autocoup attempts, addressing a recognised gap in the existing literature often
+hindered by conceptual ambiguity and limited systematic data. The study posits
+that the risk of autocoup attempts is significantly shaped by the underlying
+structural balance of power within a regime, operationalised here through regime
+type. Employing both a standard logit model and a bias-reduced logit model, the
+analysis reveals that personalist autocracies and presidential democracies
+exhibit a significantly higher likelihood of experiencing autocoup attempts when
+compared to dominant party regimes. Specifically, the odds of an autocoup are
+estimated to be approximately three times greater in personalist autocracies and
+four times greater in presidential democracies, relative to the reference
+category.
+
+This finding lends support to the hypothesis that these specific regime types are
+particularly vulnerable to autocoups, suggesting a clear link between their
+structural characteristics and the propensity of incumbent leaders to extend
+their tenures extra legally. Beyond regime type, the study also identifies
+economic development, the level of democracy, and the historical context of the
+Cold War as influential factors. By examining the strategic calculus of incumbent
+leaders across different regime types, this research provides valuable empirical
+insights into the conditions that either facilitate or constrain autocoup
+attempts, thereby contributing to a more nuanced understanding of political
+instability and democratic trajectories.
+
+It is important to acknowledge certain complexities inherent in the analysis of
+autocoups that warrant further study. Unlike traditional coups, which can
+theoretically occur at any point and potentially multiple times within a short
+period, autocoups initiated by incumbents appear to follow different temporal
+patterns. For instance, an autocoup attempt may be less likely during the initial
+phase of a leader's term compared to the period preceding the term's scheduled
+expiry. Furthermore, while a leader successfully extending their tenure may
+reduce the immediate likelihood of a subsequent attempt, particularly if a
+life-long term is secured, it is also true that some leaders have successfully
+extended their rule on multiple occasions (e.g., Presidents Putin and
+Lukashenko). To render the analysis manageable within the scope of this study, a
+simplifying assumption was made that an autocoup attempt occurs only once during
+an incumbent leader's tenure. These temporal dynamics and the possibility of
+repeat attempts by the same leader represent important avenues for future
+research to build upon the foundational analysis presented here.
 
 ## Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-installed and Autocoup Leaders
 
