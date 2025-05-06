@@ -1,0 +1,155 @@
+---
+title: "tidymodels_vote_prediction"
+format: html
+---
+
+# ------------------------------------------
+
+# 项目名称：预测受访者是否投票
+
+# 框架：tidymodels
+
+# 作者：ChatGPT（为政治科学家定制）
+
+# 日期：2025
+
+# ------------------------------------------
+
+# 🚀 第一步：加载必要的包
+
+```{r}
+library(tidymodels)
+```
+
+# 📂 第二步：读取并检查数据
+
+```{r}
+set.seed(42)
+
+n <- 1000
+
+age <- sample(18:80, n, replace = TRUE)
+income <- round(rnorm(n, mean = 50000, sd = 15000))
+education <- sample(c("High School", "College", "Graduate"), n, replace = TRUE, prob = c(0.4, 0.4, 0.2))
+gender <- sample(c("Male", "Female"), n, replace = TRUE)
+
+# 简单逻辑生成 vote 意愿概率
+vote_prob <- plogis(-4 + 0.03 * age + 0.00003 * income +
+  ifelse(education == "Graduate", 0.5, 0) +
+  ifelse(gender == "Female", 0.2, 0))
+
+vote <- ifelse(runif(n) < vote_prob, "yes", "no")
+
+survey <- data.frame(
+  age = age,
+  income = income,
+  education = education,
+  gender = gender,
+  vote = vote
+)
+
+# 保存为 CSV 文件
+write.csv(survey, "survey.csv", row.names = FALSE)
+
+cat("✅ 文件 survey.csv 已保存到当前工作目录。\n")
+```
+
+```{r}
+data <- read_csv("survey.csv") # 请确保 survey.csv 与本脚本在同一目录
+
+glimpse(data)
+```
+
+# ------------------------------------------
+
+# 🧪 第三步：划分训练集和测试集
+
+```{r}
+set.seed(123)
+split <- initial_split(data, prop = 0.8, strata = vote)
+train <- training(split)
+test <- testing(split)
+```
+
+# ------------------------------------------
+
+# 🧹 第四步：定义预处理流程（recipe）
+
+```{r}
+rec <- recipe(vote ~ age + income + education + gender, data = train) %>%
+  step_dummy(all_nominal_predictors()) %>%
+  step_normalize(all_numeric_predictors())
+```
+
+# ------------------------------------------
+
+# 🔍 第五步：定义模型（逻辑回归）
+
+```{r}
+log_model <- logistic_reg() %>%
+  set_engine("glm") %>%
+  set_mode("classification")
+```
+
+# ------------------------------------------
+
+# 🛠️ 第六步：构建 workflow 并训练模型
+
+```{r}
+wf <- workflow() %>%
+  add_recipe(rec) %>%
+  add_model(log_model)
+
+fit <- wf %>% fit(data = train)
+```
+
+# ------------------------------------------
+
+# 🧾 第七步：预测与评估
+
+```{r}
+preds <- predict(fit, test, type = "prob") %>%
+  bind_cols(predict(fit, test)) %>%
+  bind_cols(test)
+
+# 准确率与 ROC AUC
+print(metrics(preds, truth = vote, estimate = .pred_class))
+print(roc_auc(preds, truth = vote, .pred_yes))
+```
+
+# ------------------------------------------
+
+# 📊 第八步：绘制混淆矩阵
+
+```{r}
+conf_mat(preds, truth = vote, estimate = .pred_class) %>%
+  autoplot(type = "heatmap")
+```
+
+# ------------------------------------------
+
+# 🎯 附加练习：替换模型为决策树
+
+# tree_model \<- decision_tree() %\>%
+
+# set_engine("rpart") %\>%
+
+# set_mode("classification")
+
+# wf_tree \<- wf %\>% update_model(tree_model)
+
+# fit_tree \<- fit(wf_tree, data = train)
+
+# 🎯 附加练习：交叉验证 + ROC
+
+# folds \<- vfold_cv(train, v = 5, strata = vote)
+
+# fit_resample(wf, resamples = folds, metrics = metric_set(roc_auc))
+
+# ------------------------------------------
+
+# ✅ 项目完成
+
+```{r}
+cat("🎉 模型构建完成！您可以继续扩展特征或尝试其他模型。\n")
+```

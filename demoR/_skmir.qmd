@@ -1,0 +1,65 @@
+---
+title: "Skimr Create publication ready descriptive data summaries"
+format: html
+---
+
+## Setup
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(gt)
+library(flextable)
+```
+
+## Data
+
+```{r}
+df <- diamonds
+
+df |>
+  head(20) |>
+  gt()
+```
+
+## Skimr
+
+```{r}
+df |>
+  skim() |>
+  flextable()
+```
+
+```{r}
+df |>
+  skim() |>
+  dplyr::select(skim_type, skim_variable, numeric.mean) |>
+  gt()
+```
+
+```{r}
+df2 <- df |>
+  skim() |>
+  skimr::partition()
+```
+
+```{r}
+df2$factor |>
+  gt()
+
+df2$numeric |>
+  gt()
+```
+
+```{r}
+df |>
+  skim() |>
+  skimr::to_long()
+```
+
+```{r}
+df |>
+  skim() |>
+  focus(n_missing, numeric.mean) |>
+  gt()
+```

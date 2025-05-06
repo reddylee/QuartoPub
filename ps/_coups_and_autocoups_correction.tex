@@ -2250,7 +2250,7 @@ methods such as probit or logit may underestimate the probability of
 occurrence in such cases. To address this issue and ensure more reliable
 inference, the analysis additionally applies Firth's Bias-Reduced
 Penalised Maximum Likelihood Estimation (Bias-Reduced Logit), as
-proposed by (\citeproc{ref-firth1993David}{\textbf{firth1993David?}}).
+proposed by FIRTH (\citeproc{ref-firth1993}{1993}).
 
 \subsection*{Data and variables}\label{data-and-variables}
 \addcontentsline{toc}{subsection}{Data and variables}
@@ -2345,33 +2345,33 @@ attempts(1945-2018)}
 
 \centering{
 
-\fontsize{10.5pt}{12.6pt}\selectfont
-\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccc}
+\fontsize{11.2pt}{13.5pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccccc}
 \toprule
- & \multicolumn{2}{c}{Standard Logit} & \multicolumn{2}{c}{Bias-reduced Logit} \\ 
-\cmidrule(lr){2-3} \cmidrule(lr){4-5}
-\textbf{Characteristic} & \textbf{log(OR)}\textsuperscript{\textit{1,2}} & \textbf{OR}\textsuperscript{\textit{1,2}} & \textbf{log(OR)}\textsuperscript{\textit{1,2}} & \textbf{OR}\textsuperscript{\textit{1,2}} \\ 
+ & \multicolumn{4}{c}{Standard Logit} & \multicolumn{2}{c}{Bias-reduced Logit} \\ 
+\cmidrule(lr){2-5} \cmidrule(lr){6-7}
+\textbf{Characteristic} & \textbf{N} & \textbf{Event N} & \textbf{log(OR)}\textsuperscript{\textit{1}} & \textbf{OR}\textsuperscript{\textit{1}} & \textbf{log(OR)}\textsuperscript{\textit{1}} & \textbf{OR}\textsuperscript{\textit{1}} \\ 
 \midrule\addlinespace[2.5pt]
-Constant & -5.3*** & 0.00*** & -5.3*** & 0.01*** \\ 
-Regime Type &  &  &  &  \\ 
-    Dominant Party & — & — & — & — \\ 
-    Personal & 1.1*** & 3.03*** & 1.1*** & 2.99*** \\ 
-    Presidential Democracy & 1.4** & 4.18** & 1.4** & 4.06** \\ 
-    Military & 0.50 & 1.65 & 0.53 & 1.70 \\ 
-    Parliamentary Democracy & -1.9 & 0.15 & -1.5 & 0.21 \\ 
-    Other & -0.75 & 0.47 & -0.67 & 0.51 \\ 
-GDP per capita & -0.04* & 0.96* & -0.03 & 0.97 \\ 
-GDP growth trend & 1.1 & 2.87 & 1.1 & 2.96 \\ 
-Political stability & 0.00 & 1.00 & 0.01 & 1.01 \\ 
-Log of Population & -0.14 & 0.87 & -0.14 & 0.87 \\ 
-Polity 5 scores & -0.07* & 0.93* & -0.07* & 0.93* \\ 
-Log of days in office & 0.08 & 1.08 & 0.07 & 1.08 \\ 
-Cold war & -0.52* & 0.60* & -0.52* & 0.60* \\ 
+Constant & 9,444 & 102 & -5.3*** & 0.00*** & -5.3*** & 0.01*** \\ 
+Regime Type &  &  &  &  &  &  \\ 
+    Dominant Party & 2,303 & 21 & — & — & — & — \\ 
+    Personal & 1,305 & 40 & 1.1*** & 3.03*** & 1.1*** & 2.99*** \\ 
+    Presidential Democracy & 1,643 & 27 & 1.4** & 4.18** & 1.4** & 4.06** \\ 
+    Military & 620 & 8 & 0.50 & 1.65 & 0.53 & 1.70 \\ 
+    Parliamentary Democracy & 2,368 & 1 & -1.9 & 0.15 & -1.5 & 0.21 \\ 
+    Other & 1,205 & 5 & -0.75 & 0.47 & -0.67 & 0.51 \\ 
+GDP per capita & 9,444 & 102 & -0.04* & 0.96* & -0.03 & 0.97 \\ 
+GDP growth trend & 9,444 & 102 & 1.1 & 2.87 & 1.1 & 2.96 \\ 
+Political stability & 9,444 & 102 & 0.00 & 1.00 & 0.01 & 1.01 \\ 
+Log of Population & 9,444 & 102 & -0.14 & 0.87 & -0.14 & 0.87 \\ 
+Polity 5 scores & 9,444 & 102 & -0.07* & 0.93* & -0.07* & 0.93* \\ 
+Log of days in office & 9,444 & 102 & 0.08 & 1.08 & 0.07 & 1.08 \\ 
+Cold war &  &  & -0.52* & 0.60* & -0.52* & 0.60* \\ 
 \bottomrule
 \end{tabular*}
 \begin{minipage}{\linewidth}
 \textsuperscript{\textit{1}}*p\textless{}0.05; **p\textless{}0.01; ***p\textless{}0.001\\
-\textsuperscript{\textit{2}}OR = Odds Ratio\\
+Abbreviation: OR = Odds Ratio\\
 \end{minipage}
 
 }
@@ -2899,11 +2899,11 @@ hypothesis guiding this study.
 Data analysis shows a significant correlation between the frequency of
 coup attempts in a country and the likelihood of future coups. Notably,
 over a third of coups have occurred in the top ten countries with the
-most attempts since 1950 (As shown in \textbf{?@tbl-coups}). This
-pattern suggests a self-reinforcing cycle of political instability,
-where each successful coup increases the probability of subsequent
-attempts, creating an environment of persistent uncertainty for
-coup-installed leaders.
+most attempts since 1950 (\citeproc{ref-powell2011}{Powell and Thyne
+2011}). This pattern suggests a self-reinforcing cycle of political
+instability, where each successful coup increases the probability of
+subsequent attempts, creating an environment of persistent uncertainty
+for coup-installed leaders.
 
 The disparity in leadership longevity between autocoup and
 coup-installed leaders is starkly illustrated by survival data. As
@@ -3037,7 +3037,7 @@ the autocoup dataset introduced in this study, Archigos, and PLAD.
 
 Control variables include economic performance, political stability,
 population size, and the leader's age, which are consistent with the
-autocoup analysis in Chapter~\ref{sec-chapter3}.
+autocoup analysis in Chapter 3.
 
 \section{Results and discussion}\label{results-and-discussion}
 
@@ -3060,7 +3060,7 @@ of leaders}
 \toprule
  & \multicolumn{4}{c}{\textbf{Cox PH Model}} & \multicolumn{4}{c}{\textbf{Time-dependent Cox Model}} \\ 
 \cmidrule(lr){2-5} \cmidrule(lr){6-9}
-\textbf{Characteristic} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1,2}} & \textbf{SE}\textsuperscript{\textit{2}} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1,2}} & \textbf{SE}\textsuperscript{\textit{2}} \\ 
+\textbf{Characteristic} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1}} & \textbf{SE} & \textbf{N} & \textbf{Event N} & \textbf{HR}\textsuperscript{\textit{1}} & \textbf{SE} \\ 
 \midrule\addlinespace[2.5pt]
 {\bfseries Leader Type} &  &  &  &  &  &  &  &  \\ 
     Autocoup leaders & 67 & 30 & 1.00 & — & 50 & 25 & 1.00 & — \\ 
@@ -3075,7 +3075,7 @@ of leaders}
 \end{tabular*}
 \begin{minipage}{\linewidth}
 \textsuperscript{\textit{1}}*p\textless{}0.1; **p\textless{}0.05; ***p\textless{}0.01\\
-\textsuperscript{\textit{2}}HR = Hazard Ratio, SE = Standard Error\\
+Abbreviations: HR = Hazard Ratio, SE = Standard Error\\
 \end{minipage}
 
 }
@@ -3381,14 +3381,13 @@ mitigating the occurrence of autocoups.
 \section{Impact of autocoups on political
 change}\label{impact-of-autocoups-on-political-change}
 
-According to the definition in \textbf{?@sec-definition}, an autocoup
-refers to an incumbent leader extending their tenure in power beyond the
-originally mandated limits, whether through legal or illegal means.
-While the leader may assume a different title or position, the
-individual in power remains unchanged. Therefore, unlike traditional
-coups, an autocoup does not result in real leadership turnover, elite
-restructuring, or regime change. In other words, the fundamental ruling
-structure remains intact.
+According to the definition in Chapter 2, an autocoup refers to an
+incumbent leader extending their tenure in power beyond the originally
+mandated limits, whether through legal or illegal means. While the
+leader may assume a different title or position, the individual in power
+remains unchanged. Therefore, unlike traditional coups, an autocoup does
+not result in real leadership turnover, elite restructuring, or regime
+change. In other words, the fundamental ruling structure remains intact.
 
 This distinction has important implications. Since regime change rarely
 occurs following an autocoup, its impact on politics cannot be assessed
@@ -4407,6 +4406,11 @@ Fariss, Christopher J., Therese Anders, Jonathan N. Markowitz, and
 Miriam Barnum. 2022. {``New Estimates of Over 500 Years of Historic GDP
 and Population Data.''} \emph{Journal of Conflict Resolution} 66 (3):
 553--91. \url{https://doi.org/10.1177/00220027211054432}.
+
+\bibitem[\citeproctext]{ref-firth1993}
+FIRTH, DAVID. 1993. {``Bias Reduction of Maximum Likelihood
+Estimates.''} \emph{Biometrika} 80 (1): 27--38.
+\url{https://doi.org/10.1093/biomet/80.1.27}.
 
 \bibitem[\citeproctext]{ref-frantz2016}
 Frantz, Erica, and Elizabeth A. Stein. 2016. {``Countering Coups:

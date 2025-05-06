@@ -4,13 +4,13 @@ library(janitor)
 library(gtsummary)
 library(gt)
 library(democracyData)
-gwf_all |> 
+gwf_all |>
   view()
-gwf_all_extended |> 
+gwf_all_extended |>
   view()
 library(splines)
 
-REIGN |> 
+REIGN |>
   head()
 ```
 
@@ -26,12 +26,12 @@ military-personal, indirect military)
 gwf_monarchy Binary indicator of monarchy regime type
 
 ```{r}
-REIGN |> 
-  distinct(gwf_regimetype) 
+REIGN |>
+  distinct(gwf_regimetype)
 ```
 
 ```{r}
-REIGN |> 
+REIGN |>
   mutate(regime_type = case_when(
     gwf_regimetype %in% c("party-based", "party-personal", "party-military", "party-personal-military", "oligarchy") ~ "dominant_party",
     gwf_regimetype == "personal" ~ "personal",
@@ -39,32 +39,38 @@ REIGN |>
     gwf_regimetype == "monarchy" ~ "monarchy",
     gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
     TRUE ~ "other"
-  )) |> 
-  # filter(regime_type == "other") |> 
-  filter(year > 1949) |> 
+  )) |>
+  # filter(regime_type == "other") |>
+  filter(year > 1949) |>
   # view()
-  tabyl(regime_type) |> 
+  tabyl(regime_type) |>
   filter(regime_type != "other") |>
-  mutate(percent = percent(percent),
-         regime_type = str_to_title(regime_type),
-         no_of_country_year = n,
-         .before = n) |>
+  mutate(
+    percent = percent(percent),
+    regime_type = str_to_title(regime_type),
+    no_of_country_year = n,
+    .before = n
+  ) |>
   select(-n) |>
-  add_row(total = "Total",
-          sum_no_of_country_year = sum(no_of_country_year),
-          sum_percent = sum(percent)) |> 
+  add_row(
+    total = "Total",
+    sum_no_of_country_year = sum(no_of_country_year),
+    sum_percent = sum(percent)
+  ) |>
   arrange(-no_of_country_year) |>
   clean_names(case = "title") |>
-  gt() |> 
-  tab_options(table.width = pct(90),
-              column_labels.font.size = 16,
-              column_labels.font.weight = "bold") |>
+  gt() |>
+  tab_options(
+    table.width = pct(90),
+    column_labels.font.size = 16,
+    column_labels.font.weight = "bold"
+  ) |>
   opt_row_striping() |>
   tab_source_note(source_note = md("***Source: REIGN dataset***"))
 ```
 
 ```{r}
-gwf_all |> 
+gwf_all |>
   mutate(regimetype = case_when(
     gwf_party == 1 ~ "Dominant_Party",
     gwf_military == 1 ~ "Military",
@@ -79,7 +85,7 @@ gwf_all |>
 ```
 
 ```{r}
-REIGN %>% 
+REIGN %>%
   mutate(regime_type = case_when(
     gwf_regimetype %in% c("party-based", "party-personal", "party-military", "party-personal-military", "oligarchy") ~ "dominant-party",
     gwf_regimetype == "personal" ~ "personal",
@@ -87,28 +93,32 @@ REIGN %>%
     gwf_regimetype == "monarchy" ~ "monarchy",
     gwf_regimetype %in% c("presidential", "parliamentary") ~ "democracy",
     TRUE ~ "other"
-  )) %>% 
+  )) %>%
   filter(year > 1949) %>%
-  tabyl(regime_type) %>% 
+  tabyl(regime_type) %>%
   arrange(-n) %>%
-  bind_rows(summarise(., across(where(is.numeric), sum),
-                         across(where(is.character), ~'Total'))) %>%
-  mutate(percent = percent(percent),
-         regime_type = str_to_title(regime_type),
-         counts_of_country_year = n) %>%
+  bind_rows(summarise(
+    ., across(where(is.numeric), sum),
+    across(where(is.character), ~"Total")
+  )) %>%
+  mutate(
+    percent = percent(percent),
+    regime_type = str_to_title(regime_type),
+    counts_of_country_year = n
+  ) %>%
   select(-n) %>%
   clean_names(case = "title") %>%
-  gt() %>% 
-  tab_options(table.width = pct(90),
-              column_labels.font.size = 16,
-              column_labels.font.weight = "bold") %>%
+  gt() %>%
+  tab_options(
+    table.width = pct(90),
+    column_labels.font.size = 16,
+    column_labels.font.weight = "bold"
+  ) %>%
   opt_row_striping() %>%
   tab_source_note(source_note = md("***Source: REIGN dataset***"))
-
 ```
 
 ```{r}
-
 ```
 
 Dominant party regimes
@@ -256,6 +266,7 @@ commodo justo?
 # Install the package if you haven't
 # install.packages("splines")
 
+
 # Load the package
 # library(splines)
 
@@ -278,20 +289,28 @@ lines(x, predict(model, newdata = data), col = "blue")
 ```{r}
 probit_selection <- reg_data |>
   filter(regime_type != "other") |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct -1)*100) |>
-  glm(coup >0 ~ regime + ect + gdppc + violence + pre_coups, 
-      family = binomial(link = "probit"), data = _)
+  mutate(
+    regime = fct_relevel(regime_type, "dominant-party"),
+    ect = (ct - 1) * 100
+  ) |>
+  glm(coup > 0 ~ regime + ect + gdppc + violence + pre_coups,
+    family = binomial(link = "probit"), data = _
+  )
 
 selection_margin <- margins(probit_selection)
 
 probit_outcome <- reg_data |>
-  filter(regime_type != "other",
-         coup != 0) |>
-  mutate(regime = fct_relevel(regime_type, "dominant-party"),
-         ect = (ct -1)*100) |>
-  glm(coup > 1 ~ regime + ect + gdppc + violence, 
-      family = binomial(link = "probit"), data = _)
+  filter(
+    regime_type != "other",
+    coup != 0
+  ) |>
+  mutate(
+    regime = fct_relevel(regime_type, "dominant-party"),
+    ect = (ct - 1) * 100
+  ) |>
+  glm(coup > 1 ~ regime + ect + gdppc + violence,
+    family = binomial(link = "probit"), data = _
+  )
 
 outcome_margin <- margins(probit_outcome)
 marginal_means(probit_selection, type = "response")
@@ -301,7 +320,8 @@ export_summs(
   selection_margin,
   outcome_margin
 )
-stargazer(type = "text",
+stargazer(
+  type = "text",
   probit_selection,
   probit_outcome,
   selection_margin,
@@ -314,10 +334,10 @@ export_summs(
 )
 library(marginaleffects)
 library(insight)
-marginal_effects(probit_selection, type = "response") |> 
-  summary() 
-marginal_effects(probit_outcome) |> 
-  summary() 
+marginal_effects(probit_selection, type = "response") |>
+  summary()
+marginal_effects(probit_outcome) |>
+  summary()
 
 avg_slopes(model_2step)
 ```
@@ -333,6 +353,8 @@ s
 ```
 
 ```{r}
-sim_ame(s, var = "ect", verbose = F) |> 
+sim_ame(s, var = "ect", verbose = F) |>
   summary()
 ```
+
+This is a test. this is a ters. This is a test. this results in a new line.
