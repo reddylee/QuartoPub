@@ -1853,8 +1853,8 @@ regimes, with democracies serving as the reference category.
 
 Control variables are selected based on previous research into coup determinants,
 predominantly encompassing factors such as economic performance, political
-violence, and tenure in office. In addition, population size and a Cold War dummy
-variable are included as further controls.
+violence, and tenure in office. In addition, democratic level, population size
+and a Cold War dummy variable are included as further controls.
 
 **Economic Level:** Measured by GDP per capita, representing the general economic
 wellbeing of a country. Data are sourced from the V-Dem dataset by @fariss2022,
@@ -1882,6 +1882,14 @@ posited to facilitate power consolidation, thereby making autocoup attempts more
 feasible. Data are drawn from the Archigos dataset [@goemans2009] and the
 Political Leaders' Affiliation Database (PLAD) [@bomprezzi2024wedded].
 
+**Democratic level:** This variable employs the Polity V score to assess the
+degree of democracy or autocracy in a given country. Developed by the Center for
+Systemic Peace, the Polity V score evaluates regime authority characteristics on
+a scale ranging from -10 (fully autocratic) to +10 (fully democratic), based on
+indicators such as the competitiveness of political participation, the process of
+executive recruitment, and the extent of constraints on executive authority
+[@marshall].
+
 **Population size:** The natural logarithm of national population is included to
 control for the potential impact of population size on leadership stability.
 Larger populations may pose greater governance challenges and amplify opposition.
@@ -1902,6 +1910,7 @@ increase thereafter.
 #| echo: false
 
 autocoup_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_model.csv") |>
+  filter(days_in_office > 180) |>
   mutate(
     regime = case_when(
       regime == "personal" ~ "Personal",
@@ -1931,10 +1940,11 @@ common_labels <- list(
 model_formula <- autocoup_attempt ~ regime + GDP_pc + GDP_trend + violence + pop_log +
   polity5 + log(cumulative_days_in_office) + factor(cold_war)
 
-model_logit <- glm(
+model_logit <- autocoup_model |> 
+  glm(
   model_formula,
   family = binomial,
-  data = autocoup_model
+  data = _
 ) |>
   tbl_regression(
     label = common_labels,
@@ -1944,7 +1954,9 @@ model_logit <- glm(
   ) |>
   add_n(location = "level") |>
   add_nevent(location = "level") |>
-  add_significance_stars(hide_p = TRUE) |>
+  add_significance_stars(hide_p = TRUE,
+                        thresholds = c(0.01, 0.05, 0.1)
+                         ) |>
   modify_column_hide(columns = std.error)
 
 
@@ -1960,7 +1972,9 @@ model_logit_od <- glm(
     conf.int = F,
     intercept = T
   ) |>
-  add_significance_stars(hide_p = TRUE) |>
+  add_significance_stars(hide_p = TRUE,
+                        thresholds = c(0.01, 0.05, 0.1)
+                         ) |>
   modify_column_hide(columns = std.error)
 
 
@@ -1976,7 +1990,9 @@ model_brg <- glm(
     conf.int = F,
     intercept = T
   ) |>
-  add_significance_stars(hide_p = TRUE) |>
+  add_significance_stars(hide_p = TRUE,
+                          thresholds = c(0.01, 0.05, 0.1)
+                         ) |>
   modify_column_hide(columns = std.error)
 
 model_brg_od <- glm(
@@ -1992,7 +2008,9 @@ model_brg_od <- glm(
     conf.int = F,
     intercept = T
   ) |>
-  add_significance_stars(hide_p = TRUE) |>
+  add_significance_stars(hide_p = TRUE,
+                         thresholds = c(0.01, 0.05, 0.1)
+                         ) |>
   modify_column_hide(columns = std.error)
 
 tbl_merge(
@@ -2028,7 +2046,7 @@ types. The model uses "Dominant Party" regimes as the reference category.
 
 Examining the regime type variables, I find strong support for aspects of the
 hypothesis. Relative to dominant party regimes, personalist autocracies have an
-estimated odds ratio of 2.07, which is statistically significant ( $p<0.05$ ).
+estimated odds ratio of 2.13, which is statistically significant ( $p<0.05$ ).
 This indicates that the odds of an autocoup attempt are approximately 2 times
 higher in personalist autocracies compared to dominant party regimes, holding all
 other variables constant. Presidential democracies also show a significantly
@@ -2118,22 +2136,25 @@ research to build upon the foundational analysis presented here.
 
 ### Abstract {.unnumbered}
 
-This chapter examines the relationship between the methods of power acquisition
-and the tenure of leaders who ascend to power through unconventional means, with
-a particular focus on coup-installed and autocoup leaders. The central hypothesis
-posits that the mode of accession has a profound impact on leadership longevity.
-Utilizing Cox proportional hazards and time-dependent Cox models, this study
-provides robust empirical evidence of disparate survival times between these two
-leader types. The findings reveal that, on average, coup-installed leaders are
-2.23 times more likely to be ousted from power than autocoup leaders, all else
-being equal. These results have far-reaching implications for political stability
-and democratic processes, suggesting that the perceived low costs and high
-rewards associated with autocoups may incentivize incumbents to prolong their
-tenure through this means, potentially contributing to democratic erosion. This
-research makes a notable contribution to the academic literature by offering
-nuanced insights into the dynamics of irregular leadership transitions and
-enhances our understanding of the complex interplay between power acquisition
-methods and leadership longevity.
+This chapter examines how the mode of power acquisition affects the tenure of
+political leaders who rise to office through irregular means, with a particular
+focus on those installed via coups and autocoups. It argues that political
+leaders who successfully extend their tenure through autocoups are more likely to
+survive in office longer than those who are installed by coups. Contrary to this
+initial hypothesis, the time-dependent Cox model reveals no statistically
+significant difference in the risk of removal between coup-installed and autocoup
+leaders once key covariates—particularly regime type—are accounted for. Instead,
+the analysis highlights the decisive influence of regime characteristics on
+leadership survival. Leaders in military, parliamentary, and transitional regimes
+face significantly higher hazards of removal compared to those in dominant-party
+systems. Additionally, higher levels of GDP per capita are associated with
+greater leadership stability, while increased political violence correlates with
+elevated risks of ousting. These findings suggest that structural and
+institutional contexts, rather than the specific mechanism of accession, more
+strongly shape the durability of irregular leadership. This study contributes to
+the literature on political survival by emphasising the role of regime type and
+political context in explaining leadership longevity following unconventional
+accessions to power.
 
 ***keywords**: Coups, Autocoups, Leadership Survival, Cox Model*
 
@@ -2169,8 +2190,7 @@ successful.
 ```{r}
 #| label: data
 #| include: false
-survival_cox_ph_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_ph_model.csv") |>
-  mutate(survival_year = survival_days / 365)
+survival_cox_ph_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_ph_model.csv")
 
 survival_cox_td_model <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/survival_cox_td_model.csv")
 
@@ -2598,25 +2618,20 @@ basis for comparing the survival time between these two types of leaders.
 The data for both dependent and independent variables are sourced from the
 autocoup dataset introduced in this study, Archigos, and PLAD.
 
-Control variables include economic performance, political stability, population
-size, and the leader's age, which are consistent with the autocoup analysis in
-Chapter 3.
+Control variables include regime types, economic performance, political
+stability, population size, and Polity V scores which are consistent with the
+autocoup analysis in Chapter 3.
 
 ### Results and discussion
 
 #### Model results
 
-Using the ***surviavl*** package in R [@survival], I present the regression
-results for both the Cox Proportional Hazards model (Cox PH) and the
-time-dependent Cox model in @tbl-cox.
+Regression results for both the Cox Proportional Hazards (Cox PH) model and the
+time-dependent Cox model, estimated using the survival package in R [@survival],
+are presented in @tbl-cox.
 
 ```{r}
 #| label: model
-
-Mydata1 <- survival_cox_ph_model |>
-  mutate(group = factor(group,
-    labels = c("Autocoup leaders", "Coup-installed leaders")
-  ))
 
 common_labels <- list(
   group ~ "Leader Type",
@@ -2625,15 +2640,21 @@ common_labels <- list(
   GDP_pc ~ "GDP per capita",
   pop_log ~ "Population: log",
   polity5 ~ "Polity 5",
-  violence ~ "Political stability",
-  age ~ "Age"
+  violence ~ "Political stability"
 )
 
-model_cox1 <- Mydata1 |>
+model_cox1 <- survival_cox_ph_model |>
+  mutate(
+    regime = factor(regime,
+    levels = c("dominant-party", "military", "personal", "presidential", "parliamentary", "other")
+  ),
+    group = factor(group,
+    labels = c("Autocoup leaders", "Coup-installed leaders")
+  )) |> 
   coxph(
     Surv(survival_days, status) ~
       group + regime + GDP_trend + GDP_pc + pop_log +
-      polity5 + violence + age,
+      polity5 + violence,
     data = _
   )
 
@@ -2655,21 +2676,24 @@ tbl1 <- model_cox1 |>
   bold_p(t = 0.05) |>
   bold_labels()
 
-Mydata2 <- survival_cox_td_model |>
+
+model_cox2 <- survival_cox_td_model |>
   mutate(
+    regime = factor(regime,
+    levels = c("dominant-party", "military", "personal", "presidential", "parliamentary", "other")
+  ),
     group = factor(group,
       labels = c("Autocoup leaders", "Coup-installed leaders")
     ),
     survt = (tstop - tstart) * 365
-  )
-
-model_cox2 <- Mydata2 |>
+  ) |> 
   coxph(
     Surv(T1, T2, status) ~
       group + regime + GDP_trend + GDP_pc + pop_log +
-      polity5 + violence + age + cluster(id),
+      polity5 + violence + cluster(id),
     data = _
   )
+
 tbl2 <- model_cox2 |>
   tbl_regression(
     exponentiate = T,
@@ -2699,105 +2723,58 @@ tbl_merge(list(tbl1, tbl2),
 )
 ```
 
-Both models showed a statistically significant relationship between leadership
-type and the hazard of removal from power. Since time-dependent Cox model use the
-control variables which change over time, I interpret the main findings based on
-time-dependent model.
+The two models yield divergent findings concerning the central question of this
+study. The Cox Proportional Hazards (PH) model indicates a marginally
+statistically significant relationship between leadership type and the risk of
+removal from power ( $p<0.1$ ). This result supports the hypothesis that leaders
+installed via coups face a 1.68 times greater hazard of removal compared to those
+who came to power through autocoups. However, the time-dependent Cox model finds
+no statistically significant association in this regard. As the time-dependent
+model incorporates covariates that vary over time, the subsequent interpretation
+of the primary findings is grounded in this more refined specification.
 
-Coup-installed leaders were found to have a hazard ratio of 2.23 in the
-time-dependent model compared to autocoup leaders (reference group), assuming all
-other variables in the model are held constant. This suggests that coup-installed
-leaders face a significantly greater risk of removal from power compared to
-autocoup leaders. At any given time during their tenure, coup-installed leaders
-are 2.23 times more likely to be ousted from power compared to autocoup leaders,
-all else being equal in the model.
+According to the time-dependent Cox model, and contrary to the initial hypothesis
+and earlier analysis, the mode of accession to power does not significantly
+affect the tenure of irregularly inaugurated political leaders once relevant
+covariates—particularly regime type—are accounted for. Nevertheless, the findings
+derived from survival modelling reinforce the conclusions drawn in Chapter 3: the
+balance of power, fundamentally shaped by regime characteristics, is central to
+both the seizure and maintenance of political authority.
 
-The control variables perform differently in the two models. Economic level (GDP
-per capita) exhibits statistically significant effects in both models. In the
-time-dependent model, the hazard ratio of 0.95 indicates that for each unit
-increase in GDP per capita (measured in units of \$10,000), the hazard (or risk)
-of being ousted at any given time is reduced by 5%, assuming all other variables
-in the model are held constant.
+More specifically, regime type significantly influences the hazard of removal.
+Leaders within military regimes exhibit a hazard ratio of 2.08 relative to their
+counterparts in dominant-party regimes, all else being equal. This suggests that
+military leaders face a notably greater risk of being ousted. At any given time
+during their rule, military regime leaders are 1.08 times more likely to be
+removed than those in dominant-party regimes, under the same model conditions.
+Leaders in parliamentary regimes face an even higher hazard ratio of 4.28, though
+this is only marginally significant at the $10\%$ level. Leaders under "other"
+regimes—typically provisional or transitional—display a hazard ratio of 2.64, a
+statistically significant result that aligns with their inherently unstable
+nature.
 
-GDP growth trend demonstrates a more substantial effect in reducing the risk of
-coups. Specifically, a 1 percentage point higher economic growth trend is
-associated with an 80% reduction in the risk of being ousted, although this
-effect is only statistically significant at the 10% level. This suggests a
-possible trend where positive economic performance might mitigate the risk of
-removal from power, but the evidence is not robust enough to confirm this
-conclusively.
+Economic development, proxied by GDP per capita, exerts a statistically
+significant influence in the time-dependent model. A hazard ratio of 0.95 implies
+that each additional \$10,000 in GDP per capita reduces the risk of removal by
+$5\%$, holding all other variables constant. Political stability, as measured by
+the violence index, indicates that a one-unit increase in the index corresponds
+to an $11\%$ rise in the hazard of removal from office.
 
-Political stability, as measured by the violence index, shows that a 1-point
-increase in the index correlates with an 11% higher risk of being ousted.
-However, this effect is also only statistically significant at the 10% level,
-indicating a weaker but potentially important relationship between increased
-violence and the risk of removal from office.
+Other control variables—namely GDP growth trends, the logarithm of population
+size, and Polity V scores—do not exhibit statistically significant effects on the
+likelihood of political removal in the time-dependent Cox model. Although these
+variables are theoretically relevant and commonly included in models of political
+survival, their lack of significance suggests that, within the context of
+irregular leadership transitions, structural economic growth, demographic scale,
+and broader democratic indicators may exert less immediate influence on leader
+vulnerability than more proximate factors such as regime type and political
+stability. It is possible that their effects are either mediated by other
+included variables or require a longer time horizon to manifest in measurable
+political outcomes. This underscores the importance of distinguishing between
+long-term institutional features and short-term political dynamics when assessing
+leader survival.
 
 #### Discussion
-
-```{r}
-#| label: fig-coxSurv
-#| fig-cap: Survival curves for Cox Model
-#| fig-subcap:
-#|  - Cox PH Model
-#|  - Time-dependent Cox Model
-#| layout-ncol: 2
-#| echo: false
-
-testdata1 <- Mydata1 |>
-  summarise(
-    .by = group,
-    GDP_trend = mean(GDP_trend),
-    GDP_pc = mean(GDP_pc),
-    pop_log = mean(pop_log),
-    polity5 = mean(polity5),
-    violence = mean(violence),
-    age = mean(age)
-  )
-
-model_cox1 |>
-  survfit(newdata = testdata1) |>
-  ggsurvplot(
-    data = testdata1,
-    xlab = "Days",
-    surv.median.line = "hv",
-    legend.title = "Leader Type",
-    legend.labs = c("Autocoup leaders", "Coup-installed leaders")
-  )
-
-testdata2 <- Mydata2 |>
-  summarise(
-    .by = group,
-    GDP_trend = mean(GDP_trend),
-    GDP_pc = mean(GDP_pc),
-    pop_log = mean(pop_log),
-    polity5 = mean(polity5),
-    violence = mean(violence),
-    age = mean(age)
-  )
-
-model_cox2 |>
-  survfit(newdata = testdata2) |>
-  ggsurvplot(
-    data = testdata2,
-    xlab = "Days",
-    surv.median.line = "hv",
-    legend.title = "Leader Type",
-    legend.labs = c("Autocoup leaders", "Coup-installed leaders")
-  )
-```
-
-The survival curves in @fig-coxSurv displays the survival rates for both types of
-leaders, highlighting the differences in their survival curves. Both the Cox PH
-model and the time-dependent Cox model yield similar results. Notably, the
-survival curve for coup-installed leaders has a significantly lower trajectory
-than that of autocoup leaders. The steeper drop at the early stage for
-coup-installed leaders indicates they are more likely to be ousted shortly after
-assuming power. Additionally, the survival curve for coup-installed leaders
-crosses the median survival line much earlier (about 3,000 days) than that of
-autocoup leaders (about 8,500 days). This disparity suggests that autocoup
-leaders tend to remain in power for longer durations than their coup-installed
-counterparts.
 
 ```{r}
 #| label: fig-coxHR
@@ -2811,12 +2788,16 @@ counterparts.
 coxplottidy <- tidy(model_cox1, exponentiate = T, conf.int = T) |>
   mutate(term = c(
     "Coup-installed leaders",
+    "Military",
+    "Personal",
+    "Presidential",
+    "Parliamentary",
+    "Ohter",
     "GDP Growth Trend",
     "GDP per capita",
     "Population: log",
     "Polity 5",
-    "Political stability",
-    "Age"
+    "Political stability"
   ))
 
 coxplottidy |>
@@ -2838,12 +2819,16 @@ coxplottidy |>
 coxplottidy <- tidy(model_cox2, exponentiate = T, conf.int = T) |>
   mutate(term = c(
     "Coup-installed leaders",
+    "Military",
+    "Personal",
+    "Presidential",
+    "Parliamentary",
+    "Ohter",
     "GDP Growth Trend",
     "GDP per capita",
     "Population: log",
     "Polity 5",
-    "Political stability",
-    "Age"
+    "Political stability"
   ))
 
 coxplottidy |>
@@ -2863,98 +2848,87 @@ coxplottidy |>
   theme_bw()
 ```
 
-@fig-coxHR displays the hazard ratios and corresponding 95% confidence intervals
-for the variables incorporated in the Cox model. Both the Cox Proportional
-Hazards (PH) model and the time-dependent model produce similar plots,
-reinforcing the robustness of the findings. Key points to note include:
+Figure @fig-coxHR presents the hazard ratios and their corresponding $95\%$
+confidence intervals for the variables included in the Cox proportional hazards
+model. The proximity of a hazard ratio (depicted as dots) to 1 indicates a
+minimal effect of that variable on the risk of removal from power; a hazard ratio
+of 1 denotes no effect. The horizontal lines extending from the dots represent
+the $95\%$ confidence intervals. If these intervals intersect the vertical blue
+line at 1, the variable is not statistically significant at the $5\%$ level.
 
--   The closer the hazard ratio (represented by the dots) is to 1, the less
-    impact the variable has on the risk of being ousted. A hazard ratio of 1
-    indicates no effect.
+As previously discussed, the hazard ratios for leaders in military regimes and
+those classified under “Other” coup-installed regimes are significantly greater
+than 1 and are statistically significant at the $5\%$ threshold. Although GDP per
+capita is also statistically significant at this level, its hazard ratio is very
+close to 1, indicating a limited substantive effect.
 
--   The whiskers extending from the dots represent the 95% confidence intervals.
-    If these whiskers cross the vertical blue line at 1, it indicates that the
-    variable is not statistically significant at the 5% level.
+While the hazard ratios for GDP growth trend and for parliamentary and
+presidential regimes appear visually distant from 1, they are not statistically
+significant at the $5\%$ level, as their confidence intervals cross the vertical
+reference line.
 
--   The hazard ratio for coup-installed leaders is significantly greater than 1
-    and statistically significant at the 5% level. This indicates that
-    coup-installed leaders face a substantially higher risk of being ousted
-    compared to autocoup leaders.
-
--   Most other variables have hazard ratios close to 1, suggesting that a
-    one-unit increase in these variables does not significantly affect the risk
-    of being ousted.
-
--   Although the hazard ratio for GDP growth trend is considerably less than 1 in
-    the time-dependent model, indicating a potential protective effect, it is not
-    statistically significant at the 5% level. However, it is statistically
-    significant at the 10% level, suggesting that better economic performance may
-    help to consolidate the rule of the incumbents to some extent, albeit the
-    evidence is not as strong.
+Most other variables exhibit hazard ratios near 1, suggesting that a one-unit
+change in these variables does not meaningfully influence the likelihood of a
+leader being ousted.
 
 #### Assessing the proportional hazards assumption
 
-Assessing the proportional hazards assumption is crucial for the validity of the
-Cox model results. To evaluate this, we used the chi-square test based on
-Schoenfeld residuals to determine whether the covariate effects remain constant
-(proportional) over time. Although the Cox PH model violates the proportional
-hazards assumption, our primary analysis relies on the time-dependent Cox model,
-which does not show strong evidence of violating the proportional hazards
-assumption for any covariate. The global p-value of 0.416 is much greater than
-the 5% significance level, indicating that the proportional hazards assumption is
-reasonably met for the time-dependent Cox model.
+Evaluating the proportional hazards assumption is essential for ensuring the
+validity of the Cox model estimates. This assumption is tested using a chi-square
+test based on Schoenfeld residuals, which assesses whether the effects of
+covariates remain constant over time. The results indicate that neither the
+standard Cox proportional hazards model nor the time-dependent Cox model violates
+this assumption. The global p-values—0.18 for the standard model and 0.27 for the
+time-dependent model—both exceed the conventional $5\%$ significance threshold,
+suggesting that the proportional hazards assumption is reasonably upheld in both
+cases.
 
 ```{r}
 #| label: robust_test
 #| include: false
-test <- cox.zph(model_cox2)
+test <- cox.zph(model_cox1)
 ```
 
 ### Summary
 
-This chapter explores the survival durations of political leaders who come to
-power through unconventional means, specifically focusing on coups and autocoups.
-Based on the hypothesis that the mode of accession affects leader tenure, I use
-survival analysis techniques, including the Cox proportional hazards model and a
-time-dependent Cox model, to investigate this phenomenon. The findings suggest
-that autocoup leaders tend to have longer tenures than coup-installed leaders.
+This chapter examined the survival durations of political leaders who assumed
+office through irregular means—specifically coups and autocoups—using survival
+analysis techniques, including the Cox proportional hazards model and a
+time-dependent Cox model. While the standard Cox model suggested a marginally
+significant difference in tenure risk between autocoup and coup-installed
+leaders, this association was not statistically significant in the time-dependent
+model, which offers a more robust specification by accounting for time-varying
+covariates.
 
-Empirical analysis reveals a significant disparity in tenure length: leaders who
-assume power via autocoup remain in office for an average of 11 years, compared
-to just 5.6 years for those installed by coups. Moreover, the time-dependent Cox
-model indicates that coup-installed leaders are 2.23 times more likely to be
-ousted from power at any given time compared to their autocoup counterparts, all
-other factors being equal. These findings underscore the importance of
-understanding the autocoup as a mechanism through which leaders extend their rule
-by manipulating legal frameworks and weakening institutional constraints.
+The findings indicate that, once regime type and other relevant covariates are
+controlled for, the method of accession—whether by coup or autocoup—does not
+independently predict leader survival. Instead, regime type emerged as a key
+determinant. Leaders operating within military and transitional ("other") regimes
+faced significantly higher risks of removal compared to those in dominant-party
+systems. Additionally, economic development, proxied by GDP per capita, and
+political stability, measured by a violence index, were found to significantly
+influence tenure length, whereas GDP growth, population size, and democratic
+scores (Polity V) were not statistically significant.
 
-The implications of these findings are profound. The relative ease and potential
-rewards of an autocoup could incentivize more leaders to resort to this method of
-power retention, particularly in fragile democracies or transitioning regimes.
-Consequently, democratic backsliding may become more prevalent, as autocoups
-erode democratic institutions and undermine constitutional norms.
+These results reinforce the central argument that the institutional
+context—particularly regime characteristics—plays a more decisive role in
+determining political longevity than the initial mode of power seizure. This
+finding aligns with earlier qualitative assessments and underscores the necessity
+of incorporating institutional and structural variables when analysing political
+survival.
 
-This study contributes significantly to the literature on political leadership
-survival by showing that the mode of accession has a substantial impact on leader
-tenure, an aspect that has received limited attention in previous research.
-Methodologically, this work advances the field by applying robust survival
-analysis techniques, including both Cox models, to provide a nuanced
-understanding of the dynamics that influence leadership stability.
+Methodologically, the chapter demonstrates the value of time-dependent modelling
+in political science, especially when covariates evolve over time. It also
+contributes to the emerging literature on autocoups by offering one of the first
+systematic analyses of their implications for political survival. However, the
+reliance on a newly constructed dataset for autocoups presents limitations,
+highlighting the need for continued refinement and expansion in future research.
 
-However, the study is not without limitations. The analysis relies on an autocoup
-dataset that was collected and coded by the author, a relatively novel concept in
-the academic sphere. As the understanding and recognition of "autocoup" as a term
-continue to evolve, future research should refine and expand the dataset.
-Incorporating additional cases and cross-referencing with other forms of
-irregular leadership transitions would contribute to a more comprehensive view of
-political survival under such conditions.
-
-In conclusion, this chapter highlights the need for more refined approaches to
-studying political tenure and irregular power retention. By offering valuable
-insights into the dynamics of political stability and the risks associated with
-non-democratic leadership transitions, this research emphasizes the importance of
-continued investigation into the complex relationships between power, legitimacy,
-and survival in political leadership.
+In sum, this chapter provides empirical support for the proposition that regime
+characteristics, more than the method of accession alone, shape the durability of
+irregular political leadership. These insights contribute to broader debates on
+authoritarian resilience, democratic backsliding, and the institutional
+foundations of political power.
 
 ## Coups, Autocoups, and Democracy
 
@@ -3345,36 +3319,43 @@ coup_autocoup <- read.csv("https://raw.githubusercontent.com/reddylee/Datasets/r
 #| tbl-cap: "The Impact of Autocoups on Democratization(1950–2018): OLS with country-fixed effects"
 #| results: asis
 
-demo_model1 <- plm(
+demo_model1 <- coup_autocoup |> 
+  rename(Attemp = diff2, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3) |> 
+  plm(
   Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Attemp = diff2, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3)
+  data = _
 )
 
-demo_model2 <- plm(
+demo_model2 <- coup_autocoup |> 
+  rename(Attemp = diff3, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3) |> 
+  plm(
   Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Attemp = diff3, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3)
+  data = _
 )
 
-demo_model3 <- plm(
+demo_model3 <- coup_autocoup |> 
+  rename(Succeed = diff3, Autocoup = autocoup_effect, Coup = coup_effect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_effect, Coup = coup_effect)
+  data = _
 )
 
-demo_model4 <- plm(
+demo_model4 <- coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect)
+  data = _
 )
 
 stargazer(demo_model1, demo_model2, demo_model3, demo_model4,
@@ -3486,44 +3467,49 @@ never contribute to an increase in Polity scores.
 #| tbl-cap: "The Impact of Autocoups on Democratization: one to five years"
 #| results: asis
 
-demo_model1 <- plm(
+demo_model1 <- coup_autocoup |> rename(Succeed = diff1, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff1, Autocoup = autocoup_seffect, Coup = coup_seffect)
+  data = _
 )
 
-demo_model2 <- plm(
+demo_model2 <- coup_autocoup |> rename(Succeed = diff2, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff2, Autocoup = autocoup_seffect, Coup = coup_seffect)
+  data = _
 )
 
-demo_model3 <- plm(
+demo_model3 <- coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect)
+  data = _
 )
 
-demo_model4 <- plm(
+demo_model4 <- coup_autocoup |> rename(Succeed = diff4, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff4, Autocoup = autocoup_seffect, Coup = coup_seffect)
+  data = _
 )
 
-demo_model5 <- plm(
+demo_model5 <- coup_autocoup |> rename(Succeed = diff5, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+  plm(
   Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |> rename(Succeed = diff5, Autocoup = autocoup_seffect, Coup = coup_seffect)
+  data = _
 )
 
 stargazer(demo_model1, demo_model2, demo_model3, demo_model4, demo_model5,
@@ -3550,43 +3536,47 @@ stargazer(demo_model1, demo_model2, demo_model3, demo_model4, demo_model5,
 #| results: asis
 
 
-demo_model1 <- plm(
-  Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = coup_autocoup |>
+demo_model1 <- coup_autocoup |>
     rename(Attempted = diff2, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
-    filter(regime != "other")
-)
-
-demo_model2 <- plm(
+    filter(regime != "other") |> 
+  plm(
   Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |>
-    rename(Attempted = diff3, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
-    filter(regime != "other")
+  data = _
 )
 
-demo_model3 <- plm(
-  Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
+demo_model2 <- coup_autocoup |>
+    rename(Attempted = diff3, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
+    filter(regime != "other") |> 
+  plm(
+  Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |>
-    rename(Succeeded = diff2, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
-    filter(regime != "other")
+  data = _
 )
-demo_model4 <- plm(
+
+demo_model3 <- coup_autocoup |>
+    rename(Succeeded = diff2, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
+    filter(regime != "other") |> 
+  plm(
   Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
   index = c("ccode", "year"),
   model = "within", # fixed effect
   effect = "individual",
-  data = coup_autocoup |>
+  data = _
+)
+demo_model4 <- coup_autocoup |>
     rename(Succeeded = diff3, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
-    filter(regime != "other")
+    filter(regime != "other") |> 
+  plm(
+  Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
+  index = c("ccode", "year"),
+  model = "within", # fixed effect
+  effect = "individual",
+  data = _
 )
 
 

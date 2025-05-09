@@ -95,8 +95,11 @@ head(mtcars)
 # 使用ggplot2绘制散点图
 library(ggplot2)
 
+head(mtcars, 10)
+
+
 ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point(color = "red", size = 3, alpha = 0.8) + # 设置点的颜色、大小和透明度
+  geom_point(color = "purple", size = 3, alpha = 0.8) + # 设置点的颜色、大小和透明度
   labs(
     title = "车重 vs 燃油效率",
     x = "车重 (吨)",
@@ -128,3 +131,7 @@ model_4 <- glm(diabetes ~ glucose + age + glucose:age,
 
 summary(model_4)
 ```
+
+This is a test of the `gt` package. It is used to create tables in R Markdown
+documents. The `gt` package provides a simple and flexible way to create
+high-quality tables for reporting and presentation purposes.
