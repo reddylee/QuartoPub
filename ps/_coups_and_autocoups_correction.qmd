@@ -53,7 +53,7 @@ execute:
 #| label: setup
 #| include: false
 
-pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue, plm, brglm2, flextable)
+pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, zoo, democracyData, vdemdata, readxl, here, stargazer, survival, survminer, ggsurvfit, sampleSelection, marginaleffects, glue, plm, brglm2, flextable, broom)
 ```
 
 ## Acknowledgements {.unnumbered}
@@ -1334,8 +1334,8 @@ long time... That is the origin of usurpation and tyranny” [@ginsburg2019, p.
 the Constitutional Assembly that "a president for life with the right to choose
 the successor is the most sublime inspiration for the republican order"—the
 notion of term limits became embedded in the region’s political culture. Indeed,
-approximately 81% of Latin American constitutions between independence and 1985
-included some form of presidential term limitation [@marsteintredet2019a].
+approximately $81\%$ of Latin American constitutions between independence and
+1985 included some form of presidential term limitation [@marsteintredet2019a].
 
 An analysis of autocoup cases in the region reveals two notable patterns
 concerning re-election dynamics.
@@ -1344,9 +1344,9 @@ concerning re-election dynamics.
 
 Unlike in many presidential systems where two consecutive terms are the norm,
 Latin American constitutions historically favoured more restrictive models.
-According to @marsteintredet2019a, 64.9% of constitutions in the region between
-independence and 1985 prohibited immediate re-election, while 5.9% forbade
-re-election altogether.
+According to @marsteintredet2019a, $64.9\%$ of constitutions in the region
+between independence and 1985 prohibited immediate re-election, while $5.9\%$
+forbade re-election altogether.
 
 Nonetheless, adherence to these rules has varied. Countries such as Mexico, which
 introduced a strict non-re-election clause in 1911 at the outset of the Mexican
@@ -1358,9 +1358,9 @@ or circumvented constitutional term limits.
 
 The pursuit of re-election or immediate re-election has been a key catalyst for
 autocoup attempts aimed at extending executive power. This study identifies 22
-autocoup cases in Latin America, of which 14 (over 63%) involved attempts to
+autocoup cases in Latin America, of which 14 (over $63\%$) involved attempts to
 enable re-election or immediate re-election. Among these, 9 were successful—a
-success rate of over 64%.
+success rate of over $64\%$.
 
 Importantly, not all such leaders sought indefinite rule. Many stepped down after
 securing and completing a second term. Notable examples include: Fernando
@@ -1437,15 +1437,15 @@ Autocoup |>
 ```
 
 Classical coups have historically been widespread across the African continent,
-accounting for approximately 45 per cent of all coups globally—219 out of 491
+accounting for approximately %45\\%\$ of all coups globally—219 out of 491
 recorded incidents since 1950—affecting 45 of the 54 African states
 [@powell2011]. Although autocoups occur less frequently than traditional coups,
 they nonetheless constitute a significant political phenomenon in Africa. Of the
-83 documented cases of autocoups worldwide, 43 per cent (36 cases) have taken
-place in Africa, involving 29 countries. Notably, the success rate of autocoups
-in Africa exceeds 77 per cent (28 out of 36), which is significantly higher than
-the regional success rate for classical coups (approximately 50 per cent) and
-aligns with the global average success rate for autocoups (77 per cent).
+83 documented cases of autocoups worldwide, $43\%$ (36 cases) have taken place in
+Africa, involving 29 countries. Notably, the success rate of autocoups in Africa
+exceeds $77\%$ (28 out of 36), which is significantly higher than the regional
+success rate for classical coups (approximately $50\%$ ) and aligns with the
+global average success rate for autocoups ( $77\%$ ).
 
 Identifying a clear and consistent pattern for autocoups in Africa proves
 difficult—mirroring the analytical complexity associated with classical coups.
@@ -1940,12 +1940,12 @@ common_labels <- list(
 model_formula <- autocoup_attempt ~ regime + GDP_pc + GDP_trend + violence + pop_log +
   polity5 + log(cumulative_days_in_office) + factor(cold_war)
 
-model_logit <- autocoup_model |> 
+model_logit <- autocoup_model |>
   glm(
-  model_formula,
-  family = binomial,
-  data = _
-) |>
+    model_formula,
+    family = binomial,
+    data = _
+  ) |>
   tbl_regression(
     label = common_labels,
     show_single_row = "factor(cold_war)",
@@ -1954,9 +1954,10 @@ model_logit <- autocoup_model |>
   ) |>
   add_n(location = "level") |>
   add_nevent(location = "level") |>
-  add_significance_stars(hide_p = TRUE,
-                        thresholds = c(0.01, 0.05, 0.1)
-                         ) |>
+  add_significance_stars(
+    hide_p = TRUE,
+    thresholds = c(0.01, 0.05, 0.1)
+  ) |>
   modify_column_hide(columns = std.error)
 
 
@@ -1972,9 +1973,10 @@ model_logit_od <- glm(
     conf.int = F,
     intercept = T
   ) |>
-  add_significance_stars(hide_p = TRUE,
-                        thresholds = c(0.01, 0.05, 0.1)
-                         ) |>
+  add_significance_stars(
+    hide_p = TRUE,
+    thresholds = c(0.01, 0.05, 0.1)
+  ) |>
   modify_column_hide(columns = std.error)
 
 
@@ -1990,9 +1992,10 @@ model_brg <- glm(
     conf.int = F,
     intercept = T
   ) |>
-  add_significance_stars(hide_p = TRUE,
-                          thresholds = c(0.01, 0.05, 0.1)
-                         ) |>
+  add_significance_stars(
+    hide_p = TRUE,
+    thresholds = c(0.01, 0.05, 0.1)
+  ) |>
   modify_column_hide(columns = std.error)
 
 model_brg_od <- glm(
@@ -2008,9 +2011,10 @@ model_brg_od <- glm(
     conf.int = F,
     intercept = T
   ) |>
-  add_significance_stars(hide_p = TRUE,
-                         thresholds = c(0.01, 0.05, 0.1)
-                         ) |>
+  add_significance_stars(
+    hide_p = TRUE,
+    thresholds = c(0.01, 0.05, 0.1)
+  ) |>
   modify_column_hide(columns = std.error)
 
 tbl_merge(
@@ -2044,40 +2048,41 @@ attempts varies significantly by regime type, with personalist autocracies and
 presidential democracies being particularly susceptible relative to other regime
 types. The model uses "Dominant Party" regimes as the reference category.
 
-Examining the regime type variables, I find strong support for aspects of the
-hypothesis. Relative to dominant party regimes, personalist autocracies have an
-estimated odds ratio of 2.13, which is statistically significant ( $p<0.05$ ).
-This indicates that the odds of an autocoup attempt are approximately 2 times
-higher in personalist autocracies compared to dominant party regimes, holding all
-other variables constant. Presidential democracies also show a significantly
-increased likelihood of autocoup attempts, with an estimated odds ratio of 4.79 (
-$p<0.001$ ) compared to dominant party regimes. This suggests that the odds of an
-autocoup attempt are roughly 4.8 times higher in presidential democracies than in
-dominant party regimes, ceteris paribus.
-
-In comparison to dominant-party regimes, military regimes, parliamentary
-democracies, and regimes classified as "other" exhibit lower odds of experiencing
-an autocoup, although these differences are not statistically significant within
-the model.
+An examination of the regime type variables reveals strong empirical support for
+key aspects of the hypothesis. Compared to dominant-party regimes, personalist
+autocracies exhibit an estimated odds ratio of 2.07, which is statistically
+significant (  $p<0.05$  ). This suggests that the odds of an autocoup attempt
+are just over twice as high in personalist autocracies, holding all other
+variables constant. Presidential democracies also display a markedly increased
+likelihood of autocoup attempts, with an estimated odds ratio of 4.83 (  $p<0.01$
+ ), indicating that the odds are approximately 3.8 times higher than in
+dominant-party regimes, ceteris paribus. By contrast, military regimes,
+parliamentary democracies, and those classified as “other” exhibit lower odds of
+experiencing an autocoup relative to dominant-party regimes. However, of these,
+only the “other” category achieves marginal statistical significance within the
+model.
 
 These findings strongly support the assertion that both personalist autocracies
 and presidential democracies face a substantially higher risk of autocoup
 attempts compared to dominant party regimes. The odds ratios for personalist
-autocracies (2.07) and presidential democracies (4.79) are notably larger than
+autocracies (2.13) and presidential democracies (4.83) are notably larger than
 those for military, parliamentary democracy, and other regime types, providing
 evidence that these two regime types are indeed more susceptible. This lends
 considerable support to hypothesis.
 
-Turning to the control variables in the bias-reduced logit model, several show
-significant associations with autocoup attempts. The log of Polity 5 scores, a
-measure of democracy, is associated with a decreased odds of autocoup (
-$OR = 0.91$, $p<0.01$ ), suggesting that more democratic regimes are less likely
-to experience autocoups. The Cold War variable is associated with a significantly
-lower odds of autocoup attempts ( $OR = 0.46$, $p<0.01$ ), indicating that the
-period of the Cold War saw a reduced likelihood of such events. Other variables,
-such as GDP per capita, GDP growth trend, political stability, log of population,
-and log of days in office, do not show statistically significant relationships
-with the likelihood of autocoup attempts in this model.
+Turning to the control variables in the bias-reduced logit model, several exhibit
+statistically significant associations with the likelihood of autocoup attempts.
+The logged Polity V score, a measure of democratic quality, is negatively
+associated with autocoup occurrence (  $OR = 0.91$,  $p<0.01$  ), indicating that
+more democratic regimes are less likely to experience such events. The Cold War
+variable is likewise associated with a significantly reduced odds of autocoup
+attempts (  $OR = 0.46$,  $p<0.01$  ), suggesting that such incidents were less
+prevalent during the Cold War period. The logarithm of population demonstrates
+marginal statistical significance and appears to have a negative relationship
+with the likelihood of autocoups. By contrast, other variables—including GDP per
+capita, GDP growth trend, political stability, and the log of days in office—do
+not display statistically significant associations with the probability of
+autocoup attempts within this model.
 
 In summary, the bias-reduced logit model reveals that regime type is a crucial
 determinant of autocoup attempts. Consistent with the hypothesis, personalist
@@ -2405,8 +2410,6 @@ coup-installed leaders at a significant disadvantage. @tbl-leaders provides a
 comparative overview of the main features of autocoup and coup-installed leaders,
 highlighting these key differences.
 
-\blandscape
-
 ```{r}
 #| label: tbl-leaders
 #| tbl-cap: Main features of autocoup and coup-installed leaders
@@ -2426,8 +2429,6 @@ read.csv(here("data/leader_comparison.csv")) |>
     2:3 ~ px(300)
   )
 ```
-
-\elandscape
 
 ##### Illegitimacy {.unnumbered}
 
@@ -2646,11 +2647,12 @@ common_labels <- list(
 model_cox1 <- survival_cox_ph_model |>
   mutate(
     regime = factor(regime,
-    levels = c("dominant-party", "military", "personal", "presidential", "parliamentary", "other")
-  ),
+      levels = c("dominant-party", "military", "personal", "presidential", "parliamentary", "other")
+    ),
     group = factor(group,
-    labels = c("Autocoup leaders", "Coup-installed leaders")
-  )) |> 
+      labels = c("Autocoup leaders", "Coup-installed leaders")
+    )
+  ) |>
   coxph(
     Surv(survival_days, status) ~
       group + regime + GDP_trend + GDP_pc + pop_log +
@@ -2680,13 +2682,13 @@ tbl1 <- model_cox1 |>
 model_cox2 <- survival_cox_td_model |>
   mutate(
     regime = factor(regime,
-    levels = c("dominant-party", "military", "personal", "presidential", "parliamentary", "other")
-  ),
+      levels = c("dominant-party", "military", "personal", "presidential", "parliamentary", "other")
+    ),
     group = factor(group,
       labels = c("Autocoup leaders", "Coup-installed leaders")
     ),
     survt = (tstop - tstart) * 365
-  ) |> 
+  ) |>
   coxph(
     Surv(T1, T2, status) ~
       group + regime + GDP_trend + GDP_pc + pop_log +
@@ -2727,7 +2729,7 @@ The two models yield divergent findings concerning the central question of this
 study. The Cox Proportional Hazards (PH) model indicates a marginally
 statistically significant relationship between leadership type and the risk of
 removal from power ( $p<0.1$ ). This result supports the hypothesis that leaders
-installed via coups face a 1.68 times greater hazard of removal compared to those
+installed via coups face a 1.78 times greater hazard of removal compared to those
 who came to power through autocoups. However, the time-dependent Cox model finds
 no statistically significant association in this regard. As the time-dependent
 model incorporates covariates that vary over time, the subsequent interpretation
@@ -2742,23 +2744,21 @@ balance of power, fundamentally shaped by regime characteristics, is central to
 both the seizure and maintenance of political authority.
 
 More specifically, regime type significantly influences the hazard of removal.
-Leaders within military regimes exhibit a hazard ratio of 2.08 relative to their
+Leaders within military regimes exhibit a hazard ratio of 2.06 relative to their
 counterparts in dominant-party regimes, all else being equal. This suggests that
 military leaders face a notably greater risk of being ousted. At any given time
-during their rule, military regime leaders are 1.08 times more likely to be
+during their rule, military regime leaders are 1.06 times more likely to be
 removed than those in dominant-party regimes, under the same model conditions.
-Leaders in parliamentary regimes face an even higher hazard ratio of 4.28, though
-this is only marginally significant at the $10\%$ level. Leaders under "other"
-regimes—typically provisional or transitional—display a hazard ratio of 2.64, a
-statistically significant result that aligns with their inherently unstable
-nature.
+Leaders under "other" regimes—typically provisional or transitional—display a
+hazard ratio of 2.57, a statistically significant result that aligns with their
+inherently unstable nature.
 
 Economic development, proxied by GDP per capita, exerts a statistically
 significant influence in the time-dependent model. A hazard ratio of 0.95 implies
 that each additional \$10,000 in GDP per capita reduces the risk of removal by
 $5\%$, holding all other variables constant. Political stability, as measured by
 the violence index, indicates that a one-unit increase in the index corresponds
-to an $11\%$ rise in the hazard of removal from office.
+to an $9\%$ rise in the hazard of removal from office.
 
 Other control variables—namely GDP growth trends, the logarithm of population
 size, and Polity V scores—do not exhibit statistically significant effects on the
@@ -2878,7 +2878,7 @@ validity of the Cox model estimates. This assumption is tested using a chi-squar
 test based on Schoenfeld residuals, which assesses whether the effects of
 covariates remain constant over time. The results indicate that neither the
 standard Cox proportional hazards model nor the time-dependent Cox model violates
-this assumption. The global p-values—0.18 for the standard model and 0.27 for the
+this assumption. The global p-values—0.12 for the standard model and 0.23 for the
 time-dependent model—both exceed the conventional $5\%$ significance threshold,
 suggesting that the proportional hazards assumption is reasonably upheld in both
 cases.
@@ -2886,7 +2886,7 @@ cases.
 ```{r}
 #| label: robust_test
 #| include: false
-test <- cox.zph(model_cox1)
+test <- cox.zph(model_cox2)
 ```
 
 ### Summary
@@ -3319,44 +3319,45 @@ coup_autocoup <- read.csv("https://raw.githubusercontent.com/reddylee/Datasets/r
 #| tbl-cap: "The Impact of Autocoups on Democratization(1950–2018): OLS with country-fixed effects"
 #| results: asis
 
-demo_model1 <- coup_autocoup |> 
-  rename(Attemp = diff2, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3) |> 
+demo_model1 <- coup_autocoup |>
+  rename(Attemp = diff2, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3) |>
   plm(
-  Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model2 <- coup_autocoup |> 
-  rename(Attemp = diff3, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3) |> 
+demo_model2 <- coup_autocoup |>
+  rename(Attemp = diff3, Autocoup = autocoup_attemp_3, Coup = coup_attemp_3) |>
   plm(
-  Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Attemp ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model3 <- coup_autocoup |> 
-  rename(Succeed = diff3, Autocoup = autocoup_effect, Coup = coup_effect) |> 
+demo_model3 <- coup_autocoup |>
+  rename(Succeed = diff3, Autocoup = autocoup_effect, Coup = coup_effect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model4 <- coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+demo_model4 <- coup_autocoup |>
+  rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
 stargazer(demo_model1, demo_model2, demo_model3, demo_model4,
   # type = "text",
@@ -3467,50 +3468,55 @@ never contribute to an increase in Polity scores.
 #| tbl-cap: "The Impact of Autocoups on Democratization: one to five years"
 #| results: asis
 
-demo_model1 <- coup_autocoup |> rename(Succeed = diff1, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+demo_model1 <- coup_autocoup |>
+  rename(Succeed = diff1, Autocoup = autocoup_seffect, Coup = coup_seffect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model2 <- coup_autocoup |> rename(Succeed = diff2, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+demo_model2 <- coup_autocoup |>
+  rename(Succeed = diff2, Autocoup = autocoup_seffect, Coup = coup_seffect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model3 <- coup_autocoup |> rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+demo_model3 <- coup_autocoup |>
+  rename(Succeed = diff3, Autocoup = autocoup_seffect, Coup = coup_seffect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model4 <- coup_autocoup |> rename(Succeed = diff4, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+demo_model4 <- coup_autocoup |>
+  rename(Succeed = diff4, Autocoup = autocoup_seffect, Coup = coup_seffect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
-demo_model5 <- coup_autocoup |> rename(Succeed = diff5, Autocoup = autocoup_seffect, Coup = coup_seffect) |> 
+demo_model5 <- coup_autocoup |>
+  rename(Succeed = diff5, Autocoup = autocoup_seffect, Coup = coup_seffect) |>
   plm(
-  Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeed ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + factor(non_democracy) + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
 stargazer(demo_model1, demo_model2, demo_model3, demo_model4, demo_model5,
   # type = "text",
@@ -3537,47 +3543,47 @@ stargazer(demo_model1, demo_model2, demo_model3, demo_model4, demo_model5,
 
 
 demo_model1 <- coup_autocoup |>
-    rename(Attempted = diff2, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
-    filter(regime != "other") |> 
+  rename(Attempted = diff2, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
+  filter(regime != "other") |>
   plm(
-  Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
 demo_model2 <- coup_autocoup |>
-    rename(Attempted = diff3, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
-    filter(regime != "other") |> 
+  rename(Attempted = diff3, Autocoup = autocoup_attemp, Coup = coup_attemp) |>
+  filter(regime != "other") |>
   plm(
-  Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Attempted ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
 demo_model3 <- coup_autocoup |>
-    rename(Succeeded = diff2, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
-    filter(regime != "other") |> 
+  rename(Succeeded = diff2, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
+  filter(regime != "other") |>
   plm(
-  Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 demo_model4 <- coup_autocoup |>
-    rename(Succeeded = diff3, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
-    filter(regime != "other") |> 
+  rename(Succeeded = diff3, Autocoup = autocoup_succeed, Coup = coup_succeed) |>
+  filter(regime != "other") |>
   plm(
-  Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
-  index = c("ccode", "year"),
-  model = "within", # fixed effect
-  effect = "individual",
-  data = _
-)
+    Succeeded ~ Autocoup + Coup + GDP_pc + GDP_trend + pop_log + violence + regime + factor(cold_war),
+    index = c("ccode", "year"),
+    model = "within", # fixed effect
+    effect = "individual",
+    data = _
+  )
 
 
 stargazer(demo_model1, demo_model2, demo_model3, demo_model4,
