@@ -1578,21 +1578,27 @@ diverse regime types and political environments.
 
 ### Abstract {.unnumbered}
 
-This chapter investigates the determinants of autocoup attempts, seeking to
-enhance understanding of the political dynamics underpinning tenure extensions by
-incumbent leaders. Addressing a gap in the literature, the study employs a
-quantitative approach, utilising a bias-reduced logit model to explore the
-relationship between regime type and the likelihood of autocoup occurrence.
-Particular attention is paid to how regime type reflects the structural balance
-of power between incumbents and potential institutional constraints or elite
-challengers. The findings indicate that regime type is a significant predictor of
-autocoup attempts. Specifically, personalist autocracies and presidential
-democracies are shown to be substantially more likely to experience autocoups
-compared to dominant party regimes. This increased propensity is discussed in
-relation to the varying degrees of institutional constraints and power
-configurations characteristic of different regime types, offering insights into
-the structural conditions that facilitate or constrain such irregular power
-consolidations.
+This chapter explores the determinants of autocoup attempts, aiming to deepen
+understanding of the political dynamics that underpin tenure extensions by
+incumbent leaders. Addressing a notable gap in the existing literature, the study
+contends that the balance of power plays a critical role in shaping the
+likelihood of autocoup events. In contrast to classical coups—which are often
+triggered by unstable or fragmented power structures—autocoups tend to arise in
+contexts characterised by stable and concentrated power.
+
+To operationalise the concept of power balance in an observable manner, regime
+type is employed as a proxy, reflecting the structural distribution of power
+between incumbents and potential institutional constraints or elite challengers.
+Using a bias-reduced logistic regression model, the analysis finds that regime
+type is a significant predictor of autocoup attempts. Leaders operating within
+regimes marked by concentrated power are more prone to extend their tenure
+unconstitutionally. In particular, presidential democracies and personalist
+autocracies are found to be significantly more susceptible to autocoup attempts
+than dominant-party regimes.
+
+The study contributes to the broader literature on irregular leadership
+transitions by offering a more systematic and empirically grounded account of the
+conditions under which incumbents seek to subvert constitutional term limits.
 
 ***Keywords:** Autocoups, Coup, Regime types, Tenure Extension, Authoritarianism*
 
@@ -1600,158 +1606,158 @@ consolidations.
 
 ### Introduction
 
-As discussed in Chapter 2, the study of autocoups has been hindered by conceptual
-ambiguity and a lack of systematic data, resulting in limited empirical analysis
-of this phenomenon. To address this gap, the present chapter seeks to make a
-substantive contribution by offering a quantitative analysis of the determinants
-of autocoup attempts. Following the precedent set by empirical research on
-classic coups, which has primarily focused on the factors precipitating coup
-attempts [@gassebner2016], this chapter similarly investigates why some incumbent
-leaders choose to extend their tenure through autocoups, while others do not.
+As outlined in Chapter 2, scholarly engagement with autocoups has been hampered
+by conceptual ambiguity and the absence of systematic data, thereby limiting the
+scope for rigorous empirical investigation. To address this lacuna, the present
+chapter aims to make a substantive contribution through a quantitative analysis
+of the determinants of autocoup attempts. Following the methodological precedent
+established by empirical studies of classical coups—which have primarily examined
+the antecedents of coup initiation [@gassebner2016]—this chapter similarly
+explores why some incumbent leaders attempt to extend their tenure through
+autocoups, while others do not.
 
-The rationale for investigating the determinants of autocoups is threefold.
-First, autocoups represent one of the most frequent forms of irregular leadership
-transition, with over 100 documented cases since 1945 (as detailed in Chapter 2).
-Their prevalence has increased notably since 2000, coinciding with the apparent
-global decline in classic coups [@bermeo2016; @thyne2019]. Second, autocoups play
-a critical role in shaping political stability and democratic trajectories,
-frequently resulting in long-term institutional erosion. Third, understanding the
-factors that drive autocoup attempts constitutes a foundational step for further
-enquiry into their consequences. Without identifying the conditions under which
-autocoups occur, it is difficult to assess how to prevent them or mitigate their
-negative effects.
+There are three principal reasons for investigating the determinants of
+autocoups. First, autocoups constitute one of the most prevalent forms of
+irregular leadership transition, with over 80 documented cases since 1945 (as
+discussed in Chapter 2). Their frequency has increased notably since 2000,
+coinciding with a marked global decline in classical coups [@bermeo2016;
+@thyne2019]. Second, autocoups exert profound effects on political stability and
+democratic development, often resulting in enduring institutional degradation.
+Third, identifying the drivers of autocoup attempts is essential for future
+research into their consequences; without a clear understanding of the conditions
+under which autocoups occur, efforts to prevent them or mitigate their
+detrimental effects remain constrained.
 
-While autocoups differ fundamentally from classic coups—primarily in terms of the
-actor initiating the event (the incumbent, rather than a power challenger)—the
-two forms of power disruption share important features. Consequently, methods
-commonly applied to the study of traditional coups can be usefully adapted for
-the analysis of autocoups. Nevertheless, despite an extensive literature on coup
-dynamics [@gassebner2016], many studies treat regime type as a mere background
-condition or control variable, rather than as a central determinant of power
-disruptions.
+Although autocoups differ fundamentally from classical coups—particularly in that
+they are instigated by incumbents rather than external challengers—the two
+phenomena share key features as disruptions to established political order.
+Accordingly, methodological tools commonly applied in the study of traditional
+coups may be fruitfully adapted to analyse autocoups. However, despite the
+extensive literature on coup dynamics [@gassebner2016], regime type is frequently
+treated as a background condition or control variable rather than a central
+explanatory factor.
 
-This chapter advances the argument that the risk of autocoup attempts is
-significantly shaped by the structural balance of power embedded within a
-regime's foundational type. It contends that the likelihood of an autocoup is
-determined by the perceived power equilibrium between the incumbent leader and
-potential institutional or elite challengers. This power configuration is
-relatively stable over time, as it is both shaped by and constitutive of the
-regime type itself [@geddes2014]. Accordingly, this study employs regime type as
-a proxy for underlying power dynamics, enabling a more systematic investigation
-of the structural conditions that facilitate or constrain autocoup attempts.
+This chapter advances the argument that the likelihood of autocoup attempts is
+shaped significantly by the structural distribution of power inherent in regime
+type. In contrast to classical coups, which often emerge from unstable or
+contested power structures, autocoups tend to occur in regimes characterised by
+concentrated and stable authority. Given the challenges of directly measuring
+internal power configurations, regime type is employed as a proxy variable. The
+underlying premise is that regime type reflects core institutional arrangements,
+including the distribution of authority, the robustness of constitutional
+constraints, and the capacity of incumbents to subvert democratic norms.
+Analysing cross-regime variation thus facilitates a deeper understanding of the
+institutional foundations that condition autocoup risk. These power structures
+tend to be relatively stable over time, as they both shape and are shaped by the
+regime’s overarching institutional design [@geddes2014].
 
-To empirically test this proposition, the chapter employs a probit regression
-model to examine the strategic calculus of incumbent leaders. It argues that the
-balance of power, as inferred from regime typology, is a key determinant of
-whether an incumbent will initiate an autocoup.
+To empirically test this proposition, the chapter utilises both a standard
+logistic regression model and a bias-reduced logistic regression model to assess
+how regime type influences the likelihood of incumbents extending their tenure
+through extra-constitutional means.
 
-Given the inherent difficulty in directly measuring the internal balance of power
-within regimes, regime type is used as an operational proxy. The premise
-underpinning this approach is that regime type fundamentally conditions the
-distribution of authority, the strength of institutional constraints, and the
-capacity of incumbents to subvert constitutional norms. By analysing variation
-across regime types, this study provides deeper insight into the structural
-factors that influence both the occurrence and outcome of autocoup attempts.
+Given the paucity of quantitative research on autocoups, this study offers a
+potentially pioneering contribution to the empirical literature by providing a
+theoretically informed and methodologically rigorous account of their
+determinants.
 
-In light of the limited quantitative research on autocoups in the existing
-literature, this thesis aims to make a pioneering contribution to their empirical
-study by offering a theoretically grounded and methodologically robust analysis
-of their determinants.
-
-The remainder of this chapter is organised as follows. Section 2 examines the
-dynamics and patterns of autocoup attempts and their outcomes. Section 3 outlines
-the research design, methodology, and variables used in the analysis, offering a
-clear account of the empirical strategy. Section 4 presents and interprets the
-findings, identifying key trends and implications. Section 5 concludes the
-chapter by summarising the main insights and considering their relevance for
-understanding and mitigating the risks of autocoups.
+The remainder of the chapter is structured as follows. Section 2 examines the
+dynamics and outcomes of autocoup attempts. Section 3 outlines the research
+design, including the methodological approach and variables employed. Section 4
+presents and interprets the empirical findings, highlighting key patterns and
+implications. Section 5 concludes by summarising the core insights and reflecting
+on their broader significance for understanding and mitigating the risks posed by
+autocoups.
 
 ### Dynamics of autocoup attempts
 
-Much like traditional coup attempts, autocoups are driven by two fundamental
-factors: the disposition of incumbent leaders—namely, their motivations and
-willingness to act—and their capability, referring to the resources and
-opportunities available to them. However, autocoups exhibit two notable features
-that distinguish them from classical coups. First, whereas coups predominantly
-occur in autocracies [@thyne2014], approximately one-third of recorded autocoups
-have taken place in democracies, as documented in Chapter 2. Second, while the
-success rate of traditional coups hovers around 50%, more than 80% of autocoup
-attempts have succeeded, according to the autocoup dataset introduced in Chapter
-2. These distinctions suggest that the disposition and capability dynamics
-underpinning autocoups differ substantially from those governing traditional
-coups. This section examines the complex dynamics of autocoup attempts, focusing
-particularly on how the motivations of incumbents, the factors influencing
-success, and the institutional structures of regime types shape a state's
-vulnerability to such actions.
+Like traditional coup attempts, autocoups are shaped by two fundamental elements:
+the disposition of incumbent leaders—referring to their motivations and
+willingness to act—and their capability, defined by the resources and
+opportunities at their disposal. However, autocoups exhibit two notable features
+that distinguish them from classical coups. First, whereas traditional coups
+occur predominantly in autocracies [@thyne2014], over one-third of documented
+autocoups have taken place in democratic regimes, as outlined in Chapter 2.
+Second, while the success rate of traditional coups hovers around $50\%$, more
+than $77\%$ of autocoup attempts have resulted in success, according to the
+dataset introduced in Chapter 2. These distinctions indicate that the dynamics of
+disposition and capability underlying autocoups differ significantly from those
+of traditional coups.
+
+This section explores the complex dynamics of autocoup attempts, with particular
+emphasis on how the motivations of incumbents, the determinants of success, and
+the institutional frameworks of various regime types shape the vulnerability of
+states to such extra-constitutional power extensions.
 
 #### Motivations for autocoups {.unnumbered}
 
-Incumbent leaders seeking to extend their tenure may be motivated by a variety of
-considerations, which can broadly be categorised into three principal domains:
-personal ambition, purported national interest, and self-preservation.
+Incumbents seeking to prolong their tenure may be driven by a range of
+motivations, broadly falling into three principal categories: personal ambition,
+appeals to national interest, and self-preservation.
 
-First, the pursuit of personal power serves as a powerful incentive for many
-leaders. The ability to govern without institutional constraints grants them
-control over national policy, access to significant state resources, influence
-over the judiciary and legislature, and the prestige associated with continued
-office. For some, the desire to secure a lasting political legacy—to be
-remembered as a transformative figure in national history—further reinforces the
-appeal of prolonged rule.
+First, the pursuit of personal power constitutes a compelling incentive for many
+leaders. The capacity to govern free from institutional constraints enables
+incumbents to exercise dominance over national policy-making, access state
+resources, influence the judiciary and legislature, and retain the prestige
+associated with holding high office. For some, the aspiration to secure a lasting
+political legacy—to be remembered as a transformative figure—further amplifies
+the appeal of extended rule.
 
-Second, incumbents often justify tenure extensions as being in the national
-interest. A common argument posits that a single term is insufficient to complete
-long-term reform or development agendas. In this framing, remaining in office is
-presented as necessary for the successful realisation of ongoing projects,
-thereby positioning the autocoup as a sacrifice for the greater good rather than
-a personal power grab.
+Second, tenure extensions are often justified by incumbents in the name of the
+national interest. A commonly advanced rationale suggests that a single term is
+insufficient for the completion of long-term reforms or development initiatives.
+Within this narrative, remaining in power is portrayed as essential to ensuring
+the continuity and success of ongoing projects. The autocoup is thus framed not
+as an act of self-interest, but as a necessary step for the greater good.
 
-Third, autocoups can function as a mechanism for self-preservation. Leaders who
-face potential prosecution for corruption, human rights abuses, or other crimes
-may view tenure extension as a means of maintaining immunity. Moreover, those who
-have accumulated significant political enemies during their time in power may
-fear retaliation upon stepping down. In such cases, extending one’s rule is not
-only about ambition but also about survival—shielding oneself from legal or
-political retribution.
+Third, autocoups may serve as mechanisms of self-preservation. Incumbents facing
+the prospect of prosecution for corruption, human rights violations, or other
+transgressions may view continued tenure as a means of preserving legal immunity.
+Additionally, those who have amassed significant political adversaries during
+their rule may fear retribution upon leaving office. In such cases, the extension
+of power is not merely a product of ambition but also a strategy for
+survival—intended to shield the leader from legal or political repercussions.
 
 #### Power dynamics and autocoups {.unnumbered}
 
-While motivations may spark an incumbent’s decision to initiate an autocoup, it
-is often the capability to execute and sustain such an action that proves more
-decisive. The relatively high frequency and strikingly high success rate of
-autocoups—over 80%, compared to around 50% for traditional coups—suggest that
-incumbents enjoy structural advantages when seeking to extend their tenure. These
-advantages are not confined to autocracies but are also observable in
-democracies, highlighting that the resources and institutional leverage available
-to incumbents vary significantly across regimes.
+While motivations may initiate an incumbent’s decision to pursue an autocoup, the
+decisive factor often lies in their ability to implement and sustain such an
+action. The relatively high frequency and remarkable success rate of
+autocoups—over $77%$, compared to approximately $50\%$ for classical
+coups—suggest that incumbents benefit from notable structural advantages when
+attempting to consolidate power. These advantages are not limited to autocracies
+but are also evident in democratic systems, underscoring the variation in
+institutional leverage available to incumbents across different regime types.
 
-This observation necessitates a closer examination of state power
-structures—particularly the distribution of control over the armed forces.
-Military allegiance is a critical determinant of autocoup success. If the armed
-forces remain loyal to the incumbent, opposition—whether from civil society, the
-judiciary, or the legislature—can be neutralised or marginalised. Conversely,
-open defiance by military leaders or a refusal to intervene on behalf of the
-executive can render an autocoup untenable.
+This reality necessitates a closer examination of state power structures,
+particularly the allocation of control over the military. The allegiance of the
+armed forces is a critical determinant of autocoup outcomes. If the military
+remains loyal to the executive, resistance—whether from civil society, the
+judiciary, or the legislature—can be suppressed or marginalised. Conversely, open
+defiance or refusal by the military to support the incumbent may render an
+autocoup untenable.
 
-However, it would be reductive to assume that nominal authority as
-commander-in-chief translates into uncontested control. Just as it is simplistic
-to attribute the occurrence of traditional coups solely to military power
-[@singh2016], it is equally misleading to presume that incumbents uniformly wield
-the loyalty of the armed forces. Formal titles belie the often complex and
-fragile relationships that underpin military loyalty.
+Nevertheless, it is reductive to assume that formal authority as
+commander-in-chief guarantees unqualified control. Just as it is overly
+simplistic to attribute the success of traditional coups solely to the presence
+of military force [@singh2016], it is equally erroneous to presume that
+incumbents invariably enjoy the unconditional loyalty of the armed forces.
+Nominal titles often obscure the complex and sometimes precarious dynamics
+underpinning military allegiance.
 
-In autocratic contexts, the military may not adhere to constitutional norms, but
-nor is it inherently loyal to the head of state. Executives rely on military
-officers to implement commands, yet those officers may possess their own
-ambitions or rival loyalties. For example, in 1971, Ugandan President Milton
-Obote attempted to dismiss General Idi Amin. In response, Amin capitalised on his
-influence within the armed forces to stage a successful coup, ousting Obote
-[@sudduth2017].
+In autocratic regimes, while the military may not be bound by constitutional
+principles, it is not inherently loyal to the head of state. Executives depend on
+military officers to execute their commands; however, these officers may harbour
+independent political ambitions or competing loyalties. A case in point is Uganda
+in 1971, when President Milton Obote attempted to dismiss General Idi Amin. In
+response, Amin exploited his influence within the armed forces to mount a
+successful coup, ousting Obote [@sudduth2017].
 
-In contrast, consolidated democracies typically institutionalise military
-allegiance to the constitution rather than to individual officeholders. In the
-United States, following the 2020 presidential election, General Mark Milley,
-Chairman of the Joint Chiefs of Staff, publicly reaffirmed the military’s
-commitment to constitutional principles:
+By contrast, in consolidated democracies, military loyalty is typically
+institutionalised through allegiance to the constitution rather than to
+individual officeholders. For example, in the United States, following the 2020
+presidential election, General Mark Milley, Chairman of the Joint Chiefs of
+Staff, publicly reaffirmed the military’s constitutional commitment:
 
 > “We are unique among militaries. We do not take an oath to a king or a queen, a
 > tyrant or a dictator. We do not take an oath to an individual. We take an oath
@@ -1759,131 +1765,142 @@ commitment to constitutional principles:
 >
 > — (US Army Museum, 12 November 2020[^1])
 
-In hybrid or fragile democracies, attempts to extend executive tenure can carry
-higher risks. For example, in Niger (2009), President Mamadou Tandja’s efforts to
-amend the constitution and secure a third term provoked a military coup in 2010
-[@miller2016]. Similarly, in Honduras (2009), President Manuel Zelaya was removed
-from office by the military after attempting to modify the constitution to allow
-immediate re-election [@muñoz-portillo2019].
+In hybrid regimes or fragile democracies, attempts to prolong executive tenure
+may entail significant political risks. In Niger, for example, President Mamadou
+Tandja’s attempt in 2009 to amend the constitution to permit a third term
+precipitated a military coup in 2010 [@miller2016]. Similarly, in Honduras the
+same year, President Manuel Zelaya was removed from office by the military after
+seeking to alter the constitution to allow immediate re-election
+[@muñoz-portillo2019].
 
 #### Regime types and autocoups {.unnumbered}
 
-Given these complexities, a more effective analytical strategy involves assessing
-the broader balance of power within political systems. Direct observation of this
-balance is inherently difficult, so this study employs regime type as a proxy—a
-method consistent with established approaches in comparative politics. Regime
-types reflect the institutional architecture of power distribution, especially
-regarding authority over military command, political appointments, and
-policy-making.
+Given the complexities discussed, a more effective analytical strategy entails
+evaluating the broader balance of power within political systems. As direct
+observation of this balance is inherently challenging, this study adopts regime
+type as a proxy—an approach consistent with established methodologies in
+comparative politics. Regime types encapsulate the institutional architecture of
+power distribution, particularly with respect to control over the military,
+political appointments, and policy-making authority.
 
-Drawing on the classification by @geddes2014, autocratic regimes can be divided
-as follows:
+Following the typology developed by @geddes2014, autocratic regimes can be
+categorised as follows:
 
-**Military regimes** are governed by a junta, typically composed of senior
-military officers who collectively determine leadership and policy. Examples
-include Brazil (1964–1985), Argentina (1976–1983), and El Salvador (1948–1984)
-[@geddes1999].
+**Military regimes** are governed by a junta, typically comprising senior
+military officers who collectively determine leadership and policy direction.
+Notable examples include Brazil (1964–1985), Argentina (1976–1983), and El
+Salvador (1948–1984) [@geddes1999].
 
-**Personalist regimes** are centred around a dominant individual who exercises
-unchecked authority over military, policy, and succession processes. Notable
-cases include Rafael Trujillo in the Dominican Republic (1930–1961), Idi Amin in
-Uganda (1971–1979), and Jean-Bédel Bokassa in the Central African Republic
-(1966–1979) [@geddes1999].
+**Personalist regimes** revolve around a dominant individual who wields unchecked
+authority over the military, policy decisions, and succession processes.
+Prominent instances include Rafael Trujillo in the Dominican Republic
+(1930–1961), Idi Amin in Uganda (1971–1979), and Jean-Bédel Bokassa in the
+Central African Republic (1966–1979) [@geddes1999].
 
-**Dominant-party regimes** entrust authority to a structured political party,
-with the leader operating within, or as the head of, that organisation. Prominent
-examples include the PRI in Mexico, CCM in Tanzania, and Leninist parties in
-Eastern Europe [@geddes1999].
+**Dominant-party regimes** concentrate authority within a structured political
+party, with the leader operating either as part of or at the helm of the party
+apparatus. Illustrative cases include the PRI in Mexico, CCM in Tanzania, and the
+Leninist parties of Eastern Europe [@geddes1999].
 
-Among these, personalist regimes are particularly conducive to autocoups. The
-concentration of power reduces institutional resistance, and loyalty from the
-armed forces is often cultivated through personal patronage. Military regimes,
-though rooted in armed power, frequently experience internal instability, making
-them more vulnerable to traditional coups than to autocoups. Dominant-party
-regimes are more ambiguous: while the leader may be constrained by party
-structures, exceptionally strong party leaders may nonetheless initiate
-autocoups—as evidenced by Xi Jinping (2018), operating under dominant-party
-regimes.
+Among these regime types, personalist autocracies are particularly conducive to
+autocoups. The concentration of power in a single individual weakens
+institutional checks and fosters loyalty—particularly from the military—through
+mechanisms of personal patronage. While military regimes are rooted in coercive
+power, they are often beset by internal factionalism, rendering them more
+susceptible to traditional coups than to autocoups. Dominant-party regimes occupy
+a more ambiguous position: although party structures can constrain executive
+action, exceptionally powerful party leaders may still initiate autocoups, as
+exemplified by Xi Jinping’s constitutional amendments in 2018 within a
+dominant-party framework.
 
-Monarchies, though classified as autocracies, typically render autocoups
-irrelevant, as monarchs usually serve for life by design.
+Monarchies, though technically autocratic, generally render autocoups redundant,
+as monarchs typically rule for life by constitutional design.
 
-An important clarification arises at this point: why would leaders in personalist
-regimes feel compelled to extend their tenure, given the extensive authority they
-already wield? The answer lies in the distinction between the scope of power and
-its duration. While personalist rulers often exercise substantial control over
-state institutions, many originally assume office through constitutional or legal
-means and must incrementally consolidate power. In this context, autocoups serve
-as formal mechanisms to institutionalise their dominance, converting de facto
-authority into de jure permanence. This dynamic is exemplified by the multiple
-tenure extensions pursued by Vladimir Putin and Alexander Lukashenko.
+A key clarification is warranted at this juncture: why might leaders in
+personalist regimes—already possessing extensive authority—feel compelled to
+extend their tenure further? The answer lies in distinguishing between the scope
+and duration of power. While such leaders may exercise considerable de facto
+control over state institutions, many initially assume office via legal or
+constitutional channels, necessitating a gradual process of consolidation. In
+this context, autocoups function as formal mechanisms to institutionalise
+existing dominance—transforming informal power into legally sanctioned
+permanence. This dynamic is exemplified by the repeated tenure extensions pursued
+by Vladimir Putin and Alexander Lukashenko.
 
-In post-Soviet Russia, President Boris Yeltsin oversaw the transformation of a
-parliamentary system into a personalist regime. However, Yeltsin himself did not
-overstay his term; instead, he selected Vladimir Putin as his successor. Upon
-assuming office in 2000, Putin progressively extended his rule and has remained
-in power since, utilising constitutional amendments and legal manoeuvres to
-circumvent term limits.
+In post-Soviet Russia, President Boris Yeltsin presided over the transformation
+of a parliamentary system into a personalist regime. However, Yeltsin himself did
+not overstay his term; instead, he designated Vladimir Putin as his successor.
+Upon assuming office in 2000, Putin progressively entrenched his authority,
+employing constitutional amendments and legal strategies to circumvent term
+limits and extend his rule indefinitely.
 
-Similarly, in Belarus, Alexander Lukashenko was elected president in 1994 under a
-party-based regime. Within a year, he dismantled the existing political structure
-and established a personalist system. Since then, Lukashenko has remained in
-power through successive extensions of his tenure, further entrenching his
-authority over time.
+Likewise, in Belarus, Alexander Lukashenko was elected president in 1994 under a
+party-based system. Within a year, he dismantled the existing institutional
+framework and established a personalist regime. Since then, he has remained in
+power through successive tenure extensions, steadily consolidating his control
+over the state apparatus.
 
-In democracies, autocoups exclusively occur in presidential systems. This
-reflects the institutional leverage enjoyed by presidents, who are directly
-elected, often command the armed forces, and may override or bypass legislative
-decisions. Prime ministers in parliamentary systems, by contrast, are more
-constrained. They are typically beholden to legislative confidence and may be
-dismissed via no-confidence votes. Military command is often institutionally
-separated from their authority. Consequently, prime ministers face more frequent
-leadership turnover and fewer opportunities to extend their terms. For example,
-in the UK, three prime ministers served in 2022; in Japan, there have been 36
-prime ministers since 1945—an average of one every two years. By contrast, only
-14 presidents have served in the United States over the same period, reflecting
-greater institutional stability. Given these distinctions, presidential systems
-provide a more conducive environment for autocoups—even in established
-democracies—due to their centralised executive authority and command over the
-military.
+In democratic contexts, autocoups are found exclusively in presidential systems.
+This reflects the institutional leverage enjoyed by presidents, who are directly
+elected, typically command the armed forces, and may possess the capacity to
+override or circumvent legislative opposition. By contrast, prime ministers in
+parliamentary systems are considerably more constrained. Their tenure depends on
+maintaining legislative confidence and they may be removed through votes of no
+confidence. Moreover, they often lack direct control over the military, which is
+institutionally separated from their office. As a result, prime ministers are
+subject to more frequent leadership turnover and face fewer opportunities to
+unilaterally extend their mandates. For instance, the United Kingdom saw three
+prime ministers serve in 2022 alone, while Japan has had 36 prime ministers since
+1945—an average of one every two years. In contrast, only 14 presidents have
+served in the United States over the same period, reflecting greater
+institutional continuity. These structural distinctions render presidential
+systems more conducive to autocoups—even within well-established democracies—due
+to their centralised executive authority and command over the military.
 
 From this analysis, the following hypothesis is proposed:
 
-> **H3-1: *The likelihood of autocoup attempts varies significantly by regime
-> type, with personalist autocracies and presidential democracies being the most
-> susceptible, relative to other regime types.***
+The likelihood of autocoup attempts is significantly shaped by regime type, with
+regimes characterised by concentrated and stable executive power—namely,
+personalist autocracies and presidential democracies—being the most susceptible,
+relative to other regime types.
+
+> **H3-1: *The likelihood of autocoup attempts is significantly shaped by regime
+> type, with regimes characterised by concentrated and stable executive
+> power—namely, personalist autocracies and presidential democracies—being the
+> most susceptible, relative to other regime types.***
 
 ### Research design
 
 #### Methodology {.unnumbered}
 
-Given the binary nature of the dependent variable—whether an autocoup is staged
-or not—this section initially employs a logit regression model to analyse the
-determinants of autocoup attempts. This approach enables the identification of
-statistically significant factors influencing the likelihood of such events, as
-well as the direction and magnitude of their effects.
+Given the binary nature of the dependent variable—namely, whether an autocoup is
+attempted in a given country-year—the study initially employs a logistic
+regression model to investigate the determinants of autocoup attempts. This
+method enables the identification of statistically significant factors
+influencing the likelihood of such events, as well as the direction and magnitude
+of their effects.
 
-However, since the dataset comprises over 9,000 observations with only
-approximately 80 instances of autocoups, the dependent variable qualifies as a
-rare event. Standard maximum likelihood estimation methods such as probit or
-logit may underestimate the probability of occurrence in such cases. To address
-this issue and ensure more reliable inference, the analysis additionally applies
-Firth’s Bias-Reduced Penalised Maximum Likelihood Estimation (Bias-Reduced
-Logit), as proposed by @firth1993.
+Nevertheless, the rarity of autocoup incidents—83 cases out of over 9,000
+observations—poses a methodological challenge. Standard maximum likelihood
+estimation techniques, including conventional logit and probit models, are prone
+to underestimating the probability of rare events. To mitigate this limitation
+and improve the robustness of statistical inference, the analysis also employs
+Firth’s Bias-Reduced Penalised Maximum Likelihood Estimation (commonly referred
+to as Bias-Reduced Logit), as outlined by @firth1993.
 
 #### Data and variables {.unnumbered}
 
-The principal dataset, covering autocoups and regime types, spans the period from
-1945 to 2023. However, due to issues in data matching, there is some truncation,
-and the actual range of usable data extends from 1945 to 2018. The dataset
-encompasses approximately 9400 observations, of which 78 are instances of
-autocoup attempts.
+The primary dataset, which incorporates information on autocoups and regime
+types, spans the period from 1945 to 2023. However, due to data alignment
+limitations, the usable data range extends from 1945 to 2018. The dataset
+comprises approximately 9,400 country-year observations, of which 83 represent
+recorded autocoup attempts.
 
 ##### Dependent variable {.unnumbered}
 
-The analysis utilises the autocoup dataset introduced in Chapter 2. This dataset
-covers the period from 1945 to 2023 and records information on 107 autocoup
-attempts. Descriptive statistics for these attempts, along with regime
+The analysis draws upon the autocoup dataset introduced in Chapter 2, which
+covers the period from 1945 to 2023 and includes 83 documented autocoup attempts.
+Summary statistics for these events, as well as the corresponding regime
 classifications, are presented in Chapter 2.
 
 **Autocoup attempt**: A binary variable indicating whether an autocoup attempt
@@ -1892,24 +1909,31 @@ observation.
 
 ##### Independent variables {.unnumbered}
 
-As discussed, regime type constitutes the primary explanatory focus of the model.
-Regimes are categorised according to the typology developed by @geddes2014 (GWF
-dataset), distinguishing between military, personalist, and dominant-party
-regimes, with democracies serving as the reference category.
+The principal independent variable in this analysis is regime type, reflecting
+the central analytical focus of the study. Regime classifications are drawn from
+the typology developed by @geddes2014 (GWF dataset), which distinguishes among
+military, personalist, and dominant-party regimes within autocratic systems. For
+democratic systems, regimes are categorised as either parliamentary or
+presidential. A residual category—labelled “other”—captures regimes that are
+provisional, transitional, or otherwise not easily classified within the primary
+typology.
 
-Control variables are selected based on previous research into coup determinants,
-predominantly encompassing factors such as economic performance, political
-violence, and tenure in office. In addition, democratic level, population size
-and a Cold War dummy variable are included as further controls.
+In addition to regime type, a range of control variables is included, selected on
+the basis of established scholarship on the determinants of coups. These controls
+account for factors such as economic performance, political violence, and the
+tenure of incumbents. Further controls comprise the level of democracy,
+population size, and a Cold War dummy variable, which captures temporal variation
+in the global political environment.
 
-**Economic Level:** Measured by GDP per capita, representing the general economic
-wellbeing of a country. Data are sourced from the V-Dem dataset by @fariss2022,
-expressed in constant 2017 international dollars (PPP, per thousand).
+**Economic Level:** Measured by GDP per capita, this variable reflects the
+overall economic wellbeing of a country. Data are sourced from the V-Dem dataset
+[@fariss2022] and are expressed in constant 2017 international dollars (PPP, per
+thousand).
 
-**Economic Performance:** Assessed through the current-trend ($CT$) ratio, as
-developed by @krishnarajan2019. This metric compares a country’s current GDP per
-capita with the average GDP per capita over the preceding five years. A higher
-$CT$ ratio signifies stronger economic growth. Formally:
+**Economic Performance:** Operationalised via the Current-Trend (CT) ratio
+developed by @krishnarajan2019, this measure compares current GDP per capita with
+the average of the previous five years. Higher CT values indicate stronger
+economic growth. Formally:
 
 $$
     \begin{aligned}
@@ -1917,35 +1941,34 @@ $$
     \end{aligned}
 $$
 
-**Political stability:** Captured by a violence index reflecting the incidence of
-internal and interstate conflict, derived from the “actotal” variable in the
-Major Episodes of Political Violence dataset [@marshall2005current]. Scores range
-from 0 (complete stability) to 18 (maximum instability).
+**Political violence:** Measured using a violence index based on the “actotal”
+variable from the Major Episodes of Political Violence dataset
+[@marshall2005current], this index captures both internal and interstate
+conflict. Scores range from 0 (complete stability) to 18 (maximum instability).
 
-**Days in office (log):** This variable records the natural logarithm of an
-incumbent leader’s cumulative days in office in each year. Longer tenure is
-posited to facilitate power consolidation, thereby making autocoup attempts more
-feasible. Data are drawn from the Archigos dataset [@goemans2009] and the
-Political Leaders' Affiliation Database (PLAD) [@bomprezzi2024wedded].
+**Days in office (log):** The natural logarithm of an incumbent leader’s
+cumulative days in office is included as a proxy for power consolidation. Longer
+tenures are hypothesised to facilitate the conditions necessary for an autocoup.
+Data are drawn from the Archigos dataset [@goemans2009] and the Political
+Leaders’ Affiliation Database (PLAD) [@bomprezzi2024wedded].
 
-**Democratic level:** This variable employs the Polity V score to assess the
-degree of democracy or autocracy in a given country. Developed by the Center for
-Systemic Peace, the Polity V score evaluates regime authority characteristics on
-a scale ranging from -10 (fully autocratic) to +10 (fully democratic), based on
-indicators such as the competitiveness of political participation, the process of
-executive recruitment, and the extent of constraints on executive authority
+**Democratic level:** This variable employs the Polity V score to measure the
+degree of democracy in a country, ranging from -10 (fully autocratic) to +10
+(fully democratic). The index, developed by the Center for Systemic Peace,
+assesses regime characteristics such as the competitiveness of political
+participation, executive recruitment, and constraints on executive authority
 [@marshall].
 
-**Population size:** The natural logarithm of national population is included to
-control for the potential impact of population size on leadership stability.
-Larger populations may pose greater governance challenges and amplify opposition.
-Population data are sourced from the V-Dem dataset.
+**Population size:** The natural logarithm of a country’s population is included
+to account for the potential effects of demographic scale on governance. Larger
+populations may present more complex administrative challenges and generate
+greater opposition. Data are sourced from the V-Dem dataset.
 
-**Cold War:** Following the approach of prior studies [@thyne2014;
-@derpanopoulos2016; @dahl2023], a dummy variable, Cold War, is included to
-capture differences across historical periods. This variable reflects the
-relative scarcity of autocoup events between the 1960s and 1990, with a notable
-increase thereafter.
+**Cold War:** Following the precedent of earlier studies [@thyne2014;
+@derpanopoulos2016; @dahl2023], a dummy variable is included to distinguish the
+Cold War period (approximately 1960–1990) from the post-Cold War era. This
+distinction reflects the relative paucity of autocoup events during the Cold War
+and their increased frequency thereafter.
 
 #### Results and discussions {.unnumbered}
 
@@ -1976,7 +1999,7 @@ common_labels <- list(
   regime ~ "Regime Type",
   GDP_pc ~ "GDP per capita",
   GDP_trend ~ "GDP growth trend",
-  violence ~ "Political stability",
+  violence ~ "Political violence",
   pop_log ~ "Log of Population",
   polity5 ~ "Polity 5 scores",
   "log(cumulative_days_in_office)" ~ "Log of days in office",
@@ -2074,138 +2097,145 @@ tbl_merge(
   )
 ```
 
-This analysis utilizes a logistic regression model to examine the factors
-influencing the likelihood of autocoup attempts. Given the nature of the
-dependent variable (a binary outcome, autocoup attempt occurring or not) and
-potentially rare events in certain categories, a bias-reduced logit model is
-employed alongside the standard logit model. The bias-reduced logit approach is
-generally considered more appropriate when dealing with datasets where the
-outcome of interest is infrequent, as it helps to mitigate potential biases in
-the coefficient estimates that can arise in standard maximum likelihood
-estimation. Therefore, the following discussion of the results will primarily
-focus on the estimates obtained from the bias-reduced logit model, presenting the
-findings in terms of Odds Ratios (ORs) for ease of interpretation. Odds Ratios
-provide a more intuitive understanding of the relationship between predictors and
-the likelihood of the outcome compared to log odds.
+This analysis employs a logistic regression framework to investigate the factors
+influencing the likelihood of autocoup attempts. Given the binary nature of the
+dependent variable—namely, whether an autocoup attempt occurred in a given
+country-year—and the relative infrequency of such events in certain categories, a
+bias-reduced logit model is used alongside the standard logit model. The
+bias-reduced approach is particularly appropriate for rare event data, as it
+mitigates estimation bias associated with standard maximum likelihood techniques.
+Accordingly, the discussion that follows focuses primarily on the results derived
+from the bias-reduced logit model. These results are presented in the form of
+Odds Ratios (ORs), which provide a more intuitive understanding of the
+relationships between explanatory variables and the probability of autocoup
+attempts than log-odds coefficients.
 
-The results from the bias-reduced logit model are presented in
-@tbl-autocoupmodel. The primary hypothesis posits that the likelihood of autocoup
-attempts varies significantly by regime type, with personalist autocracies and
-presidential democracies being particularly susceptible relative to other regime
-types. The model uses "Dominant Party" regimes as the reference category.
+The estimates obtained from the bias-reduced logit model are summarised in
+@tbl-autocoupmodel. The central hypothesis advanced in this study posits that the
+likelihood of autocoup attempts is significantly shaped by regime type, with
+personalist autocracies and presidential democracies being particularly prone to
+such events in comparison with other regime types. The model adopts
+"dominant-party" regimes as the reference category for comparison.
 
-An examination of the regime type variables reveals strong empirical support for
-key aspects of the hypothesis. Compared to dominant-party regimes, personalist
-autocracies exhibit an estimated odds ratio of 2.07, which is statistically
-significant (  $p<0.05$  ). This suggests that the odds of an autocoup attempt
-are just over twice as high in personalist autocracies, holding all other
-variables constant. Presidential democracies also display a markedly increased
-likelihood of autocoup attempts, with an estimated odds ratio of 4.83 (  $p<0.01$
- ), indicating that the odds are approximately 3.8 times higher than in
-dominant-party regimes, ceteris paribus. By contrast, military regimes,
-parliamentary democracies, and those classified as “other” exhibit lower odds of
-experiencing an autocoup relative to dominant-party regimes. However, of these,
-only the “other” category achieves marginal statistical significance within the
-model.
+The findings offer strong empirical support for this hypothesis. Relative to
+dominant-party regimes, personalist autocracies exhibit an estimated odds ratio
+of 2.07, which is statistically significant (  $p<0.05$  ). This suggests that
+the odds of an autocoup attempt are just over twice as high in personalist
+autocracies, holding all other variables constant. Presidential democracies
+demonstrate an even greater propensity for autocoup attempts, with an estimated
+odds ratio of 4.83 (  $p<0.01$  ), indicating that the odds are nearly 3.8 times
+higher than in dominant-party regimes, ceteris paribus. By contrast, military
+regimes, parliamentary democracies, and regimes classified as "other" all exhibit
+lower odds of experiencing an autocoup relative to dominant-party regimes. Among
+these, only the “other” category reaches marginal statistical significance.
 
-These findings strongly support the assertion that both personalist autocracies
-and presidential democracies face a substantially higher risk of autocoup
-attempts compared to dominant party regimes. The odds ratios for personalist
-autocracies (2.13) and presidential democracies (4.83) are notably larger than
-those for military, parliamentary democracy, and other regime types, providing
-evidence that these two regime types are indeed more susceptible. This lends
-considerable support to hypothesis.
+These results provide compelling evidence that both personalist autocracies and
+presidential democracies are significantly more susceptible to autocoup attempts
+than dominant-party regimes. The magnitude of the odds ratios for personalist
+autocracies (2.07) and presidential democracies (4.83) is substantially greater
+than for other regime types, thereby lending robust support to the central
+hypothesis.
 
-Turning to the control variables in the bias-reduced logit model, several exhibit
-statistically significant associations with the likelihood of autocoup attempts.
-The logged Polity V score, a measure of democratic quality, is negatively
-associated with autocoup occurrence (  $OR = 0.91$,  $p<0.01$  ), indicating that
-more democratic regimes are less likely to experience such events. The Cold War
-variable is likewise associated with a significantly reduced odds of autocoup
-attempts (  $OR = 0.46$,  $p<0.01$  ), suggesting that such incidents were less
-prevalent during the Cold War period. The logarithm of population demonstrates
-marginal statistical significance and appears to have a negative relationship
-with the likelihood of autocoups. By contrast, other variables—including GDP per
-capita, GDP growth trend, political stability, and the log of days in office—do
-not display statistically significant associations with the probability of
-autocoup attempts within this model.
+With respect to the control variables, several demonstrate statistically
+significant relationships with the likelihood of autocoup attempts. The logged
+Polity V score—reflecting the level of democratic institutionalisation—is
+negatively associated with the probability of an autocoup (  $OR = 0.91$,
+ $p<0.01$  ), suggesting that higher levels of democracy reduce the risk of such
+occurrences. Similarly, the Cold War dummy variable is associated with a
+significantly reduced likelihood of autocoup attempts (  $OR = 0.46$,  $p<0.01$
+ ), indicating that these events were comparatively rarer during the Cold War
+period. The natural logarithm of population size is marginally significant and
+exhibits a negative association with autocoup likelihood, potentially reflecting
+the greater organisational complexity and political constraints faced in more
+populous states.
 
-In summary, the bias-reduced logit model reveals that regime type is a crucial
-determinant of autocoup attempts. Consistent with the hypothesis, personalist
-autocracies and presidential democracies exhibit a significantly higher
-likelihood of experiencing autocoup attempts compared to dominant party regimes,
-and appear more vulnerable than other regime types examined. This highlights the
-particular fragility within these political systems concerning attempts by
-incumbents to extend their tenures through extra-constitutional means. The
-analysis also confirms the importance of economic development (GDP per capita),
-level of democracy (Polity 5 scores), and the historical context of the Cold War
-in influencing the probability of autocoup attempts.
+By contrast, several variables—including GDP per capita, economic performance (as
+measured by the GDP growth trend ratio), political violence, and the logged
+number of days the incumbent has been in office—do not exhibit statistically
+significant associations with the likelihood of autocoup attempts in this model.
+
+In sum, the bias-reduced logit model confirms that regime type is a critical
+determinant of autocoup propensity. In line with the theoretical expectations,
+personalist autocracies and presidential democracies are significantly more
+vulnerable to autocoup attempts than dominant-party regimes or other regime
+types. These findings underscore the institutional fragility inherent in such
+systems, particularly in contexts where executive authority is highly
+centralised. The analysis also highlights the relevance of broader political and
+historical factors, including democratic development and the Cold War period, in
+shaping the incidence of autocoup events.
 
 ### Summary
 
-This chapter presents a quantitative investigation into the determinants of
-autocoup attempts, addressing a recognised gap in the existing literature often
-hindered by conceptual ambiguity and limited systematic data. The study posits
-that the risk of autocoup attempts is significantly shaped by the underlying
-structural balance of power within a regime, operationalised here through regime
-type. Employing both a standard logit model and a bias-reduced logit model, the
-analysis reveals that personalist autocracies and presidential democracies
-exhibit a significantly higher likelihood of experiencing autocoup attempts when
-compared to dominant party regimes. Specifically, the odds of an autocoup are
-estimated to be approximately three times greater in personalist autocracies and
-four times greater in presidential democracies, relative to the reference
-category.
+This chapter offers a quantitative examination of the determinants of autocoup
+attempts, addressing a well-documented lacuna in the existing literature, which
+has often been impeded by conceptual ambiguity and a lack of systematic empirical
+data. The study advances the argument that the likelihood of autocoup attempts is
+significantly influenced by the structural distribution of power within political
+regimes, operationalised through regime type. Drawing on both standard logistic
+regression and Firth’s bias-reduced logit model, the analysis demonstrates that
+personalist autocracies and presidential democracies are substantially more prone
+to autocoup attempts than dominant-party regimes. Specifically, the odds of an
+autocoup are estimated to be approximately three times higher in personalist
+autocracies and four times higher in presidential democracies, relative to the
+reference category.
 
-This finding lends support to the hypothesis that these specific regime types are
-particularly vulnerable to autocoups, suggesting a clear link between their
-structural characteristics and the propensity of incumbent leaders to extend
-their tenures extra legally. Beyond regime type, the study also identifies
-economic development, the level of democracy, and the historical context of the
-Cold War as influential factors. By examining the strategic calculus of incumbent
-leaders across different regime types, this research provides valuable empirical
-insights into the conditions that either facilitate or constrain autocoup
-attempts, thereby contributing to a more nuanced understanding of political
-instability and democratic trajectories.
+These findings offer empirical support for the hypothesis that such regime types
+possess structural vulnerabilities that render them particularly susceptible to
+extra-constitutional power consolidation by incumbents. In addition to regime
+type, the study identifies further significant covariates: population size, the
+degree of democratisation, and the broader historical context of the Cold War
+period all exert measurable influence on the probability of autocoup occurrence.
+By analysing the strategic incentives faced by incumbent leaders across different
+institutional configurations, this research contributes to a more comprehension
+understanding of irregular leader transitions.
 
-It is important to acknowledge certain complexities inherent in the analysis of
-autocoups that warrant further study. Unlike traditional coups, which can
-theoretically occur at any point and potentially multiple times within a short
-period, autocoups initiated by incumbents appear to follow different temporal
-patterns. For instance, an autocoup attempt may be less likely during the initial
-phase of a leader's term compared to the period preceding the term's scheduled
-expiry. Furthermore, while a leader successfully extending their tenure may
-reduce the immediate likelihood of a subsequent attempt, particularly if a
-life-long term is secured, it is also true that some leaders have successfully
-extended their rule on multiple occasions (e.g., Presidents Putin and
-Lukashenko). To render the analysis manageable within the scope of this study, a
-simplifying assumption was made that an autocoup attempt occurs only once during
-an incumbent leader's tenure. These temporal dynamics and the possibility of
-repeat attempts by the same leader represent important avenues for future
-research to build upon the foundational analysis presented here.
+Nonetheless, the analysis also highlights conceptual and methodological
+complexities that merit further scholarly attention. Unlike traditional
+coups—which may occur at any point during a regime's lifespan and can potentially
+recur within short intervals—autocoups appear to follow distinct temporal logics.
+For example, the likelihood of an autocoup may be lower during the early stages
+of a leader’s tenure and increase as the end of a constitutional term approaches.
+Moreover, while successful tenure extensions may reduce the short-term likelihood
+of further attempts, instances of repeated extensions—such as those undertaken by
+Presidents Putin and Lukashenko—indicate that some incumbents may engage in
+multiple autocoups over time.
+
+To render the analysis tractable, this study adopts the simplifying assumption
+that an autocoup attempt occurs only once per leadership tenure. While
+analytically necessary, this assumption underscores the need for future research
+to investigate the temporal dynamics and sequencing of autocoup behaviour. Such
+inquiries would usefully complement the present study by offering deeper insight
+into the longitudinal patterns and institutional adaptations that shape
+authoritarian resilience and democratic backsliding.
 
 ## Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-installed and Autocoup Leaders
 
 ### Abstract {.unnumbered}
 
-This chapter examines how the mode of power acquisition affects the tenure of
-political leaders who rise to office through irregular means, with a particular
-focus on those installed via coups and autocoups. It argues that political
-leaders who successfully extend their tenure through autocoups are more likely to
-survive in office longer than those who are installed by coups. Contrary to this
-initial hypothesis, the time-dependent Cox model reveals no statistically
-significant difference in the risk of removal between coup-installed and autocoup
-leaders once key covariates—particularly regime type—are accounted for. Instead,
-the analysis highlights the decisive influence of regime characteristics on
-leadership survival. Leaders in military, parliamentary, and transitional regimes
-face significantly higher hazards of removal compared to those in dominant-party
-systems. Additionally, higher levels of GDP per capita are associated with
-greater leadership stability, while increased political violence correlates with
-elevated risks of ousting. These findings suggest that structural and
-institutional contexts, rather than the specific mechanism of accession, more
-strongly shape the durability of irregular leadership. This study contributes to
-the literature on political survival by emphasising the role of regime type and
-political context in explaining leadership longevity following unconventional
-accessions to power.
+This chapter investigates the impact of power acquisition methods on the tenure
+of political leaders who assume office through irregular means, with a particular
+focus on individuals installed via coups and those who subsequently extend their
+rule through autocoups. It posits that leaders who consolidate their authority
+through autocoups are likely to enjoy greater longevity in office than those
+installed by coups alone. However, this hypothesis is not supported by the
+empirical evidence. A time-dependent Cox proportional hazards model indicates no
+statistically significant difference in the risk of removal between
+coup-installed and autocoup leaders once key covariates—especially regime
+type—are taken into account.
+
+Rather, the analysis underscores the critical role of regime characteristics in
+shaping leadership survival. Leaders operating within military or transitional
+regimes are found to face significantly higher hazards of removal compared to
+their counterparts in dominant-party systems. Furthermore, higher levels of GDP
+per capita are associated with increased leadership stability, while greater
+levels of political violence correspond with elevated risks of ousting.
+
+These findings suggest that structural and institutional contexts exert a
+stronger influence on the durability of irregular leadership than the specific
+mechanism through which power is initially acquired. This study contributes to
+the literature on political survival by highlighting the significance of regime
+type and broader political conditions in accounting for leadership longevity
+following non-conventional ascensions to power.
 
 ***keywords**: Coups, Autocoups, Leadership Survival, Cox Model*
 
@@ -2213,30 +2243,33 @@ accessions to power.
 
 ### Introduction
 
-The enduring fascination with the longevity of political leaders has sparked
-extensive research in political science, with scholars seeking to understand why
-some leaders maintain power for decades while others are ousted in a matter of
-months or even days. However, a specific subset of leaders—those who ascend to
-power through coups or extend their tenure through autocoups—has received
-relatively limited attention. Examining the tenures of these leaders is crucial,
-as it sheds light on the dynamics of irregular leadership transitions and their
-implications for political stability and democratic processes.
+The enduring question of why some political leaders remain in power for decades
+while others are deposed within months or even days has long captivated scholars
+in political science. Despite the considerable body of research on leadership
+longevity, a particular subset of leaders—those who assume power through coups or
+consolidate it via autocoups—has received comparatively limited scholarly
+attention. Investigating the tenures of these leaders is essential, as it
+illuminates the dynamics underpinning irregular transitions of power and their
+broader implications for political stability and democratic governance.
 
-In contrast to leaders who attain power through conventional means, those who
-rise through irregular channels, such as coups or autocoups, present more complex
-and intriguing cases for study. The Archigos dataset highlights the prevalence of
-irregular power transitions. Between 1945 and 2015, over half of leaders who
-assumed power irregularly also exited irregularly, a rate significantly higher
-than that of leaders who accessed office through regular channels.
+Leaders who rise through irregular means, such as coups and autocoups, differ
+markedly from those who attain office via institutionalised, constitutional
+processes. These irregular leaders often pose more complex analytical challenges,
+given the uncertainties surrounding their authority and legitimacy. Data from the
+Archigos dataset underscores the prevalence of such irregular transitions:
+between 1945 and 2015, more than half of the leaders who entered power
+irregularly also exited through irregular means—a rate considerably higher than
+that observed for leaders who entered office through regular procedures
+[@goemans2009].
 
-Coup-installed and autocoup leaders constitute a substantial portion of these
-irregular cases. The Archigos dataset notes that of 374 leaders who exited
-irregularly, 246 (65.8%) were ousted through coups. Furthermore, research by
-@frantz2016 demonstrates that coup-related exits account for approximately
-one-third of all exits in autocracies, surpassing any other transition type.
-Additionally, the autocoup dataset, introduced in [Chapter 3](#sec-chapter3),
-documents 110 autocoup attempts between 1945 and 2023, of which 87 were
-successful.
+Coup-installed and autocoup leaders comprise a significant proportion of these
+irregular cases. According to Archigos, 246 of the 374 leaders ( $65.8\%$ ) who
+exited power irregularly were removed via coups [@goemans2009]. Additionally,
+research by @frantz2016 shows that coups constitute approximately one-third of
+all exits in autocracies, representing the most common form of leadership
+transition in such regimes. Complementing this, the autocoup dataset introduced
+in Chapter 2 documents 83 autocoup attempts between 1945 and 2023, of which 64
+were successful.
 
 ```{r}
 #| label: data
@@ -2252,12 +2285,14 @@ avg <- survival_cox_ph_model |>
   )
 ```
 
-Measuring the tenure of coup-installed and autocoup leaders poses challenges due
-to the inherent irregularity and uncertainty of their positions. Nevertheless, a
-comparative analysis reveals that leaders who extend power through autocoups tend
-to have longer average post-autocoup tenures (approximately `r avg$avg[1]` years)
-compared to coup-installed leaders (approximately `r avg$avg[2]` years),
-suggesting a potential tenure gap of over five years.
+Assessing the tenure of coup-installed and autocoup leaders presents
+methodological challenges due to the inherent volatility and uncertainty of their
+positions. Nonetheless, comparative evidence—excluding short-lived leaders who
+remained in office for fewer than 180 days—suggests that those who extend their
+rule through autocoups tend to experience longer average post-autocoup tenures
+(approximately `r avg$avg[2]` years) than those who initially assume power via
+coups (approximately `r avg$avg[1]` years), indicating a potential tenure gap of
+around 3 years.
 
 ```{r}
 #| label: fig-logrank
@@ -2285,176 +2320,171 @@ ggsurvplot(fit,
 )
 ```
 
-A preliminary log-rank test in survival analysis, as illustrated in @fig-logrank,
-demonstrates a statistically significant difference between the tenures of
-autocoup and coup-installed leaders. The survival curve for autocoup leaders
-consistently exceeds that of coup-installed leaders, indicating longer survival
-times and a reduced risk of ouster for autocoup leaders.
+Preliminary survival analysis, using a log-rank test illustrated in Figure
+@fig-logrank, reveals a statistically significant difference in tenure length
+between these two groups. The survival curve for autocoup leaders consistently
+lies above that of coup-installed leaders, suggesting both a lower hazard of
+removal and longer durations in office for the former.
 
-This study posits that the method of accession significantly influences
-leadership longevity. Coup-installed leaders likely confront greater challenges
-to their rule, resulting in shorter average tenures compared to autocoup leaders.
-The analysis, employing Cox proportional hazards and time-dependent Cox models,
-supports this hypothesis, demonstrating that autocoup leaders generally
-experience longer tenures than coup-installed leaders.
+This study posits that the method of power acquisition exerts a significant
+influence on leadership survival. Coup-installed leaders may encounter greater
+resistance or institutional fragility, contributing to shorter average tenures
+than those who consolidate power through autocoups. Employing Cox proportional
+hazards and time-dependent Cox models, the analysis supports this hypothesis by
+demonstrating that autocoup leaders tend to remain in office longer than their
+coup-installed counterparts.
 
-This research offers two primary contributions to the field. First, it highlights
-an understudied factor in leadership survival analysis: the impact of the method
-of accession to power. The findings suggest that leader survival is influenced
-not only by ruling strategies but also by the initial method of acquiring power.
-Second, by employing survival models, this study provides empirical evidence of
-the significant difference in tenure duration between autocoup and coup-installed
-leaders. This insight may explain the increasing prevalence of tenure extensions
-through autocoups since 2000, as more incumbents observe and potentially emulate
-successful precedents.
+This research makes two key contributions to the literature on political
+survival. First, it introduces an under-explored explanatory factor: the method
+of accession to power. Second, by applying survival models, this study provides
+robust empirical evidence of the significant disparity in tenure length between
+autocoup and coup-installed leaders. These insights may help account for the
+rising incidence of autocoup-driven tenure extensions since 2000, as incumbents
+increasingly observe and emulate successful precedents.
 
-The remainder of this chapter is structured as follows: Section 2 provides a
-comprehensive literature review on political survival, establishing the context
-for this research. Section 3 explores the factors influencing the survival of
-coup and autocoup leaders. Section 4 outlines the methodology and data used,
-including the application of survival models to analyze the determinants of
-leadership longevity. Section 5 presents the analysis findings and a detailed
-discussion of the results. Finally, Section 6 concludes by synthesizing key
-takeaways and exploring their broader implications for political stability and
-democratic processes.
+The remainder of this chapter is structured as follows: Section 2 reviews the
+existing literature on political survival, establishing the theoretical context
+for the analysis. Section 3 examines the factors influencing the longevity of
+coup-installed and autocoup leaders. Section 4 details the methodological
+approach and data sources, including the application of survival analysis
+techniques. Section 5 presents the empirical findings and interprets their
+implications. Finally, Section 6 offers concluding reflections and considers the
+broader consequences of the findings for political stability and democratic
+development.
 
 ### Literature review
 
-The longevity of political leaders, which varies widely across different regimes,
-countries, and historical periods, has been a long-standing focus of research in
-political science. This field can be divided into two interconnected areas:
-regime survival and individual leader survival, which are distinct but related
-concepts. Regime survival focuses on the endurance of political systems, such as
-monarchies, political parties, or specific ideological structures, while leader
-survival concerns the duration of individual leaders' time in office.
+The longevity of political leaders, which varies markedly across regimes,
+countries, and historical periods, has long been a focal point of inquiry within
+political science. Research in this field is generally categorised into two
+interrelated strands: regime survival and individual leader survival. While the
+former concerns the endurance of political systems—such as monarchies, dominant
+parties, or ideological frameworks—the latter focuses on the duration of
+individual leaders’ tenure in office.
 
-Political survival patterns vary widely across different systems. Parliamentary
-democracies (e.g., Japan, United Kingdom) often experience prolonged periods of
-party dominance coupled with frequent leadership changes. Similarly, communist
-regimes (e.g., China) typically demonstrate enduring party rule with more
-frequent leadership transitions. Presidential systems (e.g., United States) and
-many military regimes tend to exhibit more frequent changes in both ruling party
-or junta and leader.
+Patterns of political survival differ significantly across regime types. For
+instance, parliamentary democracies (e.g., Japan and the United Kingdom) often
+witness sustained party dominance alongside frequent leadership turnover.
+Similarly, communist regimes (e.g., China) are typically characterised by stable
+party control but relatively frequent changes in leadership. In contrast,
+presidential systems (e.g., the United States) and many military regimes tend to
+exhibit more frequent changes in both leadership and ruling entity.
 
-The existing literature on leader survival is extensive and multifaceted. Some
-studies explore specific mechanisms influencing leadership longevity within
-particular regimes, such as democracies [@svolik2014] or autocracies
-[@davenport2021]. Others aim to develop more generalizable theoretical frameworks
-explaining leader survival across different political systems
-[@buenodemesquita2003]. While a universal theory remains an aspirational goal,
-the complexities of leadership survival across diverse regime types present
-significant challenges.
+The existing literature on leader survival is both extensive and diverse. Some
+studies investigate mechanisms that influence leadership durability within
+specific regime types, such as democracies [@svolik2014] or autocracies
+[@davenport2021]. Others attempt to formulate more general theoretical frameworks
+applicable across various political systems [@buenodemesquita2003]. Despite these
+efforts, the ambition of constructing a universal theory of leadership survival
+remains elusive due to the inherent complexities across regime contexts.
 
-Power transition mechanisms vary substantially across different types of regimes,
-particularly between democracies and autocracies. Autocratic systems often
-feature closed leadership selection processes, restricted to a narrow pool of
-individuals. While some autocracies may hold elections, significant barriers to
-entry for legitimate challengers typically persist. The opacity of selection
-processes in autocracies makes it difficult to assess genuine levels of public
-support compared to democracies. Conceptualizing selectorates or winning
-coalitions, as proposed by @buenodemesquita2003, becomes problematic in many
-autocratic contexts.
+Mechanisms of leadership transition vary substantially between democracies and
+autocracies. In autocratic regimes, leadership selection processes are often
+closed, with access restricted to a limited elite. Even when elections are held,
+meaningful competition is frequently constrained by structural or legal barriers.
+The opacity of leadership transitions in autocracies complicates assessments of
+popular support and renders concepts such as selectorates or winning coalitions,
+as theorised by @buenodemesquita2003, difficult to operationalise.
 
-Given these complexities, focusing research on specific regimes or leader types
-may be more fruitful. The study of irregular leaders, such as those who ascend to
-power through coups or extend their tenures through autocoups, offers a
-compelling avenue for research due to the inherent complexities and uncertainties
-surrounding their leadership trajectories.
+Given these challenges, focusing research on specific categories of leaders may
+yield more analytically fruitful outcomes. The study of irregular leaders—those
+who ascend to power via coups or extend their rule through autocoups—offers a
+compelling line of inquiry due to the distinctive uncertainty and volatility that
+characterise their tenures.
 
-Two primary perspectives have emerged to explain the dynamics of leader survival.
-The first emphasizes objective factors and resources, such as personal competence
-[@yu2016], societal stability [@arriola2009], economic development [@palmer1999;
-@williams2011], natural resource endowments [@smith2004; @quirozflores2012;
-@wright2013], and external support [@licht2009; @wright2008; @thyne2017]. The
-second focuses on subjective factors and strategies, including political
-policies, responses to opposition, and tactics for consolidating power
+Two dominant perspectives have emerged in the literature to explain leader
+survival. The first emphasises objective structural factors and material
+resources, such as individual competence [@yu2016], societal stability
+[@arriola2009], economic development [@palmer1999; @williams2011], natural
+resource wealth [@smith2004; @quirozflores2012; @wright2013], and external
+support [@licht2009; @wright2008; @thyne2017]. The second perspective focuses on
+subjective dimensions and strategic choices, including policy decisions,
+management of opposition, and mechanisms for consolidating authority
 [@gandhi2007; @morrison2009; @escribà-folch2013; @davenport2021].
 
-Coups, a significant aspect of irregular leadership transitions, have received
-considerable scholarly attention. Research has examined coup prevention
-strategies [@powell2017; @sudduth2017; @debruin2020]. Studies have explored the
-impact of coups on leadership and the subsequent actions of coup leaders
-[@sudduth2017, @sudduth2018, @easton2018].
+Coups, a critical form of irregular leadership transition, have garnered
+substantial scholarly attention. Research has examined strategies for coup
+prevention [@powell2017; @sudduth2017; @debruin2020], as well as the effects of
+coups on leadership trajectories and the subsequent behaviour of coup leaders
+[@sudduth2017; @sudduth2018; @easton2018].
 
-However, a significant gap remains in the literature regarding the comparison of
-leadership survival between coup-installed and autocoup leaders. This study aims
-to address this gap by investigating and comparing the duration of leadership
-survival for these two leader types.
+Despite this body of work, a significant lacuna remains in the comparative
+analysis of leadership survival between coup-installed and autocoup leaders. This
+study seeks to address this gap by examining and comparing the tenure lengths of
+leaders emerging from these two distinct forms of irregular power acquisition.
 
-By focusing on the comparison between coup-installed and autocoup leaders, this
-study seeks to contribute to a more nuanced understanding of political survival
-in irregular leadership transitions. This approach may offer valuable insights
-into the complex dynamics of leader longevity across different political
-contexts.
+By centring its analysis on the survival of coup-installed versus autocoup
+leaders, this research aims to enhance our understanding of political longevity
+in the context of irregular leadership transitions. Such a focus promises to
+yield important insights into the strategic and structural conditions that
+underpin leadership durability in diverse political environments.
 
 ### Survival dynamics of autocoup and coup-installed leaders
 
-The study of leadership survival within political systems presents considerable
-challenges due to the opacity and complexity of power transitions. These
-challenges, however, highlight the importance of such research, as it sheds light
-on the often-overlooked dynamics of political leadership. While the survival
-trajectories of political leaders are complex and varied, certain patterns do
-emerge. Leaders of similar origin or regime type frequently exhibit comparable
-characteristics, thereby enabling systematic and meaningful analysis.
+The study of leadership survival within political systems poses significant
+methodological and conceptual challenges, owing to the opaque and complex nature
+of power transitions. These very challenges, however, underscore the importance
+of such inquiry, as it illuminates the often-neglected dynamics of political
+leadership. While the survival trajectories of individual leaders vary
+considerably, discernible patterns can be identified. Leaders emerging from
+similar origins or operating within comparable regime types frequently display
+analogous characteristics, thereby enabling systematic and meaningful comparative
+analysis.
 
 #### Key definitions and scope
 
-Before proceeding to a comparative analysis, it is essential to clarify several
-key terms.
+Prior to undertaking a comparative analysis, it is essential to establish clear
+definitions of key terms to ensure conceptual clarity and analytical coherence.
+The definitions employed in this chapter align with those presented in Chapter 2.
 
-Firstly, coups and autocoups are defined in a manner consistent with Chapter 2 to
-ensure conceptual clarity and analytical coherence throughout the study.
+Autocoup leaders are defined as incumbent rulers who utilise extra-constitutional
+measures to prolong their tenure in office. In contrast, coup-installed leaders
+are those who ascend to power following a successful coup, irrespective of
+whether they personally orchestrated or participated in the coup. This inclusive
+definition encompasses both coup perpetrators and individuals subsequently
+appointed to lead, thereby offering a comprehensive perspective on leadership
+following violent or forceful regime change.
 
-Autocoup leaders are defined as incumbent rulers who employ extra-constitutional
-means to extend their tenure in office. Coup-installed leaders, by contrast, are
-those who assume power following a successful coup, irrespective of whether they
-personally participated in or instigated the coup. This inclusive definition
-allows for the consideration of both coup perpetrators and those appointed to
-lead in the aftermath, offering a comprehensive understanding of leadership
-following regime change by force.
+Three clarifications are warranted in delineating the analytical scope. First is
+about the minimum tenure threshold. To facilitate a meaningful and robust
+analysis, the study imposes a minimum threshold of six months in office for both
+autocoup and coup-installed leaders. This criterion serves to exclude brief or
+interim leadership episodes that are less analytically relevant to the study of
+survival dynamics, thereby enhancing the reliability of the findings.
 
-Three important clarifications are required. First, to facilitate a meaningful
-analysis, this study focuses on leaders who remained in power for a significant
-period, applying a minimum threshold of six months to both autocoup and
-coup-installed leaders. This criterion serves to exclude brief or transitional
-episodes of leadership, thereby enhancing the robustness of the findings
-concerning survival dynamics.
+Second is the potential overlap in leadership categories. Some cases may present
+ambiguities due to overlapping leadership pathways. A notable example is Zine El
+Abidine Ben Ali, who assumed the presidency of Tunisia in 1987 following a
+bloodless coup that removed President Habib Bourguiba on grounds of ill health.
+In 2002, Ben Ali further consolidated power through a constitutional referendum
+that removed term limits and raised the presidential age cap from 70 to 75 years
+[@bonci2019]. This latter manoeuvre could be construed as an autocoup.
+Nevertheless, since Ben Ali initially came to power via the 1987 coup and
+remained in office continuously, he is classified in this study as a
+coup-installed leader. To preserve analytical consistency and prevent category
+overlap, this study adopts the rule that any leader who initially acquires office
+through a coup is categorised as coup-installed, even if they later consolidate
+or extend their rule through elections or extra-constitutional means.
 
-Second, some overlap between these two leadership categories is possible. For
-instance, Zine El Abidine Ben Ali, President of Tunisia from 1987 to 2011,
-assumed power through a bloodless coup that ousted President Habib Bourguiba on
-grounds of alleged incompetence. Subsequently, in 2002, a constitutional
-referendum—the first of its kind in Tunisia—enabled the president to seek an
-unlimited number of five-year terms and raised the maximum age limit for
-presidential candidates from 70 to 75 [@bonci2019]. Technically, this latter
-manoeuvre might be classified as an autocoup. Thus, President Ben Ali could be
-viewed as both a coup-installed and an autocoup leader. However, since Ben Ali
-originally came to power through the 1987 coup and retained office continuously
-thereafter, this study classifies him solely as a coup-installed leader. This
-rule—namely, that a leader who initially assumes power via a coup shall be
-categorised as coup-installed, even if they subsequently extend their rule by
-general elections or extra-constitutional means—ensures analytical consistency
-and prevents overlap between leadership types.
-
-Third, this study focuses on comparing the post-autocoup tenure of autocoup
-leaders with the post-coup tenure of coup-installed leaders. That is, any tenure
-served by autocoup leaders prior to their tenure extension is excluded from the
-analysis. This comparative approach is motivated by the relevance and shared
-characteristics of these leadership types, particularly in terms of their
-legitimacy deficits, uncertainty, and susceptibility to instability. By examining
-these parallel yet distinct pathways to power, the study aims to elucidate the
-factors that influence the longevity of leaders who rise to power through
-irregular means.
+Third is the focus on post-event tenure. The analysis compares the post-autocoup
+tenure of autocoup leaders with the post-coup tenure of coup-installed leaders.
+Any period served by autocoup leaders prior to the tenure-extending manoeuvre is
+excluded. This approach ensures a like-for-like comparison by focusing on the
+period of leadership characterised by irregular legitimacy and heightened
+political uncertainty. Both categories of leaders share key characteristics—such
+as limited institutional legitimacy, increased exposure to instability, and
+dependence on coercive or extra-legal mechanisms—which render the comparison
+analytically fruitful.
 
 #### Challenges in power consolidation
 
-Both autocoup and coup-installed leaders confront distinct challenges in
-consolidating their power, primarily stemming from the varying intensity of
-issues related to illegitimacy, uncertainty, and instability. This disparity
-creates an uneven playing field in terms of power dynamics, placing
-coup-installed leaders at a significant disadvantage. @tbl-leaders provides a
-comparative overview of the main features of autocoup and coup-installed leaders,
-highlighting these key differences.
+Both autocoup and coup-installed leaders encounter distinct challenges in
+consolidating power, largely arising from the differing intensity of issues
+related to illegitimacy, uncertainty, and instability. These disparities create
+an uneven political landscape, placing coup-installed leaders at a marked
+disadvantage. @tbl-leaders presents a comparative overview of the principal
+characteristics of autocoup and coup-installed leaders, highlighting these
+critical differences.
 
 \blandscape
 
@@ -2482,202 +2512,211 @@ read.csv(here("data/leader_comparison.csv")) |>
 
 ##### Illegitimacy {.unnumbered}
 
-While both types of leaders suffer from a legitimacy deficit, the nature and
-perception of this deficit differ significantly.
+Although both categories of leaders face legitimacy deficits, the nature and
+perception of this deficit vary considerably.
 
-The illegitimacy coup-installed leaders is blatant and unambiguous, stemming from
-the overt and often violent seizure of power. This overt act undermines
-pre-existing norms and institutions, generating immediate domestic and
-international condemnation.
+For coup-installed leaders, illegitimacy is overt and unequivocal, stemming from
+the direct—often violent—seizure of power. Such abrupt disruptions to established
+political norms and institutions elicit immediate condemnation, both domestically
+and internationally, and cast doubt on the regime's authority from the outset.
 
-In contrast, autocoup leaders employ a more subtle and deceptive strategy,
-manipulating legal processes and institutions to create a façade of democratic
-legitimacy. This veneer of legality, while often thin, can provide a degree of
-cover and buy time for consolidating power.
+By contrast, autocoup leaders adopt a more covert and strategic approach,
+utilising legal and institutional mechanisms to simulate democratic legitimacy.
+Though often superficial, this legalistic veneer can obscure the authoritarian
+nature of their actions, offering a temporary shield from domestic opposition and
+international scrutiny while they seek to consolidate power.
 
 ##### Uncertainty {.unnumbered}
 
-The irregular paths to power for both types of leaders create uncertainty about
-the longevity of their rule and the mechanisms of their eventual departure.
-However, the levels and sources of this uncertainty differ significantly.
+The irregular accession of both types of leaders generates uncertainty regarding
+the durability of their rule and the modalities of succession. However, the
+nature and sources of this uncertainty differ markedly.
 
-Coup-installed leaders face a trifecta of uncertainties. First, the immediate
-aftermath of a coup often involves a struggle for power within the junta or
-ruling coalition, creating ambiguity about who will ultimately consolidate
-control. Second, the tenure of coup-installed leaders is inherently precarious,
-subject to internal rivalries, popular uprisings, or counter-coups. Third, the
-lack of established succession mechanisms further amplifies uncertainty, making
-it difficult to predict the transfer of power and potentially triggering future
-instability.
+Coup-installed leaders confront a triad of uncertainties. First, the immediate
+post-coup environment frequently involves intense power struggles within the
+military or ruling coalition, creating ambiguity over who will ultimately
+prevail. Second, their tenure is intrinsically unstable, threatened by internal
+rivalries, popular mobilisation, or the prospect of counter-coups. Third, the
+absence of institutionalised succession mechanisms exacerbates this
+unpredictability, heightening the risk of future instability.
 
-While not immune to uncertainty, autocoup leaders generally present a clearer
-picture. The question of who will rule post-autocoup is largely settled, as the
-incumbent retains power. Furthermore, many autocoup leaders openly aspire to
-extend their rule indefinitely or incrementally, attempting to establish a sense
-of permanence. This perceived stability, whether real or manufactured, can
-contribute to a more predictable political environment, at least in the short
-term.
+Autocoup leaders, while not entirely insulated from uncertainty, typically face
+fewer ambiguities. As incumbents, they retain formal authority post-autocoup,
+thereby eliminating immediate succession questions. Moreover, autocoup leaders
+often articulate explicit ambitions to prolong their rule indefinitely, or
+through gradual extensions, cultivating an image of continuity. This perceived
+stability—whether genuine or contrived—may foster a more predictable political
+climate in the short term.
 
 ##### Instability {.unnumbered}
 
-The awareness of shaky legitimacy and persistent uncertainty inevitably breeds
-insecurity and a sense of crisis, forcing both autocoup and coup-installed
-leaders to prioritize stabilization measures. However, the nature and intensity
-of these challenges differ:
+The combination of legitimacy deficits and enduring uncertainty inevitably
+fosters insecurity and a sense of political fragility. Consequently, both
+autocoup and coup-installed leaders prioritise strategies to stabilise their
+regimes. However, the scale and nature of these challenges differ.
 
-Coup-installed leadersface the daunting task of rapidly reshaping power dynamics,
-often resorting to purges and crackdowns to eliminate potential adversaries and
-consolidate control. This process of dismantling existing structures and building
-new ones generates significant instability, potentially alienating former allies
-and triggering resistance from various segments of society. The need to appease
-powerful actors both domestically and internationally further limits their
-options, forcing them into compromises that can undermine their authority and
-long-term stability.
+Coup-installed leaders typically face the formidable task of reconfiguring
+political power from the ground up. This often involves purging opponents,
+suppressing dissent, and restructuring institutional frameworks. Such aggressive
+measures can provoke significant resistance, alienate potential allies, and
+incite societal unrest. Moreover, the imperative to appease powerful domestic and
+international actors may force these leaders into precarious compromises that
+further undermine their authority.
 
-In contrast, autocoup leaders often benefit from a degree of continuity in regime
-personnel and institutions. This relative stability allows them to implement
-changes gradually, minimizing disruptions and mitigating potential backlash.
-While they may still face opposition, they are less likely to confront immediate
-and existential threats to their rule, providing them with more time and leverage
-to consolidate power.
+In contrast, autocoup leaders often benefit from a degree of institutional
+continuity and regime loyalty. This relative stability enables them to pursue
+consolidation incrementally, reducing the likelihood of immediate backlash. While
+opposition may persist, autocoup leaders are generally less exposed to
+existential threats in the early stages of their extended rule, affording them
+greater latitude to entrench their authority.
 
-By understanding these contrasting challenges, we can better appreciate the
-relative advantages and disadvantages faced by autocoup and coup-installed
-leaders. This comparative perspective provides a nuanced framework for analyzing
-the strategies these leaders employ to consolidate power and navigate the
-perilous terrain of irregular leadership transitions.
+Understanding these contrasting challenges allows for a more refined appreciation
+of the strategic environments in which irregular leaders operate. This
+comparative lens provides a valuable framework for analysing the divergent
+pathways to power consolidation, and the varied tools and tactics employed by
+autocoup and coup-installed leaders in navigating the precarious terrain of
+non-traditional political ascension.
 
 #### Empirical evidence and hypothesis
 
-Empirical evidence substantiates the disadvantage faced by coup-installed
-leaders, revealing a complex interplay between historical precedent, power
-consolidation challenges, and leadership longevity. This section presents key
-data points and introduces the central hypothesis guiding this study.
+Empirical evidence underscores the relative disadvantage faced by coup-installed
+leaders, revealing a complex interplay between historical patterns, difficulties
+in consolidating power, and variations in leadership longevity. This section
+presents key empirical findings and introduces the central hypothesis that guides
+this study.
 
-Data analysis shows a significant correlation between the frequency of coup
-attempts in a country and the likelihood of future coups. Notably, over a third
-of coups have occurred in the top ten countries with the most attempts since 1950
-[@powell2011]. This pattern suggests a self-reinforcing cycle of political
-instability, where each successful coup increases the probability of subsequent
-attempts, creating an environment of persistent uncertainty for coup-installed
-leaders.
+Data analysis indicates a strong correlation between the frequency of coup
+attempts within a given country and the likelihood of future coups. Notably, more
+than one-third of all coups since 1950 have taken place in the ten countries with
+the highest number of coup attempts [@powell2011]. This suggests a
+self-reinforcing cycle of political instability, in which each successful coup
+increases the probability of further attempts, thereby cultivating an environment
+of persistent uncertainty for coup-installed leaders.
 
-The disparity in leadership longevity between autocoup and coup-installed leaders
-is starkly illustrated by survival data. As depicted in @fig-logrank, the average
-survival period following an autocoup is approximately five years longer than
-that of coup-installed leaders. This substantial difference in tenure length
-underscores the divergent challenges faced by these two types of leaders in
-maintaining their grip on power.
+The disparity in leadership duration between autocoup and coup-installed leaders
+is clearly reflected in survival data. As illustrated in @fig-logrank, leaders
+who extend their tenure through autocoups remain in office, on average,
+approximately five years longer than those who assume power via coups. This
+marked difference in tenure highlights the distinct challenges these two
+categories of leaders encounter in retaining power.
 
-The distinct challenges faced by autocoup leaders and coup-installed leaders in
-consolidating power create a self-perpetuating cycle that significantly
-influences their tenure length.
+The divergent consolidation environments faced by autocoup and coup-installed
+leaders contribute to a self-perpetuating cycle with significant implications for
+tenure length. Coup-installed leaders confront acute legitimacy deficits and
+heightened internal instability; they often struggle to attract and retain
+durable support, rendering them more susceptible to both internal dissent and
+external pressures. Their comparatively shorter average tenures reinforce
+perceptions of volatility and fragility. Autocoup leaders, by contrast,
+frequently benefit from a superficial veneer of legality and enjoy a more
+favourable starting position as incumbents. This allows them to consolidate
+authority more effectively, cultivate elite and public support, and reduce the
+immediate risk of displacement. Their longer tenures further contribute to
+perceptions of regime stability. This cyclical dynamic suggests that the initial
+method of acquiring or extending power has long-term implications for a leader’s
+capacity to maintain their position.
 
-Coup-installed leaders face greater legitimacy challenges and internal
-instability; Struggle to attract and retain strong support; More vulnerable to
-internal and external challenges; Shorter average tenures reinforce perception of
-instability.
-
-Autocoup leaders often benefit from a veneer of legitimacy and a stronger initial
-position; Better able to consolidate power and attract supporters; Face less
-immediate threat of overthrow; Longer average tenures contribute to perception of
-stability.
-
-This cycle suggests that the initial method of power acquisition or extension has
-far-reaching consequences for a leader's ability to maintain their position over
-time.
-
-Based on these observations and the theoretical framework outlined earlier, I
-propose the following hypothesis:
+Drawing upon these empirical observations and the theoretical framework outlined
+in preceding sections, the following hypothesis is proposed:
 
 ***H4-1: Political leaders who successfully extend their tenure through autocoups
-are more likely to survive longer extended tenure compared to coup-installed
-leaders.***
+are more likely to enjoy longer extended tenures than those who assume office
+through coups.***
 
-This hypothesis encapsulates the expected outcome of the divergent challenges and
-advantages faced by autocoup and coup-installed leaders. By testing this
-hypothesis, I aim to quantify the impact of the method of power acquisition or
-extension on leadership longevity, contributing to a more nuanced understanding
-of political survival in contexts of irregular transitions.
+This hypothesis encapsulates the anticipated effects of the differing challenges
+and advantages faced by coup-installed and autocoup leaders. By empirically
+testing this claim, the study seeks to assess the impact of irregular accession
+mechanisms on leadership survival, thereby advancing a more nuanced understanding
+of political durability in contexts of non-traditional transitions to power.
 
 ### Research design
 
-This section employs survival analysis to test the hypothesis that autocoup
-leaders have longer survival times in office compared to coup-installed leaders.
-This study uses Cox models to analyze the survival tenures of autocoup and
-coup-installed leaders, controlling for various factors that may affect their
-time in office.
+This section outlines the methodological framework employed to test the
+hypothesis that autocoup leaders exhibit longer survival times in office than
+coup-installed leaders. Survival analysis is utilised to model leadership tenure,
+with Cox proportional hazards models employed to estimate the effects of leader
+type while controlling for relevant covariates.
 
 #### Methodology: Survival analysis
 
-Two Cox models will be employed to analyze the survival tenures of coup-installed
-and autocoup leaders:
+Two variants of the Cox model are employed to analyse the survival durations of
+coup-installed and autocoup leaders.
 
-**Cox proportional hazards (PH) model**: This model uses only the variables
-present at the entry year, without considering changes over time.
+**Cox proportional hazards (PH) model**: This model incorporates only
+time-invariant covariates measured at the time of the leader’s entry into office.
+It assumes that the effects of these covariates on the hazard rate remain
+constant over time.
 
-**Time-dependent Cox model**: This model accounts for variations in
-time-dependent control variables such as economic performance and political
-stability.
+**Time-dependent Cox model**: This model allows for the inclusion of covariates
+whose values may vary over time, such as indicators of economic performance and
+levels of political violence. By incorporating temporal variation, this model
+offers a more dynamic and nuanced analysis of leadership survival.
 
-The Cox model is preferred over the Kaplan-Meier model because it enables the
-estimation of the impact of multiple factors. Although it does not directly
-estimate the duration of tenure, it assesses the hazard rate associated with
-being ousted from power. This approach captures different facets of the same
-phenomenon: as a leader's cumulative hazard of being ousted increases, their
-probability of survival in office decreases.
+The Cox model is preferred over the Kaplan-Meier estimator due to its capacity to
+account for multiple explanatory variables simultaneously. Although the Cox model
+does not directly estimate the expected duration of tenure, it estimates the
+hazard ratio, which reflects the relative risk of being removed from office. A
+higher cumulative hazard corresponds to a lower probability of survival, thereby
+capturing critical dynamics of leadership vulnerability over time.
 
 #### Data and variables
 
-The dependent variables include survival time and end point status:
+The analysis relies on a set of dependent and independent variables, complemented
+by a range of controls.
 
-**Survival time** refers to the duration of a leader's tenure, measured in days.
-For coup-installed leaders, the survival time begins on the day they assume power
-through a coup. For autocoup leaders, the survival time starts on the expiration
-date of their original legitimate term. For example, Russia's president Vladimir
-Putin assumed power in 2000 and, after serving two terms, stepped down in 2008.
-However, he remained in a powerful position as the prime minister and hand-picked
-Dmitry Medvedev to succeed him as president, while continuing to control the
-power behind the scenes. In this case, Putin's survival time begins in 2008,
-marking the start of his post-autocoup tenure. The survival time concludes on the
-day the leader finally exits office, applicable to both coup-installed and
-autocoup leaders.
+**Survival Time:** Measured in days, this variable captures the length of a
+leader’s tenure. For coup-installed leaders, the tenure is measured from the date
+of their accession via coup. For autocoup leaders, it begins on the date their
+original legitimate term would have expired. For instance, Vladimir Putin assumed
+the presidency of Russia in 2000, stepped down in 2008 after completing two
+terms, and assumed the post of prime minister while continuing to exert de facto
+control. His post-autocoup tenure, therefore, is coded as beginning in 2008.
 
-**End point status** indicates the manner in which the leader's tenure concluded,
-categorized as follows:
+**End Point Status:** This categorical variable indicates how a leader’s tenure
+ended:
 
--   **0 = Censored:** This status is assigned to leaders who leave office through
-    regular means other than being ousted. This includes leaders transferring
-    power to their designated successors, leaving office as their terms expire,
-    losing in general elections, voluntarily leaving office due to health issues,
-    or dying of natural causes.
+-   **0 = Censored:** Denotes leaders who exited office through regular or
+    voluntary means, such as electoral defeat, term expiration, voluntary
+    resignation due to health, or natural death.
 
-    **1 = Ousted:** This status is assigned to leaders who are forced to leave
-    office. This includes leaders resigning under pressure, being ousted by coups
-    or other forces, or being assassinated.
+-   **1 = Ousted:** Denotes leaders who were forcibly removed, including through
+    coups, resignations under pressure, or assassination.
 
 The key independent variable is the leader type, which categorizes leaders into
 two distinct groups:
 
--   **Group A = Autocoup leader**: Leaders who extend their tenure through
-    autocoups.
--   **Group B = Coup-installed leader**: Leaders who assume power through coups.
+-   **Group A = Autocoup leader**: An incumbent who extends their tenure through
+    extra-constitutional means.
+-   **Group B = Coup-installed leader**: A leader who assumes power through a
+    coup, whether or not they personally participated in its execution.
 
-This variable is the primary independent variable of interest, serving as the
-basis for comparing the survival time between these two types of leaders.
+This variable serves as the primary explanatory factor, enabling a direct
+comparison of survival outcomes between the two categories of irregular leaders.
 
-The data for both dependent and independent variables are sourced from the
-autocoup dataset introduced in this study, Archigos, and PLAD.
+Data for the dependent and independent variables are drawn from the newly
+constructed autocoup dataset introduced in this study, as well as the Archigos
+dataset and the Political Leaders and Alliances Dataset (PLAD).
 
-Control variables include regime types, economic performance, political
-stability, population size, and Polity V scores which are consistent with the
-autocoup analysis in Chapter 3.
+To isolate the effect of leader type on survival, the analysis incorporates a set
+of control variables, as identified in the autocoup analysis presented in Chapter
+3. These include: regime type which is categorised as democracy, hybrid regime,
+or autocracy, to account for institutional differences that may influence
+leadership stability; economic performance, measured through macroeconomic
+indicators such as GDP growth, which may affect a leader’s ability to retain
+support; political violence, captures the extent of civil conflict, repression,
+or unrest, which can threaten regime stability and leadership tenure; population
+size, controls for structural differences across states that may impact political
+dynamics; Polity V scores, feflects the institutional characteristics and degree
+of democracy or autocracy within a regime.
+
+These control variables enhance the comparability and robustness of the
+statistical models, ensuring that the estimated effects of leader type are not
+confounded by broader political, economic, or demographic conditions.
 
 ### Results and discussion
 
 #### Model results
 
-Regression results for both the Cox Proportional Hazards (Cox PH) model and the
+Regression results for both the Cox Proportional Hazards (PH) model and the
 time-dependent Cox model, estimated using the survival package in R [@survival],
 are presented in @tbl-cox.
 
@@ -2691,7 +2730,7 @@ common_labels <- list(
   GDP_pc ~ "GDP per capita",
   pop_log ~ "Population: log",
   polity5 ~ "Polity 5",
-  violence ~ "Political stability"
+  violence ~ "Political violence"
 )
 
 model_cox1 <- survival_cox_ph_model |>
@@ -2776,53 +2815,65 @@ tbl_merge(list(tbl1, tbl2),
 ```
 
 The two models yield divergent findings concerning the central question of this
-study. The Cox Proportional Hazards (PH) model indicates a marginally
-statistically significant relationship between leadership type and the risk of
-removal from power ( $p<0.1$ ). This result supports the hypothesis that leaders
-installed via coups face a 1.78 times greater hazard of removal compared to those
-who came to power through autocoups. However, the time-dependent Cox model finds
-no statistically significant association in this regard. As the time-dependent
-model incorporates covariates that vary over time, the subsequent interpretation
-of the primary findings is grounded in this more refined specification.
+study. The Cox PH model reveals a marginally statistically significant
+relationship between leadership type and the hazard of removal from office (
+$p < 0.1$ ). Specifically, this model supports the hypothesis that leaders
+installed through coups face a 1.78 times greater hazard of removal compared to
+those who came to power via autocoups. However, the time-dependent Cox model,
+which incorporates time-varying covariates such as economic performance and
+political violence, does not find a statistically significant relationship
+between leadership type and survival in office. Given the greater robustness of
+the time-dependent specification, the interpretation of the principal findings is
+grounded in this model.
 
 According to the time-dependent Cox model, and contrary to the initial hypothesis
-and earlier analysis, the mode of accession to power does not significantly
-affect the tenure of irregularly inaugurated political leaders once relevant
-covariates—particularly regime type—are accounted for. Nevertheless, the findings
-derived from survival modelling reinforce the conclusions drawn in Chapter 3: the
-balance of power, fundamentally shaped by regime characteristics, is central to
-both the seizure and maintenance of political authority.
+and preliminary results, the mode of accession to power does not significantly
+influence the tenure of irregularly inaugurated political leaders once relevant
+covariates—particularly regime type—are controlled for. Nevertheless, these
+results reinforce the broader conclusion of Chapter 3: that the balance of power,
+fundamentally shaped by regime characteristics, is central to both the seizure
+and retention of political authority.
 
-More specifically, regime type significantly influences the hazard of removal.
-Leaders within military regimes exhibit a hazard ratio of 2.06 relative to their
-counterparts in dominant-party regimes, all else being equal. This suggests that
-military leaders face a notably greater risk of being ousted. At any given time
-during their rule, military regime leaders are 1.06 times more likely to be
-removed than those in dominant-party regimes, under the same model conditions.
-Leaders under "other" regimes—typically provisional or transitional—display a
-hazard ratio of 2.57, a statistically significant result that aligns with their
-inherently unstable nature.
+In particular, regime type emerges as a statistically significant determinant of
+political survival. Leaders in military regimes exhibit a hazard ratio of 2.06
+relative to their counterparts in dominant-party regimes, suggesting that
+military leaders are significantly more likely to be ousted. This implies that,
+all else being equal, a military leader faces a $106\%$ greater risk of removal
+at any given point compared to a leader within a dominant-party regime. Leaders
+operating within regimes classified as “Other”—typically encompassing
+transitional or provisional arrangements—display an even higher hazard ratio of
+2.57, consistent with the inherent volatility of such political configurations.
 
-Economic development, proxied by GDP per capita, exerts a statistically
-significant influence in the time-dependent model. A hazard ratio of 0.95 implies
-that each additional \$10,000 in GDP per capita reduces the risk of removal by
-$5\%$, holding all other variables constant. Political stability, as measured by
-the violence index, indicates that a one-unit increase in the index corresponds
-to an $9\%$ rise in the hazard of removal from office.
+Economic development, proxied by GDP per capita, also exerts a statistically
+significant influence. A hazard ratio of 0.95 indicates that each additional
+\$10,000 in GDP per capita is associated with a $5\%$ reduction in the risk of
+removal, ceteris paribus. Conversely, political violence, measured via the
+violence index, demonstrates a positive relationship with leader removal: a
+one-unit increase in the index raises the hazard of removal by approximately
+$9\%$.
 
-Other control variables—namely GDP growth trends, the logarithm of population
-size, and Polity V scores—do not exhibit statistically significant effects on the
-likelihood of political removal in the time-dependent Cox model. Although these
-variables are theoretically relevant and commonly included in models of political
-survival, their lack of significance suggests that, within the context of
-irregular leadership transitions, structural economic growth, demographic scale,
-and broader democratic indicators may exert less immediate influence on leader
-vulnerability than more proximate factors such as regime type and political
-stability. It is possible that their effects are either mediated by other
-included variables or require a longer time horizon to manifest in measurable
-political outcomes. This underscores the importance of distinguishing between
-long-term institutional features and short-term political dynamics when assessing
-leader survival.
+Other control variables—including GDP growth, the logarithm of population size,
+and Polity V scores—do not reach statistical significance in the time-dependent
+Cox model. Although these factors are theoretically salient and frequently
+employed in studies of political survival, their lack of significance in this
+context suggests that, under conditions of irregular leadership transitions, more
+immediate variables such as regime type and political violence may play a more
+decisive role. It is plausible that the effects of structural economic growth,
+demographic scale, and institutional quality are either mediated through more
+proximate mechanisms or unfold over longer time horizons, rendering them less
+visible in short- to medium-term analyses of leader tenure.
+
+It is important to note that the results are contingent upon the exclusion of
+very short-lived leaders—those who remained in office for fewer than 180 days
+following a coup or autocoup. A significant number of coup-installed leaders
+survive only for brief periods—often mere days or months—a phenomenon that is
+comparatively rare among autocoup leaders. Consequently, the exclusion criterion
+introduces a slight bias in favour of coup-installed leaders. Nevertheless, this
+study contends that the inclusion of such short-lived tenures would be
+methodologically inappropriate. Although these leaders technically meet the
+minimal threshold for a successful coup (i.e., retaining power for more than
+seven days), their failure to consolidate authority suggests they did not truly
+succeed in establishing post-coup rule in a meaningful or sustained manner.
 
 #### Discussion
 
@@ -2847,7 +2898,7 @@ coxplottidy <- tidy(model_cox1, exponentiate = T, conf.int = T) |>
     "GDP per capita",
     "Population: log",
     "Polity 5",
-    "Political stability"
+    "Political violence"
   ))
 
 coxplottidy |>
@@ -2878,7 +2929,7 @@ coxplottidy <- tidy(model_cox2, exponentiate = T, conf.int = T) |>
     "GDP per capita",
     "Population: log",
     "Polity 5",
-    "Political stability"
+    "Political violence"
   ))
 
 coxplottidy |>
@@ -2898,40 +2949,39 @@ coxplottidy |>
   theme_bw()
 ```
 
-Figure @fig-coxHR presents the hazard ratios and their corresponding $95\%$
-confidence intervals for the variables included in the Cox proportional hazards
-model. The proximity of a hazard ratio (depicted as dots) to 1 indicates a
-minimal effect of that variable on the risk of removal from power; a hazard ratio
-of 1 denotes no effect. The horizontal lines extending from the dots represent
-the $95\%$ confidence intervals. If these intervals intersect the vertical blue
-line at 1, the variable is not statistically significant at the $5\%$ level.
+@fig-coxHR illustrates the hazard ratios and their associated 95% confidence
+intervals for the variables included in the Cox proportional hazards model. The
+proximity of each hazard ratio (represented by a dot) to 1 denotes minimal effect
+on the risk of removal from office; a hazard ratio of 1 indicates no effect. The
+horizontal lines denote the $95\%$ confidence intervals, and variables whose
+intervals cross the vertical reference line at 1 are not statistically
+significant at the $5\%$ level.
 
 As previously discussed, the hazard ratios for leaders in military regimes and
-those classified under “Other” coup-installed regimes are significantly greater
-than 1 and are statistically significant at the $5\%$ threshold. Although GDP per
-capita is also statistically significant at this level, its hazard ratio is very
-close to 1, indicating a limited substantive effect.
+“Other” regimes are both substantially above 1 and statistically significant at
+the $5\%$ level, confirming their heightened vulnerability to removal. GDP per
+capita also attains statistical significance, albeit with a hazard ratio very
+close to 1, indicating a relatively modest substantive effect.
 
-While the hazard ratios for GDP growth trend and for parliamentary and
-presidential regimes appear visually distant from 1, they are not statistically
-significant at the $5\%$ level, as their confidence intervals cross the vertical
-reference line.
+Although the hazard ratios for GDP growth and regime type (e.g., presidential or
+parliamentary) appear visually distant from 1, their respective confidence
+intervals intersect the vertical line, indicating a lack of statistical
+significance at conventional thresholds.
 
-Most other variables exhibit hazard ratios near 1, suggesting that a one-unit
-change in these variables does not meaningfully influence the likelihood of a
-leader being ousted.
+Most other variables display hazard ratios close to 1, suggesting that marginal
+changes in these predictors do not substantially alter the likelihood of
+political removal for leaders emerging from coups or autocoups.
 
 #### Assessing the proportional hazards assumption
 
-Evaluating the proportional hazards assumption is essential for ensuring the
-validity of the Cox model estimates. This assumption is tested using a chi-square
-test based on Schoenfeld residuals, which assesses whether the effects of
-covariates remain constant over time. The results indicate that neither the
-standard Cox proportional hazards model nor the time-dependent Cox model violates
-this assumption. The global p-values—0.12 for the standard model and 0.23 for the
-time-dependent model—both exceed the conventional $5\%$ significance threshold,
-suggesting that the proportional hazards assumption is reasonably upheld in both
-cases.
+Evaluating the proportional hazards assumption is essential to ensure the
+validity of the Cox model estimates. This assumption was tested using a
+chi-squared test based on Schoenfeld residuals, which assesses whether the
+effects of covariates remain constant over time. The results indicate that
+neither the standard Cox PH model nor the time-dependent Cox model violates this
+assumption. The global p-values—0.12 for the standard model and 0.23 for the
+time-dependent model—exceed the conventional $5\%$ significance threshold,
+thereby confirming that the proportional hazards assumption holds in both cases.
 
 ```{r}
 #| label: robust_test
@@ -2941,44 +2991,45 @@ test <- cox.zph(model_cox2)
 
 ### Summary
 
-This chapter examined the survival durations of political leaders who assumed
-office through irregular means—specifically coups and autocoups—using survival
-analysis techniques, including the Cox proportional hazards model and a
-time-dependent Cox model. While the standard Cox model suggested a marginally
-significant difference in tenure risk between autocoup and coup-installed
-leaders, this association was not statistically significant in the time-dependent
-model, which offers a more robust specification by accounting for time-varying
-covariates.
+This chapter has examined the survival durations of political leaders who assumed
+office through irregular means—specifically coups and autocoups—by employing
+survival analysis techniques, including the Cox proportional hazards model and a
+time-dependent Cox model. While the standard Cox model indicated a marginally
+significant difference in the risk of removal between autocoup and coup-installed
+leaders, this association did not attain statistical significance in the
+time-dependent model, which offers a more rigorous specification by accounting
+for time-varying covariates.
 
-The findings indicate that, once regime type and other relevant covariates are
-controlled for, the method of accession—whether by coup or autocoup—does not
-independently predict leader survival. Instead, regime type emerged as a key
-determinant. Leaders operating within military and transitional ("other") regimes
-faced significantly higher risks of removal compared to those in dominant-party
-systems. Additionally, economic development, proxied by GDP per capita, and
-political stability, measured by a violence index, were found to significantly
-influence tenure length, whereas GDP growth, population size, and democratic
-scores (Polity V) were not statistically significant.
+The findings suggest that, once regime type and other pertinent covariates are
+controlled for, the method of accession—whether via coup or autocoup—does not
+independently determine leader survival. Rather, regime type emerges as a key
+determinant. Leaders operating within military or transitional (“other”) regimes
+face significantly higher risks of removal than those in dominant-party systems.
+Furthermore, economic development, as measured by GDP per capita, and political
+violence significantly influence tenure length, whereas GDP growth, population
+size, and democratic quality (as captured by Polity V scores) do not exhibit
+statistically significant effects.
 
-These results reinforce the central argument that the institutional
-context—particularly regime characteristics—plays a more decisive role in
-determining political longevity than the initial mode of power seizure. This
-finding aligns with earlier qualitative assessments and underscores the necessity
-of incorporating institutional and structural variables when analysing political
+These results reinforce the central argument that institutional
+context—particularly regime characteristics—plays a more decisive role in shaping
+political longevity than the initial method of seizing power. This conclusion is
+consistent with earlier qualitative assessments and underscores the importance of
+integrating institutional and structural variables into analyses of political
 survival.
 
-Methodologically, the chapter demonstrates the value of time-dependent modelling
-in political science, especially when covariates evolve over time. It also
+Methodologically, the chapter illustrates the utility of time-dependent modelling
+in political science, particularly where covariates evolve over time. It also
 contributes to the emerging literature on autocoups by offering one of the first
-systematic analyses of their implications for political survival. However, the
-reliance on a newly constructed dataset for autocoups presents limitations,
-highlighting the need for continued refinement and expansion in future research.
+systematic empirical assessments of their implications for political survival.
+However, reliance on a newly constructed dataset for autocoups introduces certain
+limitations, underscoring the need for further refinement and expansion in future
+research.
 
-In sum, this chapter provides empirical support for the proposition that regime
-characteristics, more than the method of accession alone, shape the durability of
-irregular political leadership. These insights contribute to broader debates on
-authoritarian resilience, democratic backsliding, and the institutional
-foundations of political power.
+In sum, this chapter provides empirical evidence supporting the proposition that
+regime characteristics, more than the mode of accession alone, shape the
+durability of irregular political leadership. These insights contribute to
+broader debates on authoritarian resilience, democratic backsliding, and the
+institutional foundations of political authority.
 
 ## Coups, Autocoups, and Democracy
 
@@ -3335,7 +3386,7 @@ consistency, I apply the same methodological approach to coups as to autocoups:
 Binary coding for pre-event effects and decay function coding for post-event
 effects.
 
-Control variables include economic performance, political stability, and
+Control variables include economic performance, political violence, and
 population size, all of which have been analysed in previous chapters.
 Additionally, I incorporate two dummy variables. The first,
 **"**non_democracy**,"** accounts for regime type, recognizing that
