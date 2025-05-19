@@ -84,6 +84,13 @@ scholars in the field, including Dr. Brian J Phillips, Dr. Prabin Khadka, and Dr
 Winnie Xia. Their expertise and insights have enriched this research, and I am
 grateful for their contributions.
 
+I would also like to express my sincere gratitude to my examiners, Professor
+Tobias Böhmelt and Professor Jonathan Powell. Their insightful questions,
+constructive critiques, and engaging discussion during the viva examination were
+invaluable in challenging my thinking and highlighting areas for further
+refinement. Their expertise has undoubtedly strengthened the final version of
+this thesis.
+
 On a personal note, I would like to express my deepest gratitude to my family,
 who have been a constant source of support and inspiration throughout this
 journey. To my beloved wife, Ji Zhi, your patience, love, and encouragement have
@@ -135,12 +142,12 @@ irregular power transitions, particularly with respect to democratisation. Using
 Polity scores as a proxy for democratic quality and applying a country-fixed
 effects model, the analysis demonstrates that autocoups are associated with a
 sustained erosion of democratic institutions both preceding and following their
-occurrence. In contrast, while traditional coups often precipitate an immediate
-and sharp decline in democratic quality, they are frequently followed by
-democratic recovery or transitions over time. These findings highlight the
-divergent political trajectories engendered by coups and autocoups and call for
-greater scholarly and policy attention to the consistently negative consequences
-of autocoups for democratic governance.
+occurrence. In contrast, while traditional coups precipitate an immediate and
+sharp decline in democratic quality, they are often followed by democratic
+recovery or transitions over time. These findings highlight the divergent
+political trajectories engendered by coups and autocoups and call for greater
+scholarly and policy attention to the consistently negative consequences of
+autocoups for democratic governance.
 
 Taken together, the findings underscore the distinct nature, drivers, and
 consequences of coups and autocoups. This research makes several substantive
@@ -288,7 +295,7 @@ strategic decisions to override term limits.
 **Comparative analysis of leadership longevity between coup-installed and
 autocoup leaders:** The research further contributes to the study of leadership
 survival by comparing the tenure durations of leaders who attain power through
-coups with those who retain it via autocoups. Employing survival analysis on both
+coups with those who extend it via autocoups. Employing survival analysis on both
 the coup and autocoup datasets, the study finds that, contrary to the assumption,
 the method of power acquisition is not a significant predictor of leadership
 longevity. However, it reaffirms that regime type plays a decisive role in leader
@@ -345,12 +352,12 @@ explore the normative and analytical trade-offs involved in including such cases
 within the autocoup category. Comparative analyses of ‘unconstitutional’ versus
 ‘extra-constitutional’ extensions of executive tenure may assist in clarifying
 whether these actions constitute variants of the same phenomenon or represent
-analytically distinct processes. A case in point is President Manuel Zelaya of
-Honduras in 2009, whose attempt to amend the constitution to allow future
-re-election led to his removal by a military coup [@muñoz-portillo2019]. This
-case illustrates the analytical complexity of identifying autocoups and
-underscores the necessity of refining coding criteria and interpretive clarity in
-future data collection efforts.
+analytically distinct processes. The case of President Manuel Zelaya of Honduras
+in 2009, whose attempt to amend the constitution to allow future re-election led
+to his removal by a military coup [@muñoz-portillo2019], illustrates the
+analytical complexity of identifying autocoups and underscores the necessity of
+refining coding criteria and interpretive clarity in future data collection
+efforts.
 
 Given the long-term decline in traditional coups and the parallel rise of
 autocoups, increased scholarly attention to the latter is imperative. While this
@@ -537,7 +544,7 @@ events from 1945 to 2023, identifying 83 distinct cases, of which 64 were
 successful. This empirical contribution enables systematic, large-N analysis of
 an increasingly salient mode of authoritarian consolidation.
 
-***keywords**: Autocoups, Coups, Irregular Power Transitions, Leadership Tenure,
+***Keywords**: Autocoups, Coups, Irregular Power Transitions, Leadership Tenure,
 Dataset*
 
 ### Introduction
@@ -696,9 +703,9 @@ seizure of power, labels such as ‘takeover’ or ‘overstay’ may inadverten
 understate the normative gravity of the events they describe.
 
 Given that many existing terms tend to prioritise procedural mechanisms over
-normative considerations, or indeed conflate legal and extra-legal practices,
-this study posits 'autocoup' as the most precise and analytically coherent term.
-This term offers several key advantages.
+normative considerations, or even conflate legal and extra-legal practices, this
+study posits 'autocoup' as the most precise and analytically coherent term. This
+term offers several key advantages.
 
 **Definitional clarity and addressing the core essence:** 'Autocoup' precisely
 denotes an incumbent leader's extension of their political tenure through
@@ -805,10 +812,9 @@ required. This study therefore designates tenure extension as the definitional
 core of autocoups, leaving the broader discussion of power expansion (and its
 inverse, power contraction) to future research.
 
-Based on these considerations, this study defines an autocoup as:
-
-> *The extension of an incumbent leader’s tenure in office beyond the originally
-> mandated limit, achieved through extra-constitutional means.*
+Based on these considerations, this study defines an autocoup as **the extension
+of an incumbent leader’s tenure in office beyond the originally mandated limit,
+achieved through extra-constitutional means.**
 
 This definition places tenure extension at the centre of the concept, while
 acknowledging that power expansion may coexist. First, the term incumbent leader
@@ -945,9 +951,10 @@ retained substantial influence, effectively rendering Medvedev a figurehead.
 
 It is important that the identification of such cases be grounded in objective
 criteria to avoid arbitrary classification. Accordingly, this study relies on the
-Archigos dataset to determine leadership status. If a former officeholder is not
-recorded in Archigos as the country’s leader—despite wielding informal power—they
-are not coded as engaging in a figurehead-style autocoup within this dataset.
+Archigos dataset [@goemans2009] to determine leadership status. If a former
+officeholder is not recorded in Archigos as the country’s leader—despite wielding
+informal power—they are not coded as engaging in a figurehead-style autocoup
+within this dataset.
 
 ##### Reassignment of supreme authority {.unnumbered}
 
@@ -987,8 +994,9 @@ The Incumbent Takeover dataset [@baturo2022], which synthesises information from
 eleven separate sources, provides a broad inventory of cases wherein executive
 actors significantly curtailed institutional constraints on their authority. As
 this dataset encompasses both power consolidation and tenure extension cases,
-cross-referencing with Archigos and PLAD was necessary to determine whether
-individual cases satisfied the definitional criteria for an autocoup.
+cross-referencing with Archigos [@goemans2009] and PLAD [@bomprezzi2024wedded]
+was necessary to determine whether individual cases satisfied the definitional
+criteria for an autocoup.
 
 ```{r}
 #| label: tbl-source
@@ -1002,8 +1010,7 @@ read.csv(here("data/autocoup_source.csv")) |>
   tab_options(
     table.width = pct(100),
     table.align = "center"
-  ) |>
-  as_raw_html()
+  )
 ```
 
 ```{r}
@@ -1022,7 +1029,8 @@ Autocoup <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/auto
 In total, 83 events were identified and coded as autocoups. Of these, 50
 correspond to entries within the Incumbent Takeover dataset, while the remaining
 33 were newly identified and coded by the author through cross-verification with
-supplementary materials, including Archigos, PLAD, and contemporary news sources.
+supplementary materials, including Archigos [@goemans2009], PLAD
+[@bomprezzi2024wedded], and contemporary news sources.
 
 Although a majority of cases originate from the Incumbent Takeover dataset, the
 present study does not constitute a replication of that work. Of the 279 cases
@@ -1040,7 +1048,8 @@ field for supplementary notes. The variables are as follows:
     following the standards of the Correlates of War project [@stinnett2002].
 
 -   **Leader information:** Name of the de facto leader (leader_name), coded in
-    accordance with the conventions employed in the Archigos and PLAD datasets.
+    accordance with the conventions employed in the Archigos [@goemans2009] and
+    PLAD [@bomprezzi2024wedded] datasets.
 
 -   **Timeline variables:** Date the leader assumed office (entry_date), date of
     departure (exit_date), date of the autocoup-defining event (autocoup_date),
@@ -1163,13 +1172,13 @@ electoral outcomes. These factors may increase the probability of failure for
 incumbents who pursue this path.
 
 Notably, in contrast to classical coups, which predominantly occur in autocratic
-regimes, a substantial proportion of autocoups are take place in democratic
-settings. Of the 83 identified autocoup attempts, 30 took place in democracies—of
-which 29 occurred in presidential democracies—constituting approximately $36\%$
-of the total. By comparison, traditional coups have been significantly less
-frequent in democratic contexts, with only 99 out of 493 cases ( $20\%$ ) taking
-place in such regimes. This marked disparity will be examined in greater depth in
-Chapter 3.
+regimes, a substantial proportion of autocoups take place in democratic settings.
+Of the 83 identified autocoup attempts, 30 took place in democracies—of which 29
+occurred in presidential democracies—constituting approximately $36\%$ of the
+total. By comparison, traditional coups have been significantly less frequent in
+democratic contexts, with only 99 out of 493 cases ( $20\%$ ) taking place in
+such regimes. This marked disparity will be examined in greater depth in Chapter
+3.
 
 ### Case studies
 
@@ -1400,27 +1409,31 @@ exceeds $77\%$ (28 out of 36), a figure that significantly surpasses the regiona
 success rate for classical coups (approximately $50\%$ ) and aligns with the
 global average success rate for autocoups ( $77\%$ ).
 
-Identifying a clear and consistent pattern underlying autocoups in Africa proves
-challenging—reflecting the broader analytical complexity associated with
-classical coups. Several explanatory factors have been proposed in the
-literature.
+Identifying a clear and consistent pattern underpinning autocoups in Africa
+remains a considerable challenge, reflecting the broader analytical complexity
+long associated with classical coups. Nevertheless, the literature has proposed
+several explanatory factors.
 
-**Natural resource wealth:** States endowed with oil, diamonds, or other
-strategic commodities often witness greater incentives and capacities among
-incumbents to seek term extensions and consolidate power [@posner;
-@cheeseman2015; @cheeseman2019a].
+First, natural resource wealth has been identified as a key variable. States
+endowed with oil, diamonds, or other strategic commodities often present
+incumbents with both greater incentives and enhanced capacities to pursue term
+extensions and entrench their authority [@posner; @cheeseman2015;
+@cheeseman2019a].
 
-**Democratic quality:** The degree of democratic consolidation strongly
-influences respect for constitutional term limits [@reyntjens2016].
+Second, the quality of democracy plays a crucial role. Higher levels of
+democratic consolidation are strongly associated with greater adherence to
+constitutional term limits [@reyntjens2016].
 
-**International influence:** External actors, including bilateral donors and
-international organisations, may exert diplomatic or economic pressure to
-dissuade leaders from subverting term limits [@brown2001; @tangri2010].
+Third, international influence may act as a constraint. External actors—including
+bilateral donors and international organisations—can exert diplomatic or economic
+pressure to discourage leaders from circumventing term limits [@brown2001;
+@tangri2010].
 
-**Opposition strength and party cohesion:** The ability of opposition forces to
-coordinate effectively, as well as the incumbent’s success in maintaining unity
-within the ruling party, are critical factors shaping the feasibility of term
-extension efforts [@cheeseman2019].
+Finally, opposition strength and ruling party cohesion are critical domestic
+factors. The effectiveness of opposition forces in coordinating resistance, as
+well as the incumbent’s ability to preserve unity within the ruling party,
+significantly shapes the political feasibility of tenure extensions
+[@cheeseman2019].
 
 Drawing on the Africa Executive Term Limits (AETL) dataset, @cassani2020
 identifies human rights abuses and the desire to evade legal or political
@@ -1670,13 +1683,10 @@ By contrast, in consolidated democracies, military loyalty is typically
 institutionalised through allegiance to the constitution rather than to
 individual officeholders. For example, in the United States, following the 2020
 presidential election, General Mark Milley, Chairman of the Joint Chiefs of
-Staff, publicly reaffirmed the military’s constitutional commitment:
-
-> “We are unique among militaries. We do not take an oath to a king or a queen, a
-> tyrant or a dictator. We do not take an oath to an individual. We take an oath
-> to the Constitution.”
->
-> — (US Army Museum, 12 November 2020[^1])
+Staff, publicly reaffirmed the military’s constitutional commitment: “We are
+unique among militaries. We do not take an oath to a king or a queen, a tyrant or
+a dictator. We do not take an oath to an individual. We take an oath to the
+Constitution.” (US Army Museum, 12 November 2020[^1])
 
 In hybrid regimes or fragile democracies, attempts to prolong executive tenure
 may entail significant political risks. In Niger, for example, President Mamadou
@@ -1777,10 +1787,10 @@ regimes characterised by concentrated and stable executive power—namely,
 personalist autocracies and presidential democracies—being the most susceptible,
 relative to other regime types.
 
-> **H3-1: *The likelihood of autocoup attempts is significantly shaped by regime
-> type, with regimes characterised by concentrated and stable executive
-> power—namely, personalist autocracies and presidential democracies—being the
-> most susceptible, relative to other regime types.***
+***H3-1: The likelihood of autocoup attempts is significantly shaped by regime
+type, with regimes characterised by concentrated and stable executive
+power—namely, personalist autocracies and presidential democracies—being the most
+susceptible, relative to other regime types.***
 
 ### Research design
 
@@ -2199,7 +2209,7 @@ avg <- survival_cox_ph_model |>
 ```
 
 Assessing the tenure of leaders who assume office through coups or autocoups
-presents methodological challenges, owing to the inherent volatility and
+presents methodological challenges, due to the inherent volatility and
 uncertainty associated with such irregular modes of accession. Nonetheless,
 comparative evidence—excluding short-lived leaders who remained in office for
 fewer than 180 days—suggests that those who extend their rule through autocoups
@@ -2608,7 +2618,8 @@ comparison of survival outcomes between the two categories of irregular leaders.
 
 Data for the dependent and independent variables are drawn from the newly
 constructed autocoup dataset introduced in this study, as well as the Archigos
-dataset and the Political Leaders and Alliances Dataset (PLAD).
+dataset [@goemans2009]and the Political Leaders and Alliances Dataset (PLAD)
+[@bomprezzi2024wedded].
 
 To isolate the effect of leader type on survival, the analysis incorporates a set
 of control variables, as identified in the autocoup analysis presented in Chapter
@@ -3059,7 +3070,7 @@ implications for democratisation warrant serious consideration. Importantly,
 their effects differ from those of traditional coups in at least two key
 respects.
 
-#### **The pre-event effects versus post-event effects** {.unnumbered}
+#### The pre-event effects versus post-event effects {.unnumbered}
 
 First, unlike coups—typically characterised by sudden, definitive events such as
 the removal of a sitting leader—autocoups often unfold incrementally rather than
@@ -3124,9 +3135,9 @@ Based on this analysis, the following hypothesis is proposed:
 Autocoups primarily influence political change in advance of their execution,
 whereas coups tend to drive political change predominantly in their aftermath.
 
-> ***H5-1: Autocoups primarily influence political change in advance of their
-> execution, whereas coups tend to drive political change predominantly in their
-> aftermath.***
+***H5-1: Autocoups primarily influence political change in advance of their
+execution, whereas coups tend to drive political change predominantly in their
+aftermath.***
 
 #### Consistent autocoup outcomes versus the varied impact of coups {.unnumbered}
 
@@ -3224,9 +3235,9 @@ Autocoups typically result in a decline in the Polity Index and rarely see
 democratic recovery, whereas coups often allow for recovery and may even
 facilitate transitions from autocracy to democracy.
 
-> ***H5-2: Autocoups typically result in a decline in the Polity Index and rarely
-> see democratic recovery, whereas coups often allow for recovery and may even
-> facilitate transitions from autocracy to democracy.***
+***H5-2: Autocoups typically result in a decline in the Polity Index and rarely
+see democratic recovery, whereas coups often allow for recovery and may even
+facilitate transitions from autocracy to democracy.***
 
 ### Methodology and variables
 
