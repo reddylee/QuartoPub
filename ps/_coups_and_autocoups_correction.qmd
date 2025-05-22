@@ -108,55 +108,55 @@ responsibility for any errors or shortcomings that may remain.
 
 ## Abstract {.unnumbered}
 
-This thesis addresses a notable lacuna in the study of irregular leadership
-transitions by systematically incorporating autocoups—instances wherein incumbent
-leaders extend their constitutionally mandated terms through extra-constitutional
-means. It refines the conceptual definition of autocoups by resolving prevailing
-ambiguities, thereby aligning them more closely with conventional coup
-frameworks. On the basis of this refined definition, the thesis introduces a
-novel global dataset of autocoup events spanning the period from 1945 to 2023,
-comprising 83 documented cases, 64 of which were successful.
+This thesis addresses a significant gap in the literature on irregular leadership
+transitions by systematically integrating autocoups—cases where incumbent leaders
+extend their constitutionally mandated terms through extra-constitutional means.
+It refines the conceptual definition of autocoups, resolving existing ambiguities
+to align them more closely with conventional coup frameworks. Based on this
+refined definition, the thesis presents a novel global dataset of autocoup events
+from 1945 to 2023, encompassing 83 documented cases, of which 64 were successful.
 
-Utilising this dataset, the study conducts a large-N empirical analysis to
-examine the structural determinants of autocoups. The findings indicate that most
-power-centred regimes–presidential democracies and personalist regimes–are
-significantly more susceptible to employing autocoups as a strategy for power
-retention, in contrast to other regime types. This pattern diverges from that of
+Employing this dataset, the study conducts a large-N empirical analysis to
+investigate the structural determinants of autocoups. The findings reveal that
+power-centric regimes, specifically presidential democracies and personalist
+regimes, are significantly more prone to employing autocoups as a strategy for
+power retention compared to other regime types. This pattern contrasts with
 traditional coups, which have historically been more prevalent in military
 regimes.
 
-The analysis then shifts to the question of leadership survival, employing
-survival analysis techniques to compare the political longevity of leaders who
-assumed office via traditional coups with those who retained power through
-autocoups. Contrary to the hypothesis that autocoup leaders survive longer than
-their coup-installed counterparts, the results reveal that—once very short-lived
-leaderships (less than 180 days) are excluded—the method of power acquisition
-does not exert a statistically significant effect on leadership duration.
-Instead, regime type emerges once again as the critical determinant: military
-regimes exhibit a significantly higher hazard ratio for leadership removal
-compared to the reference category of dominant-party regimes, mirroring trends
-observed in classic coups.
+The analysis subsequently examines leadership survival, utilising survival
+analysis techniques to evaluate the political longevity of leaders who assumed
+office through regular means, traditional coups, or autocoups. Contrary to the
+hypothesis that the mode of power acquisition significantly influences leadership
+survival—particularly the expectation that autocoup leaders would enjoy longer
+tenures than those installed through traditional coups—the results suggest that,
+when excluding very short-lived tenures (i.e., less than 180 days), the mode of
+accession does not exert a statistically significant effect on leadership
+duration. Instead, regime type emerges as the primary determinant: leaders in
+military and personalist regimes exhibit significantly higher hazard ratios for
+removal compared to the reference category of dominant-party regimes, consistent
+with trends observed following traditional coups.
 
-The thesis also assesses the broader institutional ramifications of such
-irregular power transitions, particularly with respect to democratisation. Using
-Polity scores as a proxy for democratic quality and applying a country-fixed
-effects model, the analysis demonstrates that autocoups are associated with a
-sustained erosion of democratic institutions both preceding and following their
-occurrence. In contrast, while traditional coups precipitate an immediate and
-sharp decline in democratic quality, they are often followed by democratic
-recovery or transitions over time. These findings highlight the divergent
-political trajectories engendered by coups and autocoups and call for greater
-scholarly and policy attention to the consistently negative consequences of
-autocoups for democratic governance.
+The thesis further explores the broader institutional consequences of irregular
+power transitions, focusing on their impact on democratisation. Using Polity
+scores as a proxy for democratic quality and applying a country-fixed effects
+model, the analysis finds that autocoups are associated with a sustained decline
+in democratic indicators, both immediately after the event and over a two-year
+period. In contrast, traditional coups exhibit a ‘U-shaped’ effect: although
+Polity scores decline sharply in the immediate aftermath, they typically recover
+to pre-coup levels within two years. These findings highlight the divergent
+political trajectories triggered by coups and autocoups, underscoring the need
+for increased scholarly and policy attention to the persistently detrimental
+impact of autocoups on democratic governance.
 
-Taken together, the findings underscore the distinct nature, drivers, and
-consequences of coups and autocoups. This research makes several substantive
-contributions: it clarifies the conceptual boundaries of autocoups; provides a
-new empirical basis for their systematic study; and offers robust comparative
-insights into how different modes of irregular power transition influence both
-leadership survival and institutional development. The implications are
-substantial for academic scholarship and policy-making alike, particularly in the
-context of global democratic backsliding and the resilience of political
+Collectively, these findings illuminate the distinct nature, drivers, and
+consequences of coups and autocoups. The research makes several substantive
+contributions: it clarifies the conceptual boundaries of autocoups, provides a
+new empirical foundation for their systematic study, and offers robust
+comparative insights into how different modes of irregular power transition
+affect leadership survival and institutional development. These findings have
+significant implications for academic scholarship and policy-making, particularly
+in the context of global democratic backsliding and the resilience of political
 institutions.
 
 ***Keywords:** Coups, Autocoups, Leadership transitions, Leadership survival,
@@ -164,367 +164,361 @@ Democratic resilience*
 
 ## Introduction
 
-At the heart of contemporary political dynamics lies a fundamental question: why
-are some political leaders prematurely removed from office, while others succeed
-in extending their tenure beyond constitutionally mandated limits? Furthermore,
-how does the mode of their survival or removal shape political stability and
-democratic institutions? This thesis seeks to address these critical questions by
-analysing the structural and strategic foundations of irregular leadership
-transitions.
+Why are some political leaders removed from office prematurely, while others
+successfully extend their tenure beyond constitutionally mandated limits?
+Moreover, how does the mode of their survival or removal influence political
+stability and democratic institutions? This thesis addresses these critical
+questions by analysing the structural and strategic foundations of irregular
+leadership transitions.
 
-### Motivations
+### Rationale
 
-The stability and resilience of political systems depend crucially on the orderly
-transfer of power. When leadership transitions occur within established
-institutional frameworks, they reinforce political legitimacy and contribute to
-regime durability. In contrast, the breakdown of conventional mechanisms for
-political succession often precipitates instability, violence, and democratic
-backsliding. Among the most disruptive of such breakdowns are irregular
-leadership transitions, which leave lasting institutional legacies and
-fundamentally alter the political trajectory of regimes. Understanding the causes
-and consequences of these events remains central to the study of political order
-and regime change.
+The stability and resilience of political systems hinge on the orderly transfer
+of power. Leadership transitions that occur within established institutional
+frameworks reinforce political legitimacy and enhance regime durability.
+Conversely, the breakdown of conventional mechanisms for political succession
+often precipitates instability, violence, and democratic backsliding. Among the
+most disruptive of these breakdowns are irregular leadership transitions, which
+leave enduring institutional legacies and fundamentally alter the political
+trajectories of regimes. Understanding the causes and consequences of such events
+is central to the study of political order and regime change.
 
-The extant literature identifies a broad array of catalysts for irregular
-leadership exits, including civil wars [@kokkonen2019], international conflict
+The existing literature identifies a diverse array of catalysts for irregular
+leadership exits, including civil wars [@kokkonen2019], international conflicts
 [@demesquita1995], ethnic divisions [@londregan1995], economic crises
 [@miller2012; @krishnarajan2019], and natural disasters [@quirozflores2012].
-Among these, coups d’état are particularly consequential due to both their
-frequency and their direct displacement of incumbent leaders. In autocratic
-regimes, coups account for nearly one-third of all leadership exits—exceeding
-regular transitions, which constitute just over one-fifth [@frantz2016].
-Furthermore, over 63% of non-constitutional removals in dictatorships are
-attributable to coups [@svolik2009].
+Among these, coups d’état are particularly significant due to their frequency and
+direct displacement of incumbent leaders. In autocratic regimes, coups account
+for nearly one-third of all leadership exits, surpassing regular transitions,
+which constitute just over one-fifth [@frantz2016]. Furthermore, over $63\%$ of
+non-constitutional removals in dictatorships are attributable to coups
+[@svolik2009].
 
-Consequently, coups have received extensive scholarly attention. A substantial
-body of research explores their causes, outcomes, and long-term implications for
-democracy and development [@thyne2019]. In particular, the study of coup
+Consequently, coups have garnered extensive scholarly attention, with a
+substantial body of research exploring their causes, outcomes, and long-term
+implications for democracy and development [@thyne2019]. The study of coup
 determinants has flourished, with scholars proposing nearly one hundred
-explanatory variables. Yet, a widely accepted baseline model remains elusive
+explanatory variables, yet a widely accepted baseline model remains elusive
 [@gassebner2016].
 
-By contrast, another form of irregular power transition—the autocoup—has received
-comparatively limited academic scrutiny. In an autocoup, an incumbent extends
-their tenure by circumventing or overriding constitutional term limits through
-extra-constitutional means. While autocoups do not immediately result in
-leadership change, they constitute a fundamental breach of institutional
-succession norms and obstruct the expected regular transfer of power. As such,
-they warrant classification as a critical, albeit understudied, variant of
-irregular leadership transition.
+In contrast, autocoups—wherein incumbent leaders extend their constitutionally
+mandated terms through extra-constitutional means—have received comparatively
+limited academic scrutiny. Although autocoups do not immediately result in
+leadership change, they represent a fundamental breach of institutional
+succession norms and obstruct the anticipated regular transfer of power. As such,
+they merit classification as a critical, yet understudied, form of irregular
+leadership transition.
 
-This thesis argues that autocoups deserve systematic analysis alongside
+This thesis contends that autocoups warrant systematic analysis alongside
 traditional coups within a unified analytical framework. Despite differences in
-execution, both coups and autocoups involve extra-constitutional efforts to
-acquire or retain power, and both have significant implications for leadership
-survival, regime stability, and democratic integrity. Comparative analysis of
-these two forms of irregular transition can reveal shared drivers, divergent
-outcomes, and broader lessons for democratic resilience.
+their execution, both coups and autocoups involve extra-constitutional efforts to
+acquire or retain power and have profound implications for leadership survival,
+regime stability, and democratic integrity. A comparative analysis of these two
+forms of irregular transition can elucidate shared drivers, divergent outcomes,
+and broader lessons for democratic resilience.
 
-The urgency of this inquiry is underscored by the serious risks associated with
-irregular transitions. Both coups and autocoups may trigger immediate
-crises—ranging from institutional paralysis to civil unrest—and leave deep
-institutional scars. More fundamentally, they tend to dismantle constitutional
+The urgency of this inquiry is underscored by the significant risks associated
+with irregular transitions. Both coups and autocoups can trigger immediate
+crises—ranging from institutional paralysis to civil unrest—and leave lasting
+institutional scars. More fundamentally, they often dismantle constitutional
 checks and balances, undermine electoral processes, and accelerate democratic
 decline or authoritarian consolidation.
 
-Historical cases illustrate these dangers vividly. Ghana’s turbulent era from
-1979 to 1984 reflects the destabilising effects of classic coups. Following Jerry
-Rawlings’s 1979 coup, eight individuals, including three former heads of state,
-were executed [@pieterse1982]. Rawlings launched another coup in 1981 and
-subsequently quashed three further coup attempts [@haynes2022d]. In contrast, the
-1992 autocoup in Peru, orchestrated by President Alberto Fujimori, exemplifies
-how an incumbent can dismantle democratic institutions without a change in
-leadership. Fujimori dissolved Congress, suspended the constitution, and ruled by
-decree [@mauceri1995; @cameron1998].
+Historical cases vividly illustrate these dangers. Ghana’s turbulent period from
+1979 to 1984 exemplifies the destabilising effects of classic coups. Following
+Jerry Rawlings’s 1979 coup, eight individuals, including three former heads of
+state, were executed [@pieterse1982]. Rawlings orchestrated another coup in 1981
+and subsequently suppressed three further coup attempts [@haynes2022d]. By
+contrast, the 1992 autocoup in Peru, led by President Alberto Fujimori,
+demonstrates how an incumbent can dismantle democratic institutions without a
+change in leadership. Fujimori dissolved Congress, suspended the constitution,
+and ruled by decree [@mauceri1995; @cameron1998].
 
-These patterns are increasingly salient in today’s global political landscape.
-According to Freedom House’s Freedom in the World 2024 report, global political
-rights and civil liberties declined for the eighteenth consecutive year in 2023,
-with setbacks recorded in 52 countries and improvements in only 21
-[@freedomhouse2024freedom]. The persistence of democratic erosion highlights the
-pressing need to understand the mechanisms that facilitate it—including both
+These patterns are increasingly pertinent in the contemporary global political
+landscape. According to Freedom House’s Freedom in the World 2024 report, global
+political rights and civil liberties declined for the eighteenth consecutive year
+in 2023, with setbacks recorded in 52 countries and improvements in only 21
+[@freedomhouse2024freedom]. The persistence of democratic erosion underscores the
+pressing need to understand the mechanisms that facilitate it, including both
 coups and autocoups.
 
-This thesis seeks to advance both theoretical and empirical understanding of
-irregular leadership transitions. It offers insights with substantial
-implications for scholarly research and policy formulation in fragile or
-democratising regimes.
+This thesis aims to advance the theoretical and empirical understanding of
+irregular leadership transitions. It offers insights with significant
+implications for scholarly research and policy formulation, particularly in
+fragile or democratising regimes.
 
 ### Research objectives and contributions
 
-In response to the pressing challenges posed by irregular leadership transitions,
-this study undertakes a comprehensive comparative analysis structured around four
-core research objectives. First, it seeks to refine the conceptual definition of
-autocoups and introduce a novel dataset amenable to large-N empirical analysis.
-Second, it aims to identify the structural and institutional determinants of
-autocoups through a systematic quantitative investigation. Third, it compares the
-survival prospects of leaders who ascend to power via traditional coups with
-those who extend their tenure through autocoups. Finally, it assesses the
-divergent impacts of coups and autocoups on democratisation trajectories and the
-resilience of political institutions.
+In response to the significant challenges posed by irregular leadership
+transitions, this study undertakes a comprehensive comparative analysis
+structured around four core research objectives. Firstly, it aims to refine the
+conceptual definition of autocoups and develop a novel dataset suitable for
+large-N empirical analysis. Secondly, it seeks to identify the structural and
+institutional determinants of autocoups through systematic quantitative
+investigation. Thirdly, it compares the survival prospects of leaders who assume
+power through traditional coups with those who extend their tenure via autocoups.
+Finally, it evaluates the divergent impacts of coups and autocoups on
+democratisation trajectories and the resilience of political institutions.
 
-By examining both coups and autocoups from 1950 to 2023, this thesis addresses a
-significant gap in political science by developing and applying a unified
-analytical framework that treats these events as distinct yet interrelated forms
-of extra-constitutional power transition. Through this lens, the study makes four
-principal contributions to the literature on leadership dynamics, regime
+By examining both coups and autocoups from 1945 to 2023, this thesis addresses a
+critical gap in political science by developing and applying a unified analytical
+framework that treats these events as distinct yet interrelated forms of
+extra-constitutional power transition. Through this approach, the study makes
+four principal contributions to the literature on leadership dynamics, regime
 stability, and institutional development.
 
 **Conceptual clarification and empirical foundation for autocoups:** This thesis
-advances conceptual clarity by situating autocoups within the broader typology of
-irregular power transitions. It offers a refined definition of autocoups—centred
-on the executive's unilateral extension of tenure—and clearly differentiates them
-from both executive aggrandisement and traditional military coups. Building upon
-this conceptual framework, the study introduces an original dataset of autocoups
-spanning the period from 1945 to 2023, documenting 83 incidents, of which 64 were
-successful. This dataset addresses a long-standing empirical lacuna and provides
-a foundational basis for systematic comparative analysis, thereby enabling future
-research into a previously under-examined form of institutional disruption.
+enhances conceptual clarity by situating autocoups within the broader typology of
+irregular power transitions. It provides a refined definition of autocoups,
+focusing on the executive’s unilateral extension of tenure through
+extra-constitutional means, and clearly distinguishes them from executive
+aggrandisement and traditional military coups. Building on this conceptual
+framework, the study introduces an original dataset of autocoup events from 1945
+to 2023, documenting 83 incidents, of which 64 were successful. This dataset
+addresses a long-standing empirical gap and establishes a robust foundation for
+systematic comparative analysis, enabling future research into a previously
+understudied form of institutional disruption.
 
-**First empirical analysis of determinants of autocoups:** Utilising this newly
-compiled dataset, the thesis undertakes the first empirical examination of the
-structural and institutional conditions under which autocoups are likely to
-occur. The analysis finds that leaders operating within power-concentrated
-systems—particularly presidential democracies and personalist regimes—are
-significantly more prone to extending their tenure through autocoups than those
-operating in other regime types. These findings contribute to the literature on
-the relationship between regime characteristics and irregular power retention,
-highlighting the critical role of institutional structures in shaping leaders'
-strategic decisions to override term limits.
+**First empirical analysis of autocoup determinants**: Utilising the newly
+compiled dataset, the thesis conducts the first empirical examination of the
+structural and institutional conditions conducive to autocoups. The analysis
+reveals that leaders in power-concentrated systems—particularly presidential
+democracies and personalist regimes—are significantly more likely to extend their
+tenure through autocoups compared to those in other regime types. These findings
+contribute to the literature on the interplay between regime characteristics and
+irregular power retention, highlighting the pivotal role of institutional
+structures in shaping leaders’ strategic decisions to circumvent term limits.
 
-**Comparative analysis of leadership longevity between coup-installed and
-autocoup leaders:** The research further contributes to the study of leadership
-survival by comparing the tenure durations of leaders who attain power through
-coups with those who extend it via autocoups. Employing survival analysis on both
-the coup and autocoup datasets, the study finds that, contrary to the assumption,
-the method of power acquisition is not a significant predictor of leadership
-longevity. However, it reaffirms that regime type plays a decisive role in leader
-survival, irrespective of the mode of accession or retention. The survival models
-indicate that leaders within military regimes exhibit a higher hazard ratio of
-removal compared to those in dominant-party regimes. These results underscore the
+**Comparative analysis of leadership longevity**: The research advances the study
+of leadership survival by comparing the tenure durations of leaders who attain
+power through regular means, traditional coups, or autocoups. Employing survival
+analysis, the study finds that, contrary to expectations, the mode of power
+acquisition does not significantly predict leadership longevity. However, it
+reaffirms the decisive influence of regime type on leader survival, regardless of
+the mode of accession or retention. The survival models indicate that leaders in
+military and personalist regimes face higher hazard ratios for removal compared
+to those in dominant-party regimes. These results underscore the critical
 influence of regime structure on leadership durability and elite turnover.
 
-**Comparative democratic implications of coups and autocoups:** The thesis also
-investigates the differential impacts of coups and autocoups on democratic
-development. Employing country-fixed effects regression models and utilising
-Polity V scores as an indicator of democratic quality, the analysis finds that
-autocoups are consistently associated with gradual and sustained democratic
-erosion—both preceding and following the event. In contrast, coups yield more
-heterogeneous institutional outcomes. While they often result in immediate
-setbacks to democratic norms, in certain instances they facilitate democratic
-transitions, including shifts from autocracy to democracy. This disaggregated
-analysis reveals the distinct trajectories and institutional consequences
-engendered by different forms of irregular power transitions.
+**Comparative democratic implications of coups and autocoups**: The thesis
+further investigates the differential impacts of coups and autocoups on
+democratic development. Using country-fixed effects regression models and Polity
+V scores as an indicator of democratic quality, the analysis demonstrates that
+autocoups are associated with a gradual and sustained decline in Polity scores,
+both immediately following the event and over a two-year period. In contrast,
+coups result in a ‘U-shaped’ institutional outcome: while they precipitate
+immediate declines in Polity scores, these typically recover to pre-event levels
+within two years. This disaggregated analysis illuminates the distinct
+trajectories and institutional consequences of different forms of irregular power
+transitions.
+
+Collectively, these contributions provide a robust theoretical and empirical
+foundation for understanding the dynamics of irregular leadership transitions,
+offering significant insights for both academic scholarship and policy
+formulation in the context of democratic resilience and institutional stability.
 
 ### Policy implications
 
-Although scholarly debate persists regarding the potential for coups to
-inadvertently foster democratisation under certain conditions [@thyne2014;
-@derpanopoulos2016; @miller2016], there exists a strong policy consensus that
-coups constitute inherently illegitimate mechanisms of political change. As
-violent disruptions of constitutional order, they tend to inflict immediate
-institutional damage, precipitate instability, and lead to unpredictable
-political trajectories. Accordingly, both international and domestic policy
-responses have rightly prioritised prevention—most notably through
-“coup-proofing” strategies designed to insulate regimes from military
-intervention or elite defection [@quinlivan1999; @pilster2012; @powell;
-@albrecht2014; @carey2015; @brown2015; @sudduth2017]. However, as this thesis
-demonstrates, such approaches have well-documented limitations [@albrecht2014a;
-@reiter2020], and deeper structural power dynamics within regimes are frequently
-more decisive in determining vulnerability to both coups and autocoups.
+Although scholarly debate continues regarding the potential for coups to
+inadvertently foster democratisation under specific circumstances [@thyne2014;
+@derpanopoulos2016; @miller2016], a robust policy consensus holds that coups
+represent inherently illegitimate mechanisms of political change. As violent
+disruptions of constitutional order, they typically inflict immediate
+institutional damage, precipitate instability, and result in unpredictable
+political trajectories. Consequently, both international and domestic policy
+responses have prioritised prevention, most notably through ‘coup-proofing’
+strategies aimed at insulating regimes from military intervention or elite
+defection [@quinlivan1999; @pilster2012; @powell; @albrecht2014; @carey2015;
+@brown2015; @sudduth2017]. However, as this thesis demonstrates, such approaches
+have well-documented limitations [@albrecht2014a; @reiter2020], and deeper
+structural power dynamics within regimes are often more critical in determining
+vulnerability to both coups and autocoups.
 
 The findings of this study yield several important policy implications,
-particularly concerning institutional design, international responses, and the
-monitoring of democratic backsliding. These implications will be discussed in
-detail in the concluding chapter.
+particularly in the domains of institutional design, international responses, and
+the monitoring of democratic backsliding. In terms of institutional design, the
+research highlights the heightened susceptibility of power-concentrated
+systems—such as presidential democracies and personalist regimes—to autocoups.
+This underscores the importance of reinforcing institutional checks and balances
+through mechanisms such as independent judiciaries, robust legislative oversight,
+and clearly defined constitutional term limits, all of which serve to constrain
+executive overreach and mitigate the risk of extra-constitutional power
+consolidation. With regard to international responses, the persistent democratic
+erosion associated with autocoups—evidenced by sustained declines in Polity V
+scores—calls for proactive diplomatic and economic interventions. These may
+include targeted sanctions, conditional aid, or other measures aimed at deterring
+incumbent leaders from circumventing constitutional constraints to prolong their
+tenure. Moreover, the effective monitoring of democratic backsliding requires
+more sophisticated frameworks capable of detecting early warning signs of
+autocoups. These signs often manifest in gradual and legally veiled efforts to
+undermine term-limit provisions or manipulate electoral processes, in contrast to
+the more abrupt and overt power seizures typical of traditional coups. These
+policy implications, which call for tailored approaches to address the distinct
+dynamics of coups and autocoups, will be examined further in the concluding
+chapter.
 
 ### Limitations and future research
 
 Whilst this study proposes a novel analytical framework for understanding coups
-and autocoups, their effects on leadership survival, and their broader
-institutional implications, several limitations remain, indicating important
-directions for future research and refinement.
+and autocoups, their impact on leadership survival, and their broader
+institutional consequences, several limitations persist, pointing to significant
+opportunities for future research and refinement.
 
-A core challenge concerns the conceptual ambiguity that surrounds the very
-definition of autocoups—particularly in borderline cases where incumbents extend
-their authority through legal or quasi-legal mechanisms. Future work might
-explore the normative and analytical trade-offs involved in including such cases
-within the autocoup category. Comparative analyses of ‘unconstitutional’ versus
-‘extra-constitutional’ extensions of executive tenure may assist in clarifying
-whether these actions constitute variants of the same phenomenon or represent
-analytically distinct processes. The case of President Manuel Zelaya of Honduras
-in 2009, whose attempt to amend the constitution to allow future re-election led
-to his removal by a military coup [@muñoz-portillo2019], illustrates the
-analytical complexity of identifying autocoups and underscores the necessity of
-refining coding criteria and interpretive clarity in future data collection
-efforts.
+A primary challenge lies in the conceptual ambiguity surrounding the definition
+of autocoups, particularly in borderline cases where incumbents extend their
+authority through legal or quasi-legal mechanisms. Future research could explore
+the normative and analytical trade-offs of including such cases within the
+autocoup category. Comparative analyses of ‘unconstitutional’ versus
+‘extra-constitutional’ extensions of executive tenure may help determine whether
+these actions represent variants of the same phenomenon or distinct processes.
+The case of President Manuel Zelaya of Honduras in 2009, whose attempt to amend
+the constitution to permit future re-election precipitated his removal by a
+military coup [@muñoz-portillo2019], exemplifies the analytical complexity of
+identifying autocoups and underscores the need for refined coding criteria and
+greater interpretive clarity in future data collection efforts.
 
-Given the long-term decline in traditional coups and the parallel rise of
-autocoups, increased scholarly attention to the latter is imperative. While this
-study focuses on tenure extension as the defining feature of autocoups, broader
-forms of executive power expansion—whether within or beyond the formal
-constitutional framework—merit systematic investigation. To capture the full
-range of such practices, the development of a dedicated dataset on executive
-power expansion represents a crucial next step.
+Given the long-term decline in traditional coups and the concurrent rise of
+autocoups, increased scholarly focus on the latter is essential. Although this
+study centres on tenure extension as the defining characteristic of autocoups,
+broader forms of executive power expansion—whether within or beyond formal
+constitutional frameworks—warrant systematic investigation. The development of a
+dedicated dataset on executive power expansion would be a critical step towards
+capturing the full spectrum of such practices.
 
-Moreover, the decreasing frequency of overt and dramatic regime transitions since
-the early 2000s has coincided with a decline in unambiguous shifts between
-democracy and autocracy. This trend highlights the necessity of more sensitive
-instruments capable of detecting incremental changes within regimes. Future
-empirical research should focus on identifying and measuring such subtler
-transformations.
+Furthermore, the decreasing frequency of overt and dramatic regime transitions
+since the early 2000s, coupled with a reduction in clear shifts between democracy
+and autocracy, highlights the need for more sensitive analytical tools to detect
+incremental changes within regimes. Future empirical research should prioritise
+the identification and measurement of these subtler transformations to better
+understand their implications for regime stability and democratic resilience.
 
-These limitations and promising avenues for future inquiry will be explored in
+These limitations and promising avenues for future inquiry will be examined in
 greater detail in the concluding chapter.
 
 ### Overview of the thesis
 
-This thesis examines the complex power dynamics underlying coups and autocoups,
-with a particular focus on their consequences for leadership survival and the
-democratisation or authoritarian transformation of political regimes. It develops
-a unified analytical framework to study these phenomena as distinct yet
-interconnected forms of irregular power transition. Each chapter contributes to
-this overarching inquiry by offering conceptual clarifications, empirical
-innovations, and comparative insights.
+This thesis examines the intricate power dynamics underlying coups and autocoups,
+focusing on their consequences for leadership survival and the democratisation or
+authoritarian transformation of political regimes. It develops a unified
+analytical framework to study these phenomena as distinct yet interconnected
+forms of irregular power transition. Each chapter contributes to this overarching
+inquiry by providing conceptual clarifications, empirical innovations, and
+comparative insights.
 
 #### Chapter 2: Autocoups: Conceptual Clarification and Dataset Introduction {.unnumbered}
 
-Despite the increasing incidence of autocoups—particularly in the post-Cold War
-era—their systematic study remains underdeveloped. Existing scholarship suffers
-from conceptual fragmentation, characterised by a proliferation of overlapping
-and inconsistently defined terms (‘self-coup’, autogolpe, ‘executive
-aggrandisement’, etc.) [@marsteintredet2019; @baturo2022]. This conceptual
-ambiguity complicates empirical analysis, as many datasets fail to distinguish
-between tenure extension and other forms of executive power consolidation—an
-essential distinction for this study. As a result, methodological progress has
-been hindered, with most existing research relying on qualitative case studies
-[@cameron1998; @antonio2021; @pion-berlin2022], rather than large-N analyses.
+Despite the rising prevalence of autocoups, particularly in the post-Cold War
+era, their systematic study remains underdeveloped. The existing literature
+suffers from conceptual fragmentation, marked by a proliferation of overlapping
+and inconsistently defined terms (e.g., ‘self-coup’, ‘autogolpe’, ‘executive
+aggrandisement’) [@marsteintredet2019; @baturo2022]. This conceptual ambiguity
+hinders empirical analysis, as many datasets fail to distinguish between tenure
+extension and other forms of executive power consolidation—a critical distinction
+for this study. Consequently, methodological progress has been limited, with most
+research relying on qualitative case studies [@cameron1998; @antonio2021;
+@pion-berlin2022] rather than large-N analyses.
 
-This chapter addresses these limitations by proposing a more precise and
-theoretically grounded definition of the autocoup. It contends that autocoups
-should be defined as attempts by incumbents to extend their constitutionally
-mandated terms of office. By centring the definition on tenure extension, the
-concept excludes broader forms of executive aggrandisement that occur within
-existing constitutional time-frames, and aligns autocoups conceptually with
-classic coups, both of which involve disruptions to constitutionally prescribed
-leadership succession. Accordingly, this study defines **an autocoup as the
-extension of an incumbent leader’s tenure beyond its original constitutional
-limit, achieved through extra-constitutional means**.
-
-Based on this refined definition, the chapter presents a significant empirical
-contribution: a newly compiled global dataset of autocoups spanning the period
-1945 to 2023, identifying 83 distinct events, of which 64 were successful. This
-dataset facilitates systematic quantitative analysis and opens new avenues for
-comparative research on irregular retention of power.
+This chapter addresses these shortcomings by proposing a precise and
+theoretically grounded definition of the autocoup, centred on attempts by
+incumbents to extend their constitutionally mandated terms of office through
+extra-constitutional means. By focusing on tenure extension, the definition
+excludes broader forms of executive aggrandisement that occur within existing
+constitutional timeframes, aligning autocoups conceptually with traditional
+coups, both of which disrupt constitutionally prescribed leadership succession.
+Building on this definition, the chapter introduces a significant empirical
+contribution: an original global dataset of autocoups from 1945 to 2023,
+documenting 83 distinct events, of which 64 were successful. This dataset enables
+systematic quantitative analysis and opens new avenues for comparative research
+on irregular power retention.
 
 #### Chapter 3: Power Dynamics and Autocoup Attempts {.unnumbered}
 
-Due to long-standing conceptual and empirical constraints, existing discussions
-of autocoups have relied largely on case-based approaches [@baturo;
-@marsteintredet2019; @baturo2022]. The dataset introduced in Chapter 2 enables,
-for the first time, a large-N analysis of the structural conditions underpinning
-autocoup attempts.
+Due to long-standing conceptual and empirical constraints, prior discussions of
+autocoups have predominantly relied on case-based approaches [@baturo;
+@marsteintredet2019; @baturo2022]. The dataset introduced in Chapter 2
+facilitates, for the first time, a large-N analysis of the structural conditions
+underpinning autocoup attempts.
 
-Drawing upon insights from the coup literature, this chapter investigates a range
-of potential predictors—including economic performance, succession rules,
-military influence, protest activity, and media freedom. While these variables
-have been analysed in the context of traditional coups, they often fail to
-account for persistent cross-regime variation or the limited efficacy of
-so-called ‘coup-proofing’ strategies [@albrecht2014a; @reiter2020]. Moreover,
-many studies adopt overly simplistic regime typologies (e.g. democracy versus
-autocracy, or civilian versus military), thereby obscuring important variation
-within regime types [@hiroi2013; @schiel2019].
+Drawing on insights from the coup literature, this chapter examines a range of
+potential predictors, including economic performance, succession rules, military
+influence, protest activity, and media freedom. While these variables have been
+explored in the context of traditional coups, they often fail to account for
+persistent cross-regime variation or the limited efficacy of ‘coup-proofing’
+strategies [@albrecht2014a; @reiter2020]. Moreover, many studies employ overly
+simplistic regime typologies (e.g., democracy versus autocracy, or civilian
+versus military), obscuring significant variation within regime types
+[@hiroi2013; @schiel2019].
 
-This chapter advances the argument that autocoup risk is shaped fundamentally by
-the structural balance of power embedded in a regime’s founding configuration.
-Specifically, the likelihood of an autocoup is determined by the equilibrium
-between incumbents and potential institutional challengers—a balance largely set
-at regime inception [@geddes2014]. To test this proposition, regime typologies
-are employed as proxies for internal power structures.
-
-Using both a standard logit model and a bias-reduced logit model (Firth’s
-penalised maximum likelihood estimation), the analysis reveals that presidential
-democracies and personalist regimes are significantly more prone to autocoup
-attempts than dominant-party regimes, when other variables are held constant.
-Leaders in dominant-party and military regimes, by contrast, do not significantly
-differ in their likelihood of attempting an autocoup. These findings underscore
-the centrality of regime type in shaping elite incentives for irregular tenure
+This chapter argues that the risk of autocoups is fundamentally shaped by the
+structural balance of power established at a regime’s inception. Specifically,
+the likelihood of an autocoup is determined by the equilibrium between incumbents
+and potential institutional challengers [@geddes2014]. Using regime typologies as
+proxies for internal power structures, the analysis employs both a standard logit
+model and a bias-reduced logit model (Firth’s penalised maximum likelihood
+estimation). The results demonstrate that presidential democracies and
+personalist regimes are significantly more prone to autocoup attempts than
+dominant-party regimes, when controlling for other variables. By contrast,
+leaders in dominant-party and military regimes exhibit no significant difference
+in their likelihood of attempting an autocoup. These findings highlight the
+critical role of regime type in shaping elite incentives for irregular tenure
 extension.
 
 #### Chapter 4: Power Acquisition and Leadership Survival: A Comparative Analysis of Coup-installed and Autocoup Leaders {.unnumbered}
 
-Although a substantial body of literature has explored the tenure survival of
-leaders who come to power through coups [@gandhi2007; @sudduth2017; @easton2018],
-the absence of comparable data on autocoups has long precluded systematic
-comparisons between coup-installed leaders and those who prolong their rule via
-autocoups. This chapter addresses that gap by offering the first comparative
-survival analysis of these two categories within a unified theoretical framework.
+Although extensive research has examined the tenure survival of leaders who
+assume power through coups [@gandhi2007; @sudduth2017; @easton2018], the lack of
+comparable data on autocoups has precluded systematic comparisons among
+regular-entry leaders, coup-installed leaders, and autocoup leaders. This chapter
+addresses this gap by conducting the first comparative survival analysis of these
+three categories within a unified theoretical framework.
 
-It argues that coup leaders typically face heightened legitimacy deficits,
-political uncertainty, and institutional instability, whereas autocoup leaders
-benefit from institutional continuity while simultaneously removing key
-constraints. These distinct conditions shape divergent pathways to political
-consolidation.
-
-Surprisingly, the time-dependent Cox model shows no statistically significant
-difference in survival risk between coup-installed and autocoup leaders once
-relevant covariates—especially regime type—are taken into account. Rather, regime
-characteristics exert a decisive influence on leadership tenure: leaders in
-military and transitional regimes face significantly higher risks of removal than
-those in dominant-party regimes.
+It posits that coup-installed leaders typically face heightened legitimacy
+deficits, political uncertainty, and institutional instability, whereas autocoup
+leaders benefit from institutional continuity while dismantling key constraints.
+These differing conditions shape distinct pathways to political consolidation.
+Surprisingly, the time-dependent Cox model reveals no statistically significant
+difference in survival risk among regular-entry, coup-installed, and autocoup
+leaders once relevant covariates—particularly regime type—are accounted for.
+Instead, regime characteristics exert a decisive influence on leadership tenure:
+leaders in military and personalist regimes face significantly higher risks of
+removal compared to those in dominant-party regimes.
 
 #### Chapter 5: Coups, autocoups, and democracy {.unnumbered}
 
-While the impact of coups on democratisation has received considerable scholarly
-attention [@clayton2000; @powell2014a; @thyne2020], the consequences of autocoups
-remain understudied due to the historical absence of relevant data. This chapter
-addresses this lacuna through a quantitative analysis of how coups and autocoups
+While the impact of coups on democratisation has been widely studied
+[@clayton2000; @powell2014a; @thyne2020], the consequences of autocoups remain
+underexplored due to the historical absence of relevant data. This chapter
+addresses this gap through a quantitative analysis of how coups and autocoups
 affect democratic institutions.
 
-Whereas coups may produce leadership turnover or even regime change, autocoups
+Whereas coups often result in leadership turnover or regime change, autocoups
 typically involve incumbents dismantling institutional constraints without
 altering the core ruling coalition. Consequently, their effects are best assessed
-not by regime-type transitions, but by shifts in continuous measures of
-democratic quality, such as Polity V scores.
-
-Two key claims are advanced. First, leaders often begin to erode institutional
-checks in anticipation of an autocoup, resulting in declines in Polity scores
-prior to the event itself. Second, while coups exhibit mixed outcomes—sometimes
-enabling democratisation—autocoups almost invariably result in democratic erosion
-or deeper authoritarian consolidation.
-
-Empirical analysis using a country-fixed effects model confirms that autocoups
-are associated with consistent declines in democratic quality both before and
-after the event. By contrast, coups tend to cause an immediate drop in Polity
-scores, although in some cases democratic recovery follows. These findings
-highlight the uniquely insidious nature of autocoups, which often proceed
-incrementally and under a legalistic façade.
+through continuous measures of democratic quality, such as Polity V scores,
+rather than binary regime-type transitions. The chapter argues that autocoups
+lead to consistent declines in Polity scores, while coups produce more complex
+impacts. Empirical analysis using a country-fixed effects model confirms that
+autocoups are associated with sustained reductions in Polity scores both
+immediately following the event and over a two-year period. In contrast, coups
+cause an initial decline in Polity scores but often exhibit a ‘U-shaped’ recovery
+within two years. These findings underscore the uniquely insidious nature of
+autocoups, which frequently proceed incrementally under a legalistic façade.
 
 #### Chapter 6: Conclusion and future research directions {.unnumbered}
 
 The concluding chapter synthesises the findings of the preceding chapters,
-drawing attention to the structural, strategic, and institutional dynamics that
-underpin irregular leadership transitions. It contends that coups and autocoups
-are not simply disruptive events, but strategic tools employed by elites to
-recalibrate or entrench political authority. Their institutional legacies
-diverge: while coups often destabilise regimes, autocoups typically consolidate
-autocratic rule.
+highlighting the structural, strategic, and institutional dynamics that underpin
+irregular leadership transitions. It argues that coups and autocoups are not
+merely disruptive events but strategic tools employed by elites to recalibrate or
+entrench political authority. Their institutional legacies diverge: while coups
+often destabilise regimes, autocoups typically consolidate autocratic rule.
 
 This chapter outlines the broader implications of these findings for
 understanding the resilience of autocracy, the vulnerability of democratic
 institutions, and the strategic calculus of political leaders. It also proposes
-several directions for future research.
-
-First, the broader phenomenon of executive power expansion—whether or not it
-involves tenure extension—warrants systematic investigation. Given its increasing
-frequency and corrosive institutional effects, the development of a dedicated
-dataset on power expansions is strongly recommended.
-
-Second, as full regime transitions become less common, future research should
-focus on detecting subtle, incremental changes in political quality. Fine-grained
-indicators—such as modest shifts in Polity scores—will be essential for
-monitoring democratic backsliding and institutional recovery in hybrid or
-semi-authoritarian regimes.
+several directions for future research, including further exploration of the
+nuances of executive power expansion and the development of more sensitive
+measures to detect incremental regime changes.
 
 ## Autocoups: Conceptual Clarification and Dataset Introduction {#sec-chapter3}
 
