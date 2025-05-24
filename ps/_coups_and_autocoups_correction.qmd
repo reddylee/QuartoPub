@@ -2896,51 +2896,78 @@ coxplottidy |>
   theme_bw()
 ```
 
-@fig-coxHR illustrate the hazard ratios and their associated $95\%$ confidence
-intervals for the variables included in the Cox PH model (left figure) and Cox
-Time-dependent model (right figure). The proximity of each hazard ratio
-(represented by a dot) to 1 denotes minimal effect on the risk of removal from
-office; a hazard ratio of 1 indicates no effect. The horizontal lines denote the
-$95\%$ confidence intervals, and variables whose intervals cross the vertical
-reference line ( dash blue line) at 1 are not statistically significant at the
-$5\%$ level. Also, given the superior robustness of the Cox time-dependent model
-in accounting for evolving political and economic conditions, the principal
-interpretation of the findings rests on the right figure of Cox time-dependent
-model.
+@fig-coxHR presents the hazard ratios (HRs) and their corresponding $95\%$
+confidence intervals for the covariates included in the Cox Proportional Hazards
+(PH) model (left panel) and the time-dependent Cox model (right panel). Each dot
+represents the estimated hazard ratio, while the horizontal lines denote the
+$95\%$ confidence intervals. A hazard ratio of 1 indicates no effect on the
+probability of removal from office. Variables whose confidence intervals cross
+the vertical dashed blue line at 1 are not statistically significant at the $5\%$
+level. Given its ability to account for time-varying covariates and evolving
+structural conditions, the time-dependent Cox model provides the principal basis
+for interpretation.
 
-As previously discussed, the different leaders do not exhibit significant effects
-on survival tenure as the intervals lines of "Coup-installed leaders" and
-"Autocoup leaders" cross the reference line.
+While the effect of leadership type varies across models, the time-dependent Cox
+model—on which the principal interpretation is based—shows that neither
+coup-installed nor autocoup leaders have a statistically significant impact on
+survival tenure. In this specification, the confidence intervals for both
+categories cross the reference line, indicating that once relevant covariates are
+controlled for, the mode of accession does not independently influence the hazard
+of removal.
 
-The hazard ratios for leaders in military regimes, personal regimes and "Other"
-regimes are substantially above 1 and statistically significant at the $5\%$
-level, confirming their heightened vulnerability to removal from office. Other
-regime types, mainly the democratic regimes, parliamentary and presidential
-democracies, although positive effect, but not significant as the variables cross
-the reference line.
+In contrast, regime type emerges as a robust determinant of political survival.
+Leaders operating within military regimes, personalist regimes, and those
+classified under “Other” regime types (typically transitional or provisional
+governments) face markedly elevated hazards of removal. The hazard ratios for
+these categories are significantly greater than 1 and attain statistical
+significance at the $5\%$ level, signalling a consistently heightened
+vulnerability. This aligns with the broader theoretical contention that regime
+institutionalisation and coherence are central to leadership stability.
 
-GDP growth trend is apparently distant from the reference line, indicating a
-significant negative effect of being ousted from office as GDP growth increased.
-GDP per capita also attains statistical significance, albeit with a hazard ratio
-very close to 1, indicating a relatively modest substantive effect on the risk of
-removal. The same is true to the political violence, although statistical
-significance, also with a hazard ratio very close to the reference line.
+Conversely, the effects associated with more democratic regime
+types—parliamentary and presidential systems—while positive, do not reach
+statistical significance. Their confidence intervals intersect the reference
+line, suggesting that, under conditions of irregular accession, the institutional
+architecture of democratic regimes may not offer immediate protective advantages
+to incumbents.
 
-Other variables, including the size of population and Polity scores, display
-hazard ratios close to 1, suggesting that marginal changes in these predictors do
-not substantially alter the likelihood of political removal for leaders emerging
-from coups or autocoups.
+Economic performance plays a meaningful role. GDP growth exhibits a pronounced
+and statistically significant negative effect on the hazard of removal. The
+associated hazard ratio is considerably below 1 and lies far from the reference
+line, suggesting that improved economic performance substantially reduces the
+likelihood of political removal. GDP per capita is also statistically
+significant, though its hazard ratio is very close to 1, implying only a modest
+substantive effect. These findings reinforce the well-established association
+between economic stability and political survival.
+
+Political violence also shows a statistically significant effect, but with a
+hazard ratio close to 1, indicating that while it increases the risk of removal,
+its magnitude is limited. Similarly, other control variables such as population
+size (logged) and Polity V scores fail to achieve statistical significance. Their
+estimated hazard ratios are near 1 and their confidence intervals encompass the
+reference line. This suggests that these structural and institutional indicators,
+though theoretically important, exert minimal influence on short- to medium-term
+leadership survival in the context of irregular accession.
+
+These findings collectively reinforce the argument that, in the aftermath of
+irregular leadership transitions, regime context and dynamic political-economic
+conditions are more consequential for tenure than the specific mode of accession.
+While the method of taking power—coup versus autocoup—may matter symbolically or
+normatively, it is the surrounding regime environment and its capacity to manage
+threats, maintain coherence, and deliver stability that ultimately determine
+political longevity.
 
 #### Assessing the proportional hazards assumption {.unnumbered}
 
-Evaluating the proportional hazards assumption is essential to ensure the
-validity of the Cox model estimates. This assumption was tested using a
-chi-squared test based on Schoenfeld residuals, which assesses whether the
-effects of covariates remain constant over time. The results indicate that
-neither the standard Cox PH model nor the time-dependent Cox model violates this
-assumption. The global p-values—0.12 for the standard model and 0.23 for the
-time-dependent model—exceed the conventional $5\%$ significance threshold,
-thereby confirming that the proportional hazards assumption holds in both cases.
+Evaluating the proportional hazards assumption is a critical step in validating
+the reliability of estimates produced by the Cox regression models. This
+assumption was tested using a chi-squared test based on Schoenfeld residuals,
+which assesses whether the effect of each covariate remains constant over time.
+The test results indicate that the assumption is not violated in either the
+standard Cox Proportional Hazards (PH) model or the time-dependent Cox model. The
+global p-values—0.12 for the standard model and 0.23 for the time-dependent
+model—both exceed the conventional $5\%$ significance threshold, thereby
+confirming that the proportional hazards assumption is satisfied in both cases.
 
 ```{r}
 #| label: robust_test
@@ -2950,45 +2977,51 @@ test <- cox.zph(model_cox2)
 
 ### Summary
 
-This chapter has examined the survival durations of political leaders who assumed
-office through irregular means—specifically coups and autocoups—by employing
-survival analysis techniques, including the Cox proportional hazards model and a
-time-dependent Cox model. While the standard Cox model indicated a marginally
-significant difference in the risk of removal between autocoup and coup-installed
-leaders, this association did not attain statistical significance in the
-time-dependent model, which offers a more rigorous specification by accounting
-for time-varying covariates.
+This chapter has explored the survival prospects of political leaders who assumed
+office through irregular means—specifically via coups and autocoups—using
+survival analysis techniques, including the Cox Proportional Hazards model and a
+time-dependent Cox model. While the standard Cox model identified a statistically
+significant difference in removal risk between coup-installed and non-coup
+leaders, this effect was not sustained in the more rigorous time-dependent model.
+Once time-varying covariates were accounted for, the mode of power
+acquisition—whether through a coup or an autocoup—did not independently predict
+leadership duration.
 
-The findings suggest that, once regime type and other pertinent covariates are
-controlled for, the method of accession—whether via coup or autocoup—does not
-independently determine leader survival. Rather, regime type emerges as a key
-determinant. Leaders operating within military or transitional (“other”) regimes
-face significantly higher risks of removal than those in dominant-party systems.
-Furthermore, economic development, as measured by GDP per capita, and political
-violence significantly influence tenure length, whereas GDP growth, population
-size, and democratic quality (as captured by Polity V scores) do not exhibit
-statistically significant effects.
+The principal findings suggest that leadership type is not a significant
+determinant of political survival when contextual variables such as regime type,
+economic performance, and political violence are considered. In particular,
+regime type consistently emerges as the most influential factor. Leaders in
+military, personalist, and transitional (“other”) regimes face significantly
+higher hazards of removal than those in dominant-party systems, highlighting the
+institutional instability and vulnerability associated with less consolidated
+political structures.
 
-These results reinforce the central argument that institutional
-context—particularly regime characteristics—plays a more decisive role in shaping
-political longevity than the initial method of seizing power. This conclusion is
-consistent with earlier qualitative assessments and underscores the importance of
-integrating institutional and structural variables into analyses of political
-survival.
+Economic development also plays an important role. Higher levels of GDP per
+capita are associated with greater leadership stability, while GDP growth exerts
+an especially strong effect: even modest increases in growth rates substantially
+reduce the risk of removal. Conversely, political violence increases the
+likelihood of ousting, underscoring the destabilising impact of unrest and
+conflict on leader survival.
 
-Methodologically, the chapter illustrates the utility of time-dependent modelling
-in political science, particularly where covariates evolve over time. It also
-contributes to the emerging literature on autocoups by offering one of the first
-systematic empirical assessments of their implications for political survival.
-However, reliance on a newly constructed dataset for autocoups introduces certain
-limitations, underscoring the need for further refinement and expansion in future
-research.
+Other structural variables, such as population size and Polity V scores, do not
+attain statistical significance in the time-dependent model. Their limited effect
+in this context suggests that under conditions of irregular accession, proximate
+and dynamic factors—particularly those relating to regime structure and economic
+performance—are more consequential than long-term institutional attributes.
 
-In sum, this chapter provides empirical evidence supporting the proposition that
-regime characteristics, more than the mode of accession alone, shape the
-durability of irregular political leadership. These insights contribute to
-broader debates on authoritarian resilience, democratic backsliding, and the
-institutional foundations of political authority.
+Methodologically, this chapter illustrates the analytical value of time-dependent
+survival models in capturing the effects of evolving covariates. Substantively,
+it provides one of the first systematic empirical investigations into the
+survival of autocoup leaders, contributing to the growing literature on irregular
+leadership transitions. While the newly constructed autocoup dataset represents a
+valuable innovation, its limitations point to the need for further refinement and
+expansion in future research.
+
+In sum, this chapter finds that regime characteristics and economic dynamics,
+rather than the mode of accession, are the principal determinants of political
+survival following irregular transitions to power. These findings contribute to
+broader debates on authoritarian resilience, executive instability, and the
+structural foundations of political longevity.
 
 ## Coups, Autocoups, and Democracy
 
