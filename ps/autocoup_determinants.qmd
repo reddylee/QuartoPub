@@ -3,7 +3,7 @@ title: "Power Dynamics and Autocoup Attempts"
 author:
   - name: Zhu Qi
     affiliations: University of Essex
-    email: qz21485@essex.ac.uk
+    email: zhu-qi@hotmail.com
 
 date: last-modified
 format:
@@ -111,6 +111,199 @@ mitigating the risks associated with autocoups.
 
 ## Autocoup Conceptualisation and Dataset
 
+### Terminology
+
+The academic discourse on autocoups utilises a diverse lexicon to describe the
+extension of power or tenure by incumbent leaders. The most commonly employed
+term is ‘self-coup’, or its Spanish counterpart ‘autogolpe’ [@przeworski2000;
+@cameron1998a; @bermeo2016; @helmke2017; @marsteintredet2019]. This term rose to
+prominence following the actions of Peruvian President Alberto Fujimori in 1992,
+who dissolved Congress, suspended the constitution, and governed by decree
+[@mauceri1995; @cameron1998]. However, as @marsteintredet2019 notes, ‘self-coup’
+can be misleading, as it suggests the leader is acting against their own
+interests, whereas such actions typically target other state institutions or
+constitutional constraints.
+
+A second category of terminology includes descriptors such as ‘presidential
+coup’, ‘executive coup’, ‘constitutional coup’, ‘electoral coup’, ‘judicial
+coup’, ‘slow-motion coup’, ‘soft coup’, and ‘parliamentary coup’
+[@marsteintredet2019]. Whilst these terms may highlight specific mechanisms or
+contexts, their proliferation often leads to conceptual ambiguity. Many focus on
+the method of power acquisition but fail consistently to identify the
+perpetrator. Furthermore, such mechanisms—judicial rulings, legislative
+manoeuvres, or administrative decrees—may be employed either by or against
+executive actors, thereby complicating classification further.
+
+A third group of terms encompasses phrases such as ‘incumbent takeover’,
+‘executive takeover’, and ‘overstay’. For example, ‘incumbent takeover’ is
+defined as "an event perpetrated by a ruling executive that significantly reduces
+the formal and/or informal constraints on his/her power" [@baturo2022, p. 374],
+building on @svolik2014. Similarly, ‘overstay’ refers to "staying longer than the
+maximum term as it stood when the candidate originally came into office"
+[@ginsburg2011evasion, p. 1844]. These terms clearly delineate the actor (the
+incumbent) and the action (power consolidation or term extension) but often fail
+to convey the illegality or unconstitutionality of such actions. Unlike ‘coup’,
+which inherently denotes an unlawful seizure of power, terms such as ‘takeover’
+or ‘overstay’ may inadvertently downplay the normative severity of these events.
+
+Given that many existing terms prioritise procedural mechanisms over normative
+considerations or conflate legal and extra-legal practices, this study proposes
+‘autocoup’ as the most precise and analytically robust term. It accurately
+identifies both the actor and the act, clearly conveys the illegitimacy and
+gravity of the behaviour, and establishes theoretical connections to conventional
+coups. Consequently, ‘autocoup’ serves as the most effective term for capturing
+and analysing this phenomenon, aligning seamlessly with the unified analytical
+framework this study aims to establish.
+
+### Definition
+
+The conceptualisation of autocoups in political science literature is marked by
+ambiguity, particularly around whether their defining feature is the expansion of
+executive power, the extension of tenure, or a combination of both. Power
+expansion refers to an incumbent accumulating authority beyond their original
+constitutional remit—often through centralisation or weakening of institutional
+constraints—while tenure extension involves efforts to remain in office beyond
+the term originally prescribed, frequently by way of constitutional amendments or
+electoral manipulation.
+
+Many existing definitions conflate or overemphasise power expansion. For example,
+@cameron1998a defines a self-coup as a suspension of the constitution and
+dissolution of congress, resulting in rule by decree until new elections and a
+referendum can establish a more empowered executive (p. 220). However, the phrase
+“broader executive power” remains vague. Likewise, the notion of an “incumbent
+takeover” as used by @baturo2022, drawing on @svolik2014, centres on the erosion
+of formal or informal checks on executive power (p. 374), though the associated
+dataset includes both power expansion and tenure extension. In contrast,
+@ginsburg2011evasion offers a more precise definition of “overstay” as exceeding
+the original term limit (p. 1844), focusing explicitly on tenure.
+
+This study argues that tenure extension—rather than power expansion—constitutes
+the core of an autocoup. Conceptually, this aligns autocoups with traditional
+coups, which involve the disruption of executive tenure rather than a reduction
+in power. Just as a coup entails premature removal from office, an autocoup
+should be understood as the illegtimate prolongation of tenure. An executive who
+loses power but remains in office does not qualify; likewise, a leader who
+consolidates power while respecting term limits is better described in terms of
+executive aggrandisement, not autocoup.
+
+In practice, power expansion often serves as a strategic means to achieve tenure
+extension. The widely cited case of President Alberto Fujimori in Peru
+illustrates this point. His 1992 suspension of the constitution and dissolution
+of Congress ultimately enabled him to remain in power: the 1993 Constitution
+allowed a second term, and a controversial “authentic interpretation” by his
+allies enabled a third run in 2000 [@ezrow2019]. These actions were not ends in
+themselves but instrumental to prolonging his rule.
+
+Finally, tenure extension offers a clearer empirical basis for classification
+than the often ambiguous and difficult-to-measure concept of power expansion.
+Definitions like @cameron1998a’s leave open questions about whether one or both
+of certain actions (e.g., suspending the constitution or dissolving congress) are
+necessary conditions for an autocoup.
+
+In light of these considerations, this study defines an autocoup as ***the
+extension of an incumbent leader’s tenure in office beyond the originally
+mandated limit, achieved through extra-constitutional means***.
+
+### Autocoup dataset
+
+The autocoup dataset is constructed with reference to established datasets and
+scholarly literature, thereby ensuring both reliability and comprehensiveness.
+The principal sources used for case coding are listed in @tbl-source. The
+Archigos dataset [@goemans2009] and the Political Leaders’ Affiliation Database
+(PLAD) [@bomprezzi2024wedded] provide detailed records of national leaders from
+1875 to 2023. Although the temporal scope of this study is restricted to events
+occurring from 1945 onwards, these datasets remain essential for identifying de
+facto leaders and distinguishing them from nominal heads of state.
+
+```{r}
+#| label: tbl-source
+#| tbl-cap: Main Data Sources for Coding the Autocoup Dataset
+#| echo: false
+#| results: asis
+
+read.csv(here("data/autocoup_source.csv")) |>
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(
+    table.width = pct(100),
+    table.align = "center"
+  )
+```
+
+The Incumbent Takeover dataset [@baturo2022], which synthesises information from
+eleven distinct sources, offers an extensive inventory of cases in which
+executive actors significantly reduced institutional constraints on their
+authority. As this dataset encompasses both instances of power consolidation and
+tenure extension, cross-referencing with Archigos [@goemans2009] and PLAD
+[@bomprezzi2024wedded] was undertaken to assess whether individual cases met the
+definitional criteria for an autocoup.
+
+In total, 83 events were identified and coded as autocoups. Of these, 50
+correspond to entries found within the Incumbent Takeover dataset, while the
+remaining 33 were newly identified and coded by the author through
+cross-verification with additional sources, including Archigos [@goemans2009],
+PLAD [@bomprezzi2024wedded], and contemporary news media.
+
+The primary coding process yielded 83 instances of autocoups between 1945 and
+2023, spanning 63 countries. This dataset provides a robust empirical foundation
+for analysing patterns and trajectories in autocoup activity across a diverse
+range of political and institutional contexts.
+
+A breakdown of the methods employed by incumbents to extend their tenure is
+provided in @tbl-autocoup_method. The most commonly observed strategy is the
+legalisation or reintroduction of re-election provisions, accounting for 37
+cases. This is followed by the removal of term limits (10 cases) and the
+declaration of the incumbent as president for life (7 cases). Other tactics—such
+as the cancellation of scheduled elections or refusal to concede electoral
+defeat—are less frequently observed. Electoral manipulation is recorded in only
+one case, primarily due to the inherent difficulty of verifying such practices
+with certainty, despite strong circumstantial indications in many instances.
+
+Importantly, and in contrast to classical coups—which occur predominantly within
+autocratic regimes—a significant proportion of autocoups have taken place in
+democratic contexts. Of the 83 identified cases, 30 occurred in democracies, of
+which 29 were in presidential systems. This constitutes approximately $36\%$ of
+the total. By contrast, traditional coups have been markedly rarer in democratic
+settings, with only 99 out of 493 recorded cases ( $20\%$ ) occurring under
+democratic rule.
+
+```{r}
+#| label: data-autocoups
+#| echo: false
+
+Autocoup <- fread("https://raw.githubusercontent.com/reddylee/Datasets/main/autocoup_clean.csv")
+country <- Autocoup |>
+  distinct(ccode) |>
+  summarise(count = n())
+
+autocoup_desc <- Autocoup |>
+  summarise(
+    attempted = n(),
+    succeeded = sum(autocoup_outcome == "Yes"),
+    .by = autocoup_method
+  ) |>
+  arrange(-attempted)
+```
+
+```{r}
+#| label: tbl-autocoup_method
+#| tbl-cap: Autocoup Methods and Success Rates (1945-2023)
+
+autocoup_desc |>
+  adorn_totals() |>
+  mutate(Success_rate = percent(round(succeeded / attempted, 3))) |>
+  clean_names(case = "title") |>
+  gt() |>
+  tab_options(
+    table.width = pct(99)
+  ) |>
+  cols_align(
+    align = "center",
+    columns = 2:3
+  ) |>
+  tab_source_note(source_note = md("*Source: Autocoup dataset*"))
+```
+
 ## Dynamics of autocoup attempts
 
 Like traditional coup attempts, autocoups are shaped by two fundamental elements:
@@ -132,8 +325,6 @@ the institutional frameworks of various regime types shape the vulnerability of
 states to such extra-constitutional power extensions.
 
 ### Motivations for autocoups
-
-#### Motivations for autocoups
 
 Incumbents seeking to prolong their tenure may be driven by a range of
 motivations, broadly falling into three principal categories: personal ambition,
