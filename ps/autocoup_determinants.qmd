@@ -13,10 +13,9 @@ format:
 bibliography: references.bib
 
 abstract: |
-  This study explores the determinants of autocoup attempts, aiming to deepen understanding of the political dynamics that underpin tenure extensions by incumbent leaders. Addressing a notable gap in the existing literature, the study contends that the balance of power plays a critical role in shaping the likelihood of autocoup events. In contrast to classical coups—which are often triggered by unstable or fragmented power structures—autocoups tend to arise in contexts characterised by stable and concentrated power.
-  To operationalise the concept of power balance in an observable manner, regime type is employed as a proxy, reflecting the structural distribution of power between incumbents and potential institutional constraints or elite challengers.
-  Using a bias-reduced logistic regression model, the analysis finds that regime type is a significant predictor of autocoup attempts. Leaders operating within regimes marked by concentrated power are more prone to extend their tenure unconstitutionally. In particular, presidential democracies and personalist autocracies are found to be significantly more susceptible to autocoup attempts than dominant-party regimes.
-  The study contributes to the broader literature on irregular leadership transitions by offering a more systematic and empirically grounded account of the conditions under which incumbents seek to subvert constitutional term limits.
+  This study investigates the determinants of autocoup attempts, with the aim of enhancing our understanding of the political dynamics underpinning extra-constitutional tenure extensions by incumbent leaders. Addressing a notable lacuna in the existing literature, it argues that the balance of power is a critical factor shaping the likelihood of such events. In contrast to classical coups—which often emerge from fragmented or unstable power structures—autocoups typically occur in contexts characterised by stable yet highly concentrated authority.
+  To render the concept of power balance empirically observable, regime type is employed as a proxy, capturing the structural distribution of power between incumbents and institutional constraints or elite challengers. Drawing on a bias-reduced logistic regression model, the analysis finds regime type to be a statistically significant predictor of autocoup attempts. Specifically, leaders governing within presidential democracies and personalist autocracies are significantly more likely to engage in tenure-extending autocoups than those in dominant-party regimes.
+  The study contributes to the conceptual refinement of autocoups and introduces a novel dataset, which may serve as a foundation for future empirical research. Furthermore, it offers a more systematic and empirically grounded account of irregular leadership transitions, broadening the analytical scope from irregular removal to irregular tenure extension. Finally, the findings underscore the critical role of regime type in shaping the strategic calculus of incumbents contemplating an autocoup.
   
 keywords: [Autocoups, Coup, Regime types, Tenure Extension, Authoritarianism]
 
@@ -37,7 +36,7 @@ pacman::p_load(tidyverse, data.table, gt, gtsummary, gtExtras, janitor, scales, 
 
 Why are some political leaders removed from office prematurely, while others
 succeed in extending their tenure beyond constitutionally mandated limits? The
-extant literature has extensively examined the former issue—namely, the forced
+existing literature has examined the former issue extensively—namely, the forced
 removal of leaders prior to the completion of their terms. Most such instances
 are attributed to classical coups, defined as illegal and overt attempts by
 military or state elites to depose a sitting executive [@powell2011], due to
@@ -63,14 +62,14 @@ understanding their broader political impact; without a clear grasp of the
 conditions under which autocoups occur, efforts to prevent or mitigate their
 harmful effects remain severely constrained.
 
-Although autocoups differ fundamentally from classical coups—in particular, in
-being orchestrated by incumbents rather than external challengers—the two
-phenomena share essential features as disruptions to the established political
-order. Accordingly, the methodological tools commonly applied to the study of
-traditional coups may be fruitfully adapted to the analysis of autocoups.
-However, despite the extensive literature on coup dynamics [@gassebner2016],
-regime type is frequently treated as a background condition or control variable,
-rather than as a central explanatory factor.
+Although autocoups differ fundamentally from classical coups, particularly in
+that they are orchestrated by incumbents rather than by external challengers, the
+two phenomena share essential features as disruptions to the established
+political order. Accordingly, the methodological tools commonly applied to the
+study of traditional coups may be fruitfully adapted to the analysis of
+autocoups. However, despite the extensive literature on coup dynamics
+[@gassebner2016], regime type is frequently treated as a background condition or
+control variable, rather than as a central explanatory factor.
 
 This research contends that the likelihood of an autocoup attempt is
 significantly influenced by the structural distribution of power embedded within
@@ -181,10 +180,10 @@ This study argues that tenure extension—rather than power expansion—constitu
 the core of an autocoup. Conceptually, this aligns autocoups with traditional
 coups, which involve the disruption of executive tenure rather than a reduction
 in power. Just as a coup entails premature removal from office, an autocoup
-should be understood as the illegtimate prolongation of tenure. An executive who
-loses power but remains in office does not qualify; likewise, a leader who
-consolidates power while respecting term limits is better described in terms of
-executive aggrandisement, not autocoup.
+should be understood as the illegitimate extension of an incumbent’s tenure. An
+executive who loses power but remains in office does not qualify; likewise, a
+leader who consolidates power while respecting term limits is better described in
+terms of executive aggrandisement, not autocoup.
 
 In practice, power expansion often serves as a strategic means to achieve tenure
 extension. The widely cited case of President Alberto Fujimori in Peru
@@ -306,18 +305,17 @@ autocoup_desc |>
 
 ## Dynamics of autocoup attempts
 
-Like traditional coup attempts, autocoups are shaped by two fundamental elements:
+Like traditional coup attempts, autocoups are driven by two fundamental elements:
 the disposition of incumbent leaders—referring to their motivations and
 willingness to act—and their capability, defined by the resources and
 opportunities at their disposal. However, autocoups exhibit two notable features
 that distinguish them from classical coups. First, whereas traditional coups
 occur predominantly in autocracies [@thyne2014], over one-third of documented
-autocoups have taken place in democratic regimes, as outlined in Chapter 2.
-Second, while the success rate of traditional coups hovers around $50\%$, more
-than $77\%$ of autocoup attempts have resulted in success, according to the
-dataset introduced in Chapter 2. These distinctions indicate that the dynamics of
-disposition and capability underlying autocoups differ significantly from those
-of traditional coups.
+autocoups have taken place in democratic regimes. Second, while the success rate
+of traditional coups hovers around $50\%$, more than $77\%$ of autocoup attempts
+have resulted in success, according to autocoup dataset introduced in Section 2.
+These distinctions indicate that the dynamics of disposition and capability
+underlying autocoups differ significantly from those of traditional coups.
 
 This section explores the complex dynamics of autocoup attempts, with particular
 emphasis on how the motivations of incumbents, the determinants of success, and
@@ -356,12 +354,12 @@ survival—intended to shield the leader from legal or political repercussions.
 ### Power dynamics and autocoups
 
 While motivations may initiate an incumbent’s decision to pursue an autocoup, the
-decisive factor often lies in their ability to implement and sustain such an
+decisive factor mainly lies in their ability to implement and sustain such an
 action. The relatively high frequency and remarkable success rate of
 autocoups—over $77\%$, compared to approximately $50\%$ for classical
 coups—suggest that incumbents benefit from notable structural advantages when
-attempting to consolidate power. These advantages are not limited to autocracies
-but are also evident in democratic systems, underscoring the variation in
+attempting to extend power. These advantages are not limited to autocracies but
+are also evident in democratic systems, underscoring the variation in
 institutional leverage available to incumbents across different regime types.
 
 This reality necessitates a closer examination of state power structures,
@@ -372,8 +370,8 @@ judiciary, or the legislature—can be suppressed or marginalised. Conversely, o
 defiance or refusal by the military to support the incumbent may render an
 autocoup untenable.
 
-Nevertheless, it is reductive to assume that formal authority as
-commander-in-chief guarantees unqualified control. Just as it is overly
+Nevertheless, it would be reductive to assume that formal designation as
+commander-in-chief guarantees unqualified military control. Just as it is overly
 simplistic to attribute the success of traditional coups solely to the presence
 of military force [@singh2016], it is equally erroneous to presume that
 incumbents invariably enjoy the unconditional loyalty of the armed forces.
@@ -395,7 +393,7 @@ presidential election, General Mark Milley, Chairman of the Joint Chiefs of
 Staff, publicly reaffirmed the military’s constitutional commitment: “We are
 unique among militaries. We do not take an oath to a king or a queen, a tyrant or
 a dictator. We do not take an oath to an individual. We take an oath to the
-Constitution.” (US Army Museum, 12 November 2020\[\^1\])
+Constitution.” (US Army Museum, 12 November 2020[^1])
 
 In hybrid regimes or fragile democracies, attempts to prolong executive tenure
 may entail significant political risks. In Niger, for example, President Mamadou
@@ -415,8 +413,8 @@ comparative politics. Regime types encapsulate the institutional architecture of
 power distribution, particularly with respect to control over the military,
 political appointments, and policy-making authority.
 
-Following the typology developed by @geddes2014, autocratic regimes can be
-categorised as follows:
+Following the typology developed by @geddes2014, regimes can be categorised as
+follows:
 
 **Military regimes** are governed by a junta, typically comprising senior
 military officers who collectively determine leadership and policy direction.
@@ -457,7 +455,7 @@ constitutional channels, necessitating a gradual process of consolidation. In
 this context, autocoups function as formal mechanisms to institutionalise
 existing dominance—transforming informal power into legally sanctioned
 permanence. This dynamic is exemplified by the repeated tenure extensions pursued
-by Vladimir Putin and Alexander Lukashenko.
+by Vladimir Putin and Alexander Lukashenko [@baturo2019politics].
 
 In post-Soviet Russia, President Boris Yeltsin presided over the transformation
 of a parliamentary system into a personalist regime. However, Yeltsin himself did
@@ -491,15 +489,10 @@ to their centralised executive authority and command over the military.
 
 From this analysis, the following hypothesis is proposed:
 
-The likelihood of autocoup attempts is significantly shaped by regime type, with
-regimes characterised by concentrated and stable executive power—namely,
-personalist autocracies and presidential democracies—being the most susceptible,
-relative to other regime types.
-
-***H3-1: The likelihood of autocoup attempts is significantly shaped by regime
-type, with regimes characterised by concentrated and stable executive
-power—namely, personalist autocracies and presidential democracies—being the most
-susceptible, relative to other regime types.***
+***H1: The likelihood of autocoup attempts is shaped by regime type, with regimes
+characterised by concentrated and stable executive power—namely, personalist
+autocracies and presidential democracies—being the most susceptible, relative to
+other regime types.***
 
 ## Research design
 
@@ -530,10 +523,8 @@ recorded autocoup attempts.
 
 #### Dependent variable
 
-The analysis draws upon the autocoup dataset introduced in Chapter 2, which
+The analysis draws upon the autocoup dataset introduced in Section 2, which
 covers the period from 1945 to 2023 and includes 83 documented autocoup attempts.
-Summary statistics for these events, as well as the corresponding regime
-classifications, are presented in Chapter 2.
 
 **Autocoup attempt**: A binary variable indicating whether an autocoup attempt
 occurred (coded as 1) or did not occur (coded as 0) in each country-year
@@ -558,7 +549,7 @@ population size, and a Cold War dummy variable, which captures temporal variatio
 in the global political environment.
 
 **Economic Level:** Measured by GDP per capita, this variable reflects the
-overall economic wellbeing of a country. Data are sourced from the V-Dem dataset
+overall economic well-being of a country. Data are sourced from the V-Dem dataset
 [@fariss2022] and are expressed in constant 2017 international dollars (PPP, per
 thousand).
 
@@ -604,17 +595,17 @@ and their increased frequency thereafter.
 
 ## Results and discussion
 
-This chapter employs logistic regression techniques to examine the structural and
+This study employs logistic regression techniques to examine the structural and
 contextual factors that influence the probability of autocoup attempts. Given the
 dichotomous nature of the dependent variable—whether or not an autocoup attempt
-occurred in a specific country-year—and the rarity of such events (78 out of
-9,434 observations) in certain categories, the analysis includes both a standard
-logit model and a bias-reduced logit model. The latter is particularly
-well-suited for rare events data, as it corrects for the small-sample bias often
-encountered with conventional maximum likelihood estimation. Consequently, the
-interpretation of results prioritises estimates from the bias-reduced model. Odds
-Ratios (ORs) are reported to facilitate an intuitive understanding of effect
-sizes.
+occurred in a specific country-year—and the rarity of such events (After
+truncation, 78 out of 9,434 observations) in certain categories, the analysis
+includes both a standard logit model and a bias-reduced logit model. The latter
+is particularly well-suited for rare events data, as it corrects for the
+small-sample bias often encountered with conventional maximum likelihood
+estimation. Consequently, the interpretation of results prioritises estimates
+from the bias-reduced model. Odds Ratios (ORs) are reported to facilitate an
+intuitive understanding of effect sizes.
 
 @tbl-autocoupmodel presents the model estimates. The core hypothesis posits that
 regime type is a key predictor of autocoup incidence, particularly that
@@ -667,7 +658,7 @@ model_logit <- autocoup_model |>
   tbl_regression(
     label = common_labels,
     show_single_row = "factor(cold_war)",
-    conf.int = T,
+    #conf.int = T,
     intercept = T
   ) |>
   add_n(location = "level") |>
@@ -688,7 +679,7 @@ model_logit_od <- glm(
     exponentiate = TRUE,
     label = common_labels,
     show_single_row = "factor(cold_war)",
-    conf.int = T,
+    #conf.int = T,
     intercept = T,
     digits = 1
   ) |>
@@ -729,7 +720,7 @@ model_brg_od <- glm(
     exponentiate = TRUE,
     label = common_labels,
     show_single_row = "factor(cold_war)",
-    conf.int = T,
+    #conf.int = T,
     intercept = T
   ) |>
   add_significance_stars(
@@ -807,28 +798,27 @@ In sum, the analysis confirms that regime type—particularly personalist and
 presidential systems—is a critical structural condition influencing the
 likelihood of autocoup attempts. The inclusion of predicted probabilities and
 percentage changes in odds ratios serves to clarify the substantive significance
-of these patterns, beyond their statistical robustness. These results point to
-the institutional fragility of regimes where executive authority is highly
-centralised and unchecked. Additionally, the protective effects of democratic
-institutions and Cold War-era international structures warrant greater attention
-in discussion of executive stability and regime resilience. The implications of
-these findings for policy and democratic governance will be explored in detail in
-the final chapter.
+of these patterns, beyond their statistical robustness. These findings highlight
+the institutional fragility inherent in regimes where executive authority is
+highly centralised and inadequately constrained. Additionally, the protective
+effects of democratic institutions and Cold War-era international structures
+warrant greater attention in discussion of executive stability and regime
+resilience.
 
-## Summary
+## Conclusion
 
-This chapter provides a quantitative analysis of the determinants of autocoup
+This study provides a quantitative analysis of the determinants of autocoup
 attempts, addressing a notable gap in the existing literature, which has often
 been hindered by conceptual imprecision and the absence of systematic empirical
-data. It advances the central argument that the likelihood of autocoup attempts
-is shaped significantly by the structural configuration of political power within
-regimes, operationalised through regime type. Employing both standard logistic
-regression and Firth’s bias-reduced logit model, the analysis demonstrates that
-personalist autocracies and presidential democracies are markedly more
-susceptible to autocoup attempts than dominant-party regimes. Specifically, the
-odds of an autocoup are estimated to be approximately three times higher in
-personalist autocracies and nearly five times higher in presidential democracies
-relative to the baseline category.
+data [@baturo2022]. It advances the central argument that the likelihood of
+autocoup attempts is shaped significantly by the structural configuration of
+political power within regimes, operationalised through regime type. Employing
+both standard logistic regression and Firth’s bias-reduced logit model, the
+analysis demonstrates that personalist autocracies and presidential democracies
+are markedly more susceptible to autocoup attempts than dominant-party regimes.
+Specifically, the odds of an autocoup are estimated to be approximately three
+times higher in personalist autocracies and nearly five times higher in
+presidential democracies relative to the baseline category.
 
 These findings lend empirical support to the hypothesis that such regime types
 possess structural vulnerabilities that facilitate extra-constitutional power
@@ -836,9 +826,15 @@ consolidation by incumbents. In addition to regime type, the analysis identifies
 several other statistically significant covariates: population size, the degree
 of democratic institutionalisation, and the broader historical context of the
 Cold War all exert discernible effects on the probability of autocoup occurrence.
+
 By examining the strategic incentives confronting incumbent leaders across
-diverse institutional contexts, the study contributes to a more nuanced
-understanding of irregular leadership transitions.
+diverse institutional contexts, the study contributes to the conceptual
+refinement of autocoups and introduces a novel dataset, which may serve as a
+foundation for future empirical research. Furthermore, it offers a more
+systematic and data-driven account of irregular leadership transitions by
+expanding the analytical scope from irregular ousting to irregular overstaying.
+Finally, the findings underscore the critical role of regime type in shaping the
+strategic calculus of incumbents contemplating an autocoup.
 
 Nevertheless, the analysis also underscores several conceptual and methodological
 challenges that warrant further investigation. Unlike traditional coups—which may
@@ -857,3 +853,8 @@ to explore the temporal dynamics and sequencing of autocoup activity. Such
 inquiries would usefully complement the present findings by offering deeper
 insights into the long-term patterns of institutional adaptation, authoritarian
 durability, and democratic erosion.
+
+[^1]: CNN. *Top US General Stands Firm Amid Pentagon Turmoil.* 12 November 2020.
+    Available at:
+    <https://edition.cnn.com/2020/11/12/politics/mark-milley-pentagon-turmoil/index.html>
+    \[Accessed 24 April 2025\].
