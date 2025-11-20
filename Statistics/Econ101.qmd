@@ -1,0 +1,104 @@
+---
+title: "Econ101"
+format: html
+
+execute: 
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(wooldridge)
+library(stargazer)
+library(modelsummary)
+library(sjPlot)
+library(gtsummary)
+library(summarytools)
+library(huxtable)
+library(jtools)
+install.packages("jtools")
+```
+
+## Data Overview
+
+```{r}
+data("wage1")
+glimpse(wage1)
+?wage1
+```
+
+```{r}
+wage1 |> 
+  ggplot(aes(x = educ, y = lwage)) +
+  geom_point() 
+```
+
+```{r}
+lm(lwage ~ educ, data = wage1) |> 
+  summary()
+```
+
+## Report the results in a table
+
+```{r}
+
+lm(lwage ~ educ, data = wage1) |> 
+  stargazer(type = "text", 
+            #out = "wage1_educ.html",
+            title = "Regression Results",
+            dep.var.labels = "Log Wage",
+            covariate.labels = c("Education (years)"),
+            #star.cutoffs = c(0.05, 0.01, 0.001),
+            notes = "Data from Wooldridge (2016)",
+            header = FALSE)
+  
+```
+
+```{r}
+#| warning: false
+lm(wage ~ educ, data = wage1) |> 
+  stargazer(type = "text", 
+            out = "wage1_educ.html",
+            title = "Regression Results",
+            dep.var.labels = "Hourly Wage",
+            covariate.labels = c("Education (years)"),
+            star.cutoffs = c(0.05, 0.01, 0.001),
+            notes = "Data from Wooldridge (2016)")
+```
+
+```{r}
+model1 |>
+  tbl_regression()
+
+
+```
+
+```{r}
+model1 |> 
+  tab_model(show.ci = FALSE,
+            show.se = TRUE,
+            pred.labels = c("(Intercept)", "Education (years)"),
+            dv.labels = "Hourly Wage")
+
+
+```
+
+```{r}
+model1 |> 
+  modelsummary()
+
+
+```
+
+```{r}
+model1 |> 
+  huxreg()
+
+
+```
+
+```{r}
+model1 |> 
+  export_summs()
+```
